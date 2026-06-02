@@ -24,6 +24,7 @@ AgentContextKit runs locally against a repository path. The MVP does not upload 
 - Generated files are opt-in by command.
 - Redaction checks are report-only.
 - Critical risks return non-zero exit codes in `redact-check`.
+- Configured `ignorePaths` only suppress reporting for selected paths; they do not delete or mutate files.
 
 ## Limitations
 Pattern-based scanners cannot guarantee full detection. Public release still requires manual review.

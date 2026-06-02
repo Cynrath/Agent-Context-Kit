@@ -42,6 +42,7 @@ dotnet restore
 dotnet build -c Release
 dotnet run --project src/AgentContextKit.Cli -- --help
 dotnet run --project src/AgentContextKit.Cli -- scan
+dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
 ```
 
@@ -80,6 +81,9 @@ Depending on the command and selected target, AgentContextKit can generate:
 
 ## Localization
 Default language is English. Turkish is supported with `--lang tr`. Unknown language values fall back to English.
+
+## Configuration And JSON
+See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for `.ackit/config.yml` and [docs/JSON_OUTPUT.md](docs/JSON_OUTPUT.md) for machine-readable output.
 
 ## Roadmap
 See [docs/ROADMAP.md](docs/ROADMAP.md).

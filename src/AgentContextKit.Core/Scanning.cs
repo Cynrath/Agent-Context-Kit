@@ -31,14 +31,16 @@ public sealed class RepositoryScanner : IRepositoryScanner
     public ScanResult Scan(string repositoryPath, AckitConfig? config = null)
     {
         var root = Path.GetFullPath(repositoryPath);
+        var activeConfig = config ?? AckitConfig.Default;
         var files = _fileSystem
             .EnumerateFiles(root, IgnoredDirectoryNames)
             .Select(file => ToRelativePath(root, file))
+            .Where(file => !IsIgnoredByConfig(file, activeConfig))
             .OrderBy(file => file, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
         var stacks = _stackDetector.Detect(root, files);
-        var findings = _riskScanner.Scan(root, files, config ?? AckitConfig.Default);
+        var findings = _riskScanner.Scan(root, files, activeConfig);
 
         return new ScanResult(
             root,
@@ -61,6 +63,38 @@ public sealed class RepositoryScanner : IRepositoryScanner
     internal static string ToRelativePath(string root, string path)
     {
         return Path.GetRelativePath(root, path).Replace('\\', '/');
+    }
+
+    internal static bool IsIgnoredByConfig(string relativePath, AckitConfig config)
+    {
+        var normalized = relativePath.Replace('\\', '/').TrimStart('/');
+
+        foreach (var ignorePath in config.IgnorePaths)
+        {
+            var rule = ignorePath.Replace('\\', '/').TrimStart('/');
+            if (rule.Length == 0)
+            {
+                continue;
+            }
+
+            if (rule.EndsWith("/", StringComparison.Ordinal))
+            {
+                if (normalized.StartsWith(rule, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (string.Equals(normalized, rule, StringComparison.OrdinalIgnoreCase) ||
+                normalized.StartsWith(rule + "/", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static bool HasAny(IReadOnlyList<string> files, params string[] names)
@@ -174,7 +208,7 @@ public sealed class RiskScanner : IRiskScanner
 
         foreach (var relativeFile in relativeFiles)
         {
-            findings.AddRange(AnalyzePath(relativeFile));
+            findings.AddRange(AnalyzePath(relativeFile, config));
 
             var fullPath = Path.Combine(repositoryPath, relativeFile.Replace('/', Path.DirectorySeparatorChar));
             if (!IsProbablyTextFile(relativeFile) || !_fileSystem.FileExists(fullPath) || _fileSystem.GetFileLength(fullPath) > MaxTextFileBytes)
@@ -206,10 +240,11 @@ public sealed class RiskScanner : IRiskScanner
             .ToArray();
     }
 
-    private static IEnumerable<RiskFinding> AnalyzePath(string relativeFile)
+    private static IEnumerable<RiskFinding> AnalyzePath(string relativeFile, AckitConfig config)
     {
         var fileName = Path.GetFileName(relativeFile);
         var lower = relativeFile.ToLowerInvariant();
+        var extension = Path.GetExtension(relativeFile);
 
         if (fileName.Equals(".env", StringComparison.OrdinalIgnoreCase) ||
             fileName.StartsWith(".env.", StringComparison.OrdinalIgnoreCase) ||
@@ -233,23 +268,29 @@ public sealed class RiskScanner : IRiskScanner
             yield return new RiskFinding(RiskSeverity.High, RiskCategory.RepositoryHygiene, relativeFile, "Risky data/storage path is present.");
         }
 
-        if (fileName.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".rar", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".7z", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".bak", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".tmp", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".log", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".mdf", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".ldf", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".db", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".sqlite3", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".bacpac", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".dacpac", StringComparison.OrdinalIgnoreCase) ||
-            fileName.EndsWith(".sql", StringComparison.OrdinalIgnoreCase))
+        if (IsBuiltInRiskExtension(fileName) ||
+            config.RiskExtensions.Any(riskExtension => extension.Equals(riskExtension, StringComparison.OrdinalIgnoreCase)))
         {
             yield return new RiskFinding(RiskSeverity.Medium, RiskCategory.BuildArtifact, relativeFile, "File extension should be reviewed before public release.");
         }
+    }
+
+    private static bool IsBuiltInRiskExtension(string fileName)
+    {
+        return fileName.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".rar", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".7z", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".bak", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".tmp", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".log", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".mdf", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".ldf", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".db", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".sqlite", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".sqlite3", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".bacpac", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".dacpac", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".sql", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool IsProbablyTextFile(string relativeFile)
@@ -327,6 +368,21 @@ public sealed class SecretScanner : ISecretScanner
 public sealed class BrandPiiScanner : IBrandPiiScanner
 {
     private static readonly Regex PhoneRegex = new(@"(?<![A-Za-z0-9-])(\+?\d[\d\s()-]{7,}\d)(?![A-Za-z0-9])", RegexOptions.Compiled);
+    private static readonly Regex EmailRegex = new(@"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex DomainRegex = new(@"\b(?:[A-Z0-9-]+\.)+(?:com\.tr|com|net|org|io|dev|app|ai|co|tr|edu|gov|cloud|site)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex IpAddressRegex = new(@"\b(?:\d{1,3}\.){3}\d{1,3}\b", RegexOptions.Compiled);
+    private static readonly HashSet<string> KnownPublicDomains = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "github.com",
+        "learn.microsoft.com",
+        "microsoft.com",
+        "dotnet.microsoft.com",
+        "visualstudio.microsoft.com",
+        "nuget.org",
+        "aka.ms",
+        "example.com",
+        "ASP.NET"
+    };
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content, AckitConfig config)
     {
@@ -354,7 +410,47 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
             findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "Phone-like value detected.", phoneMatch.Value));
         }
 
+        var emailMatch = EmailRegex.Match(content);
+        if (emailMatch.Success && !IsIgnoredDomainLikeValue(GetEmailDomain(emailMatch.Value)))
+        {
+            findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
+        }
+
+        var domainMatch = DomainRegex.Matches(content)
+            .Select(match => match.Value)
+            .FirstOrDefault(domain => !IsIgnoredDomainLikeValue(domain) && !emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase));
+
+        if (!string.IsNullOrWhiteSpace(domainMatch))
+        {
+            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Brand, relativePath, "Domain-like value detected.", domainMatch));
+        }
+
+        var ipAddressMatch = IpAddressRegex.Match(content);
+        if (ipAddressMatch.Success && IsValidIpAddress(ipAddressMatch.Value))
+        {
+            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "IP address-like value detected.", ipAddressMatch.Value));
+        }
+
         return findings;
+    }
+
+    private static bool IsValidIpAddress(string value)
+    {
+        var parts = value.Split('.');
+        return parts.Length == 4 &&
+               parts.All(part => int.TryParse(part, out var parsed) && parsed is >= 0 and <= 255);
+    }
+
+    private static string GetEmailDomain(string email)
+    {
+        var at = email.LastIndexOf('@');
+        return at >= 0 && at + 1 < email.Length ? email[(at + 1)..] : "";
+    }
+
+    private static bool IsIgnoredDomainLikeValue(string domain)
+    {
+        return KnownPublicDomains.Contains(domain) ||
+               domain.StartsWith("README.", StringComparison.OrdinalIgnoreCase);
     }
 }
 

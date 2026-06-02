@@ -17,9 +17,12 @@ public sealed class AckitConfigReader : IAckitConfigReader
             return AckitConfig.Default;
         }
 
+        var schemaVersion = 1;
         var language = LanguageCode.English;
         var brandKeywords = new List<string>();
         var piiKeywords = new List<string>();
+        var ignorePaths = new List<string>();
+        var riskExtensions = new List<string>();
         var section = "";
 
         foreach (var rawLine in _fileSystem.ReadAllText(path).Split('\n'))
@@ -37,6 +40,18 @@ public sealed class AckitConfigReader : IAckitConfigReader
                 continue;
             }
 
+            if (line.StartsWith("schemaVersion:", StringComparison.OrdinalIgnoreCase))
+            {
+                var rawValue = line["schemaVersion:".Length..].Trim();
+                if (int.TryParse(rawValue, out var parsedSchemaVersion) && parsedSchemaVersion > 0)
+                {
+                    schemaVersion = parsedSchemaVersion;
+                }
+
+                section = "";
+                continue;
+            }
+
             if (line.StartsWith("brandKeywords:", StringComparison.OrdinalIgnoreCase))
             {
                 section = "brand";
@@ -48,6 +63,20 @@ public sealed class AckitConfigReader : IAckitConfigReader
             {
                 section = "pii";
                 AddInlineList(piiKeywords, line);
+                continue;
+            }
+
+            if (line.StartsWith("ignorePaths:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = "ignore";
+                AddInlineList(ignorePaths, line);
+                continue;
+            }
+
+            if (line.StartsWith("riskExtensions:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = "extension";
+                AddInlineList(riskExtensions, line);
                 continue;
             }
 
@@ -70,9 +99,23 @@ public sealed class AckitConfigReader : IAckitConfigReader
             {
                 piiKeywords.Add(value);
             }
+            else if (section == "ignore")
+            {
+                ignorePaths.Add(value);
+            }
+            else if (section == "extension")
+            {
+                riskExtensions.Add(NormalizeExtension(value));
+            }
         }
 
-        return new AckitConfig(language, brandKeywords, piiKeywords);
+        return new AckitConfig(
+            schemaVersion,
+            language,
+            brandKeywords,
+            piiKeywords,
+            ignorePaths.Count == 0 ? AckitConfig.Default.IgnorePaths : NormalizeIgnorePaths(ignorePaths),
+            riskExtensions.Count == 0 ? AckitConfig.Default.RiskExtensions : NormalizeExtensions(riskExtensions));
     }
 
     private static void AddInlineList(List<string> target, string line)
@@ -92,6 +135,30 @@ public sealed class AckitConfigReader : IAckitConfigReader
                 target.Add(value);
             }
         }
+    }
+
+    private static IReadOnlyList<string> NormalizeIgnorePaths(IReadOnlyList<string> paths)
+    {
+        return paths
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .Select(path => path.Trim().Trim('"').Replace('\\', '/'))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static IReadOnlyList<string> NormalizeExtensions(IReadOnlyList<string> extensions)
+    {
+        return extensions
+            .Where(extension => !string.IsNullOrWhiteSpace(extension))
+            .Select(NormalizeExtension)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static string NormalizeExtension(string extension)
+    {
+        var value = extension.Trim().Trim('"');
+        return value.StartsWith(".", StringComparison.Ordinal) ? value : "." + value;
     }
 }
 
@@ -113,9 +180,17 @@ public sealed class AckitConfigWriter : IAckitConfigWriter
         }
 
         var content = $"""
+        schemaVersion: 1
         defaultLanguage: {language.Value}
         brandKeywords: []
         piiKeywords: []
+        ignorePaths:
+          - .ackit/cache/
+        riskExtensions:
+          - .bak
+          - .tmp
+          - .log
+          - .sql
         """;
 
         _fileSystem.WriteAllText(path, content + Environment.NewLine);

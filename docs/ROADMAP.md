@@ -7,6 +7,8 @@
 - English/Turkish localization foundation.
 - Markdown template generation.
 - Basic JSON output.
+- Config schema docs.
+- JSON output docs.
 - Basic tests.
 - README, OSS docs, AGENTS.
 - GitHub Actions.

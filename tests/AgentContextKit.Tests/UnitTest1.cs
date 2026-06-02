@@ -68,6 +68,51 @@ public sealed class RiskScannerTests
         Assert.DoesNotContain(result.Files, file => file.StartsWith("obj/", StringComparison.OrdinalIgnoreCase));
         Assert.DoesNotContain(result.Findings, finding => finding.Severity == RiskSeverity.Critical);
     }
+
+    [Fact]
+    public void RepositoryScannerUsesConfiguredIgnorePaths()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("generated/secret.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+        repo.Write("README.md", "# Test");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            IgnorePaths = ["generated/"]
+        });
+
+        Assert.DoesNotContain(result.Files, file => file.StartsWith("generated/", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain(result.Findings, finding => finding.Path.StartsWith("generated/", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void RiskScannerUsesConfiguredRiskExtensions()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("private.snapshot", "not secret");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            RiskExtensions = [".snapshot"]
+        });
+
+        Assert.Contains(result.Findings, finding => finding.Path == "private.snapshot" && finding.Category == RiskCategory.BuildArtifact);
+    }
+
+    [Fact]
+    public void BrandPiiScannerFindsConfiguredKeywordAndEmail()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText("notes.txt", "Contact private-name at private@example.internal", AckitConfig.Default with
+        {
+            PiiKeywords = ["private-name"]
+        });
+
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "private-name");
+    }
 }
 
 public sealed class TemplateAndGenerationTests
@@ -130,6 +175,33 @@ public sealed class ConfigAndDoctorTests
     }
 
     [Fact]
+    public void ConfigReaderParsesSchemaIgnorePathsAndRiskExtensions()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/config.yml", """
+        schemaVersion: 3
+        defaultLanguage: tr
+        brandKeywords: ["Acme"]
+        piiKeywords:
+          - private-name
+        ignorePaths:
+          - generated/
+        riskExtensions:
+          - snapshot
+        """);
+        var reader = new AckitConfigReader(new PhysicalFileSystem());
+
+        var config = reader.Read(repo.Path);
+
+        Assert.Equal(3, config.SchemaVersion);
+        Assert.Equal("tr", config.DefaultLanguage.Value);
+        Assert.Contains("Acme", config.BrandKeywords);
+        Assert.Contains("private-name", config.PiiKeywords);
+        Assert.Contains("generated/", config.IgnorePaths);
+        Assert.Contains(".snapshot", config.RiskExtensions);
+    }
+
+    [Fact]
     public void DoctorReportsMissingReadmeLicenseAndSecurity()
     {
         using var repo = TempRepository.Create();
@@ -158,6 +230,8 @@ public sealed class CliJsonAndMetadataTests
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
         Assert.Equal("scan", json?["command"]?.GetValue<string>());
         Assert.True(json?["fileCount"]?.GetValue<int>() >= 2);
     }
@@ -177,6 +251,8 @@ public sealed class CliJsonAndMetadataTests
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(0, result.ExitCode);
+        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
         Assert.Equal("doctor", json?["command"]?.GetValue<string>());
         Assert.True(json?["checks"]?.AsArray().Count > 0);
     }
@@ -187,11 +263,14 @@ public sealed class CliJsonAndMetadataTests
         using var repo = TempRepository.Create();
         repo.Write("settings.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
 
-        var result = RunCli(repo.Path, ["redact-check", "--json"]);
+        var result = RunCli(repo.Path, ["redact-check", "--profile", "public-release", "--json"]);
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(2, result.ExitCode);
+        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
         Assert.Equal("redact-check", json?["command"]?.GetValue<string>());
+        Assert.Equal("public-release", json?["profile"]?.GetValue<string>());
         Assert.Equal(2, json?["exitCode"]?.GetValue<int>());
     }
 

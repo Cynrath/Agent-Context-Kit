@@ -6,6 +6,7 @@ namespace AgentContextKit.Cli;
 public static class Program
 {
     private const string Version = "0.1.0-alpha.1";
+    private const int JsonSchemaVersion = 1;
 
     public static int Main(string[] args)
     {
@@ -26,7 +27,7 @@ public static class Program
                 "scan" => RunScan(repositoryPath, config, language, json, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
-                "redact-check" => RunRedactCheck(repositoryPath, config, language, json, services),
+                "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
                 "doctor" => RunDoctor(repositoryPath, config, language, json, services),
                 _ => RunUnknown(command, language, services.TextProvider)
             };
@@ -79,6 +80,8 @@ public static class Program
         {
             WriteJson(new
             {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
                 command = "init",
                 config = ToGeneratedFileDto(result),
                 agentInstructionFiles = agentFiles
@@ -121,6 +124,8 @@ public static class Program
         {
             WriteJson(new
             {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
                 command = "generate",
                 target = target.ToString(),
                 files = results.Select(ToGeneratedFileDto).ToArray()
@@ -151,6 +156,8 @@ public static class Program
         {
             WriteJson(new
             {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
                 command = "task",
                 file = ToGeneratedFileDto(result)
             });
@@ -161,8 +168,9 @@ public static class Program
         return 0;
     }
 
-    private static int RunRedactCheck(string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    private static int RunRedactCheck(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
     {
+        var profile = GetOption(args, "--profile") ?? "default";
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         var findings = scan.Findings
             .Where(finding => finding.Category is RiskCategory.Secret or RiskCategory.Pii or RiskCategory.Brand or RiskCategory.LocalPath or RiskCategory.ProductionConfig)
@@ -176,7 +184,10 @@ public static class Program
         {
             WriteJson(new
             {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
                 command = "redact-check",
+                profile,
                 exitCode,
                 findings = findings.Select(ToRiskFindingDto).ToArray()
             });
@@ -197,6 +208,8 @@ public static class Program
         {
             WriteJson(new
             {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
                 command = "doctor",
                 exitCode,
                 checks = result.Checks.Select(ToDoctorCheckDto).ToArray()
@@ -307,6 +320,8 @@ public static class Program
     {
         return new
         {
+            schemaVersion = JsonSchemaVersion,
+            toolVersion = Version,
             command,
             repositoryPath = scan.RepositoryPath,
             fileCount = scan.Files.Count,

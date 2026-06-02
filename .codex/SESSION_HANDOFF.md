@@ -22,11 +22,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Started TASK-0002 to replace real-name metadata with `Cynrath`, add JSON output, and validate local package install.
 - Completed TASK-0002: pseudonym metadata, JSON output, tests, warning-free local pack, and temporary tool-path install verification.
 - Started TASK-0003 for config schema, JSON schema metadata, and scanner hardening.
+- Completed TASK-0003 with config schema docs, JSON output docs, config-driven ignore/risk settings, JSON metadata, scanner hardening, and tests.
 
 ## Next Clear Steps
-1. Implement TASK-0003 changes listed in `docs/tasks/TASK-0003-config-schema-scanner-hardening.md`.
-2. Run restore/build/test and CLI checks.
-3. Update task completion notes and commit.
+1. Create TASK-0004 for release-readiness polish, `.slnx` decision, and package metadata review.
+2. Keep `RepositoryUrl` as TODO until the real public remote is selected.
+3. Consider adding JSON schema sample files after output shape stabilizes.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -61,6 +62,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/ROADMAP.md`
 - `docs/RELEASE_CHECKLIST.md`
 - `docs/tasks/TASK-0003-config-schema-scanner-hardening.md`
+- `docs/CONFIGURATION.md`
+- `docs/JSON_OUTPUT.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
@@ -98,6 +101,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor`: passed, all checks PASS.
 - Temporary verification: `task`, `init`, `generate --target codex`, and `redact-check` passed. Critical redact-check produced `LASTEXITCODE=2`.
 - TASK-0002 verification: restore/build/test passed; `scan --json` and `doctor --json` emitted valid JSON; real-name exact phrase search returned no matches; local `dotnet pack` succeeded without warning; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` and `ackit scan --json` worked.
+- TASK-0003 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed with 18/18 tests; `scan` reported no findings; `scan --json` includes schema/tool metadata; `doctor --json` works; `init --json` writes the expanded default config; temporary `redact-check --profile public-release --json` returned `LASTEXITCODE=2`.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -110,4 +114,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The foundation MVP is implemented and verified. The next step is to review git status, commit the implementation if acceptable, and plan the next task around scanner hardening or release packaging.
+If context is compacted, continue from this file. The MVP foundation through TASK-0003 is implemented and verified. The next step is to commit TASK-0003 implementation if not yet committed, then create TASK-0004 for release-readiness polish.

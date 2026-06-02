@@ -137,4 +137,14 @@ This improves public release hygiene and CI integration without publishing anyth
 Revert the TASK-0003 implementation commit. No destructive file actions, remote pushes, or publishes are performed.
 
 ## Completion notes
-In progress.
+Completed.
+
+- Added `docs/CONFIGURATION.md` and `docs/JSON_OUTPUT.md`.
+- Extended `AckitConfig` with `schemaVersion`, `ignorePaths`, and `riskExtensions`.
+- Updated `.ackit/config.yml` default generation.
+- Added config-driven ignore paths and risky extension findings.
+- Added conservative email/domain/IP-like scanner signals with public/framework false-positive filters.
+- Added JSON `schemaVersion`, `toolVersion`, and redact-check `profile` output.
+- Added tests for config schema parsing, ignore paths, custom risk extensions, configured PII keyword findings, JSON schema metadata, and redact profile output.
+- Verified restore/build/test, scan, scan JSON, doctor JSON, init JSON/default config, and redact-check JSON exit code.
+- No push, publish, deletion, automatic redaction, or remote creation was performed.

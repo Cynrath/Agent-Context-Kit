@@ -7,6 +7,7 @@
 - `ackit doctor` has no unaccepted high/critical findings.
 - `ackit redact-check --profile public-release` reviewed.
 - README and README.tr are current.
+- Configuration and JSON output docs are current.
 - SECURITY, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG are current.
 - LICENSE is present.
 - NuGet package metadata is reviewed.

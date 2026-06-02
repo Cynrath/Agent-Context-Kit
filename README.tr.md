@@ -42,6 +42,7 @@ dotnet restore
 dotnet build -c Release
 dotnet run --project src/AgentContextKit.Cli -- --help
 dotnet run --project src/AgentContextKit.Cli -- scan
+dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
 ```
 
@@ -80,6 +81,9 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 
 ## Lokalizasyon
 Varsayilan dil English'tir. Turkish icin `--lang tr` kullanilir. Bilinmeyen dil degeri English'e duser.
+
+## Konfigurasyon Ve JSON
+`.ackit/config.yml` icin [docs/CONFIGURATION.md](docs/CONFIGURATION.md), machine-readable cikti icin [docs/JSON_OUTPUT.md](docs/JSON_OUTPUT.md) dosyasina bakin.
 
 ## Roadmap
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).

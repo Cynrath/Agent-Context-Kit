@@ -103,11 +103,20 @@ public sealed record TaskSpec(string Title, LanguageCode Language);
 public sealed record RepositoryProfile(string RootPath, IReadOnlyList<string> Files, IReadOnlyList<StackInfo> Stacks);
 
 public sealed record AckitConfig(
+    int SchemaVersion,
     LanguageCode DefaultLanguage,
     IReadOnlyList<string> BrandKeywords,
-    IReadOnlyList<string> PiiKeywords)
+    IReadOnlyList<string> PiiKeywords,
+    IReadOnlyList<string> IgnorePaths,
+    IReadOnlyList<string> RiskExtensions)
 {
-    public static AckitConfig Default => new(LanguageCode.English, Array.Empty<string>(), Array.Empty<string>());
+    public static AckitConfig Default => new(
+        1,
+        LanguageCode.English,
+        Array.Empty<string>(),
+        Array.Empty<string>(),
+        [".ackit/cache/"],
+        [".bak", ".tmp", ".log", ".sql"]);
 }
 
 public sealed record CommandResult(int ExitCode, string Message);
