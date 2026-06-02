@@ -15,6 +15,8 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Config schema fields for `schemaVersion`, `ignorePaths`, and `riskExtensions`.
 - JSON output metadata with `schemaVersion` and `toolVersion`.
 - Config-driven ignore path and risky extension scanner behavior.
+- Packaging and release validation docs.
+- `.gitattributes` for repository line-ending consistency.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

@@ -109,4 +109,16 @@ Improves trust signals for package consumers and release reviewers. Keeps releas
 Revert the TASK-0004 implementation commit. Remove only temporary package/tool folders outside the repository if needed.
 
 ## Completion notes
-In progress.
+Completed.
+
+- Added `.gitattributes` for repository line-ending consistency.
+- Added `docs/PACKAGING.md` and `docs/RELEASE_VALIDATION.md`.
+- Documented the `.sln` primary / `.slnx` preserved-secondary decision in `docs/DECISIONS.md`.
+- Added NuGet metadata for copyright, release notes, repository type, package project URL, and license acceptance.
+- Extended metadata tests.
+- Verified restore/build/test.
+- Verified local pack into a temporary folder.
+- Verified temporary `dotnet tool install --tool-path`.
+- Verified installed temporary `ackit --help`.
+- Verified `ackit scan` and `ackit doctor` report clean status.
+- No push, NuGet publish, remote creation, permanent global tool install, deletion, or automatic redaction was performed.

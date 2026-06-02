@@ -88,6 +88,9 @@ See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for `.ackit/config.yml` and [
 ## Roadmap
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 
+## Packaging
+Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). NuGet publishing is a manual maintainer action and is not part of the MVP automation.
+
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md).
 

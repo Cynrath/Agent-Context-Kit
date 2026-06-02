@@ -4,6 +4,8 @@ AgentContextKit currently uses the standard .NET SDK templates and xUnit test pa
 
 Runtime dependencies for the CLI/Core MVP are intentionally minimized.
 
+Package validation uses the installed .NET SDK and NuGet tooling; no additional runtime package dependency is introduced.
+
 If additional third-party packages are added, record:
 - Package name
 - Version
