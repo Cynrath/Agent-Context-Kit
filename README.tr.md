@@ -95,6 +95,7 @@ Onemli dokumanlar:
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Architecture](docs/ARCHITECTURE.md)
+- [Source Hygiene](docs/SOURCE_HYGIENE.md)
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)

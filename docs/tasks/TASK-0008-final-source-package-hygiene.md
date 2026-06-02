@@ -101,4 +101,17 @@ Improves repository presentation and package confidence before public release.
 Revert the TASK-0008 implementation commit. Do not run broad cleanup commands or destructive git operations.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Removed unused empty `src/AgentContextKit.Core/Class1.cs`.
+- Renamed `tests/AgentContextKit.Tests/UnitTest1.cs` to `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`.
+- Added `docs/SOURCE_HYGIENE.md`.
+- Updated current project map with hidden agent/config files and the renamed test file.
+- Updated documentation index, README, README.tr, changelog, handoff, and next steps.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 18/18.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- The release verification script reported known blockers in non-failing mode, then completed pack and temporary tool install validation.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion outside the scoped cleanup, overwrite of unrelated files, or automatic redaction was performed.

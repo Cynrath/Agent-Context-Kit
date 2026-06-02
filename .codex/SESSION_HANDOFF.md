@@ -31,9 +31,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0006 with full documentation index, usage/maintainer docs, and generated agent/context workflow files.
 - Started TASK-0007 for final release blocker review and local guard script.
 - Completed TASK-0007 with release blocker documentation, local blocker guard script, release verification integration, and successful validation.
+- Started TASK-0008 for final source/package hygiene.
+- Completed TASK-0008 with empty scaffold cleanup, descriptive test file naming, source hygiene docs, updated project map, and successful validation.
 
 ## Next Clear Steps
-1. Create TASK-0008 for final source/package hygiene review before public actions.
+1. Create TASK-0009 for final public-release audit without resolving maintainer-only blockers.
 2. Keep `RepositoryUrl` and `PackageProjectUrl` as TODO until the real public remote is selected.
 3. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
 4. Do not push/tag/publish until explicit maintainer instruction.
@@ -51,9 +53,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`
 - `src/AgentContextKit.Cli/Program.cs`
 - `src/AgentContextKit.Core/AgentContextKit.Core.csproj`
-- `src/AgentContextKit.Core/Class1.cs`
 - `tests/AgentContextKit.Tests/AgentContextKit.Tests.csproj`
-- `tests/AgentContextKit.Tests/UnitTest1.cs`
+- `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`
 - `src/AgentContextKit.Core/Models.cs`
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/FileSystem.cs`
@@ -119,6 +120,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0007-release-blocker-review.md`
 - `docs/RELEASE_BLOCKERS.md`
 - `scripts/check-release-blockers.ps1`
+- `docs/tasks/TASK-0008-final-source-package-hygiene.md`
+- `docs/SOURCE_HYGIENE.md`
 
 ## Known Risks
 - `dotnet --info` prints SDK information but exits with a Windows workload installer exception. Build/test commands may still work; if not, use project-local PowerShell scripts to continue and record exact failures.
@@ -144,6 +147,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0005 verification: `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; restore/build/test passed; build had 0 warnings and 0 errors; tests passed 18/18; scan had no risk findings; doctor all PASS; pack/tool-path install/installed help/installed scan JSON passed.
 - TASK-0006 verification: all expected docs/generated files exist; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed.
 - TASK-0007 verification: blocker check report-only mode exited 0; blocker check `-FailOnBlockers` exited 1 as expected due placeholder URLs and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
+- TASK-0008 verification: build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -156,4 +160,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0007 is implemented and verified. The next step is to create TASK-0008 for final source/package hygiene review before any public action. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0008 is implemented and verified. The next step is to create TASK-0009 for final public-release audit without resolving maintainer-only blockers. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

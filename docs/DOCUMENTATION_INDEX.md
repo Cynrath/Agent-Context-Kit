@@ -17,6 +17,7 @@
 ## Architecture And Development
 - `docs/ARCHITECTURE.md`: solution structure and boundaries.
 - `docs/DEVELOPMENT_STANDARD.md`: engineering workflow.
+- `docs/SOURCE_HYGIENE.md`: source and package hygiene rules.
 - `docs/LOCALIZATION.md`: English/Turkish support.
 - `docs/DECISIONS.md`: architecture decision records.
 - `docs/PROJECT_MAP.md`: generated project map.
