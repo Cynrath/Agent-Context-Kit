@@ -6,6 +6,7 @@
 - `init`, `scan`, `generate`, `task`, `redact-check`, `doctor`.
 - English/Turkish localization foundation.
 - Markdown template generation.
+- Basic JSON output.
 - Basic tests.
 - README, OSS docs, AGENTS.
 - GitHub Actions.
@@ -14,7 +15,7 @@
 - Stronger stack detector.
 - Better risk scanner.
 - `.ackit/config.yml` brand/PII keyword support improvements.
-- JSON output.
+- JSON schema stabilization and expanded fields.
 - More generated docs.
 - NuGet package metadata hardening.
 - Sample repositories.

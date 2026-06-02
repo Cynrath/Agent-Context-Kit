@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AgentContextKit.Core\AgentContextKit.Core.csproj" />
+    <ProjectReference Include="..\..\src\AgentContextKit.Cli\AgentContextKit.Cli.csproj" />
   </ItemGroup>
 
 </Project>

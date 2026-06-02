@@ -1,4 +1,7 @@
 using AgentContextKit.Core;
+using System.Text.Json.Nodes;
+
+[assembly: Xunit.CollectionBehavior(DisableTestParallelization = true)]
 
 namespace AgentContextKit.Tests;
 
@@ -139,6 +142,110 @@ public sealed class ConfigAndDoctorTests
         Assert.Contains(result.Checks, check => check.Name == "README" && !check.Passed);
         Assert.Contains(result.Checks, check => check.Name == "LICENSE" && !check.Passed);
         Assert.Contains(result.Checks, check => check.Name == "SECURITY" && !check.Passed);
+    }
+}
+
+public sealed class CliJsonAndMetadataTests
+{
+    [Fact]
+    public void ScanJsonOutputIsValid()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write("LICENSE", "MIT");
+
+        var result = RunCli(repo.Path, ["scan", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("scan", json?["command"]?.GetValue<string>());
+        Assert.True(json?["fileCount"]?.GetValue<int>() >= 2);
+    }
+
+    [Fact]
+    public void DoctorJsonOutputIsValid()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write("LICENSE", "MIT");
+        repo.Write("SECURITY.md", "# Security");
+        repo.Write(".gitignore", "bin/");
+        repo.Write("AGENTS.md", "# Agents");
+        repo.Write("tests/DemoTests.cs", "// tests");
+
+        var result = RunCli(repo.Path, ["doctor", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("doctor", json?["command"]?.GetValue<string>());
+        Assert.True(json?["checks"]?.AsArray().Count > 0);
+    }
+
+    [Fact]
+    public void RedactCheckJsonPreservesCriticalExitCode()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+
+        var result = RunCli(repo.Path, ["redact-check", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Equal("redact-check", json?["command"]?.GetValue<string>());
+        Assert.Equal(2, json?["exitCode"]?.GetValue<int>());
+    }
+
+    [Fact]
+    public void PackageMetadataAndLicenseUsePseudonym()
+    {
+        var root = LocateRepositoryRoot();
+        var projectFile = File.ReadAllText(System.IO.Path.Combine(root, "src", "AgentContextKit.Cli", "AgentContextKit.Cli.csproj"));
+        var license = File.ReadAllText(System.IO.Path.Combine(root, "LICENSE"));
+
+        Assert.Contains("<Authors>Cynrath</Authors>", projectFile);
+        Assert.Contains("<Company>Cynrath</Company>", projectFile);
+        Assert.Contains("Copyright (c) 2026 Cynrath", license);
+    }
+
+    private static (int ExitCode, string Output, string Error) RunCli(string workingDirectory, string[] args)
+    {
+        var originalDirectory = Directory.GetCurrentDirectory();
+        var originalOut = Console.Out;
+        var originalError = Console.Error;
+
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+
+        try
+        {
+            Directory.SetCurrentDirectory(workingDirectory);
+            Console.SetOut(output);
+            Console.SetError(error);
+            var exitCode = AgentContextKit.Cli.Program.Main(args);
+            return (exitCode, output.ToString(), error.ToString());
+        }
+        finally
+        {
+            Console.SetOut(originalOut);
+            Console.SetError(originalError);
+            Directory.SetCurrentDirectory(originalDirectory);
+        }
+    }
+
+    private static string LocateRepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null)
+        {
+            if (File.Exists(System.IO.Path.Combine(directory.FullName, "AgentContextKit.sln")))
+            {
+                return directory.FullName;
+            }
+
+            directory = directory.Parent;
+        }
+
+        throw new InvalidOperationException("Repository root could not be located.");
     }
 }
 

@@ -13,12 +13,17 @@
     <ToolCommandName>ackit</ToolCommandName>
     <PackageId>AgentContextKit</PackageId>
     <Version>0.1.0-alpha.1</Version>
-    <Authors>Sait Furkan Selcuk</Authors>
-    <Company>Sait Furkan Selcuk</Company>
+    <Authors>Cynrath</Authors>
+    <Company>Cynrath</Company>
     <Description>Offline-first repository context and safety tooling for AI-assisted development.</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>ai;coding-agent;context;security;cli;oss</PackageTags>
     <RepositoryUrl>https://github.com/TODO/agent-context-kit</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>

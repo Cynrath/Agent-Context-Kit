@@ -1,4 +1,5 @@
 using AgentContextKit.Core;
+using System.Text.Json;
 
 namespace AgentContextKit.Cli;
 
@@ -15,17 +16,18 @@ public static class Program
             var config = services.ConfigReader.Read(repositoryPath);
             var language = LanguageCode.From(GetOption(args, "--lang") ?? config.DefaultLanguage.Value);
             var command = args.Length == 0 ? "help" : args[0].Trim().ToLowerInvariant();
+            var json = HasFlag(args, "--json");
 
             return command switch
             {
                 "help" or "--help" or "-h" => RunHelp(language, services.TextProvider),
                 "version" or "--version" => RunVersion(),
-                "init" => RunInit(repositoryPath, language, services),
-                "scan" => RunScan(repositoryPath, config, language, services),
-                "generate" => RunGenerate(args, repositoryPath, config, language, services),
-                "task" => RunTask(args, repositoryPath, language, services),
-                "redact-check" => RunRedactCheck(repositoryPath, config, language, services),
-                "doctor" => RunDoctor(repositoryPath, config, language, services),
+                "init" => RunInit(repositoryPath, language, json, services),
+                "scan" => RunScan(repositoryPath, config, language, json, services),
+                "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
+                "task" => RunTask(args, repositoryPath, language, json, services),
+                "redact-check" => RunRedactCheck(repositoryPath, config, language, json, services),
+                "doctor" => RunDoctor(repositoryPath, config, language, json, services),
                 _ => RunUnknown(command, language, services.TextProvider)
             };
         }
@@ -42,12 +44,12 @@ public static class Program
         Console.WriteLine(textProvider.Get("help", language));
         Console.WriteLine();
         Console.WriteLine("Usage:");
-        Console.WriteLine("  ackit init [--lang en|tr]");
-        Console.WriteLine("  ackit scan [--lang en|tr]");
-        Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr]");
-        Console.WriteLine("  ackit task \"<title>\" [--lang en|tr]");
-        Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr]");
-        Console.WriteLine("  ackit doctor [--lang en|tr]");
+        Console.WriteLine("  ackit init [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit scan [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit doctor [--lang en|tr] [--json]");
         Console.WriteLine("  ackit version");
         return 0;
     }
@@ -58,34 +60,73 @@ public static class Program
         return 0;
     }
 
-    private static int RunInit(string repositoryPath, LanguageCode language, Services services)
+    private static int RunInit(string repositoryPath, LanguageCode language, bool json, Services services)
     {
         var result = services.ConfigWriter.WriteDefaultIfMissing(repositoryPath, language);
+        var agentFiles = new[] { "AGENTS.md", "CLAUDE.md", ".cursor/rules/project.mdc", ".github/copilot-instructions.md" }
+            .Select(file =>
+            {
+                var fullPath = Path.Combine(repositoryPath, file.Replace('/', Path.DirectorySeparatorChar));
+                return new
+                {
+                    path = file,
+                    exists = services.FileSystem.FileExists(fullPath)
+                };
+            })
+            .ToArray();
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                command = "init",
+                config = ToGeneratedFileDto(result),
+                agentInstructionFiles = agentFiles
+            });
+            return 0;
+        }
+
         PrintGeneratedResult(result, services.TextProvider, language);
 
         Console.WriteLine();
         Console.WriteLine("Detected agent instruction files:");
-        foreach (var file in new[] { "AGENTS.md", "CLAUDE.md", ".cursor/rules/project.mdc", ".github/copilot-instructions.md" })
+        foreach (var file in agentFiles)
         {
-            var fullPath = Path.Combine(repositoryPath, file.Replace('/', Path.DirectorySeparatorChar));
-            Console.WriteLine($"- {file}: {(services.FileSystem.FileExists(fullPath) ? "found" : "missing")}");
+            Console.WriteLine($"- {file.path}: {(file.exists ? "found" : "missing")}");
         }
 
         return 0;
     }
 
-    private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, Services services)
+    private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        if (json)
+        {
+            WriteJson(ToScanDto("scan", scan));
+            return 0;
+        }
+
         PrintScan(scan, language, services);
         return 0;
     }
 
-    private static int RunGenerate(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, Services services)
+    private static int RunGenerate(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
     {
         var target = ParseTarget(GetOption(args, "--target"));
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         var results = services.AgentInstructionGenerator.Generate(repositoryPath, target, language, scan);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                command = "generate",
+                target = target.ToString(),
+                files = results.Select(ToGeneratedFileDto).ToArray()
+            });
+            return 0;
+        }
 
         foreach (var result in results)
         {
@@ -95,7 +136,7 @@ public static class Program
         return 0;
     }
 
-    private static int RunTask(string[] args, string repositoryPath, LanguageCode language, Services services)
+    private static int RunTask(string[] args, string repositoryPath, LanguageCode language, bool json, Services services)
     {
         var title = GetTaskTitle(args);
         if (string.IsNullOrWhiteSpace(title))
@@ -106,31 +147,62 @@ public static class Program
         }
 
         var result = services.TaskFileGenerator.CreateTask(repositoryPath, new TaskSpec(title, language));
+        if (json)
+        {
+            WriteJson(new
+            {
+                command = "task",
+                file = ToGeneratedFileDto(result)
+            });
+            return 0;
+        }
+
         PrintGeneratedResult(result, services.TextProvider, language);
         return 0;
     }
 
-    private static int RunRedactCheck(string repositoryPath, AckitConfig config, LanguageCode language, Services services)
+    private static int RunRedactCheck(string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         var findings = scan.Findings
             .Where(finding => finding.Category is RiskCategory.Secret or RiskCategory.Pii or RiskCategory.Brand or RiskCategory.LocalPath or RiskCategory.ProductionConfig)
             .ToArray();
 
-        PrintFindings(findings, language, services);
+        var exitCode = findings.Any(finding => finding.Severity == RiskSeverity.Critical)
+            ? 2
+            : findings.Length > 0 ? 1 : 0;
 
-        if (findings.Any(finding => finding.Severity == RiskSeverity.Critical))
+        if (json)
         {
-            return 2;
+            WriteJson(new
+            {
+                command = "redact-check",
+                exitCode,
+                findings = findings.Select(ToRiskFindingDto).ToArray()
+            });
+            return exitCode;
         }
 
-        return findings.Length > 0 ? 1 : 0;
+        PrintFindings(findings, language, services);
+        return exitCode;
     }
 
-    private static int RunDoctor(string repositoryPath, AckitConfig config, LanguageCode language, Services services)
+    private static int RunDoctor(string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         var result = services.Doctor.Check(repositoryPath, scan);
+        var exitCode = result.Checks.Any(check => !check.Passed && check.Severity >= RiskSeverity.High) ? 1 : 0;
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                command = "doctor",
+                exitCode,
+                checks = result.Checks.Select(ToDoctorCheckDto).ToArray()
+            });
+            return exitCode;
+        }
 
         Console.WriteLine(services.TextProvider.Get("doctor", language));
         foreach (var check in result.Checks)
@@ -139,7 +211,7 @@ public static class Program
             Console.WriteLine($"- {status} [{check.Severity}] {check.Name}: {check.Message}");
         }
 
-        return result.Checks.Any(check => !check.Passed && check.Severity >= RiskSeverity.High) ? 1 : 0;
+        return exitCode;
     }
 
     private static int RunUnknown(string command, LanguageCode language, ITextProvider textProvider)
@@ -223,6 +295,77 @@ public static class Program
         Console.WriteLine($"- {result.Path}: {status}");
     }
 
+    private static void WriteJson(object value)
+    {
+        Console.WriteLine(JsonSerializer.Serialize(value, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        }));
+    }
+
+    private static object ToScanDto(string command, ScanResult scan)
+    {
+        return new
+        {
+            command,
+            repositoryPath = scan.RepositoryPath,
+            fileCount = scan.Files.Count,
+            stacks = scan.Stacks.Select(stack => new
+            {
+                name = stack.Name,
+                signal = stack.Signal
+            }).ToArray(),
+            health = new
+            {
+                hasReadme = scan.HasReadme,
+                hasLicense = scan.HasLicense,
+                hasSecurityPolicy = scan.HasSecurityPolicy,
+                hasContributing = scan.HasContributing,
+                hasCodeOfConduct = scan.HasCodeOfConduct,
+                hasChangelog = scan.HasChangelog,
+                hasTests = scan.HasTests,
+                hasCi = scan.HasCi,
+                hasDocker = scan.HasDocker,
+                hasAgentInstructions = scan.HasAgentInstructions
+            },
+            findings = scan.Findings.Select(ToRiskFindingDto).ToArray()
+        };
+    }
+
+    private static object ToRiskFindingDto(RiskFinding finding)
+    {
+        return new
+        {
+            severity = finding.Severity.ToString(),
+            category = finding.Category.ToString(),
+            path = finding.Path,
+            message = finding.Message,
+            match = finding.Match
+        };
+    }
+
+    private static object ToDoctorCheckDto(DoctorCheck check)
+    {
+        return new
+        {
+            name = check.Name,
+            severity = check.Severity.ToString(),
+            passed = check.Passed,
+            message = check.Message
+        };
+    }
+
+    private static object ToGeneratedFileDto(GeneratedFileResult result)
+    {
+        return new
+        {
+            path = result.Path,
+            status = result.Status.ToString(),
+            created = result.Created,
+            message = result.Message
+        };
+    }
+
     private static string YesNo(bool value)
     {
         return value ? "yes" : "no";
@@ -260,6 +403,11 @@ public static class Program
         return null;
     }
 
+    private static bool HasFlag(string[] args, string name)
+    {
+        return args.Any(arg => string.Equals(arg, name, StringComparison.OrdinalIgnoreCase));
+    }
+
     private static string GetTaskTitle(string[] args)
     {
         var parts = new List<string>();
@@ -269,7 +417,7 @@ public static class Program
             var current = args[index];
             if (current.StartsWith("--", StringComparison.Ordinal))
             {
-                if (!current.Contains('=', StringComparison.Ordinal) && index + 1 < args.Length)
+                if (OptionConsumesValue(current) && !current.Contains('=', StringComparison.Ordinal) && index + 1 < args.Length)
                 {
                     index++;
                 }
@@ -281,6 +429,13 @@ public static class Program
         }
 
         return string.Join(' ', parts).Trim();
+    }
+
+    private static bool OptionConsumesValue(string option)
+    {
+        return string.Equals(option, "--lang", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(option, "--target", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(option, "--profile", StringComparison.OrdinalIgnoreCase);
     }
 
     private static Services CreateServices()

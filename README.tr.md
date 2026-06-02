@@ -33,6 +33,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit task`: `docs/tasks` altinda yapilandirilmis task dosyasi olusturur.
 - `ackit redact-check`: secret/PII/marka/local path risklerini raporlar.
 - `ackit doctor`: OSS ve repository saglik kontrollerini raporlar.
+- `--json`: otomasyon uyumlu machine-readable JSON cikti uretir.
 - English ve Turkish output/template temeli.
 
 ## Hizli Baslangic
@@ -46,12 +47,12 @@ dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" 
 
 ## CLI Komutlari
 ```text
-ackit init [--lang en|tr]
-ackit scan [--lang en|tr]
-ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr]
-ackit task "<baslik>" [--lang en|tr]
-ackit redact-check [--profile public-release] [--lang en|tr]
-ackit doctor [--lang en|tr]
+ackit init [--lang en|tr] [--json]
+ackit scan [--lang en|tr] [--json]
+ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
+ackit task "<baslik>" [--lang en|tr] [--json]
+ackit redact-check [--profile public-release] [--lang en|tr] [--json]
+ackit doctor [--lang en|tr] [--json]
 ackit version
 ackit help
 ```

@@ -1,10 +1,10 @@
 # TASK-0002: Pseudonym, JSON Output, And Package Hardening
 
 ## Purpose
-Continue the AgentContextKit MVP by replacing the maintainer real name with the public pseudonym `Cynrath`, adding machine-readable JSON output for CI/script usage, and validating local NuGet tool packaging without publishing.
+Continue the AgentContextKit MVP by replacing maintainer real-name metadata with the public pseudonym `Cynrath`, adding machine-readable JSON output for CI/script usage, and validating local NuGet tool packaging without publishing.
 
 ## Scope
-- Replace `Sait Furkan Selcuk` / real-name metadata with `Cynrath`.
+- Replace real-name metadata with `Cynrath`.
 - Keep license and package metadata OSS-friendly while avoiding real-name exposure.
 - Add `--json` output for core reporting commands where practical.
 - Keep default human CLI output unchanged.
@@ -25,6 +25,11 @@ Continue the AgentContextKit MVP by replacing the maintainer real name with the 
 - `src/AgentContextKit.Cli/Program.cs`
 - `tests/AgentContextKit.Tests/UnitTest1.cs`
 - `CHANGELOG.md`
+- `README.md`
+- `README.tr.md`
+- `docs/PRODUCT_SPEC.md`
+- `docs/ROADMAP.md`
+- `docs/RELEASE_CHECKLIST.md`
 - `.codex/SESSION_HANDOFF.md`
 - `.codex/NEXT_STEPS.md`
 - `docs/tasks/TASK-0002-pseudonym-json-package-hardening.md`
@@ -61,7 +66,7 @@ Add tests for package metadata pseudonym and JSON serialization expectations. Ex
 Local package validation improves release confidence. `RepositoryUrl` can remain TODO until a real remote URL is intentionally chosen.
 
 ## Acceptance criteria
-- No `Sait Furkan Selcuk` or `Sait Furkan Selçuk` text remains in tracked source/docs.
+- No real-name maintainer text remains in tracked source/docs.
 - `Cynrath` is used in license/package maintainer metadata.
 - `ackit scan --json` emits valid JSON.
 - `ackit doctor --json` emits valid JSON.
@@ -71,7 +76,7 @@ Local package validation improves release confidence. `RepositoryUrl` can remain
 - Tool can be installed to a temporary `--tool-path` from the local package and `ackit --help` works.
 
 ## Test steps
-1. `rg -n "Sait Furkan Selcuk|Sait Furkan Selçuk"`
+1. Run a repository text search for real-name maintainer variants.
 2. `dotnet restore AgentContextKit.sln`
 3. `dotnet build AgentContextKit.sln -c Release --no-restore`
 4. `dotnet test AgentContextKit.sln -c Release --no-build`
@@ -90,4 +95,11 @@ Local package validation improves release confidence. `RepositoryUrl` can remain
 Revert the implementation commit for TASK-0002. If a temporary tool path is created during verification, remove it manually after confirming it is outside the repository.
 
 ## Completion notes
-In progress.
+Completed.
+
+- Replaced maintainer metadata and license copyright with `Cynrath`.
+- Added `--json` output for `init`, `scan`, `generate`, `task`, `redact-check`, and `doctor`.
+- Added CLI JSON and package metadata tests.
+- Added package readme metadata so local `dotnet pack` is warning-free.
+- Verified local `dotnet pack` and temporary `dotnet tool install --tool-path`.
+- No push, publish, remote creation, permanent global install, deletion, or automatic redaction was performed.

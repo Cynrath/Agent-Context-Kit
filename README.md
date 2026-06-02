@@ -33,6 +33,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - `ackit task`: create structured task files under `docs/tasks`.
 - `ackit redact-check`: report secret/PII/brand/local path risks.
 - `ackit doctor`: report OSS and repository health checks.
+- `--json`: emit machine-readable JSON for automation-friendly command output.
 - English and Turkish output/template foundation.
 
 ## Quick Start
@@ -46,12 +47,12 @@ dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --l
 
 ## CLI Commands
 ```text
-ackit init [--lang en|tr]
-ackit scan [--lang en|tr]
-ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr]
-ackit task "<title>" [--lang en|tr]
-ackit redact-check [--profile public-release] [--lang en|tr]
-ackit doctor [--lang en|tr]
+ackit init [--lang en|tr] [--json]
+ackit scan [--lang en|tr] [--json]
+ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
+ackit task "<title>" [--lang en|tr] [--json]
+ackit redact-check [--profile public-release] [--lang en|tr] [--json]
+ackit doctor [--lang en|tr] [--json]
 ackit version
 ackit help
 ```

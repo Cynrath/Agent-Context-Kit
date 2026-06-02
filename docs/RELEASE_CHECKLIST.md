@@ -10,6 +10,8 @@
 - SECURITY, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG are current.
 - LICENSE is present.
 - NuGet package metadata is reviewed.
+- Local `dotnet pack` succeeds.
+- Temporary `dotnet tool install --tool-path` verification succeeds.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 
 ## Manual Actions

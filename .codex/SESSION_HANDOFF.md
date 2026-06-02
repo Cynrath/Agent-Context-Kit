@@ -20,13 +20,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Added focused xUnit tests and GitHub Actions CI.
 - Verified CLI commands in the repository and temporary directories.
 - Started TASK-0002 to replace real-name metadata with `Cynrath`, add JSON output, and validate local package install.
+- Completed TASK-0002: pseudonym metadata, JSON output, tests, warning-free local pack, and temporary tool-path install verification.
 
 ## Next Clear Steps
-1. Replace real-name text with `Cynrath`.
-2. Add `--json` output for CLI reporting commands.
-3. Add/adjust tests.
-4. Run restore/build/test and local pack/tool-path install verification.
-5. Update TASK-0002 completion notes and commit.
+1. Create TASK-0003 for config schema hardening and richer scanner rules.
+2. Keep `RepositoryUrl` as TODO until the real public remote is selected.
+3. Decide whether the next release should keep both `AgentContextKit.sln` and `AgentContextKit.slnx`.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -54,6 +53,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `src/AgentContextKit.Core/Doctor.cs`
 - `.github/workflows/ci.yml`
 - `docs/tasks/TASK-0002-pseudonym-json-package-hardening.md`
+- `LICENSE`
+- `README.md`
+- `README.tr.md`
+- `docs/PRODUCT_SPEC.md`
+- `docs/ROADMAP.md`
+- `docs/RELEASE_CHECKLIST.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
@@ -80,15 +85,17 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `.NET 10` is required by the project brief; the installed SDK is `10.0.300` and the host runtime is `10.0.8`.
 - Regex-based scanners remain MVP-level and can still have false positives/false negatives.
 - `RepositoryUrl` in CLI package metadata is a TODO placeholder until a real remote exists.
+- Temporary verification artifacts were created under the user temp directory only and are not part of the repository.
 
 ## Build/Test Status
 - `dotnet restore AgentContextKit.sln`: passed.
 - `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
-- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 10/10 tests.
+- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, now 14/14 tests.
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- --help`: passed.
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`: passed, no risk findings in this repo.
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor`: passed, all checks PASS.
 - Temporary verification: `task`, `init`, `generate --target codex`, and `redact-check` passed. Critical redact-check produced `LASTEXITCODE=2`.
+- TASK-0002 verification: restore/build/test passed; `scan --json` and `doctor --json` emitted valid JSON; real-name exact phrase search returned no matches; local `dotnet pack` succeeded without warning; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` and `ackit scan --json` worked.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
