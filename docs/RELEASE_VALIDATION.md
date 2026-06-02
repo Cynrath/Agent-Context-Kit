@@ -33,6 +33,21 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -Fai
 
 While TODO package URLs remain, the failing gate is expected to return non-zero. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
 
+## Public Release Audit
+Run the final public release audit in report-only mode:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1
+```
+
+Use it as a failing gate before public release:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
+```
+
+See [PUBLIC_RELEASE_AUDIT.md](PUBLIC_RELEASE_AUDIT.md).
+
 ## Package Validation
 ```powershell
 $stamp = Get-Date -Format "yyyyMMddHHmmss"
@@ -47,6 +62,7 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 ```
 
 ## Manual Release Gates
+- Run `scripts/audit-public-release.ps1 -FailOnIssues` and confirm it exits `0`.
 - Run `scripts/check-release-blockers.ps1 -FailOnBlockers` and confirm it exits `0`.
 - Confirm `RepositoryUrl` points to the real public repository.
 - Confirm `PackageProjectUrl` points to the real public project/repository page.

@@ -98,6 +98,7 @@ Onemli dokumanlar:
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
+- [Public Release Audit](docs/PUBLIC_RELEASE_AUDIT.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)
 - [Release Blockers](docs/RELEASE_BLOCKERS.md)
 

@@ -14,6 +14,7 @@
 - Local `dotnet pack` succeeds.
 - Temporary `dotnet tool install --tool-path` verification succeeds.
 - `scripts/verify-release.ps1` succeeds locally.
+- `scripts/audit-public-release.ps1 -FailOnIssues` exits `0`.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
 - `docs/PACKAGING.md` and `docs/RELEASE_VALIDATION.md` are current.
 - `docs/RELEASE_BLOCKERS.md` has no unresolved public-release blockers.

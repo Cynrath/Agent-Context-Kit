@@ -42,15 +42,31 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -Fai
 
 While TODO package URLs remain, `-FailOnBlockers` is expected to return a non-zero exit code.
 
+## Public Release Audit
+Run the broader public release audit:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1
+```
+
+Run it as a failing gate:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
+```
+
+See [PUBLIC_RELEASE_AUDIT.md](PUBLIC_RELEASE_AUDIT.md).
+
 ## Required Manual Resolution
 Before public release:
 1. Select the real public repository URL.
 2. Replace TODO `RepositoryUrl` and `PackageProjectUrl` with that URL.
 3. Run the full release validation script.
-4. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
-5. Review package README rendering.
-6. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
-7. Push, tag, and publish only as an explicit maintainer action.
+4. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
+5. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
+6. Review package README rendering.
+7. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
+8. Push, tag, and publish only as an explicit maintainer action.
 
 ## References
 - [Create a NuGet package using MSBuild](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-msbuild)

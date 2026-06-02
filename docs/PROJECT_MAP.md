@@ -42,6 +42,7 @@ Updated: 2026-06-03
 - `docs/PRIVACY.md`
 - `docs/PRODUCT_SPEC.md`
 - `docs/PROJECT_MAP.md`
+- `docs/PUBLIC_RELEASE_AUDIT.md`
 - `docs/RELEASE_BLOCKERS.md`
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`
 - `docs/RELEASE_CHECKLIST.md`
@@ -60,12 +61,14 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0006-documentation-completion.md`
 - `docs/tasks/TASK-0007-release-blocker-review.md`
 - `docs/tasks/TASK-0008-final-source-package-hygiene.md`
+- `docs/tasks/TASK-0009-public-release-audit.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`
 - `LICENSE`
 - `README.md`
 - `README.tr.md`
+- `scripts/audit-public-release.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`

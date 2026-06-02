@@ -108,4 +108,17 @@ Gives maintainers a single local audit command before public release and records
 Revert the TASK-0009 implementation commit. Do not delete temp folders or run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `scripts/audit-public-release.ps1`.
+- Added `docs/PUBLIC_RELEASE_AUDIT.md`.
+- Updated documentation index, release checklist, release validation, release blockers, source hygiene, project map, README, README.tr, changelog, handoff, and next steps.
+- Verified report-only audit exits `0`.
+- Verified `-FailOnIssues` exits `1` while placeholder URLs, missing release tag, and uncommitted changes remain.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 18/18.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- The release verification script reported known blockers in non-failing mode, then completed pack and temporary tool install validation.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

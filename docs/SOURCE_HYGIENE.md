@@ -35,5 +35,6 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 Before any public release, also run:
 
 ```powershell
+powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 ```
