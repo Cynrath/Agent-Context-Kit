@@ -21,11 +21,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Verified CLI commands in the repository and temporary directories.
 - Started TASK-0002 to replace real-name metadata with `Cynrath`, add JSON output, and validate local package install.
 - Completed TASK-0002: pseudonym metadata, JSON output, tests, warning-free local pack, and temporary tool-path install verification.
+- Started TASK-0003 for config schema, JSON schema metadata, and scanner hardening.
 
 ## Next Clear Steps
-1. Create TASK-0003 for config schema hardening and richer scanner rules.
-2. Keep `RepositoryUrl` as TODO until the real public remote is selected.
-3. Decide whether the next release should keep both `AgentContextKit.sln` and `AgentContextKit.slnx`.
+1. Implement TASK-0003 changes listed in `docs/tasks/TASK-0003-config-schema-scanner-hardening.md`.
+2. Run restore/build/test and CLI checks.
+3. Update task completion notes and commit.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -59,6 +60,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/PRODUCT_SPEC.md`
 - `docs/ROADMAP.md`
 - `docs/RELEASE_CHECKLIST.md`
+- `docs/tasks/TASK-0003-config-schema-scanner-hardening.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`

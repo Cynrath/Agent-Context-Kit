@@ -1,6 +1,6 @@
 # Next Steps
 
-1. Create TASK-0003 for config schema hardening and richer scanner rules.
+1. Complete TASK-0003 config schema, JSON schema, and scanner hardening.
 2. Keep `RepositoryUrl` as TODO until the real remote URL is intentionally selected.
 3. Decide later whether to keep `AgentContextKit.slnx` alongside the required `AgentContextKit.sln`.
 4. Run `ackit generate --target all` only when generated files should be committed.
