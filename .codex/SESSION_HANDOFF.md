@@ -25,11 +25,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0003 with config schema docs, JSON output docs, config-driven ignore/risk settings, JSON metadata, scanner hardening, and tests.
 - Started TASK-0004 for release-readiness polish, package metadata review, `.gitattributes`, and local validation docs.
 - Completed TASK-0004 with packaging docs, release validation docs, `.gitattributes`, NuGet metadata polish, metadata tests, and local pack/tool-path verification.
+- Started TASK-0005 for local v0.1.0-alpha.1 release candidate review.
 
 ## Next Clear Steps
-1. Create TASK-0005 for final v0.1.0-alpha release candidate review.
-2. Keep `RepositoryUrl` and `PackageProjectUrl` as TODO until the real public remote is selected.
-3. Do not push or publish from this session.
+1. Implement TASK-0005 release verification script and RC report.
+2. Run the script locally.
+3. Update task completion notes and commit.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -70,6 +71,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `.gitattributes`
 - `docs/PACKAGING.md`
 - `docs/RELEASE_VALIDATION.md`
+- `docs/tasks/TASK-0005-release-candidate-review.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
