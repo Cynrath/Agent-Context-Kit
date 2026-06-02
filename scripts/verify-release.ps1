@@ -54,6 +54,10 @@ try {
         dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c $Configuration --no-build -- doctor
     }
 
+    Invoke-Step "release blocker review" {
+        powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-release-blockers.ps1")
+    }
+
     Invoke-Step "dotnet pack" {
         dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c $Configuration --no-build -o $packageDir
     }
@@ -72,7 +76,8 @@ try {
     }
 
     Write-Host ""
-    Write-Host "Release verification passed."
+    Write-Host "Local release verification passed."
+    Write-Host "Public release can still be blocked; review docs/RELEASE_BLOCKERS.md."
     Write-Host "Temporary folders were left in place for inspection:"
     Write-Host "- $packageDir"
     Write-Host "- $toolDir"

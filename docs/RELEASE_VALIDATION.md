@@ -16,7 +16,22 @@ dotnet run --project src/AgentContextKit.Cli -- doctor
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection.
+The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection. It also runs `scripts/check-release-blockers.ps1` in report-only mode, so local validation can pass while public-release blockers remain visible.
+
+## Release Blocker Review
+Report current blockers:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
+```
+
+Use the blocker check as a failing gate before public release:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
+```
+
+While TODO package URLs remain, the failing gate is expected to return non-zero. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
 
 ## Package Validation
 ```powershell
@@ -32,7 +47,9 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 ```
 
 ## Manual Release Gates
+- Run `scripts/check-release-blockers.ps1 -FailOnBlockers` and confirm it exits `0`.
 - Confirm `RepositoryUrl` points to the real public repository.
+- Confirm `PackageProjectUrl` points to the real public project/repository page.
 - Confirm package README renders correctly.
 - Confirm license and security policy are current.
 - Confirm no secrets, dumps, backups, uploads, `bin/`, `obj/`, or generated package outputs are committed.

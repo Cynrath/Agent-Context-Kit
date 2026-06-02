@@ -40,6 +40,7 @@
 ## Packaging And Release
 - `docs/PACKAGING.md`: NuGet tool packaging.
 - `docs/RELEASE_VALIDATION.md`: local release validation.
+- `docs/RELEASE_BLOCKERS.md`: known public-release blockers and guard script.
 - `docs/RELEASE_CHECKLIST.md`: release checklist.
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`: current RC report.
 - `CHANGELOG.md`: release notes.

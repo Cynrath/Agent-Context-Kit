@@ -16,6 +16,8 @@ Important fields:
 
 `RepositoryUrl` and `PackageProjectUrl` intentionally use TODO placeholders until the public remote is selected.
 
+See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md) before any public publish.
+
 ## Local Pack
 ```powershell
 $pkg = Join-Path $env:TEMP "ackit-nupkg"
@@ -33,5 +35,6 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 
 ## Release Blockers
 - Do not publish to NuGet until the real repository URL is set.
+- Do not publish until `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
 - Do not publish until restore/build/test/pack/tool-path validation passes.
 - Do not publish while `ackit scan` reports unaccepted high or critical findings.

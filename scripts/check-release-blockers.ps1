@@ -1,0 +1,117 @@
+param(
+    [switch]$FailOnBlockers
+)
+
+$ErrorActionPreference = "Stop"
+Set-StrictMode -Version Latest
+
+$repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
+$projectPath = Join-Path $repoRoot "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"
+$blockers = New-Object System.Collections.Generic.List[string]
+$warnings = New-Object System.Collections.Generic.List[string]
+
+function Add-Blocker {
+    param([string]$Message)
+    $blockers.Add($Message) | Out-Null
+}
+
+function Add-Warning {
+    param([string]$Message)
+    $warnings.Add($Message) | Out-Null
+}
+
+function Get-PackageMetadataValue {
+    param(
+        [xml]$Project,
+        [string]$Name
+    )
+
+    foreach ($group in $Project.Project.PropertyGroup) {
+        $value = $group.$Name
+        if ($null -ne $value -and -not [string]::IsNullOrWhiteSpace([string]$value)) {
+            return [string]$value
+        }
+    }
+
+    return $null
+}
+
+Write-Host "AgentContextKit release blocker review"
+Write-Host "Repository: $repoRoot"
+
+if (-not (Test-Path $projectPath)) {
+    Add-Blocker "Package project file was not found: $projectPath"
+}
+else {
+    [xml]$project = Get-Content $projectPath
+    $repositoryUrl = Get-PackageMetadataValue -Project $project -Name "RepositoryUrl"
+    $packageProjectUrl = Get-PackageMetadataValue -Project $project -Name "PackageProjectUrl"
+
+    if ([string]::IsNullOrWhiteSpace($repositoryUrl)) {
+        Add-Blocker "RepositoryUrl is missing."
+    }
+    elseif ($repositoryUrl -match "TODO|example\.com|localhost") {
+        Add-Blocker "RepositoryUrl is still a placeholder: $repositoryUrl"
+    }
+
+    if ([string]::IsNullOrWhiteSpace($packageProjectUrl)) {
+        Add-Blocker "PackageProjectUrl is missing."
+    }
+    elseif ($packageProjectUrl -match "TODO|example\.com|localhost") {
+        Add-Blocker "PackageProjectUrl is still a placeholder: $packageProjectUrl"
+    }
+}
+
+if (Get-Command git -ErrorAction SilentlyContinue) {
+    Push-Location $repoRoot
+    try {
+        $status = git status --short 2>$null
+        if ($LASTEXITCODE -eq 0 -and $status) {
+            Add-Blocker "Working tree has uncommitted changes."
+        }
+
+        $tags = git tag --points-at HEAD 2>$null
+        if ($LASTEXITCODE -eq 0 -and -not $tags) {
+            Add-Warning "Current HEAD has no release tag."
+        }
+    }
+    finally {
+        Pop-Location
+    }
+}
+else {
+    Add-Warning "git was not found; working tree and tag checks were skipped."
+}
+
+Write-Host ""
+if ($blockers.Count -eq 0) {
+    Write-Host "No blocking items detected."
+}
+else {
+    Write-Host "Blocking items:"
+    foreach ($blocker in $blockers) {
+        Write-Host "- $blocker"
+    }
+}
+
+if ($warnings.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Warnings:"
+    foreach ($warning in $warnings) {
+        Write-Host "- $warning"
+    }
+}
+
+Write-Host ""
+Write-Host "Manual gates still required before public release:"
+Write-Host "- Maintainer-selected public repository URL."
+Write-Host "- Explicit maintainer approval for push, tag, and NuGet publish."
+Write-Host "- Final review of package README, SECURITY, CONTRIBUTING, and changelog."
+
+if ($FailOnBlockers -and $blockers.Count -gt 0) {
+    Write-Host ""
+    Write-Host "Release blocker gate failed."
+    exit 1
+}
+
+exit 0

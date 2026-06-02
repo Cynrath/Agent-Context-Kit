@@ -29,4 +29,10 @@ Use:
 dotnet restore
 dotnet build -c Release
 dotnet test -c Release
+powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
+powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
+
+## Public Release Blockers
+- `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
+- `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.

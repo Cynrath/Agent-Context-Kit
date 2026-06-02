@@ -29,11 +29,14 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0005 with `scripts/verify-release.ps1`, release candidate report, and successful local release verification.
 - Started TASK-0006 for full documentation completion and missing agent/context generated files.
 - Completed TASK-0006 with full documentation index, usage/maintainer docs, and generated agent/context workflow files.
+- Started TASK-0007 for final release blocker review and local guard script.
+- Completed TASK-0007 with release blocker documentation, local blocker guard script, release verification integration, and successful validation.
 
 ## Next Clear Steps
-1. Create TASK-0007 for final repository hygiene and release blocker review.
+1. Create TASK-0008 for final source/package hygiene review before public actions.
 2. Keep `RepositoryUrl` and `PackageProjectUrl` as TODO until the real public remote is selected.
-3. Do not push/tag/publish until explicit maintainer instruction.
+3. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
+4. Do not push/tag/publish until explicit maintainer instruction.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -113,6 +116,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/OSS_READINESS.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `.codex/CONTEXT_PACK.md`
+- `docs/tasks/TASK-0007-release-blocker-review.md`
+- `docs/RELEASE_BLOCKERS.md`
+- `scripts/check-release-blockers.ps1`
 
 ## Known Risks
 - `dotnet --info` prints SDK information but exits with a Windows workload installer exception. Build/test commands may still work; if not, use project-local PowerShell scripts to continue and record exact failures.
@@ -120,7 +126,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - No NuGet publish, GitHub push, destructive cleanup, or automatic redaction is allowed in this session.
 - `.NET 10` is required by the project brief; the installed SDK is `10.0.300` and the host runtime is `10.0.8`.
 - Regex-based scanners remain MVP-level and can still have false positives/false negatives.
-- `RepositoryUrl` in CLI package metadata is a TODO placeholder until a real remote exists.
+- `RepositoryUrl` and `PackageProjectUrl` in CLI package metadata are TODO placeholders until a real public remote is selected.
+- `scripts/check-release-blockers.ps1 -FailOnBlockers` intentionally fails while placeholder package URLs remain.
 - Temporary verification artifacts were created under the user temp directory only and are not part of the repository.
 
 ## Build/Test Status
@@ -136,6 +143,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0004 verification: restore/build/test passed; local `dotnet pack` succeeded without warnings; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` worked; repo `scan` reported no findings; `doctor` reported all checks PASS.
 - TASK-0005 verification: `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; restore/build/test passed; build had 0 warnings and 0 errors; tests passed 18/18; scan had no risk findings; doctor all PASS; pack/tool-path install/installed help/installed scan JSON passed.
 - TASK-0006 verification: all expected docs/generated files exist; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed.
+- TASK-0007 verification: blocker check report-only mode exited 0; blocker check `-FailOnBlockers` exited 1 as expected due placeholder URLs and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -148,4 +156,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0006 is implemented and verified. The next step is to commit TASK-0006 if not yet committed, then continue with TASK-0007 final repository hygiene and release blocker review. Do not push, tag, or publish without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0007 is implemented and verified. The next step is to create TASK-0008 for final source/package hygiene review before any public action. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

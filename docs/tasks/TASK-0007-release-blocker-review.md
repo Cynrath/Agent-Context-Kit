@@ -108,4 +108,18 @@ Prevents accidental public release with placeholder package URLs and gives maint
 Revert the TASK-0007 implementation commit. Do not remove temp folders or rewrite history unless explicitly requested.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `docs/RELEASE_BLOCKERS.md`.
+- Added `scripts/check-release-blockers.ps1`.
+- Updated `scripts/verify-release.ps1` to run the blocker review in non-failing mode.
+- Updated release validation, checklist, release candidate, packaging, documentation index, README, README.tr, and changelog docs.
+- Verified report-only blocker check exits `0`.
+- Verified `-FailOnBlockers` exits `1` while placeholder URLs and uncommitted changes remain.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 18/18.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- The release verification script reported known blockers in non-failing mode, then completed pack and temporary tool install validation.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

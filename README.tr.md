@@ -98,12 +98,15 @@ Onemli dokumanlar:
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)
+- [Release Blockers](docs/RELEASE_BLOCKERS.md)
 
 ## Roadmap
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
 Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. NuGet publish manuel maintainer aksiyonudur ve MVP otomasyonunun parcasi degildir.
+
+Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 
 ## Katki
 Bkz. [CONTRIBUTING.md](CONTRIBUTING.md).

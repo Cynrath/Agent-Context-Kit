@@ -98,12 +98,15 @@ Key docs:
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)
+- [Release Blockers](docs/RELEASE_BLOCKERS.md)
 
 ## Roadmap
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Packaging
 Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). NuGet publishing is a manual maintainer action and is not part of the MVP automation.
+
+Public release blockers are tracked in [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md).
 
 ## Contributing
 See [CONTRIBUTING.md](CONTRIBUTING.md).
