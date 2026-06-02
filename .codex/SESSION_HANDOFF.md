@@ -19,12 +19,14 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Implemented CLI commands: `init`, `scan`, `generate`, `task`, `redact-check`, `doctor`, `version`, and `help`.
 - Added focused xUnit tests and GitHub Actions CI.
 - Verified CLI commands in the repository and temporary directories.
+- Started TASK-0002 to replace real-name metadata with `Cynrath`, add JSON output, and validate local package install.
 
 ## Next Clear Steps
-1. Review generated foundation manually before public release.
-2. Decide whether to keep both `AgentContextKit.sln` and `AgentContextKit.slnx`; both are currently synced.
-3. Add richer JSON output and stronger scanner rules in a follow-up task.
-4. Prepare a real GitHub `RepositoryUrl` before NuGet packing/publishing.
+1. Replace real-name text with `Cynrath`.
+2. Add `--json` output for CLI reporting commands.
+3. Add/adjust tests.
+4. Run restore/build/test and local pack/tool-path install verification.
+5. Update TASK-0002 completion notes and commit.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -51,6 +53,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `src/AgentContextKit.Core/Generation.cs`
 - `src/AgentContextKit.Core/Doctor.cs`
 - `.github/workflows/ci.yml`
+- `docs/tasks/TASK-0002-pseudonym-json-package-hardening.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
