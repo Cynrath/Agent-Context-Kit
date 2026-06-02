@@ -1,0 +1,5 @@
+# Cursor Rules
+
+- Respect existing architecture.
+- Use task-first workflow.
+- Keep generated changes safe and reviewable.

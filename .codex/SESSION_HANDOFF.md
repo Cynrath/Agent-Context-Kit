@@ -28,11 +28,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Started TASK-0005 for local v0.1.0-alpha.1 release candidate review.
 - Completed TASK-0005 with `scripts/verify-release.ps1`, release candidate report, and successful local release verification.
 - Started TASK-0006 for full documentation completion and missing agent/context generated files.
+- Completed TASK-0006 with full documentation index, usage/maintainer docs, and generated agent/context workflow files.
 
 ## Next Clear Steps
-1. Implement TASK-0006 documentation and generated context files.
-2. Run restore/build/test/scan/doctor/release verification.
-3. Commit TASK-0006 and continue with any remaining release gaps.
+1. Create TASK-0007 for final repository hygiene and release blocker review.
+2. Keep `RepositoryUrl` and `PackageProjectUrl` as TODO until the real public remote is selected.
+3. Do not push/tag/publish until explicit maintainer instruction.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -77,6 +78,23 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `scripts/verify-release.ps1`
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`
 - `docs/tasks/TASK-0006-documentation-completion.md`
+- `docs/DOCUMENTATION_INDEX.md`
+- `docs/CLI_REFERENCE.md`
+- `docs/EXAMPLES.md`
+- `docs/TROUBLESHOOTING.md`
+- `docs/FAQ.md`
+- `docs/SUPPORT.md`
+- `docs/PRIVACY.md`
+- `docs/MAINTAINERS.md`
+- `docs/GOVERNANCE.md`
+- `CLAUDE.md`
+- `.cursor/rules/project.mdc`
+- `.github/copilot-instructions.md`
+- `docs/PROJECT_MAP.md`
+- `docs/AI_WORKFLOW.md`
+- `docs/SECURITY_NOTES.md`
+- `docs/tasks/TASK-0001.md`
+- `.codex/HANDOFF.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
@@ -117,6 +135,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0003 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed with 18/18 tests; `scan` reported no findings; `scan --json` includes schema/tool metadata; `doctor --json` works; `init --json` writes the expanded default config; temporary `redact-check --profile public-release --json` returned `LASTEXITCODE=2`.
 - TASK-0004 verification: restore/build/test passed; local `dotnet pack` succeeded without warnings; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` worked; repo `scan` reported no findings; `doctor` reported all checks PASS.
 - TASK-0005 verification: `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; restore/build/test passed; build had 0 warnings and 0 errors; tests passed 18/18; scan had no risk findings; doctor all PASS; pack/tool-path install/installed help/installed scan JSON passed.
+- TASK-0006 verification: all expected docs/generated files exist; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -129,4 +148,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0005 is implemented and verified. The next step is to commit TASK-0005 implementation if not yet committed, then wait for explicit maintainer direction before push, tag, or publish.
+If context is compacted, continue from this file. The MVP foundation through TASK-0006 is implemented and verified. The next step is to commit TASK-0006 if not yet committed, then continue with TASK-0007 final repository hygiene and release blocker review. Do not push, tag, or publish without explicit maintainer instruction.

@@ -405,7 +405,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         }
 
         var phoneMatch = PhoneRegex.Match(content);
-        if (phoneMatch.Success && phoneMatch.Value.Count(char.IsDigit) >= 8 && !IsIsoDateLikeValue(phoneMatch.Value))
+        if (phoneMatch.Success && phoneMatch.Value.Count(char.IsDigit) >= 8 && !IsDateOrDateTimeLikeValue(phoneMatch.Value))
         {
             findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "Phone-like value detected.", phoneMatch.Value));
         }
@@ -441,9 +441,9 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
                parts.All(part => int.TryParse(part, out var parsed) && parsed is >= 0 and <= 255);
     }
 
-    private static bool IsIsoDateLikeValue(string value)
+    private static bool IsDateOrDateTimeLikeValue(string value)
     {
-        return Regex.IsMatch(value, @"^\d{4}-\d{2}-\d{2}$");
+        return Regex.IsMatch(value, @"^\d{4}-\d{2}-\d{2}(?:\s+\d{1,2})?$");
     }
 
     private static string GetEmailDomain(string email)

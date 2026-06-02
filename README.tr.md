@@ -85,6 +85,20 @@ Varsayilan dil English'tir. Turkish icin `--lang tr` kullanilir. Bilinmeyen dil 
 ## Konfigurasyon Ve JSON
 `.ackit/config.yml` icin [docs/CONFIGURATION.md](docs/CONFIGURATION.md), machine-readable cikti icin [docs/JSON_OUTPUT.md](docs/JSON_OUTPUT.md) dosyasina bakin.
 
+## Dokumantasyon
+Baslangic icin [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md) dosyasina bakin.
+
+Onemli dokumanlar:
+- [CLI Reference](docs/CLI_REFERENCE.md)
+- [Examples](docs/EXAMPLES.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [JSON Output](docs/JSON_OUTPUT.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security Model](docs/SECURITY_MODEL.md)
+- [Packaging](docs/PACKAGING.md)
+- [Release Validation](docs/RELEASE_VALIDATION.md)
+
 ## Roadmap
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 

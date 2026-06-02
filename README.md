@@ -85,6 +85,20 @@ Default language is English. Turkish is supported with `--lang tr`. Unknown lang
 ## Configuration And JSON
 See [docs/CONFIGURATION.md](docs/CONFIGURATION.md) for `.ackit/config.yml` and [docs/JSON_OUTPUT.md](docs/JSON_OUTPUT.md) for machine-readable output.
 
+## Documentation
+Start with [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md).
+
+Key docs:
+- [CLI Reference](docs/CLI_REFERENCE.md)
+- [Examples](docs/EXAMPLES.md)
+- [Configuration](docs/CONFIGURATION.md)
+- [JSON Output](docs/JSON_OUTPUT.md)
+- [Troubleshooting](docs/TROUBLESHOOTING.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [Security Model](docs/SECURITY_MODEL.md)
+- [Packaging](docs/PACKAGING.md)
+- [Release Validation](docs/RELEASE_VALIDATION.md)
+
 ## Roadmap
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 

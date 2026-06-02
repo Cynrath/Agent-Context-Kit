@@ -116,4 +116,14 @@ Improves project trust, contributor onboarding, support expectations, governance
 Revert the TASK-0006 implementation commit. Do not delete files manually unless explicitly requested.
 
 ## Completion notes
-In progress.
+Completed.
+
+- Added documentation index, CLI reference, examples, troubleshooting, FAQ, support, privacy, maintainers, and governance docs.
+- Generated missing agent/context files with `ackit generate --target all --lang en --json`.
+- Created `CLAUDE.md`, Cursor rules, Copilot instructions, project map, AI workflow, security notes, generated task template, and Codex handoff.
+- Existing files were skipped by the generator and not overwritten.
+- Updated README, README.tr, and changelog.
+- Fixed generated timestamp false positive handling in the scanner.
+- Verified all expected documentation files exist.
+- Verified build/test/scan/release script.
+- No push, publish, tag, remote creation, deletion, overwrite of existing files, or automatic redaction was performed.

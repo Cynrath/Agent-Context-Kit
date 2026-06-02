@@ -1,0 +1,71 @@
+# Project Map
+
+Generated: 2026-06-02 22:32:27Z
+
+## Stack
+- .NET: .sln/.slnx/.csproj/Program.cs
+- GitHub Actions: .github/workflows
+
+## Files
+- .codex/CONTEXT_PACK.md
+- .codex/NEXT_STEPS.md
+- .codex/SESSION_HANDOFF.md
+- .editorconfig
+- .gitattributes
+- .github/workflows/ci.yml
+- .gitignore
+- AgentContextKit.sln
+- AgentContextKit.slnx
+- AGENTS.md
+- CHANGELOG.md
+- CODE_OF_CONDUCT.md
+- CONTRIBUTING.md
+- docs/ARCHITECTURE.md
+- docs/CLI_REFERENCE.md
+- docs/CONFIGURATION.md
+- docs/DECISIONS.md
+- docs/DEVELOPMENT_STANDARD.md
+- docs/EXAMPLES.md
+- docs/FAQ.md
+- docs/GOVERNANCE.md
+- docs/JSON_OUTPUT.md
+- docs/LOCALIZATION.md
+- docs/MAINTAINERS.md
+- docs/OSS_READINESS.md
+- docs/PACKAGING.md
+- docs/PRIVACY.md
+- docs/PRODUCT_SPEC.md
+- docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md
+- docs/RELEASE_CHECKLIST.md
+- docs/RELEASE_VALIDATION.md
+- docs/ROADMAP.md
+- docs/SECURITY_MODEL.md
+- docs/SUPPORT.md
+- docs/tasks/TASK-0001-foundation.md
+- docs/tasks/TASK-0002-pseudonym-json-package-hardening.md
+- docs/tasks/TASK-0003-config-schema-scanner-hardening.md
+- docs/tasks/TASK-0004-release-readiness-polish.md
+- docs/tasks/TASK-0005-release-candidate-review.md
+- docs/tasks/TASK-0006-documentation-completion.md
+- docs/THIRD_PARTY_NOTICES.md
+- docs/TROUBLESHOOTING.md
+- global.json
+- LICENSE
+- README.md
+- README.tr.md
+- scripts/verify-release.ps1
+- SECURITY.md
+- src/AgentContextKit.Cli/AgentContextKit.Cli.csproj
+- src/AgentContextKit.Cli/Program.cs
+- src/AgentContextKit.Core/Abstractions.cs
+- src/AgentContextKit.Core/AgentContextKit.Core.csproj
+- src/AgentContextKit.Core/Class1.cs
+- src/AgentContextKit.Core/Configuration.cs
+- src/AgentContextKit.Core/Doctor.cs
+- src/AgentContextKit.Core/FileSystem.cs
+- src/AgentContextKit.Core/Generation.cs
+- src/AgentContextKit.Core/Models.cs
+- src/AgentContextKit.Core/Scanning.cs
+- src/AgentContextKit.Core/Templates.cs
+- tests/AgentContextKit.Tests/AgentContextKit.Tests.csproj
+- tests/AgentContextKit.Tests/UnitTest1.cs
