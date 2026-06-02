@@ -35,13 +35,17 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0008 with empty scaffold cleanup, descriptive test file naming, source hygiene docs, updated project map, and successful validation.
 - Started TASK-0009 for final local-only public release audit.
 - Completed TASK-0009 with a public release audit script, audit report, updated release docs, and successful validation.
+- Started TASK-0010 for maintainer-only public release handoff documentation.
+- Completed TASK-0010 with maintainer release handoff docs and lightweight validation.
 
 ## Next Clear Steps
-1. Keep `RepositoryUrl` and `PackageProjectUrl` as TODO until the real public remote is selected.
-2. Create a release tag only after explicit maintainer approval.
-3. Run `scripts/audit-public-release.ps1 -FailOnIssues` after replacing TODO package URLs and creating the release tag.
-4. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
-5. Do not push/tag/publish until explicit maintainer instruction.
+1. Maintainer must select the real public repository URL.
+2. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
+3. Create a release tag only after explicit maintainer approval.
+4. Run `scripts/audit-public-release.ps1 -FailOnIssues` after replacing TODO package URLs and creating the release tag.
+5. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
+6. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
+7. Do not push/tag/publish until explicit maintainer instruction.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -128,6 +132,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0009-public-release-audit.md`
 - `docs/PUBLIC_RELEASE_AUDIT.md`
 - `scripts/audit-public-release.ps1`
+- `docs/tasks/TASK-0010-maintainer-release-handoff.md`
+- `docs/MAINTAINER_RELEASE_HANDOFF.md`
 
 ## Known Risks
 - `dotnet --info` prints SDK information but exits with a Windows workload installer exception. Build/test commands may still work; if not, use project-local PowerShell scripts to continue and record exact failures.
@@ -156,6 +162,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0007 verification: blocker check report-only mode exited 0; blocker check `-FailOnBlockers` exited 1 as expected due placeholder URLs and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 - TASK-0008 verification: build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 - TASK-0009 verification: audit report-only mode exited 0; audit `-FailOnIssues` exited 1 as expected due placeholder URLs, missing release tag, and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
+- TASK-0010 verification: `git diff --check` passed; scan reported no risk findings; audit and blocker scripts exited 0 in report-only mode and reported known maintainer-only blockers.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -168,4 +175,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0009 is implemented and verified. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0010 is implemented and verified. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

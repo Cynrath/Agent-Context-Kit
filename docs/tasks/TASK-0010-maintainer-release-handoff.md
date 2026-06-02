@@ -95,4 +95,12 @@ Provides the final handoff for maintainers to complete public release safely.
 Revert the TASK-0010 implementation commit. Do not run destructive git operations.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `docs/MAINTAINER_RELEASE_HANDOFF.md`.
+- Updated documentation index, release checklist, release blockers, public release audit, project map, README, README.tr, changelog, handoff, and next steps.
+- `git diff --check` passed.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1` exited `0` and reported known maintainer-only blockers in report-only mode.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1` exited `0` and reported known blockers in report-only mode.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

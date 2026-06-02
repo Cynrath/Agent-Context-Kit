@@ -68,6 +68,8 @@ Before public release:
 7. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
 8. Push, tag, and publish only as an explicit maintainer action.
 
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for the manual handoff sequence.
+
 ## References
 - [Create a NuGet package using MSBuild](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-msbuild)
 - [dotnet pack command](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-pack)

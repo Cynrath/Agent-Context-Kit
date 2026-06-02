@@ -37,6 +37,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
 - `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.
+- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the maintainer-only public release sequence.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

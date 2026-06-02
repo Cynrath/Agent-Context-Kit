@@ -36,6 +36,7 @@ Updated: 2026-06-03
 - `docs/GOVERNANCE.md`
 - `docs/JSON_OUTPUT.md`
 - `docs/LOCALIZATION.md`
+- `docs/MAINTAINER_RELEASE_HANDOFF.md`
 - `docs/MAINTAINERS.md`
 - `docs/OSS_READINESS.md`
 - `docs/PACKAGING.md`
@@ -62,6 +63,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0007-release-blocker-review.md`
 - `docs/tasks/TASK-0008-final-source-package-hygiene.md`
 - `docs/tasks/TASK-0009-public-release-audit.md`
+- `docs/tasks/TASK-0010-maintainer-release-handoff.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`

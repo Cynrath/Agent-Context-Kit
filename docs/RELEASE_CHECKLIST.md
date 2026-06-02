@@ -18,6 +18,7 @@
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
 - `docs/PACKAGING.md` and `docs/RELEASE_VALIDATION.md` are current.
 - `docs/RELEASE_BLOCKERS.md` has no unresolved public-release blockers.
+- `docs/MAINTAINER_RELEASE_HANDOFF.md` has been reviewed.
 - `RepositoryUrl` and `PackageProjectUrl` point to the real public repository before publish.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 

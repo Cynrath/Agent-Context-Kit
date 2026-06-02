@@ -60,5 +60,7 @@ Before public release:
 7. Run `scripts/verify-release.ps1`.
 8. Push, tag, and publish only after explicit maintainer approval.
 
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for copy-paste-ready maintainer-only commands.
+
 ## Safety
 The audit script is read-only. It does not push, tag, publish, redact, delete files, create remotes, or modify package metadata.
