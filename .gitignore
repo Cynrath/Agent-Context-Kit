@@ -1,0 +1,63 @@
+# Build output
+bin/
+obj/
+out/
+publish/
+
+# Test output
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.coveragexml
+
+# User/IDE state
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+
+# Packages and caches
+packages/
+node_modules/
+.nuget/
+
+# Logs and temp files
+logs/
+*.log
+*.tmp
+*.bak
+
+# Archives and backups
+*.zip
+*.rar
+*.7z
+Backups/
+backup/
+
+# Local secrets and environment files
+.env
+.env.*
+secrets.json
+appsettings.Production.json
+appsettings.Staging.json
+appsettings.Local.json
+DataProtection-Keys/
+
+# Databases and dumps
+*.mdf
+*.ldf
+*.db
+*.sqlite
+*.sqlite3
+*.bacpac
+*.dacpac
+*.sql
+
+# Generated package output
+nupkg/
+
+# OS files
+Thumbs.db
+.DS_Store
