@@ -9,6 +9,16 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>ackit</ToolCommandName>
+    <PackageId>AgentContextKit</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>Sait Furkan Selcuk</Authors>
+    <Company>Sait Furkan Selcuk</Company>
+    <Description>Offline-first repository context and safety tooling for AI-assisted development.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>ai;coding-agent;context;security;cli;oss</PackageTags>
+    <RepositoryUrl>https://github.com/TODO/agent-context-kit</RepositoryUrl>
   </PropertyGroup>
 
 </Project>

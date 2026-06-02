@@ -5,7 +5,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 
 ## Work Completed So Far
 - Read the pasted project brief and operating rules.
-- Inspected the workspace at `O:\projeler\agent-context-kit`.
+- Inspected the configured repository workspace.
 - Confirmed the directory was empty before initialization.
 - Confirmed it was not a git repository.
 - Initialized a local git repository without adding a remote.
@@ -15,14 +15,16 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Created `AgentContextKit.sln` and .NET 10 projects for CLI, Core, and Tests.
 - .NET 10 also generated `AgentContextKit.slnx`; it was kept and synced with the same projects instead of being deleted.
 - Added initial OSS quality docs and product architecture docs.
+- Implemented Core models, interfaces, scanning, stack detection, risk scanners, config reader/writer, template rendering, task generation, agent instruction generation, and doctor checks.
+- Implemented CLI commands: `init`, `scan`, `generate`, `task`, `redact-check`, `doctor`, `version`, and `help`.
+- Added focused xUnit tests and GitHub Actions CI.
+- Verified CLI commands in the repository and temporary directories.
 
 ## Next Clear Steps
-1. Implement the minimal Core models, interfaces, and services.
-2. Replace template `Program.cs`, `Class1.cs`, and `UnitTest1.cs`.
-3. Implement the CLI MVP commands.
-4. Add focused unit tests.
-5. Add GitHub Actions workflow.
-6. Run restore/build/test and update this handoff with results.
+1. Review generated foundation manually before public release.
+2. Decide whether to keep both `AgentContextKit.sln` and `AgentContextKit.slnx`; both are currently synced.
+3. Add richer JSON output and stronger scanner rules in a follow-up task.
+4. Prepare a real GitHub `RepositoryUrl` before NuGet packing/publishing.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -40,6 +42,15 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `src/AgentContextKit.Core/Class1.cs`
 - `tests/AgentContextKit.Tests/AgentContextKit.Tests.csproj`
 - `tests/AgentContextKit.Tests/UnitTest1.cs`
+- `src/AgentContextKit.Core/Models.cs`
+- `src/AgentContextKit.Core/Abstractions.cs`
+- `src/AgentContextKit.Core/FileSystem.cs`
+- `src/AgentContextKit.Core/Configuration.cs`
+- `src/AgentContextKit.Core/Scanning.cs`
+- `src/AgentContextKit.Core/Templates.cs`
+- `src/AgentContextKit.Core/Generation.cs`
+- `src/AgentContextKit.Core/Doctor.cs`
+- `.github/workflows/ci.yml`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
@@ -64,10 +75,17 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - The repository has no remote configured by design.
 - No NuGet publish, GitHub push, destructive cleanup, or automatic redaction is allowed in this session.
 - `.NET 10` is required by the project brief; the installed SDK is `10.0.300` and the host runtime is `10.0.8`.
+- Regex-based scanners remain MVP-level and can still have false positives/false negatives.
+- `RepositoryUrl` in CLI package metadata is a TODO placeholder until a real remote exists.
 
 ## Build/Test Status
-- Project template restores completed during `dotnet new`.
-- Full `dotnet restore`, `dotnet build -c Release`, and `dotnet test -c Release` not run yet after implementation.
+- `dotnet restore AgentContextKit.sln`: passed.
+- `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 10/10 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- --help`: passed.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`: passed, no risk findings in this repo.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor`: passed, all checks PASS.
+- Temporary verification: `task`, `init`, `generate --target codex`, and `redact-check` passed. Critical redact-check produced `LASTEXITCODE=2`.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -80,4 +98,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The next step is to implement Core services and CLI commands, replacing the template files. Re-check `git status --short --branch` before editing if the state is uncertain.
+If context is compacted, continue from this file. The foundation MVP is implemented and verified. The next step is to review git status, commit the implementation if acceptable, and plan the next task around scanner hardening or release packaging.

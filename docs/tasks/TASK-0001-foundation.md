@@ -91,4 +91,11 @@ Create README, README.tr, MIT license, SECURITY, CONTRIBUTING, CODE_OF_CONDUCT, 
 No remote or publish actions are performed. To roll back this task manually, inspect `git status`, remove newly created files only after confirming they are from this task, or reset to a known commit if one exists and the user explicitly requests that destructive action.
 
 ## Completion notes
-In progress. Initial handoff/task/decision docs are being created before implementation.
+Completed.
+
+- Created the .NET 10 solution and CLI/Core/Tests projects.
+- Added OSS readiness docs, product docs, handoff docs, and CI.
+- Implemented MVP Core services and CLI commands.
+- Added 10 focused xUnit tests.
+- Verified restore/build/test and CLI command behavior.
+- No remote, push, publish, deletion, or automatic redaction was performed.

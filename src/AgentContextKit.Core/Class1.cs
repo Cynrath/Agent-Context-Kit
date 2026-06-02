@@ -1,6 +1,6 @@
 ﻿namespace AgentContextKit.Core;
 
-public class Class1
+public static class CoreAssemblyMarker
 {
 
 }
