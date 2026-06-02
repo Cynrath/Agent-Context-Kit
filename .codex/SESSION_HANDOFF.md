@@ -23,11 +23,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0002: pseudonym metadata, JSON output, tests, warning-free local pack, and temporary tool-path install verification.
 - Started TASK-0003 for config schema, JSON schema metadata, and scanner hardening.
 - Completed TASK-0003 with config schema docs, JSON output docs, config-driven ignore/risk settings, JSON metadata, scanner hardening, and tests.
+- Started TASK-0004 for release-readiness polish, package metadata review, `.gitattributes`, and local validation docs.
 
 ## Next Clear Steps
-1. Create TASK-0004 for release-readiness polish, `.slnx` decision, and package metadata review.
-2. Keep `RepositoryUrl` as TODO until the real public remote is selected.
-3. Consider adding JSON schema sample files after output shape stabilizes.
+1. Implement TASK-0004 changes listed in `docs/tasks/TASK-0004-release-readiness-polish.md`.
+2. Run restore/build/test/pack/tool-path verification.
+3. Update task completion notes and commit.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -64,6 +65,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0003-config-schema-scanner-hardening.md`
 - `docs/CONFIGURATION.md`
 - `docs/JSON_OUTPUT.md`
+- `docs/tasks/TASK-0004-release-readiness-polish.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
