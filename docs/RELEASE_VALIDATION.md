@@ -11,6 +11,13 @@ dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 
+## Scripted Validation
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
+```
+
+The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection.
+
 ## Package Validation
 ```powershell
 $stamp = Get-Date -Format "yyyyMMddHHmmss"

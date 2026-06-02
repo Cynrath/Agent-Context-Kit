@@ -26,11 +26,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Started TASK-0004 for release-readiness polish, package metadata review, `.gitattributes`, and local validation docs.
 - Completed TASK-0004 with packaging docs, release validation docs, `.gitattributes`, NuGet metadata polish, metadata tests, and local pack/tool-path verification.
 - Started TASK-0005 for local v0.1.0-alpha.1 release candidate review.
+- Completed TASK-0005 with `scripts/verify-release.ps1`, release candidate report, and successful local release verification.
 
 ## Next Clear Steps
-1. Implement TASK-0005 release verification script and RC report.
-2. Run the script locally.
-3. Update task completion notes and commit.
+1. Review final local commits before any manual push.
+2. Replace TODO repository URLs when the real public remote is selected.
+3. Do not publish/tag/push until explicit maintainer action.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -72,6 +73,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/PACKAGING.md`
 - `docs/RELEASE_VALIDATION.md`
 - `docs/tasks/TASK-0005-release-candidate-review.md`
+- `scripts/verify-release.ps1`
+- `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`
 - `README.md`
 - `README.tr.md`
 - `LICENSE`
@@ -111,6 +114,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0002 verification: restore/build/test passed; `scan --json` and `doctor --json` emitted valid JSON; real-name exact phrase search returned no matches; local `dotnet pack` succeeded without warning; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` and `ackit scan --json` worked.
 - TASK-0003 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed with 18/18 tests; `scan` reported no findings; `scan --json` includes schema/tool metadata; `doctor --json` works; `init --json` writes the expanded default config; temporary `redact-check --profile public-release --json` returned `LASTEXITCODE=2`.
 - TASK-0004 verification: restore/build/test passed; local `dotnet pack` succeeded without warnings; temporary `dotnet tool install --tool-path` succeeded; installed `ackit --help` worked; repo `scan` reported no findings; `doctor` reported all checks PASS.
+- TASK-0005 verification: `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; restore/build/test passed; build had 0 warnings and 0 errors; tests passed 18/18; scan had no risk findings; doctor all PASS; pack/tool-path install/installed help/installed scan JSON passed.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -123,4 +127,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0004 is implemented and verified. The next step is to commit TASK-0004 implementation if not yet committed, then create TASK-0005 for final v0.1.0-alpha release candidate review.
+If context is compacted, continue from this file. The MVP foundation through TASK-0005 is implemented and verified. The next step is to commit TASK-0005 implementation if not yet committed, then wait for explicit maintainer direction before push, tag, or publish.

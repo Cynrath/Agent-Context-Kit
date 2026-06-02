@@ -90,4 +90,16 @@ Provides a repeatable local release candidate gate and a clear report for mainta
 Revert the TASK-0005 implementation commit. Temporary folders can be manually removed after confirming their paths are outside the repository.
 
 ## Completion notes
-In progress.
+Completed.
+
+- Added `scripts/verify-release.ps1`.
+- Added `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`.
+- Updated release validation/checklist docs and changelog.
+- Ran `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`.
+- Script passed restore/build/test/scan/doctor/pack/temp tool install/installed tool smoke checks.
+- Build passed with 0 warnings and 0 errors.
+- Tests passed 18/18.
+- `ackit scan` reported no risk findings.
+- `ackit doctor` reported all checks PASS.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, remote creation, tag creation, deletion, permanent global install, or automatic redaction was performed.
