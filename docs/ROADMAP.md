@@ -42,7 +42,7 @@
 
 ## v0.5.0-beta
 - Optional LLM integration architecture. Documented with consent gates, provider boundaries, data minimization, and no live provider calls.
-- `ILLMProvider` abstraction.
+- `ILLMProvider` abstraction. Added provider-neutral request/response models and fake-provider tests.
 - Dry-run prompt pack generation.
 - User-approved context export.
 

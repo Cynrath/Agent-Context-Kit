@@ -8,6 +8,7 @@ AgentContextKit remains offline-first and local-only today. v0.5 may add optiona
 - No API key is read, stored, generated, or validated.
 - No repository content is uploaded.
 - Existing `scan`, `generate`, `report`, and `webui` commands remain local-only.
+- Provider-neutral `ILLMProvider` request/response abstractions exist for future fake/provider adapter work.
 
 ## Reference Inputs
 - OpenAI's current API guidance recommends the Responses API for new API-backed projects and supports tools/function calling for agentic workflows.
@@ -35,8 +36,8 @@ AgentContextKit remains offline-first and local-only today. v0.5 may add optiona
 ## Proposed Boundaries
 
 ### Core
-Future Core abstractions should own provider-neutral behavior:
-- `ILLMProvider`: provider-neutral request/response boundary.
+Core abstractions should own provider-neutral behavior:
+- `ILLMProvider`: provider-neutral async request/response boundary.
 - `ILLMProviderFactory`: resolves a configured provider only after consent and configuration checks.
 - `IPromptPackBuilder`: builds dry-run prompt/context packs from scan results and generated docs.
 - `IContextExportReview`: records what would be exported and whether the user approved it.
@@ -101,7 +102,6 @@ Because the current task is documentation-only, rollback is the TASK-0030 implem
 
 ## Future Task Split
 Recommended v0.5 implementation order:
-1. Add provider-neutral `ILLMProvider` request/response models with fake/in-memory tests.
-2. Add dry-run prompt pack generation with no remote calls.
-3. Add user-approved context export manifests.
-4. Add provider adapters only after explicit maintainer approval and documentation updates.
+1. Add dry-run prompt pack generation with no remote calls.
+2. Add user-approved context export manifests.
+3. Add provider adapters only after explicit maintainer approval and documentation updates.

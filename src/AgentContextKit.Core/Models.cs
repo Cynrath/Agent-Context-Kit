@@ -119,6 +119,82 @@ public sealed record AckitConfig(
         [".bak", ".tmp", ".log", ".sql"]);
 }
 
+public enum LlmMessageRole
+{
+    System,
+    User,
+    Assistant,
+    Tool
+}
+
+public sealed record LlmMessage(LlmMessageRole Role, string Content);
+
+public sealed record LlmTokenUsage(int? InputTokens, int? OutputTokens, int? TotalTokens);
+
+public sealed record LlmProviderRequest
+{
+    public LlmProviderRequest(
+        string model,
+        IReadOnlyList<LlmMessage> messages,
+        bool dryRun = true,
+        string? exportReviewId = null,
+        string? auditCorrelationId = null,
+        IReadOnlyDictionary<string, string>? metadata = null)
+    {
+        Model = model;
+        Messages = messages.ToArray();
+        DryRun = dryRun;
+        ExportReviewId = exportReviewId;
+        AuditCorrelationId = auditCorrelationId;
+        Metadata = metadata is null
+            ? new Dictionary<string, string>()
+            : new Dictionary<string, string>(metadata);
+    }
+
+    public string Model { get; init; }
+
+    public IReadOnlyList<LlmMessage> Messages { get; init; }
+
+    public bool DryRun { get; init; }
+
+    public string? ExportReviewId { get; init; }
+
+    public string? AuditCorrelationId { get; init; }
+
+    public IReadOnlyDictionary<string, string> Metadata { get; init; }
+}
+
+public sealed record LlmProviderResponse
+{
+    public LlmProviderResponse(
+        string outputText,
+        string providerName,
+        string model,
+        string? requestId = null,
+        LlmTokenUsage? tokenUsage = null,
+        IReadOnlyList<string>? warnings = null)
+    {
+        OutputText = outputText;
+        ProviderName = providerName;
+        Model = model;
+        RequestId = requestId;
+        TokenUsage = tokenUsage;
+        Warnings = warnings?.ToArray() ?? Array.Empty<string>();
+    }
+
+    public string OutputText { get; init; }
+
+    public string ProviderName { get; init; }
+
+    public string Model { get; init; }
+
+    public string? RequestId { get; init; }
+
+    public LlmTokenUsage? TokenUsage { get; init; }
+
+    public IReadOnlyList<string> Warnings { get; init; }
+}
+
 public sealed record CommandResult(int ExitCode, string Message);
 
 public sealed record DoctorCheck(string Name, RiskSeverity Severity, bool Passed, string Message);

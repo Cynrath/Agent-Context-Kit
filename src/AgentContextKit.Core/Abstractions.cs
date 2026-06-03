@@ -65,6 +65,13 @@ public interface IWebUiGenerator
     GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
 }
 
+public interface ILLMProvider
+{
+    string Name { get; }
+
+    Task<LlmProviderResponse> GenerateAsync(LlmProviderRequest request, CancellationToken cancellationToken = default);
+}
+
 public interface IFileSystem
 {
     bool FileExists(string path);

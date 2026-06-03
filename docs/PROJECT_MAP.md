@@ -94,6 +94,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0028-v040-task-preview-refinement.md`
 - `docs/tasks/TASK-0029-v040-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0030-v050-optional-llm-integration-architecture.md`
+- `docs/tasks/TASK-0031-v050-llm-provider-abstraction.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

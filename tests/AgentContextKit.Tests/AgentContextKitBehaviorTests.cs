@@ -96,6 +96,43 @@ public sealed class StackDetectorTests
     }
 }
 
+public sealed class LlmProviderAbstractionTests
+{
+    [Fact]
+    public async Task SupportsFakeProviderWithoutProviderSdk()
+    {
+        var metadata = new Dictionary<string, string>
+        {
+            ["scope"] = "task"
+        };
+        var request = new LlmProviderRequest(
+            "fake-model",
+            [new LlmMessage(LlmMessageRole.User, "Summarize the approved dry-run context.")],
+            dryRun: true,
+            exportReviewId: "review-001",
+            auditCorrelationId: "audit-001",
+            metadata: metadata);
+        metadata["scope"] = "mutated";
+
+        ILLMProvider provider = new FakeLlmProvider();
+        var response = await provider.GenerateAsync(request, CancellationToken.None);
+
+        Assert.True(request.DryRun);
+        Assert.Equal("review-001", request.ExportReviewId);
+        Assert.Equal("audit-001", request.AuditCorrelationId);
+        Assert.Equal("task", request.Metadata["scope"]);
+        Assert.Equal("fake", provider.Name);
+        Assert.Equal("fake", response.ProviderName);
+        Assert.Equal("fake-model", response.Model);
+        Assert.Equal("req-001", response.RequestId);
+        Assert.Equal("Dry-run only.", response.OutputText);
+        Assert.Equal(3, response.TokenUsage?.InputTokens);
+        Assert.Equal(2, response.TokenUsage?.OutputTokens);
+        Assert.Equal(5, response.TokenUsage?.TotalTokens);
+        Assert.Contains("No remote call was made.", response.Warnings);
+    }
+}
+
 public sealed class RiskScannerTests
 {
     [Fact]
@@ -851,6 +888,24 @@ internal static class TestServices
 internal sealed class FixedClock : IClock
 {
     public DateTimeOffset UtcNow => new(2026, 6, 2, 0, 0, 0, TimeSpan.Zero);
+}
+
+internal sealed class FakeLlmProvider : ILLMProvider
+{
+    public string Name => "fake";
+
+    public Task<LlmProviderResponse> GenerateAsync(LlmProviderRequest request, CancellationToken cancellationToken = default)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        return Task.FromResult(new LlmProviderResponse(
+            "Dry-run only.",
+            Name,
+            request.Model,
+            requestId: "req-001",
+            tokenUsage: new LlmTokenUsage(3, 2, 5),
+            warnings: ["No remote call was made."]));
+    }
 }
 
 internal sealed class TempRepository : IDisposable

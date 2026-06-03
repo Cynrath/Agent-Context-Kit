@@ -124,4 +124,21 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0031 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0031.
+
+- Added provider-neutral `ILLMProvider` to Core with async `GenerateAsync` and `CancellationToken` support.
+- Added provider-neutral `LlmProviderRequest`, `LlmProviderResponse`, `LlmMessage`, `LlmMessageRole`, and `LlmTokenUsage` models.
+- Request/response models copy caller-provided collections to reduce accidental mutation risk.
+- Added fake-provider tests only; no SDK, HTTP client, remote call, API key handling, CLI command, or provider adapter was added.
+- Updated optional LLM architecture docs, architecture service list, roadmap, project map, changelog, context pack, next steps, and session handoff.
+- Checked current .NET guidance through Context7 `/dotnet/docs` before implementation.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 47/47 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed. Public release blockers remain maintainer-only TODO package URLs and missing release tag.
+- `git diff --check` passed.
+- Real-name grep found no matches.

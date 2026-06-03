@@ -44,6 +44,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Refined Web UI task preview with task ID, title, inferred status, size, path, and capped preview text.
 - v0.4 local readiness review script and documentation.
 - Optional LLM integration architecture with consent gates, provider boundaries, data minimization, and audit requirements.
+- Provider-neutral `ILLMProvider` request/response abstractions with fake-provider tests.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.
