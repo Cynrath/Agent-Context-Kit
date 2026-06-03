@@ -98,12 +98,14 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0032-v050-dry-run-prompt-pack-generation.md`
 - `docs/tasks/TASK-0033-v050-user-approved-context-export.md`
 - `docs/tasks/TASK-0034-v050-final-readiness-consolidation.md`
+- `docs/tasks/TASK-0035-v100-stabilization-plan.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
 - `docs/V030_READINESS.md`
 - `docs/V040_READINESS.md`
 - `docs/V050_READINESS.md`
+- `docs/V100_STABILIZATION_PLAN.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `global.json`
 - `LICENSE`

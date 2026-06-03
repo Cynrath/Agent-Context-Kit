@@ -109,4 +109,19 @@ Clarifies the path to v1.0. Public release remains blocked by maintainer-only UR
 Revert the TASK-0035 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed in TASK-0035.
+
+- Added `docs/V100_STABILIZATION_PLAN.md` with v1.0 stabilization themes, local acceptance gates, public-release boundaries, validation commands, and follow-up task sequence.
+- Updated roadmap, documentation index, project map, changelog, context pack, next steps, and session handoff docs.
+- Kept maintainer-only public release actions separate from local stabilization work.
+- No runtime CLI behavior, provider call, SDK, HTTP client, API key handling, upload, push, tag, publish, remote creation, or automatic redaction was added.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `git diff --check` passed.
+- Real-name grep found no matches.

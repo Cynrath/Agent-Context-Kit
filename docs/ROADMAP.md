@@ -48,6 +48,7 @@
 - Final local readiness consolidation.
 
 ## v1.0.0
+- Stabilization plan. Added local v1.0 stabilization themes, acceptance gates, and follow-up task sequence.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.

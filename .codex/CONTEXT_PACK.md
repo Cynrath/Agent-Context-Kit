@@ -94,3 +94,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0032 completed local-only `ackit prompt-pack` dry-run Markdown generation with JSON metadata and no remote provider calls.
 - TASK-0033 completed local-only `ackit context-export` approval manifest generation with JSON metadata and no remote provider calls.
 - TASK-0034 completed v0.5 local readiness consolidation script and documentation.
+- TASK-0035 completed v1.0 stabilization planning with local acceptance gates and follow-up task sequence.
