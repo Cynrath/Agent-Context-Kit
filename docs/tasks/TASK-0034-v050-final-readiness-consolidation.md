@@ -127,4 +127,27 @@ Strengthens local readiness review. Public release remains blocked by maintainer
 Revert the TASK-0034 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed in TASK-0034.
+
+- Added `scripts/check-v050-readiness.ps1` with local-only v0.5 asset and content checks.
+- Added `docs/V050_READINESS.md` with report-only and failing gate usage, safety boundary, expected public blockers, required validation, and v1.0 next-step context.
+- Updated product spec current command inventory to include `prompt-pack` and `context-export`.
+- Updated release validation, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+- Kept public-release blockers separate from local v0.5 readiness issues.
+- Checked current .NET CLI guidance through Context7 `/dotnet/docs` and PowerShell script guidance through Microsoft Learn before implementation.
+
+Verification:
+
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1` passed and reported no v0.5 asset issues.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- prompt-pack --output .ackit/prompt-packs/task-0034-validation.md --json` created the ignored local prompt pack with risk summary 0.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- context-export --prompt-pack .ackit/prompt-packs/task-0034-validation.md --approve --output .ackit/context-exports/task-0034-validation.json --json` created the ignored local approval manifest with risk summary 0.
+- `git check-ignore -v .ackit/prompt-packs/task-0034-validation.md` confirmed the prompt-pack validation artifact is ignored.
+- `git check-ignore -v .ackit/context-exports/task-0034-validation.json` confirmed the context-export validation artifact is ignored.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1` completed in report-only mode with known public blockers.
+- `git diff --check` passed.
+- Real-name grep found no matches.

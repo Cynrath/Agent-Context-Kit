@@ -11,6 +11,8 @@ dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- report --json
 dotnet run --project src/AgentContextKit.Cli -- webui --json
+dotnet run --project src/AgentContextKit.Cli -- prompt-pack --output .ackit/prompt-packs/release-validation.md --json
+dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/release-validation.md --approve --output .ackit/context-exports/release-validation.json --json
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 
@@ -65,6 +67,21 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailO
 ```
 
 See [V040_READINESS.md](V040_READINESS.md).
+
+## v0.5 Readiness Review
+Run the v0.5 local readiness check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1
+```
+
+Use it as a failing gate for missing v0.5 readiness assets:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues
+```
+
+See [V050_READINESS.md](V050_READINESS.md).
 
 ## Release Blocker Review
 Report current blockers:

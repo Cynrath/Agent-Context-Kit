@@ -34,6 +34,8 @@ v0.5 may add optional LLM-assisted workflows, but the default product remains of
 - `scan --ci`
 - `report`
 - `webui`
+- `prompt-pack`
+- `context-export`
 - `generate`
 - `task`
 - `redact-check`

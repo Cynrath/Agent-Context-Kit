@@ -45,6 +45,7 @@
 - `ILLMProvider` abstraction. Added provider-neutral request/response models and fake-provider tests.
 - Dry-run prompt pack generation. Added local-only `ackit prompt-pack` Markdown output with JSON metadata.
 - User-approved context export. Added local-only `ackit context-export` approval manifests with JSON metadata.
+- Final local readiness consolidation.
 
 ## v1.0.0
 - Stable CLI.

@@ -50,6 +50,7 @@
 - `docs/V020_READINESS.md`: v0.2 local readiness review.
 - `docs/V030_READINESS.md`: v0.3 local readiness review.
 - `docs/V040_READINESS.md`: v0.4 local readiness review.
+- `docs/V050_READINESS.md`: v0.5 local readiness review.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`: maintainer-only public release handoff.
 - `docs/PUBLIC_RELEASE_AUDIT.md`: final public release audit workflow.
 - `docs/PUBLIC_RELEASE_GATES.md`: package metadata, audit, and blocker gate orchestration.

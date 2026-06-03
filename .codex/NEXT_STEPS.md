@@ -1,6 +1,6 @@
 # Next Steps
 
-1. Continue v0.5 final readiness work with TASK-0034.
+1. Continue v1.0 stabilization planning with TASK-0035.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -8,9 +8,10 @@
 6. Run `powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailOnIssues` for local v0.2 readiness review.
 7. Run `powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1 -FailOnIssues` for local v0.3 readiness review.
 8. Run `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` for local v0.4 readiness review.
-9. Run `powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
-10. Run `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues`.
-11. Run `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers`.
-12. Run `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`.
-13. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
-14. Do not push, publish, redact, tag, delete, or create remotes without explicit maintainer action.
+9. Run `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` for local v0.5 readiness review.
+10. Run `powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
+11. Run `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues`.
+12. Run `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers`.
+13. Run `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`.
+14. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
+15. Do not push, publish, redact, tag, delete, or create remotes without explicit maintainer action.

@@ -97,11 +97,13 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0031-v050-llm-provider-abstraction.md`
 - `docs/tasks/TASK-0032-v050-dry-run-prompt-pack-generation.md`
 - `docs/tasks/TASK-0033-v050-user-approved-context-export.md`
+- `docs/tasks/TASK-0034-v050-final-readiness-consolidation.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
 - `docs/V030_READINESS.md`
 - `docs/V040_READINESS.md`
+- `docs/V050_READINESS.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `global.json`
 - `LICENSE`
@@ -123,6 +125,7 @@ Updated: 2026-06-03
 - `scripts/check-v020-readiness.ps1`
 - `scripts/check-v030-readiness.ps1`
 - `scripts/check-v040-readiness.ps1`
+- `scripts/check-v050-readiness.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`

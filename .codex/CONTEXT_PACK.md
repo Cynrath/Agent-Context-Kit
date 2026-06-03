@@ -53,6 +53,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
@@ -92,3 +93,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0031 completed provider-neutral `ILLMProvider` request/response abstractions with fake-provider tests and no live provider calls.
 - TASK-0032 completed local-only `ackit prompt-pack` dry-run Markdown generation with JSON metadata and no remote provider calls.
 - TASK-0033 completed local-only `ackit context-export` approval manifest generation with JSON metadata and no remote provider calls.
+- TASK-0034 completed v0.5 local readiness consolidation script and documentation.
