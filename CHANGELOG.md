@@ -30,6 +30,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Expanded generated agent/context docs with repository health, risk summary, and recommended checks.
 - Safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.
 - NuGet package metadata review script and documentation.
+- v0.2 local readiness review script and documentation.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

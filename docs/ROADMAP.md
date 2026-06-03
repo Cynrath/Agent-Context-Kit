@@ -14,13 +14,14 @@
 - GitHub Actions.
 
 ## v0.2.0-alpha
-- Stronger stack detector. Started with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
-- Better risk scanner. Started with environment sample precision, key-file detection, broader private key block detection, IP filtering, and configured keyword token boundaries.
-- `.ackit/config.yml` brand/PII keyword support improvements. Started with token-boundary matching.
-- JSON schema stabilization and expanded fields. Started with schema version 2 metadata and summary fields.
-- More generated docs. Started with expanded agent/context templates that include health, risk, and recommended checks.
-- NuGet package metadata hardening.
-- Sample repositories. Started with safe .NET Minimal API and Node/TypeScript/Tailwind samples.
+- Stronger stack detector with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
+- Better risk scanner with environment sample precision, key-file detection, broader private key block detection, IP filtering, and configured keyword token boundaries.
+- `.ackit/config.yml` brand/PII keyword support improvements through token-boundary matching.
+- JSON schema stabilization and expanded fields with schema version 2 metadata and summary fields.
+- More generated docs with expanded agent/context templates that include health, risk, and recommended checks.
+- NuGet package metadata hardening with a local metadata review gate.
+- Sample repositories for safe .NET Minimal API and Node/TypeScript/Tailwind stack detection.
+- Final local readiness consolidation.
 
 ## v0.3.0-beta
 - HTML report generation.

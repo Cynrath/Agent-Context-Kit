@@ -44,6 +44,7 @@ dotnet test -c Release
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
@@ -65,3 +66,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0014 completed expanded generated agent/context docs with repository health, risk summary, and recommended checks.
 - TASK-0015 completed safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.
 - TASK-0016 completed NuGet package metadata review script and documentation.
+- TASK-0017 completed v0.2 local readiness consolidation script and documentation.

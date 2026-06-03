@@ -18,6 +18,21 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 
 The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection. It also runs `scripts/check-release-blockers.ps1` in report-only mode, so local validation can pass while public-release blockers remain visible.
 
+## v0.2 Readiness Review
+Run the v0.2 local readiness check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
+```
+
+Use it as a failing gate for missing v0.2 readiness assets:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailOnIssues
+```
+
+See [V020_READINESS.md](V020_READINESS.md).
+
 ## Release Blocker Review
 Report current blockers:
 
