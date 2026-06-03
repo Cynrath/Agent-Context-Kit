@@ -63,7 +63,7 @@ Add unit tests for .NET SDK and frontend stack signals. Run build/test/scan/rele
 Improves repository analysis accuracy for v0.2 while keeping public release blockers unchanged.
 
 ## Current docs consulted
-- Microsoft Learn: `.NET project SDKs`, including `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
+- Microsoft Learn: [.NET project SDKs](https://learn.microsoft.com/en-us/dotnet/core/project-sdk/overview), including `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 
 ## Acceptance criteria
 - Existing `.NET` and `Node` detections still work.
@@ -112,4 +112,20 @@ Improves repository analysis accuracy for v0.2 while keeping public release bloc
 Revert the TASK-0011 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Expanded `StackDetector` to use repository file paths plus limited local reads through `IFileSystem`.
+- Added .NET SDK signal detection for `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
+- Added conservative ASP.NET Core Minimal API detection from `Program.cs`.
+- Added package manager and frontend tooling signals for npm, pnpm, Yarn, Bun, TypeScript, and Tailwind CSS.
+- Preserved existing `.NET`, Node, Vite, Next.js, Nuxt, Angular, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration signals.
+- Updated CLI service construction and test helper wiring to pass `IFileSystem` into `StackDetector`.
+- Added focused tests for .NET SDK signals, Minimal API signals, and frontend package manager/tooling signals.
+- Updated roadmap, architecture, CLI reference, project map, changelog, context pack, handoff, and next steps.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 21/21.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- Release verification reported known public-release blockers in non-failing mode.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

@@ -3,7 +3,7 @@
 Updated: 2026-06-03
 
 ## Stack
-- .NET: .sln/.slnx/.csproj/Program.cs
+- .NET: .sln/.slnx/*proj/Program.cs
 - GitHub Actions: .github/workflows
 
 ## Files
@@ -64,6 +64,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0008-final-source-package-hygiene.md`
 - `docs/tasks/TASK-0009-public-release-audit.md`
 - `docs/tasks/TASK-0010-maintainer-release-handoff.md`
+- `docs/tasks/TASK-0011-v020-stack-detector-expansion.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`

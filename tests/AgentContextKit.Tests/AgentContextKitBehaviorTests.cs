@@ -26,6 +26,74 @@ public sealed class StackDetectorTests
 
         Assert.Contains(stacks, stack => stack.Name == "Node");
     }
+
+    [Fact]
+    public void DetectsDotNetProjectSdkSignals()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("src/Web/Web.csproj", """<Project Sdk="Microsoft.NET.Sdk.Web"></Project>""");
+        repo.Write("src/Razor/Razor.csproj", """<Project Sdk="Microsoft.NET.Sdk.Razor"></Project>""");
+        repo.Write("src/Blazor/Blazor.csproj", """<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly"></Project>""");
+        repo.Write("src/Worker/Worker.csproj", """<Project Sdk="Microsoft.NET.Sdk.Worker"></Project>""");
+        var detector = new StackDetector(new PhysicalFileSystem());
+
+        var stacks = detector.Detect(repo.Path,
+        [
+            "src/Web/Web.csproj",
+            "src/Razor/Razor.csproj",
+            "src/Blazor/Blazor.csproj",
+            "src/Worker/Worker.csproj"
+        ]);
+
+        Assert.Contains(stacks, stack => stack.Name == ".NET");
+        Assert.Contains(stacks, stack => stack.Name == "ASP.NET Core");
+        Assert.Contains(stacks, stack => stack.Name == "Razor/Razor Pages");
+        Assert.Contains(stacks, stack => stack.Name == "Blazor WebAssembly");
+        Assert.Contains(stacks, stack => stack.Name == ".NET Worker Service");
+    }
+
+    [Fact]
+    public void DetectsMinimalApiProgramSignal()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("Program.cs", """
+        var builder = WebApplication.CreateBuilder(args);
+        var app = builder.Build();
+        app.MapGet("/", () => "ok");
+        app.Run();
+        """);
+        var detector = new StackDetector(new PhysicalFileSystem());
+
+        var stacks = detector.Detect(repo.Path, ["Program.cs"]);
+
+        Assert.Contains(stacks, stack => stack.Name == ".NET");
+        Assert.Contains(stacks, stack => stack.Name == "ASP.NET Core Minimal API");
+    }
+
+    [Fact]
+    public void DetectsFrontendPackageManagerAndToolingSignals()
+    {
+        var detector = new StackDetector();
+
+        var stacks = detector.Detect("repo",
+        [
+            "package.json",
+            "package-lock.json",
+            "pnpm-lock.yaml",
+            "yarn.lock",
+            "bun.lockb",
+            "tsconfig.json",
+            "tailwind.config.js"
+        ]);
+
+        Assert.Contains(stacks, stack => stack.Name == "Node");
+        Assert.Contains(stacks, stack => stack.Name == "npm");
+        Assert.Contains(stacks, stack => stack.Name == "pnpm");
+        Assert.Contains(stacks, stack => stack.Name == "Yarn");
+        Assert.Contains(stacks, stack => stack.Name == "Bun");
+        Assert.Contains(stacks, stack => stack.Name == "TypeScript");
+        Assert.Contains(stacks, stack => stack.Name == "Tailwind CSS");
+    }
 }
 
 public sealed class RiskScannerTests
@@ -342,7 +410,7 @@ internal static class TestServices
         var secretScanner = new SecretScanner();
         var brandPiiScanner = new BrandPiiScanner();
         var riskScanner = new RiskScanner(fileSystem, secretScanner, brandPiiScanner);
-        return new RepositoryScanner(fileSystem, new StackDetector(), riskScanner);
+        return new RepositoryScanner(fileSystem, new StackDetector(fileSystem), riskScanner);
     }
 }
 

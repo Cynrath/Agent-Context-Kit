@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using System.Text.RegularExpressions;
 
 namespace AgentContextKit.Core;
@@ -105,78 +106,263 @@ public sealed class RepositoryScanner : IRepositoryScanner
 
 public sealed class StackDetector : IStackDetector
 {
+    private readonly IFileSystem? _fileSystem;
+
+    public StackDetector(IFileSystem? fileSystem = null)
+    {
+        _fileSystem = fileSystem;
+    }
+
     public IReadOnlyList<StackInfo> Detect(string repositoryPath, IReadOnlyList<string> relativeFiles)
     {
         var files = relativeFiles.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var stacks = new List<StackInfo>();
+        var projectFiles = relativeFiles
+            .Where(IsProjectFile)
+            .OrderBy(file => file, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        var projectSdks = projectFiles
+            .SelectMany(file => ReadProjectSdkValues(repositoryPath, file))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
 
         if (files.Any(file => file.EndsWith(".sln", StringComparison.OrdinalIgnoreCase) ||
-                              file.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase) ||
-                              file.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase)) ||
-            files.Contains("Program.cs"))
+                              file.EndsWith(".slnx", StringComparison.OrdinalIgnoreCase)) ||
+            projectFiles.Length > 0 ||
+            files.Any(file => file.EndsWith("/Program.cs", StringComparison.OrdinalIgnoreCase) ||
+                              file.Equals("Program.cs", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo(".NET", ".sln/.slnx/.csproj/Program.cs"));
+            AddStack(stacks, ".NET", ".sln/.slnx/*proj/Program.cs");
+        }
+
+        if (projectSdks.Any(sdk => SdkMatches(sdk, "Microsoft.NET.Sdk.Web")))
+        {
+            AddStack(stacks, "ASP.NET Core", "Microsoft.NET.Sdk.Web");
+        }
+
+        if (projectSdks.Any(sdk => SdkMatches(sdk, "Microsoft.NET.Sdk.Razor")) ||
+            files.Any(file => file.EndsWith(".cshtml", StringComparison.OrdinalIgnoreCase) ||
+                              file.StartsWith("Pages/", StringComparison.OrdinalIgnoreCase)))
+        {
+            AddStack(stacks, "Razor/Razor Pages", "Microsoft.NET.Sdk.Razor/*.cshtml/Pages");
+        }
+
+        if (projectSdks.Any(sdk => SdkMatches(sdk, "Microsoft.NET.Sdk.BlazorWebAssembly")) ||
+            files.Any(file => file.EndsWith(".razor", StringComparison.OrdinalIgnoreCase)))
+        {
+            AddStack(stacks, "Blazor WebAssembly", "Microsoft.NET.Sdk.BlazorWebAssembly/*.razor");
+        }
+
+        if (projectSdks.Any(sdk => SdkMatches(sdk, "Microsoft.NET.Sdk.Worker")))
+        {
+            AddStack(stacks, ".NET Worker Service", "Microsoft.NET.Sdk.Worker");
+        }
+
+        if (HasMinimalApiSignal(repositoryPath, relativeFiles))
+        {
+            AddStack(stacks, "ASP.NET Core Minimal API", "Program.cs WebApplication/Map*");
         }
 
         if (files.Contains("appsettings.json") ||
             files.Any(file => file.StartsWith("Controllers/", StringComparison.OrdinalIgnoreCase)) ||
             files.Any(file => file.StartsWith("Views/", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("ASP.NET Core MVC", "appsettings.json/Controllers/Views"));
+            AddStack(stacks, "ASP.NET Core MVC", "appsettings.json/Controllers/Views");
         }
 
         if (files.Contains("package.json"))
         {
-            stacks.Add(new StackInfo("Node", "package.json"));
+            AddStack(stacks, "Node", "package.json");
+        }
+
+        if (files.Contains("package-lock.json"))
+        {
+            AddStack(stacks, "npm", "package-lock.json");
+        }
+
+        if (files.Contains("pnpm-lock.yaml"))
+        {
+            AddStack(stacks, "pnpm", "pnpm-lock.yaml");
+        }
+
+        if (files.Contains("yarn.lock"))
+        {
+            AddStack(stacks, "Yarn", "yarn.lock");
+        }
+
+        if (files.Contains("bun.lockb") || files.Contains("bun.lock"))
+        {
+            AddStack(stacks, "Bun", "bun.lock/bun.lockb");
+        }
+
+        if (files.Contains("tsconfig.json") ||
+            files.Any(file => file.EndsWith(".ts", StringComparison.OrdinalIgnoreCase) ||
+                              file.EndsWith(".tsx", StringComparison.OrdinalIgnoreCase)))
+        {
+            AddStack(stacks, "TypeScript", "tsconfig.json/*.ts/*.tsx");
         }
 
         if (files.Any(file => file.StartsWith("vite.config.", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("Vite", "vite.config.*"));
+            AddStack(stacks, "Vite", "vite.config.*");
         }
 
         if (files.Any(file => file.StartsWith("next.config.", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("Next.js", "next.config.*"));
+            AddStack(stacks, "Next.js", "next.config.*");
         }
 
         if (files.Any(file => file.StartsWith("nuxt.config.", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("Nuxt", "nuxt.config.*"));
+            AddStack(stacks, "Nuxt", "nuxt.config.*");
         }
 
         if (files.Contains("angular.json"))
         {
-            stacks.Add(new StackInfo("Angular", "angular.json"));
+            AddStack(stacks, "Angular", "angular.json");
+        }
+
+        if (files.Any(file => file.StartsWith("tailwind.config.", StringComparison.OrdinalIgnoreCase)))
+        {
+            AddStack(stacks, "Tailwind CSS", "tailwind.config.*");
         }
 
         if (files.Contains("requirements.txt") || files.Contains("pyproject.toml"))
         {
-            stacks.Add(new StackInfo("Python", "requirements.txt/pyproject.toml"));
+            AddStack(stacks, "Python", "requirements.txt/pyproject.toml");
         }
 
         if (files.Contains("composer.json") || files.Contains("artisan"))
         {
-            stacks.Add(new StackInfo("PHP/Laravel", "composer.json/artisan"));
+            AddStack(stacks, "PHP/Laravel", "composer.json/artisan");
         }
 
         if (files.Contains("Dockerfile") || files.Any(file => file.Contains("docker-compose", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("Docker", "Dockerfile/docker-compose"));
+            AddStack(stacks, "Docker", "Dockerfile/docker-compose");
         }
 
         if (files.Any(file => file.StartsWith(".github/workflows/", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("GitHub Actions", ".github/workflows"));
+            AddStack(stacks, "GitHub Actions", ".github/workflows");
         }
 
         if (files.Any(file => file.EndsWith(".sql", StringComparison.OrdinalIgnoreCase)) ||
             files.Any(file => file.Contains("/Migrations/", StringComparison.OrdinalIgnoreCase) || file.StartsWith("Migrations/", StringComparison.OrdinalIgnoreCase)))
         {
-            stacks.Add(new StackInfo("Database/Migrations", "*.sql/Migrations"));
+            AddStack(stacks, "Database/Migrations", "*.sql/Migrations");
         }
 
         return stacks;
+    }
+
+    private static bool IsProjectFile(string relativeFile)
+    {
+        return relativeFile.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase) ||
+               relativeFile.EndsWith(".fsproj", StringComparison.OrdinalIgnoreCase) ||
+               relativeFile.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static void AddStack(List<StackInfo> stacks, string name, string signal)
+    {
+        if (!stacks.Any(stack => string.Equals(stack.Name, name, StringComparison.OrdinalIgnoreCase)))
+        {
+            stacks.Add(new StackInfo(name, signal));
+        }
+    }
+
+    private static bool SdkMatches(string sdk, string expected)
+    {
+        return string.Equals(sdk, expected, StringComparison.OrdinalIgnoreCase) ||
+               sdk.StartsWith(expected + "/", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private IReadOnlyList<string> ReadProjectSdkValues(string repositoryPath, string relativeFile)
+    {
+        if (_fileSystem is null)
+        {
+            return Array.Empty<string>();
+        }
+
+        var fullPath = Path.Combine(repositoryPath, relativeFile.Replace('/', Path.DirectorySeparatorChar));
+        if (!_fileSystem.FileExists(fullPath))
+        {
+            return Array.Empty<string>();
+        }
+
+        try
+        {
+            var document = XDocument.Parse(_fileSystem.ReadAllText(fullPath));
+            var values = new List<string>();
+            var sdkAttribute = document.Root?.Attribute("Sdk")?.Value;
+            AddSdkValues(values, sdkAttribute);
+
+            if (document.Root is not null)
+            {
+                foreach (var element in document.Root.Elements("Sdk"))
+                {
+                    AddSdkValues(values, element.Attribute("Name")?.Value);
+                }
+            }
+
+            return values;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Xml.XmlException)
+        {
+            return Array.Empty<string>();
+        }
+    }
+
+    private static void AddSdkValues(List<string> values, string? rawValue)
+    {
+        if (string.IsNullOrWhiteSpace(rawValue))
+        {
+            return;
+        }
+
+        values.AddRange(rawValue
+            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(value => value.Length > 0));
+    }
+
+    private bool HasMinimalApiSignal(string repositoryPath, IReadOnlyList<string> relativeFiles)
+    {
+        if (_fileSystem is null)
+        {
+            return false;
+        }
+
+        foreach (var relativeFile in relativeFiles.Where(file => file.EndsWith("Program.cs", StringComparison.OrdinalIgnoreCase)))
+        {
+            var fullPath = Path.Combine(repositoryPath, relativeFile.Replace('/', Path.DirectorySeparatorChar));
+            if (!_fileSystem.FileExists(fullPath) || _fileSystem.GetFileLength(fullPath) > 200_000)
+            {
+                continue;
+            }
+
+            try
+            {
+                var content = _fileSystem.ReadAllText(fullPath);
+                if (content.Contains("WebApplication.CreateBuilder", StringComparison.Ordinal) &&
+                    (content.Contains(".MapGet(", StringComparison.Ordinal) ||
+                     content.Contains(".MapPost(", StringComparison.Ordinal) ||
+                     content.Contains(".MapPut(", StringComparison.Ordinal) ||
+                     content.Contains(".MapDelete(", StringComparison.Ordinal) ||
+                     content.Contains(".MapMethods(", StringComparison.Ordinal) ||
+                     content.Contains(".MapGroup(", StringComparison.Ordinal)))
+                {
+                    return true;
+                }
+            }
+            catch (IOException)
+            {
+            }
+            catch (UnauthorizedAccessException)
+            {
+            }
+        }
+
+        return false;
     }
 }
 

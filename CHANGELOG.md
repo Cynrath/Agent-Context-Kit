@@ -24,6 +24,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Source hygiene documentation and final scaffold cleanup.
 - Public release audit document and local audit script.
 - Maintainer-only public release handoff document.
+- v0.2 stack detector expansion for .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

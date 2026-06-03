@@ -459,7 +459,7 @@ public static class Program
         var secretScanner = new SecretScanner();
         var brandPiiScanner = new BrandPiiScanner();
         var riskScanner = new RiskScanner(fileSystem, secretScanner, brandPiiScanner);
-        var stackDetector = new StackDetector();
+        var stackDetector = new StackDetector(fileSystem);
         var repositoryScanner = new RepositoryScanner(fileSystem, stackDetector, riskScanner);
         var templateRenderer = new TemplateRenderer();
         var textProvider = new TextProvider();

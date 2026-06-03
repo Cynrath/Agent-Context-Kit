@@ -35,6 +35,8 @@ ackit scan
 ackit scan --json
 ```
 
+Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly, .NET Worker Service, ASP.NET Core Minimal API, Node, npm, pnpm, Yarn, Bun, TypeScript, Vite, Next.js, Nuxt, Angular, Tailwind CSS, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration files when matching local files are present.
+
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
 

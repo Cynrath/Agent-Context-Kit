@@ -14,7 +14,7 @@
 - GitHub Actions.
 
 ## v0.2.0-alpha
-- Stronger stack detector.
+- Stronger stack detector. Started with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
 - Better risk scanner.
 - `.ackit/config.yml` brand/PII keyword support improvements.
 - JSON schema stabilization and expanded fields.

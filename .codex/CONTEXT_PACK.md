@@ -42,3 +42,6 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
 - Tests live in `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`.
+
+## v0.2 Progress
+- TASK-0011 completed stack detection expansion with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
