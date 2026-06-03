@@ -75,9 +75,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0028 with task ID/title/status/size/path previews, capped encoded task details, focused tests, docs, and release verification.
 - Started TASK-0029 for v0.4 final readiness consolidation.
 - Completed TASK-0029 with a local-only v0.4 readiness script, readiness docs, release/doc index updates, and release verification.
+- Started TASK-0030 for v0.5 optional LLM integration architecture.
+- Completed TASK-0030 with optional LLM architecture docs, ADR-0010, product/architecture doc updates, and release verification. No live provider calls, API keys, SDK dependencies, or remote exports were added.
 
 ## Next Clear Steps
-1. Continue v0.5 product work with TASK-0030 for optional LLM integration architecture.
+1. Continue v0.5 product work with TASK-0031 for the provider-neutral `ILLMProvider` abstraction.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -207,6 +209,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0027-v040-risk-finding-browser-refinement.md`
 - `docs/tasks/TASK-0028-v040-task-preview-refinement.md`
 - `docs/tasks/TASK-0029-v040-final-readiness-consolidation.md`
+- `docs/tasks/TASK-0030-v050-optional-llm-integration-architecture.md`
+- `docs/LLM_INTEGRATION_ARCHITECTURE.md`
+- `docs/DECISIONS.md`
+- `docs/PRODUCT_SPEC.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `docs/V040_READINESS.md`
 - `scripts/check-v040-readiness.ps1`
@@ -267,6 +273,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0027 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0027-validation-final2.html --json` created an ignored local static Web UI with riskSummary 0; static file checks found `Risk Finding Browser`, `Review Queue`, `Finding ID`, `Recommended Action`, and `No risk findings`; static file checks found no remote asset/script/import references; `scan --ci` exited 0 and reported no risk findings; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0028 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0028-validation-final2.html --json` created an ignored local static Web UI with riskSummary 0 and TASK-0028 shown as completed; static file checks found `Task Preview`, `Task ID`, `Title`, `Task Status`, and `Size`; static file checks found no remote asset/script/import references; `scan --ci` exited 0 and reported no risk findings; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0029 verification: `check-v040-readiness.ps1` report-only and `-FailOnIssues` modes exited 0 with no v0.4 asset issues; build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0029-validation-final.html --json` created an ignored local static Web UI with riskSummary 0 and TASK-0029 shown as completed; `scan --ci` exited 0 and reported no risk findings; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0030 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `scan --ci` exited 0 and reported no risk findings; `check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -280,4 +287,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0029 is implemented and verified. Continue v0.5 product work with TASK-0030 for optional LLM integration architecture. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0030 is implemented and verified. Continue v0.5 product work with TASK-0031 for the provider-neutral `ILLMProvider` abstraction. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, or automatically redact without explicit maintainer instruction.

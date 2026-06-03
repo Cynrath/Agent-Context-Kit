@@ -120,4 +120,20 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0030 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0030.
+
+- Added `docs/LLM_INTEGRATION_ARCHITECTURE.md` for future optional LLM provider work.
+- Documented current offline-only state, consent gates, data minimization, provider boundaries, secrets handling, audit/security requirements, failure behavior, rollback, and future task split.
+- Added ADR-0010 to defer live LLM calls, SDK dependencies, API key handling, and context export until explicit maintainer approval.
+- Updated product spec, architecture, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+- Checked official OpenAI docs fallback for Responses API and API-key handling guidance, and Context7 `/dotnet/docs` for DI/interface guidance before writing the architecture.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed. Public release blockers remain maintainer-only TODO package URLs and missing release tag.
+- `git diff --check` passed.
+- Real-name grep found no matches.

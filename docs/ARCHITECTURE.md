@@ -43,5 +43,7 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 
+Optional future LLM integration is documented in `docs/LLM_INTEGRATION_ARCHITECTURE.md`. No provider calls exist today. Future provider implementations should stay behind Core interfaces, use dependency injection, require explicit user consent before export, and keep the CLI limited to argument parsing and output mapping.
+
 ## Output Schema
 Human-readable CLI output is optimized for short terminal feedback. JSON output is produced by the CLI layer from Core models and includes `schemaVersion` and `toolVersion` metadata for automation.

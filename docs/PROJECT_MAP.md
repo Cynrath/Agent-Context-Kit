@@ -41,6 +41,7 @@ Updated: 2026-06-03
 - `docs/GOVERNANCE.md`
 - `docs/HTML_REPORTS.md`
 - `docs/JSON_OUTPUT.md`
+- `docs/LLM_INTEGRATION_ARCHITECTURE.md`
 - `docs/LOCALIZATION.md`
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`
 - `docs/MAINTAINERS.md`
@@ -92,6 +93,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0027-v040-risk-finding-browser-refinement.md`
 - `docs/tasks/TASK-0028-v040-task-preview-refinement.md`
 - `docs/tasks/TASK-0029-v040-final-readiness-consolidation.md`
+- `docs/tasks/TASK-0030-v050-optional-llm-integration-architecture.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

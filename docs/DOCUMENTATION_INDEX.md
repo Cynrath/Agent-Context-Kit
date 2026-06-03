@@ -25,6 +25,7 @@
 - `docs/SOURCE_HYGIENE.md`: source and package hygiene rules.
 - `docs/LOCALIZATION.md`: English/Turkish support.
 - `docs/DECISIONS.md`: architecture decision records.
+- `docs/LLM_INTEGRATION_ARCHITECTURE.md`: optional future LLM provider architecture.
 - `docs/PROJECT_MAP.md`: generated project map.
 - `docs/AI_WORKFLOW.md`: generated AI workflow.
 

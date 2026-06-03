@@ -41,7 +41,7 @@
 - Final local readiness consolidation.
 
 ## v0.5.0-beta
-- Optional LLM integration architecture.
+- Optional LLM integration architecture. Documented with consent gates, provider boundaries, data minimization, and no live provider calls.
 - `ILLMProvider` abstraction.
 - Dry-run prompt pack generation.
 - User-approved context export.
