@@ -55,6 +55,11 @@ public interface IAgentInstructionGenerator
     IReadOnlyList<GeneratedFileResult> Generate(string repositoryPath, AgentTarget target, LanguageCode language, ScanResult scanResult);
 }
 
+public interface IHtmlReportGenerator
+{
+    GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
+}
+
 public interface IFileSystem
 {
     bool FileExists(string path);

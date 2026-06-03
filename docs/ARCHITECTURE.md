@@ -27,6 +27,7 @@ tests/
 - `ITextProvider`
 - `ITaskFileGenerator`
 - `IAgentInstructionGenerator`
+- `IHtmlReportGenerator`
 - `IFileSystem`
 - `IClock`
 - `IAckitConfigReader`
@@ -34,6 +35,8 @@ tests/
 
 ## Design Notes
 The CLI must not contain business logic. Core services are designed to be testable with file-system and clock abstractions. MVP templates are embedded in code for reliability, with a future path to external template packs.
+
+`HtmlReportGenerator` creates self-contained local HTML reports from scan results. It encodes repository content, rejects output paths outside the repository, and skips existing files by default.
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 

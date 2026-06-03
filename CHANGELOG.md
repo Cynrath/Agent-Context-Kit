@@ -33,6 +33,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - v0.2 local readiness review script and documentation.
 - CI mode for `ackit scan --ci` with high/critical exit codes and GitHub Actions integration.
 - Exit code standardization with centralized CLI constants and a documented exit code matrix.
+- Offline static HTML report generation with `ackit report`.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

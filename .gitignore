@@ -28,6 +28,7 @@ logs/
 *.log
 *.tmp
 *.bak
+.ackit/reports/
 
 # Archives and backups
 *.zip

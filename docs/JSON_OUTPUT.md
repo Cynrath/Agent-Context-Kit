@@ -5,6 +5,7 @@ AgentContextKit supports machine-readable JSON output for automation and CI usag
 Supported commands:
 - `ackit init --json`
 - `ackit scan --json`
+- `ackit report --json`
 - `ackit generate --json`
 - `ackit task "<title>" --json`
 - `ackit redact-check --json`
@@ -32,6 +33,7 @@ Schema version `2` adds:
 - `checkSummary` on `doctor`.
 - `fileSummary` on `generate`.
 - `ciMode` and `exitCode` on `scan`.
+- `report` generated file metadata on `report`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.

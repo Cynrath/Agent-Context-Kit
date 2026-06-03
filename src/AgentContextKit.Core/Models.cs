@@ -115,7 +115,7 @@ public sealed record AckitConfig(
         LanguageCode.English,
         Array.Empty<string>(),
         Array.Empty<string>(),
-        [".ackit/cache/"],
+        [".ackit/cache/", ".ackit/reports/"],
         [".bak", ".tmp", ".log", ".sql"]);
 }
 

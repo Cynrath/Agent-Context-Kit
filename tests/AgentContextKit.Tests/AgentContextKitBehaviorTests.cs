@@ -265,6 +265,16 @@ public sealed class RiskScannerTests
     }
 
     [Fact]
+    public void BrandPiiScannerIgnoresCommonDotNetNamespaces()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText("Program.cs", "using System.Net;", AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding => finding.Category == RiskCategory.Brand);
+    }
+
+    [Fact]
     public void BrandPiiScannerUsesTokenBoundariesForConfiguredKeywords()
     {
         var scanner = new BrandPiiScanner();
@@ -356,6 +366,60 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("- dotnet build", content);
         Assert.Contains("- ackit scan", content);
     }
+
+    [Fact]
+    public void HtmlReportGeneratorCreatesEncodedReport()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new HtmlReportGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(
+            repo.Path,
+            ["notes.md"],
+            [new StackInfo(".NET", ".csproj")],
+            [new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "notes.md", "<script>alert</script>")],
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false);
+
+        var result = generator.Generate(repo.Path, "reports/scan.html", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, "reports", "scan.html"));
+
+        Assert.True(result.Created);
+        Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);
+        Assert.DoesNotContain("<script>alert</script>", content);
+    }
+
+    [Fact]
+    public void HtmlReportGeneratorDoesNotOverwriteExistingReport()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("reports/scan.html", "original");
+        var generator = new HtmlReportGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        var result = generator.Generate(repo.Path, "reports/scan.html", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, "reports", "scan.html"));
+
+        Assert.False(result.Created);
+        Assert.Equal("original", content);
+    }
+
+    [Fact]
+    public void HtmlReportGeneratorRejectsUnsafeOutputPath()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new HtmlReportGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../scan.html", LanguageCode.English, scan));
+    }
 }
 
 public sealed class ConfigAndDoctorTests
@@ -370,6 +434,7 @@ public sealed class ConfigAndDoctorTests
         var config = reader.Read(repo.Path);
 
         Assert.Equal("en", config.DefaultLanguage.Value);
+        Assert.Contains(".ackit/reports/", config.IgnorePaths);
     }
 
     [Fact]
@@ -510,6 +575,23 @@ public sealed class CliJsonAndMetadataTests
 
         Assert.Equal(1, result.ExitCode);
         Assert.Contains("requires a title", result.Error);
+    }
+
+    [Fact]
+    public void ReportJsonCreatesHtmlReport()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+
+        var result = RunCli(repo.Path, ["report", "--output", ".ackit/reports/test-report.html", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var reportPath = System.IO.Path.Combine(repo.Path, ".ackit", "reports", "test-report.html");
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("report", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit/reports/test-report.html", json?["report"]?["path"]?.GetValue<string>());
+        Assert.True(File.Exists(reportPath));
+        Assert.Contains("<!doctype html>", File.ReadAllText(reportPath));
     }
 
     [Fact]

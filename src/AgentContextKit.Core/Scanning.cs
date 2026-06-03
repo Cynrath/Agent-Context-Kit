@@ -600,7 +600,8 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         "nuget.org",
         "aka.ms",
         "example.com",
-        "ASP.NET"
+        "ASP.NET",
+        "System.Net"
     };
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content, AckitConfig config)

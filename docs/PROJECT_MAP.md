@@ -38,6 +38,7 @@ Updated: 2026-06-03
 - `docs/EXIT_CODES.md`
 - `docs/FAQ.md`
 - `docs/GOVERNANCE.md`
+- `docs/HTML_REPORTS.md`
 - `docs/JSON_OUTPUT.md`
 - `docs/LOCALIZATION.md`
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`
@@ -79,6 +80,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0017-v020-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0018-v030-ci-mode.md`
 - `docs/tasks/TASK-0019-v030-exit-code-standardization.md`
+- `docs/tasks/TASK-0020-v030-html-report-generation.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

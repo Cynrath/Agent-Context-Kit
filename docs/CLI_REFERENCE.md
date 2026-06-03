@@ -46,6 +46,23 @@ Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly,
 
 Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
+### `ackit report`
+Generates an offline static HTML scan report. Existing report files are skipped.
+
+```powershell
+ackit report
+ackit report --output .ackit/reports/current.html
+ackit report --output docs/local-scan-report.html --json
+```
+
+Default output path:
+- `.ackit/reports/scan-report.html`
+
+Safety behavior:
+- Output paths must be repository-relative.
+- Existing files are not overwritten.
+- Reports are self-contained and use no remote assets.
+
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
 

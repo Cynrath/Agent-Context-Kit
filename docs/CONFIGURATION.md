@@ -23,6 +23,7 @@ brandKeywords: []
 piiKeywords: []
 ignorePaths:
   - .ackit/cache/
+  - .ackit/reports/
 riskExtensions:
   - .bak
   - .tmp

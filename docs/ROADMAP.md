@@ -24,7 +24,7 @@
 - Final local readiness consolidation.
 
 ## v0.3.0-beta
-- HTML report generation.
+- HTML report generation. Started with offline static `ackit report`.
 - CI mode. Started with `ackit scan --ci` and GitHub Actions integration.
 - Exit code standardization. Started with centralized CLI constants and an exit code matrix.
 - Public release hardening.

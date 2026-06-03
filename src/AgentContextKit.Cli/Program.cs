@@ -29,6 +29,7 @@ public static class Program
                 "version" or "--version" => RunVersion(),
                 "init" => RunInit(repositoryPath, language, json, services),
                 "scan" => RunScan(repositoryPath, config, language, json, ci, services),
+                "report" => RunReport(args, repositoryPath, config, language, json, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
                 "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
@@ -51,6 +52,7 @@ public static class Program
         Console.WriteLine("Usage:");
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
+        Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
@@ -118,6 +120,33 @@ public static class Program
 
         PrintScan(scan, language, services);
         return exitCode;
+    }
+
+    private static int RunReport(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    {
+        var outputPath = GetOption(args, "--output");
+        var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var result = services.HtmlReportGenerator.Generate(repositoryPath, outputPath, language, scan);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "report",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
+                riskSummary = ToRiskSummary(scan.Findings),
+                report = ToGeneratedFileDto(result)
+            });
+            return ExitSuccess;
+        }
+
+        PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        return ExitSuccess;
     }
 
     private static int RunGenerate(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
@@ -534,7 +563,8 @@ public static class Program
     {
         return string.Equals(option, "--lang", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--target", StringComparison.OrdinalIgnoreCase) ||
-               string.Equals(option, "--profile", StringComparison.OrdinalIgnoreCase);
+               string.Equals(option, "--profile", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(option, "--output", StringComparison.OrdinalIgnoreCase);
     }
 
     private static Services CreateServices()
@@ -555,6 +585,7 @@ public static class Program
             new AckitConfigWriter(fileSystem),
             repositoryScanner,
             new AgentInstructionGenerator(fileSystem, templateRenderer, clock),
+            new HtmlReportGenerator(fileSystem, clock),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
             clock,
@@ -567,6 +598,7 @@ public static class Program
         IAckitConfigWriter ConfigWriter,
         IRepositoryScanner RepositoryScanner,
         IAgentInstructionGenerator AgentInstructionGenerator,
+        IHtmlReportGenerator HtmlReportGenerator,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
         IClock Clock,
