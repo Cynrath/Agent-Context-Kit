@@ -42,6 +42,7 @@ dotnet restore
 dotnet build -c Release
 dotnet test -c Release
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
@@ -67,3 +68,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0015 completed safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.
 - TASK-0016 completed NuGet package metadata review script and documentation.
 - TASK-0017 completed v0.2 local readiness consolidation script and documentation.
+- TASK-0018 completed `ackit scan --ci` with high/critical exit codes, scan JSON CI metadata, tests, docs, and GitHub Actions integration.

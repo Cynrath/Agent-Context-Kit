@@ -76,6 +76,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
 - `docs/tasks/TASK-0016-v020-nuget-metadata-hardening.md`
 - `docs/tasks/TASK-0017-v020-final-readiness-consolidation.md`
+- `docs/tasks/TASK-0018-v030-ci-mode.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

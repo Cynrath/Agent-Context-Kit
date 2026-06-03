@@ -8,6 +8,7 @@ dotnet restore AgentContextKit.sln
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
 dotnet run --project src/AgentContextKit.Cli -- scan
+dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 

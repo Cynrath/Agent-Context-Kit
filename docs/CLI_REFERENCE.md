@@ -14,6 +14,9 @@ Select output/template language. Unknown values fall back to `en`.
 ### `--json`
 Emit machine-readable JSON where supported. Current JSON output schema version: `2`.
 
+### `--ci`
+CI mode for `ackit scan`. High findings return exit code `1`; critical findings return exit code `2`.
+
 ## Commands
 ### `ackit init`
 Creates `.ackit/config.yml` if it does not exist.
@@ -32,10 +35,17 @@ Scans repository structure, stack signals, docs, CI, tests, agent files, and ris
 
 ```powershell
 ackit scan
+ackit scan --ci
 ackit scan --json
+ackit scan --ci --json
 ```
 
 Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly, .NET Worker Service, ASP.NET Core Minimal API, Node, npm, pnpm, Yarn, Bun, TypeScript, Vite, Next.js, Nuxt, Angular, Tailwind CSS, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration files when matching local files are present.
+
+Exit codes:
+- `0`: default report-only mode, or CI mode with no high/critical findings
+- `1`: CI mode with high findings and no critical findings
+- `2`: CI mode with critical findings
 
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.

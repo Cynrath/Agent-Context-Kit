@@ -31,6 +31,7 @@ Schema version `2` adds:
 - `riskSummary` on `scan` and `redact-check`.
 - `checkSummary` on `doctor`.
 - `fileSummary` on `generate`.
+- `ciMode` and `exitCode` on `scan`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -38,6 +39,11 @@ Human output and JSON output use the same exit code strategy.
 `redact-check`:
 - `0`: no findings
 - `1`: warning findings
+- `2`: critical findings
+
+`scan --ci`:
+- `0`: no high/critical findings
+- `1`: high findings and no critical findings
 - `2`: critical findings
 
 `doctor`:
@@ -56,6 +62,8 @@ Example shape:
   "toolVersion": "0.1.0-alpha.1",
   "generatedAtUtc": "2026-06-03T00:00:00+00:00",
   "command": "scan",
+  "ciMode": false,
+  "exitCode": 0,
   "repositoryPath": "...",
   "repositoryName": "agent-context-kit",
   "fileCount": 12,

@@ -29,6 +29,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 ## Features
 - `ackit init`: create `.ackit/config.yml` without overwriting existing config.
 - `ackit scan`: detect stack, docs, tests, CI, Docker, agent files, and risky paths.
+- `ackit scan --ci`: fail automated checks on high or critical risk findings.
 - `ackit generate`: generate context and workflow files for supported agent targets.
 - `ackit task`: create structured task files under `docs/tasks`.
 - `ackit redact-check`: report secret/PII/brand/local path risks.
@@ -42,6 +43,7 @@ dotnet restore
 dotnet build -c Release
 dotnet run --project src/AgentContextKit.Cli -- --help
 dotnet run --project src/AgentContextKit.Cli -- scan
+dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
 ```
@@ -49,7 +51,7 @@ dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --l
 ## CLI Commands
 ```text
 ackit init [--lang en|tr] [--json]
-ackit scan [--lang en|tr] [--json]
+ackit scan [--lang en|tr] [--json] [--ci]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
 ackit task "<title>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]

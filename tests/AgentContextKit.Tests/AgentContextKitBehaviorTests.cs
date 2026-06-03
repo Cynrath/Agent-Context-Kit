@@ -432,9 +432,62 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("scan", json?["command"]?.GetValue<string>());
+        Assert.False(json?["ciMode"]?.GetValue<bool>());
+        Assert.Equal(0, json?["exitCode"]?.GetValue<int>());
         Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
         Assert.True(json?["fileCount"]?.GetValue<int>() >= 2);
         Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+    }
+
+    [Fact]
+    public void ScanWithoutCiPreservesZeroExitForFindings()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "password" + "=not-for-public");
+
+        var result = RunCli(repo.Path, ["scan"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("High", result.Output);
+    }
+
+    [Fact]
+    public void ScanCiReturnsOneForHighFindings()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "password" + "=not-for-public");
+
+        var result = RunCli(repo.Path, ["scan", "--ci"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("High", result.Output);
+    }
+
+    [Fact]
+    public void ScanCiReturnsTwoForCriticalFindings()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+
+        var result = RunCli(repo.Path, ["scan", "--ci"]);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("Critical", result.Output);
+    }
+
+    [Fact]
+    public void ScanCiJsonIncludesExitCode()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "password" + "=not-for-public");
+
+        var result = RunCli(repo.Path, ["scan", "--ci", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.True(json?["ciMode"]?.GetValue<bool>());
+        Assert.Equal(1, json?["exitCode"]?.GetValue<int>());
+        Assert.True(json?["riskSummary"]?["high"]?.GetValue<int>() > 0);
     }
 
     [Fact]

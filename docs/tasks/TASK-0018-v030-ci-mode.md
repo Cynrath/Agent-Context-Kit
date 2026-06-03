@@ -116,4 +116,13 @@ GitHub Actions can run `ackit scan --ci` after build/test. Public release blocke
 Revert the TASK-0018 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented `ackit scan --ci`.
+
+Verification completed:
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 35/35 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` on this repository.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci --json` emitted `ciMode: true` and `exitCode: 0`.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed and the installed temporary tool showed `scan --ci` in help output.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

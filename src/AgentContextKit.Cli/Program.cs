@@ -18,13 +18,14 @@ public static class Program
             var language = LanguageCode.From(GetOption(args, "--lang") ?? config.DefaultLanguage.Value);
             var command = args.Length == 0 ? "help" : args[0].Trim().ToLowerInvariant();
             var json = HasFlag(args, "--json");
+            var ci = HasFlag(args, "--ci");
 
             return command switch
             {
                 "help" or "--help" or "-h" => RunHelp(language, services.TextProvider),
                 "version" or "--version" => RunVersion(),
                 "init" => RunInit(repositoryPath, language, json, services),
-                "scan" => RunScan(repositoryPath, config, language, json, services),
+                "scan" => RunScan(repositoryPath, config, language, json, ci, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
                 "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
@@ -46,7 +47,7 @@ public static class Program
         Console.WriteLine();
         Console.WriteLine("Usage:");
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
-        Console.WriteLine("  ackit scan [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
@@ -102,17 +103,18 @@ public static class Program
         return 0;
     }
 
-    private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var exitCode = GetScanExitCode(scan, ci);
         if (json)
         {
-            WriteJson(ToScanDto("scan", scan, services.Clock.UtcNow));
-            return 0;
+            WriteJson(ToScanDto("scan", scan, services.Clock.UtcNow, ci, exitCode));
+            return exitCode;
         }
 
         PrintScan(scan, language, services);
-        return 0;
+        return exitCode;
     }
 
     private static int RunGenerate(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
@@ -328,7 +330,7 @@ public static class Program
         }));
     }
 
-    private static object ToScanDto(string command, ScanResult scan, DateTimeOffset generatedAtUtc)
+    private static object ToScanDto(string command, ScanResult scan, DateTimeOffset generatedAtUtc, bool ciMode, int exitCode)
     {
         return new
         {
@@ -336,6 +338,8 @@ public static class Program
             toolVersion = Version,
             generatedAtUtc,
             command,
+            ciMode,
+            exitCode,
             repositoryPath = scan.RepositoryPath,
             repositoryName = GetRepositoryName(scan.RepositoryPath),
             fileCount = scan.Files.Count,
@@ -439,6 +443,26 @@ public static class Program
     private static string YesNo(bool value)
     {
         return value ? "yes" : "no";
+    }
+
+    private static int GetScanExitCode(ScanResult scan, bool ci)
+    {
+        if (!ci)
+        {
+            return 0;
+        }
+
+        if (scan.Findings.Any(finding => finding.Severity == RiskSeverity.Critical))
+        {
+            return 2;
+        }
+
+        if (scan.Findings.Any(finding => finding.Severity == RiskSeverity.High))
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
     private static AgentTarget ParseTarget(string? value)

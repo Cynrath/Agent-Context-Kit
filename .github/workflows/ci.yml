@@ -35,3 +35,6 @@ jobs:
 
       - name: Test
         run: dotnet test AgentContextKit.sln -c Release --no-build
+
+      - name: AgentContextKit scan
+        run: dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
