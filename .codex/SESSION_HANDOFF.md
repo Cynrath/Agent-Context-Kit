@@ -47,17 +47,20 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0014 with expanded templates, current generated docs, tests, self-scan cleanup, and release verification.
 - Started TASK-0015 for safe sample repositories.
 - Completed TASK-0015 with safe sample repositories, docs, root/sample scan validation, and release verification.
+- Started TASK-0016 for NuGet package metadata hardening review.
+- Completed TASK-0016 with a local-only package metadata review script, NuGet metadata docs, release docs updates, and release verification.
 
 ## Next Clear Steps
-1. Continue v0.2 product work with TASK-0016 for NuGet package metadata hardening review.
+1. Continue v0.2 product work with TASK-0017 for final release readiness consolidation.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
 5. Create a release tag only after explicit maintainer approval.
-6. Run `scripts/audit-public-release.ps1 -FailOnIssues` after replacing TODO package URLs and creating the release tag.
-7. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
-8. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
-9. Do not push/tag/publish until explicit maintainer instruction.
+6. Run `scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
+7. Run `scripts/audit-public-release.ps1 -FailOnIssues` after replacing TODO package URLs and creating the release tag.
+8. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
+9. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
+10. Do not push/tag/publish until explicit maintainer instruction.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -151,6 +154,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0013-v020-json-schema-expansion.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
+- `docs/tasks/TASK-0016-v020-nuget-metadata-hardening.md`
+- `docs/NUGET_METADATA.md`
+- `scripts/check-package-metadata.ps1`
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 
@@ -187,6 +193,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0013 verification: build passed with 0 warnings and 0 errors; tests passed 30/30; scan reported no risk findings; release verification script passed; installed temporary `ackit scan --json` emitted schema version 2 metadata and summaries.
 - TASK-0014 verification: build passed with 0 warnings and 0 errors; tests passed 31/31; scan reported no risk findings after template string cleanup; release verification script passed and reported known blockers in non-failing mode.
 - TASK-0015 verification: build passed with 0 warnings and 0 errors; tests passed 31/31; root scan reported no risk findings; both sample scans reported expected stack signals and no risk findings; release verification script passed and reported known blockers in non-failing mode.
+- TASK-0016 verification: package metadata review report-only mode exited 0 and reported TODO URL blockers; package metadata review `-FailOnIssues` exited 1 as expected; build passed with 0 warnings and 0 errors; tests passed 31/31; scan reported no risk findings; release verification script passed and reported known blockers in non-failing mode; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -199,4 +206,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0015 is implemented and verified. Continue v0.2 product work with TASK-0016 for NuGet package metadata hardening review. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0016 is implemented and verified. Continue v0.2 product work with TASK-0017 for final release readiness consolidation. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

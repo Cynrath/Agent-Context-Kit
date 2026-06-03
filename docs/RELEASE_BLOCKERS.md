@@ -21,6 +21,7 @@ The following checks can pass while public release is still blocked:
 - `dotnet test -c Release`
 - `ackit scan`
 - `ackit doctor`
+- `scripts/check-package-metadata.ps1` in report-only mode
 - `dotnet pack`
 - temporary `dotnet tool install --tool-path`
 - `scripts/verify-release.ps1`
@@ -57,19 +58,36 @@ powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailO
 
 See [PUBLIC_RELEASE_AUDIT.md](PUBLIC_RELEASE_AUDIT.md).
 
+## Package Metadata Gate
+Run the package metadata review:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
+```
+
+Run it as a failing gate before public release:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
+```
+
+While TODO package URLs remain, `-FailOnIssues` is expected to return a non-zero exit code. See [NUGET_METADATA.md](NUGET_METADATA.md).
+
 ## Required Manual Resolution
 Before public release:
 1. Select the real public repository URL.
 2. Replace TODO `RepositoryUrl` and `PackageProjectUrl` with that URL.
-3. Run the full release validation script.
-4. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
-5. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
-6. Review package README rendering.
-7. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
-8. Push, tag, and publish only as an explicit maintainer action.
+3. Run the package metadata script with `-FailOnIssues` and confirm it exits `0`.
+4. Run the full release validation script.
+5. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
+6. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
+7. Review package README rendering.
+8. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
+9. Push, tag, and publish only as an explicit maintainer action.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for the manual handoff sequence.
 
 ## References
 - [Create a NuGet package using MSBuild](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-msbuild)
+- [Package authoring best practices](https://learn.microsoft.com/nuget/create-packages/package-authoring-best-practices#package-metadata)
 - [dotnet pack command](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-pack)

@@ -41,6 +41,7 @@ Updated: 2026-06-03
 - `docs/LOCALIZATION.md`
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`
 - `docs/MAINTAINERS.md`
+- `docs/NUGET_METADATA.md`
 - `docs/OSS_READINESS.md`
 - `docs/PACKAGING.md`
 - `docs/PRIVACY.md`
@@ -73,6 +74,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0013-v020-json-schema-expansion.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
+- `docs/tasks/TASK-0016-v020-nuget-metadata-hardening.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`
@@ -89,6 +91,7 @@ Updated: 2026-06-03
 - `samples/node-tooling/tailwind.config.js`
 - `samples/node-tooling/tsconfig.json`
 - `scripts/audit-public-release.ps1`
+- `scripts/check-package-metadata.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`

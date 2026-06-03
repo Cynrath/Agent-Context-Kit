@@ -34,6 +34,7 @@ Then run:
 ```powershell
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
+powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
@@ -63,6 +64,7 @@ Then re-run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
@@ -96,6 +98,7 @@ Do not commit API keys or paste secrets into public logs.
 
 ## Final Checklist
 - Real package URLs are set.
+- Package metadata gate exits `0`.
 - Audit gate exits `0`.
 - Blocker gate exits `0`.
 - Release verification passes.

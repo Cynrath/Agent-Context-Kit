@@ -43,11 +43,13 @@ dotnet build -c Release
 dotnet test -c Release
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
 ## Public Release Blockers
 - `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
+- `scripts/check-package-metadata.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the maintainer-only public release sequence.
@@ -62,3 +64,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0013 completed JSON schema version 2 with generated timestamp, repository metadata, and summary fields.
 - TASK-0014 completed expanded generated agent/context docs with repository health, risk summary, and recommended checks.
 - TASK-0015 completed safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.
+- TASK-0016 completed NuGet package metadata review script and documentation.

@@ -41,6 +41,7 @@
 
 ## Packaging And Release
 - `docs/PACKAGING.md`: NuGet tool packaging.
+- `docs/NUGET_METADATA.md`: NuGet package metadata review workflow.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`: maintainer-only public release handoff.
 - `docs/PUBLIC_RELEASE_AUDIT.md`: final public release audit workflow.
 - `docs/RELEASE_VALIDATION.md`: local release validation.

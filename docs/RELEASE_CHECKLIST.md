@@ -11,6 +11,7 @@
 - SECURITY, CONTRIBUTING, CODE_OF_CONDUCT, CHANGELOG are current.
 - LICENSE is present.
 - NuGet package metadata is reviewed.
+- `scripts/check-package-metadata.ps1 -FailOnIssues` exits `0`.
 - Local `dotnet pack` succeeds.
 - Temporary `dotnet tool install --tool-path` verification succeeds.
 - `scripts/verify-release.ps1` succeeds locally.

@@ -106,4 +106,16 @@ Clarifies which package metadata is ready and which metadata remains blocked by 
 Revert the TASK-0016 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented `scripts/check-package-metadata.ps1` and `docs/NUGET_METADATA.md`.
+
+Verification completed:
+- Metadata review report-only mode exited `0` and reported TODO `RepositoryUrl` and `PackageProjectUrl`.
+- Metadata review `-FailOnIssues` exited `1` as expected while TODO package URLs remain.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 31/31 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `git diff --check` passed.
+- Real-name grep for the maintainer name variants found no matches.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.
