@@ -112,4 +112,14 @@ Clarifies final public release gates while keeping maintainer-only blockers unre
 Revert the TASK-0022 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented `scripts/check-public-release-gates.ps1` and `docs/PUBLIC_RELEASE_GATES.md`.
+
+Verification completed:
+- `scripts/check-public-release-gates.ps1` exited `0` in report-only mode and printed known public-release blockers.
+- Wrapped `scripts/check-public-release-gates.ps1 -FailOnIssues` exited `1` as expected while TODO URLs, missing tag, and uncommitted changes remain.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 42/42 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

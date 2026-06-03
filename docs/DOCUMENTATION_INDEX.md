@@ -48,6 +48,7 @@
 - `docs/V020_READINESS.md`: v0.2 local readiness review.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`: maintainer-only public release handoff.
 - `docs/PUBLIC_RELEASE_AUDIT.md`: final public release audit workflow.
+- `docs/PUBLIC_RELEASE_GATES.md`: package metadata, audit, and blocker gate orchestration.
 - `docs/RELEASE_VALIDATION.md`: local release validation.
 - `docs/RELEASE_BLOCKERS.md`: known public-release blockers and guard script.
 - `docs/RELEASE_CHECKLIST.md`: release checklist.

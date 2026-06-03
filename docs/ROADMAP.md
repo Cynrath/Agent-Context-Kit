@@ -27,7 +27,7 @@
 - HTML report generation. Started with offline static `ackit report`.
 - CI mode. Started with `ackit scan --ci` and GitHub Actions integration.
 - Exit code standardization. Started with centralized CLI constants and an exit code matrix.
-- Public release hardening.
+- Public release hardening. Started with public release gate orchestration.
 - More tests.
 - Example workflows. Started with local development, CI, HTML report, public release preflight, and sample scanning flows.
 

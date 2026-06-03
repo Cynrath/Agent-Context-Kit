@@ -51,6 +51,7 @@ Updated: 2026-06-03
 - `docs/PRODUCT_SPEC.md`
 - `docs/PROJECT_MAP.md`
 - `docs/PUBLIC_RELEASE_AUDIT.md`
+- `docs/PUBLIC_RELEASE_GATES.md`
 - `docs/RELEASE_BLOCKERS.md`
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`
 - `docs/RELEASE_CHECKLIST.md`
@@ -83,6 +84,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0019-v030-exit-code-standardization.md`
 - `docs/tasks/TASK-0020-v030-html-report-generation.md`
 - `docs/tasks/TASK-0021-v030-example-workflows.md`
+- `docs/tasks/TASK-0022-v030-public-release-hardening.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -101,6 +103,7 @@ Updated: 2026-06-03
 - `samples/node-tooling/tsconfig.json`
 - `scripts/audit-public-release.ps1`
 - `scripts/check-package-metadata.ps1`
+- `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/check-v020-readiness.ps1`
 - `scripts/verify-release.ps1`

@@ -37,6 +37,7 @@ dotnet test AgentContextKit.sln -c Release --no-build
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
@@ -66,6 +67,7 @@ Then re-run:
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
@@ -101,6 +103,7 @@ Do not commit API keys or paste secrets into public logs.
 - Package metadata gate exits `0`.
 - Audit gate exits `0`.
 - Blocker gate exits `0`.
+- Public release gate orchestration exits `0`.
 - Release verification passes.
 - Package README renders correctly.
 - `SECURITY.md`, `CONTRIBUTING.md`, and `CHANGELOG.md` are reviewed.

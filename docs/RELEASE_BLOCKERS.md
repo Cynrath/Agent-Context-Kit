@@ -58,6 +58,21 @@ powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailO
 
 See [PUBLIC_RELEASE_AUDIT.md](PUBLIC_RELEASE_AUDIT.md).
 
+## Public Release Gate Orchestration
+Run all public release gates in report-only mode:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
+```
+
+Run all public release gates as failing checks:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
+```
+
+See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
+
 ## Package Metadata Gate
 Run the package metadata review:
 
@@ -81,9 +96,10 @@ Before public release:
 4. Run the full release validation script.
 5. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
 6. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
-7. Review package README rendering.
-8. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
-9. Push, tag, and publish only as an explicit maintainer action.
+7. Run the public release gate orchestration script with `-FailOnIssues` and confirm it exits `0`.
+8. Review package README rendering.
+9. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
+10. Push, tag, and publish only as an explicit maintainer action.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for the manual handoff sequence.
 

@@ -42,6 +42,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailO
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
@@ -56,6 +57,7 @@ Only after the maintainer selects real public URLs and explicitly approves relea
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 ```
 
 ## Sample Repository Checks

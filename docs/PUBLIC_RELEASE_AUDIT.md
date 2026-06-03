@@ -38,6 +38,21 @@ powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailO
 
 While maintainer-only blockers remain, `-FailOnIssues` is expected to return a non-zero exit code.
 
+## Gate Orchestration
+Run package metadata, public release audit, and release blocker checks together:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
+```
+
+Use failing mode only after maintainer-only blockers are resolved:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
+```
+
+See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
+
 ## What The Audit Checks
 - Tracked forbidden build/dependency/test artifact paths.
 - Tracked package, temporary, dump, and backup file extensions.

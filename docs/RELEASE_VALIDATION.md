@@ -80,6 +80,21 @@ powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailO
 
 See [PUBLIC_RELEASE_AUDIT.md](PUBLIC_RELEASE_AUDIT.md).
 
+## Public Release Gate Orchestration
+Run all public release gates in report-only mode:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
+```
+
+Run all public release gates as failing checks only after maintainer-only blockers are resolved:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
+```
+
+See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
+
 ## Package Validation
 ```powershell
 $stamp = Get-Date -Format "yyyyMMddHHmmss"
@@ -97,6 +112,7 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Run `scripts/check-package-metadata.ps1 -FailOnIssues` and confirm it exits `0`.
 - Run `scripts/audit-public-release.ps1 -FailOnIssues` and confirm it exits `0`.
 - Run `scripts/check-release-blockers.ps1 -FailOnBlockers` and confirm it exits `0`.
+- Run `scripts/check-public-release-gates.ps1 -FailOnIssues` and confirm it exits `0`.
 - Confirm `RepositoryUrl` points to the real public repository.
 - Confirm `PackageProjectUrl` points to the real public project/repository page.
 - Confirm package README renders correctly.

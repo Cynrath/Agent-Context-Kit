@@ -47,6 +47,7 @@ dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Relea
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
@@ -73,3 +74,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0019 completed exit code standardization with CLI constants, focused tests, and `docs/EXIT_CODES.md`.
 - TASK-0020 completed offline static HTML report generation with `ackit report`, tests, docs, safe output handling, and ignored `.ackit/reports/`.
 - TASK-0021 completed example workflow documentation for local development, CI, HTML reports, public release preflight, and sample scans.
+- TASK-0022 completed public release gate orchestration script and documentation.
