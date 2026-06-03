@@ -553,6 +553,72 @@ public sealed class TemplateAndGenerationTests
 
         Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../index.html", LanguageCode.English, scan));
     }
+
+    [Fact]
+    public void PromptPackGeneratorCreatesLocalDryRunPack()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("AGENTS.md", "# Agents");
+        repo.Write("docs/tasks/TASK-0001-demo.md", """
+            # TASK-0001: Demo Task
+
+            ## Completion notes
+            Completed.
+            """);
+        var generator = new PromptPackGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(
+            repo.Path,
+            ["AGENTS.md", "docs/tasks/TASK-0001-demo.md"],
+            [new StackInfo(".NET", ".csproj")],
+            [],
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            true,
+            false,
+            false,
+            true);
+
+        var result = generator.Generate(repo.Path, ".ackit/prompt-packs/demo.md", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "prompt-packs", "demo.md"));
+
+        Assert.True(result.Created);
+        Assert.Contains("AgentContextKit Dry-Run Prompt Pack", content);
+        Assert.Contains("No remote LLM provider call was made.", content);
+        Assert.Contains("Generated/Context File Status", content);
+        Assert.Contains("Latest Task Summary", content);
+        Assert.Contains("TASK-0001", content);
+        Assert.Contains("Completed", content);
+        Assert.Contains("No API key was read", content);
+    }
+
+    [Fact]
+    public void PromptPackGeneratorDoesNotOverwriteExistingPack()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/prompt-packs/demo.md", "original");
+        var generator = new PromptPackGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        var result = generator.Generate(repo.Path, ".ackit/prompt-packs/demo.md", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "prompt-packs", "demo.md"));
+
+        Assert.False(result.Created);
+        Assert.Equal("original", content);
+    }
+
+    [Fact]
+    public void PromptPackGeneratorRejectsUnsafeOutputPath()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new PromptPackGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../prompt.md", LanguageCode.English, scan));
+    }
 }
 
 public sealed class ConfigAndDoctorTests
@@ -569,6 +635,7 @@ public sealed class ConfigAndDoctorTests
         Assert.Equal("en", config.DefaultLanguage.Value);
         Assert.Contains(".ackit/reports/", config.IgnorePaths);
         Assert.Contains(".ackit/webui/", config.IgnorePaths);
+        Assert.Contains(".ackit/prompt-packs/", config.IgnorePaths);
     }
 
     [Fact]
@@ -748,6 +815,28 @@ public sealed class CliJsonAndMetadataTests
         Assert.True(File.Exists(webUiPath));
         Assert.Contains("AgentContextKit Web UI", content);
         Assert.Contains("docs/tasks/TASK-0001-demo.md", content);
+    }
+
+    [Fact]
+    public void PromptPackJsonCreatesDryRunPack()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write("AGENTS.md", "# Agents");
+        repo.Write("docs/tasks/TASK-0001-demo.md", "# Demo Task");
+
+        var result = RunCli(repo.Path, ["prompt-pack", "--output", ".ackit/prompt-packs/test-pack.md", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var packPath = System.IO.Path.Combine(repo.Path, ".ackit", "prompt-packs", "test-pack.md");
+        var content = File.ReadAllText(packPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("prompt-pack", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit/prompt-packs/test-pack.md", json?["promptPack"]?["path"]?.GetValue<string>());
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+        Assert.True(File.Exists(packPath));
+        Assert.Contains("AgentContextKit Dry-Run Prompt Pack", content);
+        Assert.Contains("No remote LLM provider call was made.", content);
     }
 
     [Fact]

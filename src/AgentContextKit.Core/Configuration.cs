@@ -188,6 +188,7 @@ public sealed class AckitConfigWriter : IAckitConfigWriter
           - .ackit/cache/
           - .ackit/reports/
           - .ackit/webui/
+          - .ackit/prompt-packs/
         riskExtensions:
           - .bak
           - .tmp

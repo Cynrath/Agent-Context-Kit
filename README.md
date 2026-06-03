@@ -32,6 +32,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - `ackit scan --ci`: fail automated checks on high or critical risk findings.
 - `ackit report`: create an offline static HTML scan report.
 - `ackit webui`: create an offline static Web UI prototype for scan review.
+- `ackit prompt-pack`: create a local dry-run prompt pack for future LLM context review without remote calls.
 - `ackit generate`: generate context and workflow files for supported agent targets.
 - `ackit task`: create structured task files under `docs/tasks`.
 - `ackit redact-check`: report secret/PII/brand/local path risks.
@@ -49,6 +50,7 @@ dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- report --json
 dotnet run --project src/AgentContextKit.Cli -- webui --json
+dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
 ```
 
@@ -58,6 +60,7 @@ ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
 ackit task "<title>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
@@ -81,12 +84,14 @@ Depending on the command and selected target, AgentContextKit can generate:
 - `.codex/CONTEXT_PACK.md`
 - `.ackit/reports/scan-report.html`
 - `.ackit/webui/index.html`
+- `.ackit/prompt-packs/prompt-pack.md`
 
 ## Safety Behavior
 - Existing files are skipped by default.
 - No automatic secret redaction in the MVP.
 - No remote upload.
 - Static reports and Web UI files are local-only and self-contained.
+- Prompt packs are local dry-run artifacts and do not call remote LLM providers.
 - No GitHub push or NuGet publish is performed by the tool.
 - Risk reports are severity based: Critical, High, Medium, Low, Info.
 

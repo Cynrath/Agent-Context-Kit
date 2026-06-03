@@ -30,6 +30,7 @@ logs/
 *.bak
 .ackit/reports/
 .ackit/webui/
+.ackit/prompt-packs/
 
 # Archives and backups
 *.zip

@@ -81,6 +81,24 @@ Safety behavior:
 - The prototype is self-contained and uses no remote assets.
 - Repository-controlled text is HTML-encoded.
 
+### `ackit prompt-pack`
+Generates a local dry-run Markdown prompt pack for future LLM context review. Existing prompt-pack files are skipped.
+
+```powershell
+ackit prompt-pack
+ackit prompt-pack --output .ackit/prompt-packs/current.md
+ackit prompt-pack --output docs/local-prompt-pack.md --json
+```
+
+Default output path:
+- `.ackit/prompt-packs/prompt-pack.md`
+
+Safety behavior:
+- Output paths must be repository-relative.
+- Existing files are not overwritten.
+- The command does not call remote LLM providers.
+- The command does not read, store, generate, or validate API keys.
+
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
 

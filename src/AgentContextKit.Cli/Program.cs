@@ -31,6 +31,7 @@ public static class Program
                 "scan" => RunScan(repositoryPath, config, language, json, ci, services),
                 "report" => RunReport(args, repositoryPath, config, language, json, services),
                 "webui" => RunWebUi(args, repositoryPath, config, language, json, services),
+                "prompt-pack" => RunPromptPack(args, repositoryPath, config, language, json, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
                 "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
@@ -55,6 +56,7 @@ public static class Program
         Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
         Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
@@ -174,6 +176,34 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        return ExitSuccess;
+    }
+
+    private static int RunPromptPack(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    {
+        var outputPath = GetOption(args, "--output");
+        var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var result = services.PromptPackGenerator.Generate(repositoryPath, outputPath, language, scan);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "prompt-pack",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
+                riskSummary = ToRiskSummary(scan.Findings),
+                promptPack = ToGeneratedFileDto(result)
+            });
+            return ExitSuccess;
+        }
+
+        PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine("No remote LLM provider call was made.");
         Console.WriteLine($"Risk findings: {scan.Findings.Count}");
         return ExitSuccess;
     }
@@ -616,6 +646,7 @@ public static class Program
             new AgentInstructionGenerator(fileSystem, templateRenderer, clock),
             new HtmlReportGenerator(fileSystem, clock),
             new WebUiGenerator(fileSystem, clock),
+            new PromptPackGenerator(fileSystem, clock),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
             clock,
@@ -630,6 +661,7 @@ public static class Program
         IAgentInstructionGenerator AgentInstructionGenerator,
         IHtmlReportGenerator HtmlReportGenerator,
         IWebUiGenerator WebUiGenerator,
+        IPromptPackGenerator PromptPackGenerator,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
         IClock Clock,

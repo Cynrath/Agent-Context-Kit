@@ -933,6 +933,299 @@ public sealed class WebUiGenerator : IWebUiGenerator
     private sealed record ExpectedPreviewFile(string Path, string Category);
 }
 
+public sealed class PromptPackGenerator : IPromptPackGenerator
+{
+    private const string DefaultOutputPath = ".ackit/prompt-packs/prompt-pack.md";
+    private static readonly ExpectedPromptPackFile[] ContextFiles =
+    [
+        new("AGENTS.md", "Codex"),
+        new("CLAUDE.md", "Claude"),
+        new(".cursor/rules/project.mdc", "Cursor"),
+        new(".github/copilot-instructions.md", "Copilot"),
+        new(".codex/HANDOFF.md", "Codex"),
+        new(".codex/CONTEXT_PACK.md", "Codex"),
+        new("docs/PROJECT_MAP.md", "Documentation"),
+        new("docs/AI_WORKFLOW.md", "Documentation"),
+        new("docs/SECURITY_NOTES.md", "Documentation"),
+        new("docs/DEVELOPMENT_STANDARD.md", "Documentation")
+    ];
+
+    private readonly IFileSystem _fileSystem;
+    private readonly IClock _clock;
+
+    public PromptPackGenerator(IFileSystem fileSystem, IClock clock)
+    {
+        _fileSystem = fileSystem;
+        _clock = clock;
+    }
+
+    public GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult)
+    {
+        var outputPath = NormalizeOutputPath(repositoryPath, relativeOutputPath);
+        var fullPath = Path.Combine(repositoryPath, outputPath.Replace('/', Path.DirectorySeparatorChar));
+
+        if (_fileSystem.FileExists(fullPath))
+        {
+            return new GeneratedFileResult(outputPath, GeneratedFileStatus.SkippedExisting, "Existing prompt pack was not overwritten.");
+        }
+
+        var content = BuildMarkdown(repositoryPath, language, scanResult);
+        _fileSystem.WriteAllText(fullPath, content.TrimEnd() + Environment.NewLine);
+        return new GeneratedFileResult(outputPath, GeneratedFileStatus.Created, "Dry-run prompt pack created.");
+    }
+
+    private static string NormalizeOutputPath(string repositoryPath, string? relativeOutputPath)
+    {
+        var outputPath = string.IsNullOrWhiteSpace(relativeOutputPath)
+            ? DefaultOutputPath
+            : relativeOutputPath.Trim().Replace('\\', '/');
+
+        if (Path.IsPathRooted(outputPath))
+        {
+            throw new InvalidOperationException("Prompt pack output path must be repository-relative.");
+        }
+
+        var segments = outputPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (segments.Length == 0 || segments.Any(segment => segment is "." or ".."))
+        {
+            throw new InvalidOperationException("Prompt pack output path must stay inside the repository.");
+        }
+
+        if (!outputPath.EndsWith(".md", StringComparison.OrdinalIgnoreCase) &&
+            !outputPath.EndsWith(".markdown", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Prompt pack output path must end with .md or .markdown.");
+        }
+
+        var repositoryFullPath = Path.GetFullPath(repositoryPath);
+        var promptPackFullPath = Path.GetFullPath(Path.Combine(repositoryFullPath, outputPath.Replace('/', Path.DirectorySeparatorChar)));
+        var repositoryPrefix = repositoryFullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+        if (!promptPackFullPath.StartsWith(repositoryPrefix, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Prompt pack output path must stay inside the repository.");
+        }
+
+        return outputPath;
+    }
+
+    private string BuildMarkdown(string repositoryPath, LanguageCode language, ScanResult scanResult)
+    {
+        var projectName = new DirectoryInfo(repositoryPath).Name;
+        var generatedAt = _clock.UtcNow.ToString("u", CultureInfo.InvariantCulture);
+        var builder = new StringBuilder();
+
+        builder.AppendLine("# " + Label(language, "AgentContextKit Dry-Run Prompt Pack", "AgentContextKit Dry-Run Prompt Paketi"));
+        builder.AppendLine();
+        builder.AppendLine("> " + Label(language, "Local review artifact only. No remote LLM provider call was made.", "Sadece lokal inceleme ciktisi. Remote LLM provider cagrisi yapilmadi."));
+        builder.AppendLine();
+        builder.AppendLine("## " + Label(language, "Repository", "Repository"));
+        builder.AppendLine("- Project: " + projectName);
+        builder.AppendLine("- Path: " + scanResult.RepositoryPath);
+        builder.AppendLine("- Generated: " + generatedAt);
+        builder.AppendLine("- Command intent: dry-run prompt context review");
+        builder.AppendLine();
+
+        AppendScanSummary(builder, language, scanResult);
+        AppendStacks(builder, language, scanResult);
+        AppendHealth(builder, language, scanResult);
+        AppendContextFiles(builder, language, scanResult);
+        AppendLatestTasks(builder, repositoryPath, language, scanResult);
+        AppendSafetyNotes(builder, language);
+
+        return builder.ToString();
+    }
+
+    private static void AppendScanSummary(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("## " + Label(language, "Scan Summary", "Scan Ozeti"));
+        builder.AppendLine("- Files: " + scanResult.Files.Count.ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Stacks: " + scanResult.Stacks.Count.ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Risk findings: " + scanResult.Findings.Count.ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Critical: " + scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Critical).ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- High: " + scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.High).ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Medium: " + scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Medium).ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Low: " + scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Low).ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine("- Info: " + scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Info).ToString(CultureInfo.InvariantCulture));
+        builder.AppendLine();
+    }
+
+    private static void AppendStacks(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("## " + Label(language, "Stack Signals", "Stack Sinyalleri"));
+        if (scanResult.Stacks.Count == 0)
+        {
+            builder.AppendLine("- Unknown");
+        }
+        else
+        {
+            foreach (var stack in scanResult.Stacks)
+            {
+                builder.AppendLine("- " + stack.Name + ": " + stack.Signal);
+            }
+        }
+
+        builder.AppendLine();
+    }
+
+    private static void AppendHealth(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("## " + Label(language, "Repository Health", "Repository Sagligi"));
+        builder.AppendLine("| Check | Status |");
+        builder.AppendLine("| --- | --- |");
+        AppendHealthRow(builder, "README", scanResult.HasReadme);
+        AppendHealthRow(builder, "LICENSE", scanResult.HasLicense);
+        AppendHealthRow(builder, "SECURITY", scanResult.HasSecurityPolicy);
+        AppendHealthRow(builder, "CONTRIBUTING", scanResult.HasContributing);
+        AppendHealthRow(builder, "CODE_OF_CONDUCT", scanResult.HasCodeOfConduct);
+        AppendHealthRow(builder, "CHANGELOG", scanResult.HasChangelog);
+        AppendHealthRow(builder, "Tests", scanResult.HasTests);
+        AppendHealthRow(builder, "CI", scanResult.HasCi);
+        AppendHealthRow(builder, "Docker", scanResult.HasDocker);
+        AppendHealthRow(builder, "Agent instructions", scanResult.HasAgentInstructions);
+        builder.AppendLine();
+    }
+
+    private static void AppendHealthRow(StringBuilder builder, string name, bool value)
+    {
+        builder.AppendLine("| " + EscapeTable(name) + " | " + (value ? "yes" : "no") + " |");
+    }
+
+    private static void AppendContextFiles(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("## " + Label(language, "Generated/Context File Status", "Uretilen/Context Dosya Durumu"));
+        builder.AppendLine("| Category | Status | Path |");
+        builder.AppendLine("| --- | --- | --- |");
+        foreach (var file in ContextFiles)
+        {
+            var exists = scanResult.Files.Contains(file.Path, StringComparer.OrdinalIgnoreCase);
+            builder.AppendLine("| " + EscapeTable(file.Category) + " | " + (exists ? "Present" : "Missing") + " | `" + EscapeTable(file.Path) + "` |");
+        }
+
+        builder.AppendLine();
+    }
+
+    private void AppendLatestTasks(StringBuilder builder, string repositoryPath, LanguageCode language, ScanResult scanResult)
+    {
+        var taskFiles = scanResult.Files
+            .Where(file => file.StartsWith("docs/tasks/", StringComparison.OrdinalIgnoreCase) &&
+                           file.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+            .OrderByDescending(file => file, StringComparer.OrdinalIgnoreCase)
+            .Take(12)
+            .ToArray();
+
+        builder.AppendLine("## " + Label(language, "Latest Task Summary", "Son Task Ozeti"));
+        if (taskFiles.Length == 0)
+        {
+            builder.AppendLine("- No task files detected.");
+            builder.AppendLine();
+            return;
+        }
+
+        builder.AppendLine("| Task ID | Status | Title | Path |");
+        builder.AppendLine("| --- | --- | --- | --- |");
+        foreach (var file in taskFiles)
+        {
+            var content = ReadFileText(repositoryPath, file);
+            builder.AppendLine("| " + EscapeTable(GetTaskId(file)) + " | " + EscapeTable(GetTaskStatus(content)) + " | " + EscapeTable(GetTaskTitle(file, content)) + " | `" + EscapeTable(file) + "` |");
+        }
+
+        builder.AppendLine();
+    }
+
+    private static void AppendSafetyNotes(StringBuilder builder, LanguageCode language)
+    {
+        builder.AppendLine("## " + Label(language, "Dry-Run Safety Notes", "Dry-Run Guvenlik Notlari"));
+        builder.AppendLine("- No remote LLM provider call was made.");
+        builder.AppendLine("- No API key was read, stored, generated, or validated.");
+        builder.AppendLine("- This file is not approval to export repository context.");
+        builder.AppendLine("- Review `ackit scan --ci` and `ackit redact-check --profile public-release` before any future provider use.");
+        builder.AppendLine("- Keep this prompt pack local unless the user explicitly approves export.");
+        builder.AppendLine();
+    }
+
+    private string ReadFileText(string repositoryPath, string relativePath)
+    {
+        try
+        {
+            var fullPath = Path.Combine(repositoryPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
+            return _fileSystem.ReadAllText(fullPath).Replace("\r", "", StringComparison.Ordinal);
+        }
+        catch (IOException)
+        {
+            return string.Empty;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return string.Empty;
+        }
+    }
+
+    private static string GetTaskId(string relativePath)
+    {
+        var fileName = Path.GetFileName(relativePath);
+        return fileName.Length >= 9 && fileName.StartsWith("TASK-", StringComparison.OrdinalIgnoreCase)
+            ? fileName[..9].ToUpperInvariant()
+            : "TASK-????";
+    }
+
+    private static string GetTaskTitle(string relativePath, string content)
+    {
+        var heading = content
+            .Split('\n')
+            .FirstOrDefault(line => line.StartsWith("# ", StringComparison.Ordinal));
+
+        if (!string.IsNullOrWhiteSpace(heading))
+        {
+            var title = heading[2..].Trim();
+            var separator = title.IndexOf(':', StringComparison.Ordinal);
+            return separator >= 0 && separator + 1 < title.Length ? title[(separator + 1)..].Trim() : title;
+        }
+
+        return Path.GetFileNameWithoutExtension(relativePath);
+    }
+
+    private static string GetTaskStatus(string content)
+    {
+        const string completionNotesHeading = "## Completion notes";
+        var headingIndex = content.IndexOf(completionNotesHeading, StringComparison.OrdinalIgnoreCase);
+        if (headingIndex < 0)
+        {
+            return "Open";
+        }
+
+        var notes = content[(headingIndex + completionNotesHeading.Length)..];
+        var firstNote = notes
+            .Split('\n')
+            .Select(line => line.Trim())
+            .TakeWhile(line => !line.StartsWith("## ", StringComparison.Ordinal))
+            .FirstOrDefault(line => line.Length > 0);
+
+        if (string.IsNullOrWhiteSpace(firstNote))
+        {
+            return "Open";
+        }
+
+        return firstNote.Equals("Not implemented yet.", StringComparison.OrdinalIgnoreCase)
+            ? "Open"
+            : "Completed";
+    }
+
+    private static string EscapeTable(string value)
+    {
+        return value.Replace("|", "\\|", StringComparison.Ordinal)
+            .Replace("\r", " ", StringComparison.Ordinal)
+            .Replace("\n", " ", StringComparison.Ordinal);
+    }
+
+    private static string Label(LanguageCode language, string english, string turkish)
+    {
+        return language.Value == "tr" ? turkish : english;
+    }
+
+    private sealed record ExpectedPromptPackFile(string Path, string Category);
+}
+
 public sealed class TaskFileGenerator : ITaskFileGenerator
 {
     private readonly IFileSystem _fileSystem;

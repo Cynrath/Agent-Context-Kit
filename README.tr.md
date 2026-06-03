@@ -32,6 +32,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
+- `ackit prompt-pack`: remote cagri yapmadan gelecekteki LLM context incelemesi icin lokal dry-run prompt paketi uretir.
 - `ackit generate`: desteklenen agent hedefleri icin context ve workflow dosyalari uretir.
 - `ackit task`: `docs/tasks` altinda yapilandirilmis task dosyasi olusturur.
 - `ackit redact-check`: secret/PII/marka/local path risklerini raporlar.
@@ -49,6 +50,7 @@ dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- report --json
 dotnet run --project src/AgentContextKit.Cli -- webui --json
+dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
 dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
 ```
 
@@ -58,6 +60,7 @@ ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
 ackit task "<baslik>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
@@ -81,12 +84,14 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - `.codex/CONTEXT_PACK.md`
 - `.ackit/reports/scan-report.html`
 - `.ackit/webui/index.html`
+- `.ackit/prompt-packs/prompt-pack.md`
 
 ## Guvenli Davranis
 - Var olan dosyalar varsayilan olarak atlanir.
 - MVP otomatik secret redaction yapmaz.
 - Uzak servise upload yapmaz.
 - Statik rapor ve Web UI dosyalari lokal ve self-contained uretilir.
+- Prompt paketleri lokal dry-run ciktisidir ve remote LLM provider cagrisi yapmaz.
 - GitHub push veya NuGet publish yapmaz.
 - Risk raporlari severity bazlidir: Critical, High, Medium, Low, Info.
 

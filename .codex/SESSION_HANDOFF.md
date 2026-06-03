@@ -79,9 +79,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0030 with optional LLM architecture docs, ADR-0010, product/architecture doc updates, and release verification. No live provider calls, API keys, SDK dependencies, or remote exports were added.
 - Started TASK-0031 for v0.5 provider-neutral LLM provider abstraction.
 - Completed TASK-0031 with `ILLMProvider`, provider-neutral request/response models, fake-provider tests, docs, and release verification. No SDK, HTTP client, remote call, API key handling, CLI command, or provider adapter was added.
+- Started TASK-0032 for v0.5 dry-run prompt pack generation.
+- Completed TASK-0032 with local-only `ackit prompt-pack`, safe Markdown output, JSON metadata, default ignore/config updates, focused tests, docs, and release verification. No provider call, SDK, HTTP client, API key handling, or context export approval flow was added.
 
 ## Next Clear Steps
-1. Continue v0.5 product work with TASK-0032 for dry-run prompt pack generation.
+1. Continue v0.5 product work with TASK-0033 for user-approved context export.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -213,7 +215,15 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0029-v040-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0030-v050-optional-llm-integration-architecture.md`
 - `docs/tasks/TASK-0031-v050-llm-provider-abstraction.md`
+- `docs/tasks/TASK-0032-v050-dry-run-prompt-pack-generation.md`
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`
+- `README.md`
+- `README.tr.md`
+- `docs/CLI_REFERENCE.md`
+- `docs/EXAMPLES.md`
+- `docs/JSON_OUTPUT.md`
+- `docs/CONFIGURATION.md`
+- `.gitignore`
 - `docs/DECISIONS.md`
 - `docs/PRODUCT_SPEC.md`
 - `docs/WEB_UI_PROTOTYPE.md`
@@ -223,7 +233,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `src/AgentContextKit.Core/Generation.cs`
 - `src/AgentContextKit.Core/Configuration.cs`
 - `src/AgentContextKit.Core/Abstractions.cs`
+- `src/AgentContextKit.Core/Generation.cs`
+- `src/AgentContextKit.Core/Configuration.cs`
 - `src/AgentContextKit.Core/Models.cs`
+- `src/AgentContextKit.Cli/Program.cs`
 - `src/AgentContextKit.Cli/Program.cs`
 - `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
@@ -279,6 +292,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0029 verification: `check-v040-readiness.ps1` report-only and `-FailOnIssues` modes exited 0 with no v0.4 asset issues; build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0029-validation-final.html --json` created an ignored local static Web UI with riskSummary 0 and TASK-0029 shown as completed; `scan --ci` exited 0 and reported no risk findings; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0030 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `scan --ci` exited 0 and reported no risk findings; `check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0031 verification: build passed with 0 warnings and 0 errors; tests passed 47/47; `scan --ci` exited 0 and reported no risk findings; `check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0032 verification: build passed with 0 warnings and 0 errors; tests passed 51/51; `prompt-pack --output .ackit/prompt-packs/task-0032-validation-final.md --json` created an ignored local prompt pack with riskSummary 0 and TASK-0032 shown as completed; static prompt-pack checks found dry-run/no-remote/no-API-key notes and expected sections; `scan --ci` exited 0 and reported no risk findings; `check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed and installed help showed `prompt-pack`; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -292,4 +306,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0031 is implemented and verified. Continue v0.5 product work with TASK-0032 for dry-run prompt pack generation. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0032 is implemented and verified. Continue v0.5 product work with TASK-0033 for user-approved context export. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, or automatically redact without explicit maintainer instruction.

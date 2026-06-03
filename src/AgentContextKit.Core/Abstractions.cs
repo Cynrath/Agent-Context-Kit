@@ -65,6 +65,11 @@ public interface IWebUiGenerator
     GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
 }
 
+public interface IPromptPackGenerator
+{
+    GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
+}
+
 public interface ILLMProvider
 {
     string Name { get; }

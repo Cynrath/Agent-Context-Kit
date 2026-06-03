@@ -138,4 +138,26 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0032 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0032.
+
+- Added local-only `ackit prompt-pack` command with `--output`, `--lang`, and `--json`.
+- Added `IPromptPackGenerator` and `PromptPackGenerator` for safe repository-relative Markdown output.
+- Default output is `.ackit/prompt-packs/prompt-pack.md`; `.ackit/prompt-packs/` is ignored by git and default config.
+- Prompt packs include scan summary, stacks, repository health, generated/context file status, latest task summary, and explicit no-remote/no-API-key notes.
+- Existing prompt pack files are skipped by default, and unsafe output paths are rejected.
+- Added focused generator, CLI JSON, skip, unsafe path, and config tests.
+- Updated README, CLI reference, examples, JSON/config docs, optional LLM architecture, roadmap, project map, changelog, context pack, next steps, and session handoff.
+- Checked current .NET file path guidance through Context7 before implementation.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 51/51 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- prompt-pack --output .ackit/prompt-packs/task-0032-validation-final.md --json` created the ignored local prompt pack with risk summary 0 and TASK-0032 shown as completed.
+- Static prompt-pack checks found dry-run/no-remote/no-API-key notes and expected sections.
+- `git check-ignore -v .ackit/prompt-packs/task-0032-validation-final.md` confirmed the validation artifact is ignored.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed and installed help showed `prompt-pack`.
+- `git diff --check` passed.
+- Real-name grep found no matches.

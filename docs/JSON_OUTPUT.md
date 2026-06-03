@@ -7,6 +7,7 @@ Supported commands:
 - `ackit scan --json`
 - `ackit report --json`
 - `ackit webui --json`
+- `ackit prompt-pack --json`
 - `ackit generate --json`
 - `ackit task "<title>" --json`
 - `ackit redact-check --json`
@@ -36,6 +37,7 @@ Schema version `2` adds:
 - `ciMode` and `exitCode` on `scan`.
 - `report` generated file metadata on `report`.
 - `webUi` generated file metadata on `webui`.
+- `promptPack` generated file metadata on `prompt-pack`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -126,5 +128,15 @@ Example shape:
   "status": "Created",
   "created": true,
   "message": "Web UI prototype created."
+}
+```
+
+`promptPack`:
+```json
+{
+  "path": ".ackit/prompt-packs/prompt-pack.md",
+  "status": "Created",
+  "created": true,
+  "message": "Dry-run prompt pack created."
 }
 ```

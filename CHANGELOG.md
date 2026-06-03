@@ -45,6 +45,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - v0.4 local readiness review script and documentation.
 - Optional LLM integration architecture with consent gates, provider boundaries, data minimization, and audit requirements.
 - Provider-neutral `ILLMProvider` request/response abstractions with fake-provider tests.
+- Local-only `ackit prompt-pack` dry-run Markdown generation with JSON metadata.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.
