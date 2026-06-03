@@ -36,6 +36,8 @@ Schema version `2` adds:
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
 
+See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
+
 `redact-check`:
 - `0`: no findings
 - `1`: warning findings

@@ -491,6 +491,28 @@ public sealed class CliJsonAndMetadataTests
     }
 
     [Fact]
+    public void UnknownCommandReturnsErrorExitCode()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["unknown-command"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("Unknown command", result.Error);
+    }
+
+    [Fact]
+    public void TaskWithoutTitleReturnsErrorExitCode()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["task", "--lang", "en"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("requires a title", result.Error);
+    }
+
+    [Fact]
     public void DoctorJsonOutputIsValid()
     {
         using var repo = TempRepository.Create();

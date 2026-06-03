@@ -106,4 +106,12 @@ Improves CI and public release validation documentation. Public release blockers
 Revert the TASK-0019 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented CLI exit code constants and `docs/EXIT_CODES.md`.
+
+Verification completed:
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 37/37 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

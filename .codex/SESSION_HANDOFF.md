@@ -53,9 +53,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0017 with a local-only v0.2 readiness script, readiness docs, roadmap updates, and release verification.
 - Started TASK-0018 for v0.3 CI mode.
 - Completed TASK-0018 with `ackit scan --ci`, scan JSON CI metadata, focused tests, docs, and GitHub Actions integration.
+- Started TASK-0019 for v0.3 exit code standardization.
+- Completed TASK-0019 with centralized CLI exit code constants, focused tests, `docs/EXIT_CODES.md`, and release verification.
 
 ## Next Clear Steps
-1. Continue v0.3 product work with TASK-0019 for exit code standardization.
+1. Continue v0.3 product work with TASK-0020 for HTML report generation planning and implementation.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -166,6 +168,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/V020_READINESS.md`
 - `scripts/check-v020-readiness.ps1`
 - `docs/tasks/TASK-0018-v030-ci-mode.md`
+- `docs/tasks/TASK-0019-v030-exit-code-standardization.md`
+- `docs/EXIT_CODES.md`
 - `docs/tasks/TASK-0015-v020-sample-repositories.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 
@@ -205,6 +209,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0016 verification: package metadata review report-only mode exited 0 and reported TODO URL blockers; package metadata review `-FailOnIssues` exited 1 as expected; build passed with 0 warnings and 0 errors; tests passed 31/31; scan reported no risk findings; release verification script passed and reported known blockers in non-failing mode; `git diff --check` passed; real-name grep found no matches.
 - TASK-0017 verification: v0.2 readiness review report-only and `-FailOnIssues` modes exited 0; package metadata review report-only mode exited 0 with known TODO URL blockers; build passed with 0 warnings and 0 errors; tests passed 31/31; scan reported no risk findings; release verification script passed and reported known blockers in non-failing mode.
 - TASK-0018 verification: build passed with 0 warnings and 0 errors; tests passed 35/35; `scan --ci` exited 0 on this repository; `scan --ci --json` emitted `ciMode: true` and `exitCode: 0`; release verification script passed and the installed temporary tool showed `scan --ci` in help output.
+- TASK-0019 verification: build passed with 0 warnings and 0 errors; tests passed 37/37; `scan --ci` exited 0 on this repository and reported no risk findings; release verification script passed.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -217,4 +222,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0018 is implemented and verified. Continue v0.3 product work with TASK-0019 for exit code standardization. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0019 is implemented and verified. Continue v0.3 product work with TASK-0020 for HTML report generation planning and implementation. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

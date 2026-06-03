@@ -95,6 +95,7 @@ Key docs:
 - [Examples](docs/EXAMPLES.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
+- [Exit Codes](docs/EXIT_CODES.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)

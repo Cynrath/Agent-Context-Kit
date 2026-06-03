@@ -69,3 +69,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0016 completed NuGet package metadata review script and documentation.
 - TASK-0017 completed v0.2 local readiness consolidation script and documentation.
 - TASK-0018 completed `ackit scan --ci` with high/critical exit codes, scan JSON CI metadata, tests, docs, and GitHub Actions integration.
+- TASK-0019 completed exit code standardization with CLI constants, focused tests, and `docs/EXIT_CODES.md`.

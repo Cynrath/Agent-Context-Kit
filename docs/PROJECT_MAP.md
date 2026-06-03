@@ -35,6 +35,7 @@ Updated: 2026-06-03
 - `docs/DEVELOPMENT_STANDARD.md`
 - `docs/DOCUMENTATION_INDEX.md`
 - `docs/EXAMPLES.md`
+- `docs/EXIT_CODES.md`
 - `docs/FAQ.md`
 - `docs/GOVERNANCE.md`
 - `docs/JSON_OUTPUT.md`
@@ -77,6 +78,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0016-v020-nuget-metadata-hardening.md`
 - `docs/tasks/TASK-0017-v020-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0018-v030-ci-mode.md`
+- `docs/tasks/TASK-0019-v030-exit-code-standardization.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

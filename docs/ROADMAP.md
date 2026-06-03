@@ -26,7 +26,7 @@
 ## v0.3.0-beta
 - HTML report generation.
 - CI mode. Started with `ackit scan --ci` and GitHub Actions integration.
-- Exit code standardization.
+- Exit code standardization. Started with centralized CLI constants and an exit code matrix.
 - Public release hardening.
 - More tests.
 - Example workflows.

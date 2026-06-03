@@ -7,6 +7,8 @@ During development, run commands through:
 dotnet run --project src/AgentContextKit.Cli -- <command>
 ```
 
+See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
+
 ## Global Options
 ### `--lang en|tr`
 Select output/template language. Unknown values fall back to `en`.
@@ -42,10 +44,7 @@ ackit scan --ci --json
 
 Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly, .NET Worker Service, ASP.NET Core Minimal API, Node, npm, pnpm, Yarn, Bun, TypeScript, Vite, Next.js, Nuxt, Angular, Tailwind CSS, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration files when matching local files are present.
 
-Exit codes:
-- `0`: default report-only mode, or CI mode with no high/critical findings
-- `1`: CI mode with high findings and no critical findings
-- `2`: CI mode with critical findings
+Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
@@ -90,6 +89,8 @@ Reports repository health.
 ackit doctor
 ackit doctor --json
 ```
+
+Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
 ### `ackit version`
 Prints the CLI version.

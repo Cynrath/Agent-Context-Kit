@@ -7,6 +7,9 @@ public static class Program
 {
     private const string Version = "0.1.0-alpha.1";
     private const int JsonSchemaVersion = 2;
+    private const int ExitSuccess = 0;
+    private const int ExitError = 1;
+    private const int ExitCritical = 2;
 
     public static int Main(string[] args)
     {
@@ -37,7 +40,7 @@ public static class Program
         {
             Console.Error.WriteLine($"ackit error: {ex.Message}");
             Console.Error.WriteLine("Suggested action: check repository permissions and run `ackit --help`.");
-            return 1;
+            return ExitError;
         }
     }
 
@@ -53,13 +56,13 @@ public static class Program
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit doctor [--lang en|tr] [--json]");
         Console.WriteLine("  ackit version");
-        return 0;
+        return ExitSuccess;
     }
 
     private static int RunVersion()
     {
         Console.WriteLine($"AgentContextKit {Version}");
-        return 0;
+        return ExitSuccess;
     }
 
     private static int RunInit(string repositoryPath, LanguageCode language, bool json, Services services)
@@ -88,7 +91,7 @@ public static class Program
                 config = ToGeneratedFileDto(result),
                 agentInstructionFiles = agentFiles
             });
-            return 0;
+            return ExitSuccess;
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
@@ -100,7 +103,7 @@ public static class Program
             Console.WriteLine($"- {file.path}: {(file.exists ? "found" : "missing")}");
         }
 
-        return 0;
+        return ExitSuccess;
     }
 
     private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
@@ -135,7 +138,7 @@ public static class Program
                 fileSummary = ToGeneratedFileSummary(results),
                 files = results.Select(ToGeneratedFileDto).ToArray()
             });
-            return 0;
+            return ExitSuccess;
         }
 
         foreach (var result in results)
@@ -143,7 +146,7 @@ public static class Program
             PrintGeneratedResult(result, services.TextProvider, language);
         }
 
-        return 0;
+        return ExitSuccess;
     }
 
     private static int RunTask(string[] args, string repositoryPath, LanguageCode language, bool json, Services services)
@@ -153,7 +156,7 @@ public static class Program
         {
             Console.Error.WriteLine("ackit task requires a title.");
             Console.Error.WriteLine("Example: ackit task \"Add role based permission management\" --lang en");
-            return 1;
+            return ExitError;
         }
 
         var result = services.TaskFileGenerator.CreateTask(repositoryPath, new TaskSpec(title, language));
@@ -167,11 +170,11 @@ public static class Program
                 command = "task",
                 file = ToGeneratedFileDto(result)
             });
-            return 0;
+            return ExitSuccess;
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        return 0;
+        return ExitSuccess;
     }
 
     private static int RunRedactCheck(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
@@ -183,8 +186,8 @@ public static class Program
             .ToArray();
 
         var exitCode = findings.Any(finding => finding.Severity == RiskSeverity.Critical)
-            ? 2
-            : findings.Length > 0 ? 1 : 0;
+            ? ExitCritical
+            : findings.Length > 0 ? ExitError : ExitSuccess;
 
         if (json)
         {
@@ -212,7 +215,9 @@ public static class Program
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         var result = services.Doctor.Check(repositoryPath, scan);
-        var exitCode = result.Checks.Any(check => !check.Passed && check.Severity >= RiskSeverity.High) ? 1 : 0;
+        var exitCode = result.Checks.Any(check => !check.Passed && check.Severity >= RiskSeverity.High)
+            ? ExitError
+            : ExitSuccess;
 
         if (json)
         {
@@ -245,7 +250,7 @@ public static class Program
     {
         Console.Error.WriteLine($"Unknown command: {command}");
         RunHelp(language, textProvider);
-        return 1;
+        return ExitError;
     }
 
     private static void PrintScan(ScanResult scan, LanguageCode language, Services services)
@@ -449,20 +454,20 @@ public static class Program
     {
         if (!ci)
         {
-            return 0;
+            return ExitSuccess;
         }
 
         if (scan.Findings.Any(finding => finding.Severity == RiskSeverity.Critical))
         {
-            return 2;
+            return ExitCritical;
         }
 
         if (scan.Findings.Any(finding => finding.Severity == RiskSeverity.High))
         {
-            return 1;
+            return ExitError;
         }
 
-        return 0;
+        return ExitSuccess;
     }
 
     private static AgentTarget ParseTarget(string? value)

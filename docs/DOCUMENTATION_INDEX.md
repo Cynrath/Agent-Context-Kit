@@ -12,6 +12,7 @@
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
+- `docs/EXIT_CODES.md`: CLI exit code matrix.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
 
