@@ -383,18 +383,18 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
 public sealed class WebUiGenerator : IWebUiGenerator
 {
     private const string DefaultOutputPath = ".ackit/webui/index.html";
-    private static readonly string[] ContextPreviewFiles =
+    private static readonly ExpectedPreviewFile[] ContextPreviewFiles =
     [
-        "AGENTS.md",
-        "CLAUDE.md",
-        ".cursor/rules/project.mdc",
-        ".github/copilot-instructions.md",
-        ".codex/HANDOFF.md",
-        ".codex/CONTEXT_PACK.md",
-        "docs/PROJECT_MAP.md",
-        "docs/AI_WORKFLOW.md",
-        "docs/SECURITY_NOTES.md",
-        "docs/DEVELOPMENT_STANDARD.md"
+        new("AGENTS.md", "Codex"),
+        new("CLAUDE.md", "Claude"),
+        new(".cursor/rules/project.mdc", "Cursor"),
+        new(".github/copilot-instructions.md", "Copilot"),
+        new(".codex/HANDOFF.md", "Codex"),
+        new(".codex/CONTEXT_PACK.md", "Codex"),
+        new("docs/PROJECT_MAP.md", "Documentation"),
+        new("docs/AI_WORKFLOW.md", "Documentation"),
+        new("docs/SECURITY_NOTES.md", "Documentation"),
+        new("docs/DEVELOPMENT_STANDARD.md", "Documentation")
     ];
 
     private readonly IFileSystem _fileSystem;
@@ -467,9 +467,8 @@ public sealed class WebUiGenerator : IWebUiGenerator
             .Take(12)
             .ToArray();
 
-        var contextFiles = ContextPreviewFiles
-            .Where(file => scanResult.Files.Contains(file, StringComparer.OrdinalIgnoreCase))
-            .ToArray();
+        var contextFiles = ContextPreviewFiles;
+        var existingContextFileCount = contextFiles.Count(file => scanResult.Files.Contains(file.Path, StringComparer.OrdinalIgnoreCase));
 
         var builder = new StringBuilder();
         builder.AppendLine("<!doctype html>");
@@ -500,11 +499,11 @@ public sealed class WebUiGenerator : IWebUiGenerator
         builder.AppendLine("</div></header>");
         builder.AppendLine("<main>");
 
-        AppendDashboard(builder, language, scanResult, taskFiles.Length, contextFiles.Length);
+        AppendDashboard(builder, language, scanResult, taskFiles.Length, existingContextFileCount);
         AppendHealthAndStacks(builder, language, scanResult);
         AppendFindings(builder, language, scanResult);
-        AppendPreviewSection(builder, repositoryPath, language, "context", Label(language, "Generated File Preview", "Uretilen Dosya Onizleme"), Label(language, "Known agent/context files detected in the repository.", "Repository icinde bulunan agent/context dosyalari."), contextFiles);
-        AppendPreviewSection(builder, repositoryPath, language, "tasks", Label(language, "Task Preview", "Task Onizleme"), Label(language, "Latest task files under docs/tasks.", "docs/tasks altindaki son task dosyalari."), taskFiles);
+        AppendGeneratedPreviewSection(builder, repositoryPath, language, scanResult, contextFiles);
+        AppendTaskPreviewSection(builder, repositoryPath, language, taskFiles);
 
         builder.AppendLine("</main>");
         builder.AppendLine("</body></html>");
@@ -706,11 +705,40 @@ public sealed class WebUiGenerator : IWebUiGenerator
         builder.AppendLine("</section>");
     }
 
-    private void AppendPreviewSection(StringBuilder builder, string repositoryPath, LanguageCode language, string sectionId, string title, string description, IReadOnlyList<string> files)
+    private void AppendGeneratedPreviewSection(StringBuilder builder, string repositoryPath, LanguageCode language, ScanResult scanResult, IReadOnlyList<ExpectedPreviewFile> files)
     {
-        builder.AppendLine("<section id=\"" + E(sectionId) + "\" class=\"band\">");
-        builder.AppendLine("<h2>" + E(title) + "</h2>");
-        builder.AppendLine("<p>" + E(description) + "</p>");
+        builder.AppendLine("<section id=\"context\" class=\"band\">");
+        builder.AppendLine("<h2>" + E(Label(language, "Generated File Preview", "Uretilen Dosya Onizleme")) + "</h2>");
+        builder.AppendLine("<p>" + E(Label(language, "Expected agent/context files with local status, category, size, and capped previews.", "Beklenen agent/context dosyalari; lokal durum, kategori, boyut ve sinirli onizleme.")) + "</p>");
+        builder.AppendLine("<p class=\"muted\">" + E(Label(language, "Status values: Present, Missing.", "Durum degerleri: Mevcut, Eksik.")) + "</p>");
+        builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Category</th><th>Status</th><th>Size</th><th>Path</th></tr></thead><tbody>");
+        foreach (var file in files)
+        {
+            var exists = scanResult.Files.Contains(file.Path, StringComparer.OrdinalIgnoreCase);
+            var status = exists ? Label(language, "Present", "Mevcut") : Label(language, "Missing", "Eksik");
+            var size = exists ? FormatBytes(ReadFileLength(repositoryPath, file.Path)) : "-";
+            builder.AppendLine("<tr><td>" + E(file.Category) + "</td><td class=\"status " + (exists ? "ok" : "fail") + "\">" + E(status) + "</td><td>" + E(size) + "</td><td><code>" + E(file.Path) + "</code></td></tr>");
+        }
+
+        builder.AppendLine("</tbody></table></div>");
+        foreach (var file in files)
+        {
+            var exists = scanResult.Files.Contains(file.Path, StringComparer.OrdinalIgnoreCase);
+            var status = exists ? Label(language, "Present", "Mevcut") : Label(language, "Missing", "Eksik");
+            builder.AppendLine("<details>");
+            builder.AppendLine("<summary><code>" + E(file.Path) + "</code> - " + E(file.Category) + " - " + E(status) + "</summary>");
+            builder.AppendLine("<pre>" + E(exists ? ReadPreview(repositoryPath, file.Path) : Label(language, "Missing file. Generate intentionally with ackit generate --target all.", "Eksik dosya. Bilerek uretmek icin ackit generate --target all kullanin.")) + "</pre>");
+            builder.AppendLine("</details>");
+        }
+
+        builder.AppendLine("</section>");
+    }
+
+    private void AppendTaskPreviewSection(StringBuilder builder, string repositoryPath, LanguageCode language, IReadOnlyList<string> files)
+    {
+        builder.AppendLine("<section id=\"tasks\" class=\"band\">");
+        builder.AppendLine("<h2>" + E(Label(language, "Task Preview", "Task Onizleme")) + "</h2>");
+        builder.AppendLine("<p>" + E(Label(language, "Latest task files under docs/tasks.", "docs/tasks altindaki son task dosyalari.")) + "</p>");
         if (files.Count == 0)
         {
             builder.AppendLine("<p class=\"muted\">" + E(Label(language, "No matching files detected.", "Eslesen dosya bulunmadi.")) + "</p>");
@@ -727,6 +755,38 @@ public sealed class WebUiGenerator : IWebUiGenerator
         }
 
         builder.AppendLine("</section>");
+    }
+
+    private long ReadFileLength(string repositoryPath, string relativePath)
+    {
+        try
+        {
+            var fullPath = Path.Combine(repositoryPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
+            return _fileSystem.GetFileLength(fullPath);
+        }
+        catch (IOException)
+        {
+            return 0;
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return 0;
+        }
+    }
+
+    private static string FormatBytes(long bytes)
+    {
+        if (bytes < 1024)
+        {
+            return bytes.ToString(CultureInfo.InvariantCulture) + " B";
+        }
+
+        if (bytes < 1024 * 1024)
+        {
+            return (bytes / 1024d).ToString("0.0", CultureInfo.InvariantCulture) + " KB";
+        }
+
+        return (bytes / 1024d / 1024d).ToString("0.0", CultureInfo.InvariantCulture) + " MB";
     }
 
     private string ReadPreview(string repositoryPath, string relativePath)
@@ -763,6 +823,8 @@ public sealed class WebUiGenerator : IWebUiGenerator
     {
         return WebUtility.HtmlEncode(value);
     }
+
+    private sealed record ExpectedPreviewFile(string Path, string Category);
 }
 
 public sealed class TaskFileGenerator : ITaskFileGenerator

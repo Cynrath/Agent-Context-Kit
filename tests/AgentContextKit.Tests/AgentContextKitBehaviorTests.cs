@@ -455,6 +455,12 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("Recommended Checks", content);
         Assert.Contains("dotnet build AgentContextKit.sln", content);
         Assert.Contains("Generated File Preview", content);
+        Assert.Contains("Category", content);
+        Assert.Contains("Status", content);
+        Assert.Contains("Size", content);
+        Assert.Contains("Present", content);
+        Assert.Contains("Missing", content);
+        Assert.Contains("Codex", content);
         Assert.Contains("Task Preview", content);
         Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);
         Assert.DoesNotContain("<script>alert</script>", content);

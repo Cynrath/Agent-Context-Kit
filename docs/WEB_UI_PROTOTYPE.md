@@ -27,7 +27,7 @@ ackit webui --output docs/local-webui.html --json
 - Repository health summary.
 - Stack signals.
 - Risk finding browser.
-- Generated agent/context file preview.
+- Generated agent/context file preview with expected file category, status, size, and capped preview text.
 - Latest task file preview.
 
 ## Safety Behavior
@@ -35,6 +35,7 @@ ackit webui --output docs/local-webui.html --json
 - No local server is started.
 - No external CSS, JavaScript, fonts, images, CDNs, telemetry, or remote calls are used.
 - Repository-controlled text is HTML-encoded.
+- Missing expected generated files are shown as local audit hints only; the Web UI does not create them.
 - Existing Web UI files are skipped by default.
 - Output paths must stay inside the repository.
 - `.ackit/webui/` is ignored by git and by the default scan config.

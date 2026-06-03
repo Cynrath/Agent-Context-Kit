@@ -3,6 +3,7 @@
 ## Default Workflow
 - Read `README.md`, `docs/PRODUCT_SPEC.md`, `docs/ARCHITECTURE.md`, and the active task before changing code.
 - Do not code before a task file exists under `docs/tasks/`.
+- Continuous progress hard rule: when the user says to continue, do not ask whether to continue; proceed through the next documented task in order with task docs, implementation, verification, and commit.
 - Update `.codex/SESSION_HANDOFF.md` after major steps.
 - Run relevant tests before reporting completion.
 - Prefer safe, minimal, production-ready changes.

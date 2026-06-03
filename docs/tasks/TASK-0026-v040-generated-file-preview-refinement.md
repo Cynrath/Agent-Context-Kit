@@ -123,4 +123,27 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0026 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Implemented generated file preview refinement and recorded the continuous progress hard rule in `AGENTS.md`.
+
+Generated file preview now includes:
+- Expected agent/context files.
+- Category values such as Codex, Claude, Cursor, Copilot, and Documentation.
+- Present/missing status values.
+- Size metadata for present files.
+- Capped, HTML-encoded preview text.
+- Missing-file hints without generating or overwriting files.
+
+Verification completed:
+- Context7 `.NET` docs were checked before coding for current file/encoding guidance.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0026-validation-final2.html --json` exited `0`, created the ignored local Web UI validation file, and reported zero risk findings.
+- Static Web UI checks found `Generated File Preview`, `Category`, `Status`, `Size`, `Present`, `Missing`, `Codex`, and `Documentation`.
+- Static Web UI checks found no remote asset/script/import references.
+- `.ackit/webui/` is ignored by git.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; it reported known public-release blockers in report-only mode.
+- `git diff --check` passed.
+- Real-name grep found no matches.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.
