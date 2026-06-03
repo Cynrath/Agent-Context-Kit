@@ -9,6 +9,7 @@
 ## Usage
 - `docs/CLI_REFERENCE.md`: command reference.
 - `docs/EXAMPLES.md`: common command flows.
+- `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.

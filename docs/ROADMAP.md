@@ -20,7 +20,7 @@
 - JSON schema stabilization and expanded fields. Started with schema version 2 metadata and summary fields.
 - More generated docs. Started with expanded agent/context templates that include health, risk, and recommended checks.
 - NuGet package metadata hardening.
-- Sample repositories.
+- Sample repositories. Started with safe .NET Minimal API and Node/TypeScript/Tailwind samples.
 
 ## v0.3.0-beta
 - HTML report generation.

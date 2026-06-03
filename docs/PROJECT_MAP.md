@@ -4,6 +4,9 @@ Updated: 2026-06-03
 
 ## Stack
 - .NET: .sln/.slnx/*proj/Program.cs
+- ASP.NET Core: Microsoft.NET.Sdk.Web
+- ASP.NET Core Minimal API: Program.cs WebApplication/Map*
+- TypeScript: tsconfig.json/*.ts/*.tsx
 - GitHub Actions: .github/workflows
 
 ## Files
@@ -51,6 +54,7 @@ Updated: 2026-06-03
 - `docs/ROADMAP.md`
 - `docs/SECURITY_MODEL.md`
 - `docs/SECURITY_NOTES.md`
+- `docs/SAMPLES.md`
 - `docs/SOURCE_HYGIENE.md`
 - `docs/SUPPORT.md`
 - `docs/tasks/TASK-0001-foundation.md`
@@ -68,12 +72,22 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0012-v020-risk-scanner-precision.md`
 - `docs/tasks/TASK-0013-v020-json-schema-expansion.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
+- `docs/tasks/TASK-0015-v020-sample-repositories.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`
 - `LICENSE`
 - `README.md`
 - `README.tr.md`
+- `samples/README.md`
+- `samples/dotnet-minimal-api/Program.cs`
+- `samples/dotnet-minimal-api/README.md`
+- `samples/dotnet-minimal-api/Sample.MinimalApi.csproj`
+- `samples/node-tooling/package.json`
+- `samples/node-tooling/README.md`
+- `samples/node-tooling/src/index.ts`
+- `samples/node-tooling/tailwind.config.js`
+- `samples/node-tooling/tsconfig.json`
 - `scripts/audit-public-release.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/verify-release.ps1`

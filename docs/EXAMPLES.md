@@ -37,3 +37,16 @@ ackit doctor --json
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
+
+## Scan Samples
+```powershell
+Push-Location samples/dotnet-minimal-api
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
+Pop-Location
+
+Push-Location samples/node-tooling
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
+Pop-Location
+```
+
+See [SAMPLES.md](SAMPLES.md).

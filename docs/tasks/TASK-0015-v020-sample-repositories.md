@@ -113,4 +113,21 @@ Improves v0.2 onboarding and provides concrete scan examples.
 Revert the TASK-0015 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `samples/README.md`.
+- Added safe .NET Minimal API sample.
+- Added safe Node/TypeScript/Tailwind tooling sample.
+- Added `docs/SAMPLES.md`.
+- Updated documentation index, examples, roadmap, project map, changelog, context pack, handoff, and next steps.
+- Updated current generated stack sections after root scan started detecting sample stack signals.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 31/31.
+- Root `ackit scan` passed with no risk findings.
+- `samples/dotnet-minimal-api` scan detected `.NET`, `ASP.NET Core`, and `ASP.NET Core Minimal API` with no risk findings.
+- `samples/node-tooling` scan detected `Node`, `TypeScript`, and `Tailwind CSS` with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- Installed temporary `ackit scan --json` emitted schema version `2` with `riskSummary.total` equal to `0`.
+- Release verification reported known public-release blockers in non-failing mode.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

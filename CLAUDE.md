@@ -3,7 +3,10 @@
 Use the same repository rules as AGENTS.md.
 
 ## Stack
-- .NET: .sln/.slnx/.csproj/Program.cs
+- .NET: .sln/.slnx/*proj/Program.cs
+- ASP.NET Core: Microsoft.NET.Sdk.Web
+- ASP.NET Core Minimal API: Program.cs WebApplication/Map*
+- TypeScript: tsconfig.json/*.ts/*.tsx
 - GitHub Actions: .github/workflows
 
 ## Repository Health

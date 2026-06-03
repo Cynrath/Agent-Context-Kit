@@ -61,3 +61,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0012 completed risk scanner precision improvements for environment samples, private key files, private key blocks, IP filtering, and configured keyword token boundaries.
 - TASK-0013 completed JSON schema version 2 with generated timestamp, repository metadata, and summary fields.
 - TASK-0014 completed expanded generated agent/context docs with repository health, risk summary, and recommended checks.
+- TASK-0015 completed safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.

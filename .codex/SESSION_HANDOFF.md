@@ -45,9 +45,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0013 with schema version 2 metadata, summary fields, tests, docs, and release verification.
 - Started TASK-0014 for expanded generated agent/context docs.
 - Completed TASK-0014 with expanded templates, current generated docs, tests, self-scan cleanup, and release verification.
+- Started TASK-0015 for safe sample repositories.
+- Completed TASK-0015 with safe sample repositories, docs, root/sample scan validation, and release verification.
 
 ## Next Clear Steps
-1. Continue v0.2 product work with TASK-0015 for sample repositories.
+1. Continue v0.2 product work with TASK-0016 for NuGet package metadata hardening review.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -148,6 +150,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0012-v020-risk-scanner-precision.md`
 - `docs/tasks/TASK-0013-v020-json-schema-expansion.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
+- `docs/tasks/TASK-0015-v020-sample-repositories.md`
+- `docs/tasks/TASK-0015-v020-sample-repositories.md`
 - `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 
 ## Known Risks
@@ -182,6 +186,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0012 verification: build passed with 0 warnings and 0 errors; tests passed 29/29; scan reported no risk findings after self-scan fixes; release verification script passed and reported known blockers in non-failing mode.
 - TASK-0013 verification: build passed with 0 warnings and 0 errors; tests passed 30/30; scan reported no risk findings; release verification script passed; installed temporary `ackit scan --json` emitted schema version 2 metadata and summaries.
 - TASK-0014 verification: build passed with 0 warnings and 0 errors; tests passed 31/31; scan reported no risk findings after template string cleanup; release verification script passed and reported known blockers in non-failing mode.
+- TASK-0015 verification: build passed with 0 warnings and 0 errors; tests passed 31/31; root scan reported no risk findings; both sample scans reported expected stack signals and no risk findings; release verification script passed and reported known blockers in non-failing mode.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -194,4 +199,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0014 is implemented and verified. Continue v0.2 product work with TASK-0015 for sample repositories. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0015 is implemented and verified. Continue v0.2 product work with TASK-0016 for NuGet package metadata hardening review. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
