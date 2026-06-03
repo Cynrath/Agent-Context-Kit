@@ -44,7 +44,7 @@
 - Optional LLM integration architecture. Documented with consent gates, provider boundaries, data minimization, and no live provider calls.
 - `ILLMProvider` abstraction. Added provider-neutral request/response models and fake-provider tests.
 - Dry-run prompt pack generation. Added local-only `ackit prompt-pack` Markdown output with JSON metadata.
-- User-approved context export.
+- User-approved context export. Added local-only `ackit context-export` approval manifests with JSON metadata.
 
 ## v1.0.0
 - Stable CLI.

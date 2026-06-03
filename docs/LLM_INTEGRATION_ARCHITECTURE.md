@@ -7,7 +7,7 @@ AgentContextKit remains offline-first and local-only today. v0.5 may add optiona
 - No OpenAI or other LLM SDK dependency is included.
 - No API key is read, stored, generated, or validated.
 - No repository content is uploaded.
-- Existing `scan`, `generate`, `report`, `webui`, and `prompt-pack` commands remain local-only.
+- Existing `scan`, `generate`, `report`, `webui`, `prompt-pack`, and `context-export` commands remain local-only.
 - Provider-neutral `ILLMProvider` request/response abstractions exist for future fake/provider adapter work.
 
 ## Reference Inputs
@@ -40,7 +40,7 @@ Core abstractions should own provider-neutral behavior:
 - `ILLMProvider`: provider-neutral async request/response boundary.
 - `ILLMProviderFactory`: resolves a configured provider only after consent and configuration checks.
 - `IPromptPackGenerator`: builds local dry-run prompt/context packs from scan results and generated docs.
-- `IContextExportReview`: records what would be exported and whether the user approved it.
+- `IContextExportManifestGenerator`: records local export approval manifests for reviewed prompt packs.
 - `ILLMAuditWriter`: writes local audit records for approved exports and provider calls.
 
 ### CLI
@@ -102,5 +102,4 @@ Because the current task is documentation-only, rollback is the TASK-0030 implem
 
 ## Future Task Split
 Recommended v0.5 implementation order:
-1. Add user-approved context export manifests.
-2. Add provider adapters only after explicit maintainer approval and documentation updates.
+1. Add provider adapters only after explicit maintainer approval and documentation updates.

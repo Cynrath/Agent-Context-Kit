@@ -99,6 +99,25 @@ Safety behavior:
 - The command does not call remote LLM providers.
 - The command does not read, store, generate, or validate API keys.
 
+### `ackit context-export`
+Creates a local JSON approval manifest for a reviewed prompt pack. Existing manifest files are skipped.
+
+```powershell
+ackit context-export --prompt-pack .ackit/prompt-packs/current.md --approve
+ackit context-export --prompt-pack .ackit/prompt-packs/current.md --approve --output .ackit/context-exports/current.json --json
+```
+
+Default output path:
+- `.ackit/context-exports/context-export-manifest.json`
+
+Safety behavior:
+- `--approve` is required.
+- `--prompt-pack <repo-relative.md>` is required.
+- Prompt pack and output paths must be repository-relative.
+- Existing files are not overwritten.
+- The command does not upload content or call remote LLM providers.
+- The command does not read, store, generate, or validate API keys.
+
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
 

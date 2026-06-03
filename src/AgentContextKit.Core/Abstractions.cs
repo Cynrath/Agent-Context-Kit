@@ -70,6 +70,11 @@ public interface IPromptPackGenerator
     GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
 }
 
+public interface IContextExportManifestGenerator
+{
+    GeneratedFileResult Generate(string repositoryPath, ContextExportSpec spec, ScanResult scanResult);
+}
+
 public interface ILLMProvider
 {
     string Name { get; }

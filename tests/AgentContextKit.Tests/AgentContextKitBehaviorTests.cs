@@ -619,6 +619,66 @@ public sealed class TemplateAndGenerationTests
 
         Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../prompt.md", LanguageCode.English, scan));
     }
+
+    [Fact]
+    public void ContextExportManifestGeneratorCreatesLocalApprovalManifest()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/prompt-packs/demo.md", "# Prompt Pack");
+        var generator = new ContextExportManifestGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [".ackit/prompt-packs/demo.md"], [], [], true, false, false, false, false, false, false, false, false, false);
+
+        var result = generator.Generate(
+            repo.Path,
+            new ContextExportSpec(".ackit/prompt-packs/demo.md", ".ackit/context-exports/demo.json", "explicit-cli-flag", LanguageCode.English),
+            scan);
+        var manifestPath = System.IO.Path.Combine(repo.Path, ".ackit", "context-exports", "demo.json");
+        var json = JsonNode.Parse(File.ReadAllText(manifestPath));
+
+        Assert.True(result.Created);
+        Assert.Equal(".ackit/prompt-packs/demo.md", json?["sourcePromptPack"]?["path"]?.GetValue<string>());
+        Assert.True(json?["sourcePromptPack"]?["sizeBytes"]?.GetValue<long>() > 0);
+        Assert.True(json?["approval"]?["approved"]?.GetValue<bool>());
+        Assert.Equal("explicit-cli-flag", json?["approval"]?["mode"]?.GetValue<string>());
+        Assert.True(json?["safety"]?["noRemoteCall"]?.GetValue<bool>());
+        Assert.False(json?["safety"]?["apiKeyAccessed"]?.GetValue<bool>());
+    }
+
+    [Fact]
+    public void ContextExportManifestGeneratorDoesNotOverwriteExistingManifest()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/prompt-packs/demo.md", "# Prompt Pack");
+        repo.Write(".ackit/context-exports/demo.json", "original");
+        var generator = new ContextExportManifestGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        var result = generator.Generate(
+            repo.Path,
+            new ContextExportSpec(".ackit/prompt-packs/demo.md", ".ackit/context-exports/demo.json", "explicit-cli-flag", LanguageCode.English),
+            scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "context-exports", "demo.json"));
+
+        Assert.False(result.Created);
+        Assert.Equal("original", content);
+    }
+
+    [Fact]
+    public void ContextExportManifestGeneratorRejectsUnsafePaths()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new ContextExportManifestGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        Assert.Throws<InvalidOperationException>(() => generator.Generate(
+            repo.Path,
+            new ContextExportSpec("../pack.md", ".ackit/context-exports/demo.json", "explicit-cli-flag", LanguageCode.English),
+            scan));
+        Assert.Throws<InvalidOperationException>(() => generator.Generate(
+            repo.Path,
+            new ContextExportSpec(".ackit/prompt-packs/demo.md", "../demo.json", "explicit-cli-flag", LanguageCode.English),
+            scan));
+    }
 }
 
 public sealed class ConfigAndDoctorTests
@@ -636,6 +696,7 @@ public sealed class ConfigAndDoctorTests
         Assert.Contains(".ackit/reports/", config.IgnorePaths);
         Assert.Contains(".ackit/webui/", config.IgnorePaths);
         Assert.Contains(".ackit/prompt-packs/", config.IgnorePaths);
+        Assert.Contains(".ackit/context-exports/", config.IgnorePaths);
     }
 
     [Fact]
@@ -837,6 +898,39 @@ public sealed class CliJsonAndMetadataTests
         Assert.True(File.Exists(packPath));
         Assert.Contains("AgentContextKit Dry-Run Prompt Pack", content);
         Assert.Contains("No remote LLM provider call was made.", content);
+    }
+
+    [Fact]
+    public void ContextExportRequiresExplicitApproval()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/prompt-packs/test-pack.md", "# Prompt Pack");
+
+        var result = RunCli(repo.Path, ["context-export", "--prompt-pack", ".ackit/prompt-packs/test-pack.md", "--json"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("requires explicit --approve", result.Error);
+    }
+
+    [Fact]
+    public void ContextExportJsonCreatesLocalManifest()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write(".ackit/prompt-packs/test-pack.md", "# Prompt Pack");
+
+        var result = RunCli(repo.Path, ["context-export", "--prompt-pack", ".ackit/prompt-packs/test-pack.md", "--approve", "--output", ".ackit/context-exports/test-export.json", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var manifestPath = System.IO.Path.Combine(repo.Path, ".ackit", "context-exports", "test-export.json");
+        var manifest = JsonNode.Parse(File.ReadAllText(manifestPath));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("context-export", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit/context-exports/test-export.json", json?["contextExport"]?["path"]?.GetValue<string>());
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+        Assert.Equal(".ackit/prompt-packs/test-pack.md", manifest?["sourcePromptPack"]?["path"]?.GetValue<string>());
+        Assert.True(manifest?["approval"]?["approved"]?.GetValue<bool>());
+        Assert.True(manifest?["safety"]?["noRemoteCall"]?.GetValue<bool>());
     }
 
     [Fact]

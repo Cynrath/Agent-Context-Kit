@@ -96,6 +96,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0030-v050-optional-llm-integration-architecture.md`
 - `docs/tasks/TASK-0031-v050-llm-provider-abstraction.md`
 - `docs/tasks/TASK-0032-v050-dry-run-prompt-pack-generation.md`
+- `docs/tasks/TASK-0033-v050-user-approved-context-export.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

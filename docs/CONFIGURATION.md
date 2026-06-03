@@ -26,6 +26,7 @@ ignorePaths:
   - .ackit/reports/
   - .ackit/webui/
   - .ackit/prompt-packs/
+  - .ackit/context-exports/
 riskExtensions:
   - .bak
   - .tmp

@@ -100,6 +100,12 @@ public sealed record GeneratedFileResult(
 
 public sealed record TaskSpec(string Title, LanguageCode Language);
 
+public sealed record ContextExportSpec(
+    string PromptPackPath,
+    string? OutputPath,
+    string ApprovalMode,
+    LanguageCode Language);
+
 public sealed record RepositoryProfile(string RootPath, IReadOnlyList<string> Files, IReadOnlyList<StackInfo> Stacks);
 
 public sealed record AckitConfig(
@@ -115,7 +121,7 @@ public sealed record AckitConfig(
         LanguageCode.English,
         Array.Empty<string>(),
         Array.Empty<string>(),
-        [".ackit/cache/", ".ackit/reports/", ".ackit/webui/", ".ackit/prompt-packs/"],
+        [".ackit/cache/", ".ackit/reports/", ".ackit/webui/", ".ackit/prompt-packs/", ".ackit/context-exports/"],
         [".bak", ".tmp", ".log", ".sql"]);
 }
 

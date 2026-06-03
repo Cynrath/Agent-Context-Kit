@@ -8,6 +8,7 @@ Supported commands:
 - `ackit report --json`
 - `ackit webui --json`
 - `ackit prompt-pack --json`
+- `ackit context-export --json`
 - `ackit generate --json`
 - `ackit task "<title>" --json`
 - `ackit redact-check --json`
@@ -38,6 +39,7 @@ Schema version `2` adds:
 - `report` generated file metadata on `report`.
 - `webUi` generated file metadata on `webui`.
 - `promptPack` generated file metadata on `prompt-pack`.
+- `contextExport` generated file metadata on `context-export`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -138,5 +140,15 @@ Example shape:
   "status": "Created",
   "created": true,
   "message": "Dry-run prompt pack created."
+}
+```
+
+`contextExport`:
+```json
+{
+  "path": ".ackit/context-exports/context-export-manifest.json",
+  "status": "Created",
+  "created": true,
+  "message": "Context export manifest created."
 }
 ```

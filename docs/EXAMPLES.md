@@ -52,6 +52,13 @@ ackit prompt-pack --output .ackit/prompt-packs/current.md --json
 
 Review the generated Markdown locally before any future context export. The command does not call a remote provider.
 
+## User-Approved Context Export Manifest
+```powershell
+ackit context-export --prompt-pack .ackit/prompt-packs/current.md --approve --output .ackit/context-exports/current.json --json
+```
+
+The manifest records local approval only. It does not upload the prompt pack or call a remote provider.
+
 ## Local Package Validation
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1

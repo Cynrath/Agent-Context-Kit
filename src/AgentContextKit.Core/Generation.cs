@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 
 namespace AgentContextKit.Core;
 
@@ -1224,6 +1225,139 @@ public sealed class PromptPackGenerator : IPromptPackGenerator
     }
 
     private sealed record ExpectedPromptPackFile(string Path, string Category);
+}
+
+public sealed class ContextExportManifestGenerator : IContextExportManifestGenerator
+{
+    private const string DefaultOutputPath = ".ackit/context-exports/context-export-manifest.json";
+    private readonly IFileSystem _fileSystem;
+    private readonly IClock _clock;
+
+    public ContextExportManifestGenerator(IFileSystem fileSystem, IClock clock)
+    {
+        _fileSystem = fileSystem;
+        _clock = clock;
+    }
+
+    public GeneratedFileResult Generate(string repositoryPath, ContextExportSpec spec, ScanResult scanResult)
+    {
+        var promptPackPath = NormalizeInputPath(repositoryPath, spec.PromptPackPath);
+        var outputPath = NormalizeOutputPath(repositoryPath, spec.OutputPath);
+        var promptPackFullPath = Path.Combine(repositoryPath, promptPackPath.Replace('/', Path.DirectorySeparatorChar));
+        var outputFullPath = Path.Combine(repositoryPath, outputPath.Replace('/', Path.DirectorySeparatorChar));
+
+        if (!_fileSystem.FileExists(promptPackFullPath))
+        {
+            throw new InvalidOperationException("Prompt pack file was not found.");
+        }
+
+        if (_fileSystem.FileExists(outputFullPath))
+        {
+            return new GeneratedFileResult(outputPath, GeneratedFileStatus.SkippedExisting, "Existing context export manifest was not overwritten.");
+        }
+
+        var manifest = new
+        {
+            schemaVersion = 1,
+            generatedAtUtc = _clock.UtcNow,
+            repositoryPath,
+            repositoryName = new DirectoryInfo(repositoryPath).Name,
+            sourcePromptPack = new
+            {
+                path = promptPackPath,
+                sizeBytes = _fileSystem.GetFileLength(promptPackFullPath)
+            },
+            approval = new
+            {
+                approved = true,
+                mode = spec.ApprovalMode,
+                note = Label(spec.Language, "Local manifest only. This is not approval for a remote provider call.", "Sadece lokal manifest. Remote provider cagrisi icin onay degildir.")
+            },
+            riskSummary = new
+            {
+                total = scanResult.Findings.Count,
+                critical = scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Critical),
+                high = scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.High),
+                medium = scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Medium),
+                low = scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Low),
+                info = scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Info)
+            },
+            safety = new
+            {
+                noRemoteCall = true,
+                noUpload = true,
+                apiKeyAccessed = false,
+                provider = "none"
+            }
+        };
+
+        var content = JsonSerializer.Serialize(manifest, new JsonSerializerOptions { WriteIndented = true });
+        _fileSystem.WriteAllText(outputFullPath, content + Environment.NewLine);
+        return new GeneratedFileResult(outputPath, GeneratedFileStatus.Created, "Context export manifest created.");
+    }
+
+    private static string NormalizeInputPath(string repositoryPath, string relativePath)
+    {
+        var inputPath = NormalizeRepositoryRelativePath(repositoryPath, relativePath, "Prompt pack path");
+        if (!inputPath.EndsWith(".md", StringComparison.OrdinalIgnoreCase) &&
+            !inputPath.EndsWith(".markdown", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Prompt pack path must end with .md or .markdown.");
+        }
+
+        return inputPath;
+    }
+
+    private static string NormalizeOutputPath(string repositoryPath, string? relativeOutputPath)
+    {
+        var outputPath = string.IsNullOrWhiteSpace(relativeOutputPath)
+            ? DefaultOutputPath
+            : relativeOutputPath;
+
+        outputPath = NormalizeRepositoryRelativePath(repositoryPath, outputPath, "Context export output path");
+        if (!outputPath.EndsWith(".json", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException("Context export output path must end with .json.");
+        }
+
+        return outputPath;
+    }
+
+    private static string NormalizeRepositoryRelativePath(string repositoryPath, string relativePath, string label)
+    {
+        if (string.IsNullOrWhiteSpace(relativePath))
+        {
+            throw new InvalidOperationException(label + " is required.");
+        }
+
+        var outputPath = relativePath.Trim().Replace('\\', '/');
+        if (Path.IsPathRooted(outputPath))
+        {
+            throw new InvalidOperationException(label + " must be repository-relative.");
+        }
+
+        var segments = outputPath.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (segments.Length == 0 || segments.Any(segment => segment is "." or ".."))
+        {
+            throw new InvalidOperationException(label + " must stay inside the repository.");
+        }
+
+        var repositoryFullPath = Path.GetFullPath(repositoryPath);
+        var fullPath = Path.GetFullPath(Path.Combine(repositoryFullPath, outputPath.Replace('/', Path.DirectorySeparatorChar)));
+        var repositoryPrefix = repositoryFullPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar) + Path.DirectorySeparatorChar;
+
+        if (!fullPath.StartsWith(repositoryPrefix, StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(label + " must stay inside the repository.");
+        }
+
+        return outputPath;
+    }
+
+    private static string Label(LanguageCode language, string english, string turkish)
+    {
+        return language.Value == "tr" ? turkish : english;
+    }
 }
 
 public sealed class TaskFileGenerator : ITaskFileGenerator

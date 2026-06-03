@@ -144,4 +144,28 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0033 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0033.
+
+- Added local-only `ackit context-export` command with required `--prompt-pack` and `--approve`.
+- Added `IContextExportManifestGenerator`, `ContextExportSpec`, and `ContextExportManifestGenerator`.
+- Default output is `.ackit/context-exports/context-export-manifest.json`; `.ackit/context-exports/` is ignored by git and default config.
+- Manifest JSON includes source prompt pack path/size, approval mode, generated timestamp, repository metadata, risk summary, and no-remote/no-upload/no-API-key safety fields.
+- Existing manifests are skipped by default, unsafe paths are rejected, and missing approval/prompt-pack inputs return exit code 1.
+- Added focused generator, CLI JSON, approval-required, skip, unsafe path, and config tests.
+- Updated README, CLI reference, examples, JSON/config docs, optional LLM architecture, roadmap, project map, changelog, context pack, next steps, and session handoff.
+- Checked current .NET JSON/path guidance through Context7 before implementation.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- prompt-pack --output .ackit/prompt-packs/task-0033-source.md --json` created the ignored local source prompt pack with risk summary 0.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- context-export --prompt-pack .ackit/prompt-packs/task-0033-source.md --approve --output .ackit/context-exports/task-0033-validation.json --json` created the ignored local approval manifest with risk summary 0.
+- Static manifest checks found approval mode, source prompt pack path, no-remote-call, and no-API-key fields.
+- `git check-ignore -v .ackit/context-exports/task-0033-validation.json` confirmed the validation artifact is ignored.
+- Missing `--approve` validation returned exit code 1 as expected.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed and installed help showed `context-export`.
+- `git diff --check` passed.
+- Real-name grep found no matches.

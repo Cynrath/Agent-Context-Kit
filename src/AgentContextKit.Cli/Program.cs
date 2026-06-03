@@ -32,6 +32,7 @@ public static class Program
                 "report" => RunReport(args, repositoryPath, config, language, json, services),
                 "webui" => RunWebUi(args, repositoryPath, config, language, json, services),
                 "prompt-pack" => RunPromptPack(args, repositoryPath, config, language, json, services),
+                "context-export" => RunContextExport(args, repositoryPath, config, language, json, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
                 "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
@@ -57,6 +58,7 @@ public static class Program
         Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit context-export --prompt-pack <repo-relative.md> --approve [--output <repo-relative.json>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
@@ -205,6 +207,50 @@ public static class Program
         PrintGeneratedResult(result, services.TextProvider, language);
         Console.WriteLine("No remote LLM provider call was made.");
         Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        return ExitSuccess;
+    }
+
+    private static int RunContextExport(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    {
+        if (!HasFlag(args, "--approve"))
+        {
+            Console.Error.WriteLine("ackit context-export requires explicit --approve.");
+            return ExitError;
+        }
+
+        var promptPackPath = GetOption(args, "--prompt-pack");
+        if (string.IsNullOrWhiteSpace(promptPackPath))
+        {
+            Console.Error.WriteLine("ackit context-export requires --prompt-pack <repo-relative.md>.");
+            return ExitError;
+        }
+
+        var outputPath = GetOption(args, "--output");
+        var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var result = services.ContextExportManifestGenerator.Generate(
+            repositoryPath,
+            new ContextExportSpec(promptPackPath, outputPath, "explicit-cli-flag", language),
+            scan);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "context-export",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
+                riskSummary = ToRiskSummary(scan.Findings),
+                contextExport = ToGeneratedFileDto(result)
+            });
+            return ExitSuccess;
+        }
+
+        PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine("No remote LLM provider call was made.");
+        Console.WriteLine("Approval recorded locally only.");
         return ExitSuccess;
     }
 
@@ -623,6 +669,7 @@ public static class Program
         return string.Equals(option, "--lang", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--target", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--profile", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(option, "--prompt-pack", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--output", StringComparison.OrdinalIgnoreCase);
     }
 
@@ -647,6 +694,7 @@ public static class Program
             new HtmlReportGenerator(fileSystem, clock),
             new WebUiGenerator(fileSystem, clock),
             new PromptPackGenerator(fileSystem, clock),
+            new ContextExportManifestGenerator(fileSystem, clock),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
             clock,
@@ -662,6 +710,7 @@ public static class Program
         IHtmlReportGenerator HtmlReportGenerator,
         IWebUiGenerator WebUiGenerator,
         IPromptPackGenerator PromptPackGenerator,
+        IContextExportManifestGenerator ContextExportManifestGenerator,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
         IClock Clock,
