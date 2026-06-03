@@ -110,4 +110,15 @@ Clarifies that v0.3 local readiness is separate from maintainer-only public rele
 Revert the TASK-0023 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented `scripts/check-v030-readiness.ps1` and `docs/V030_READINESS.md`.
+
+Verification completed:
+- `scripts/check-v030-readiness.ps1` exited `0`, reported no v0.3 readiness asset issues, and reported expected public-release blockers.
+- `scripts/check-v030-readiness.ps1 -FailOnIssues` exited `0` because all v0.3 readiness assets exist.
+- `scripts/check-public-release-gates.ps1` exited `0` in report-only mode and printed known public-release blockers.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 42/42 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

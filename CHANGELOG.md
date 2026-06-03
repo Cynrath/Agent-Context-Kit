@@ -36,6 +36,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Offline static HTML report generation with `ackit report`.
 - Example workflow documentation for local development, CI, HTML reports, release preflight, and sample scans.
 - Public release gate orchestration script and documentation.
+- v0.3 local readiness review script and documentation.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

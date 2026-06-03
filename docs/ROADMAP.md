@@ -30,6 +30,7 @@
 - Public release hardening. Started with public release gate orchestration.
 - More tests.
 - Example workflows. Started with local development, CI, HTML report, public release preflight, and sample scanning flows.
+- Final local readiness consolidation.
 
 ## v0.4.0-beta
 - Local Web UI prototype.

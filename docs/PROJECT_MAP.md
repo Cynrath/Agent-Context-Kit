@@ -85,9 +85,11 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0020-v030-html-report-generation.md`
 - `docs/tasks/TASK-0021-v030-example-workflows.md`
 - `docs/tasks/TASK-0022-v030-public-release-hardening.md`
+- `docs/tasks/TASK-0023-v030-final-readiness-consolidation.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
+- `docs/V030_READINESS.md`
 - `global.json`
 - `LICENSE`
 - `README.md`
@@ -106,6 +108,7 @@ Updated: 2026-06-03
 - `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/check-v020-readiness.ps1`
+- `scripts/check-v030-readiness.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`
