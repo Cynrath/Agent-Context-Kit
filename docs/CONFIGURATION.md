@@ -44,8 +44,12 @@ Supported values:
 ### `brandKeywords`
 Custom brand, product, customer, or domain words to report before public release.
 
+Matching uses token boundaries. For example, `Acme` matches `Acme Corp` but not `AcmeCorp`.
+
 ### `piiKeywords`
 Custom person, phone, address, customer identifier, or private organization words to report before public release.
+
+Matching uses token boundaries to reduce substring false positives.
 
 ### `ignorePaths`
 Repository-relative paths to exclude from scanning and risk reports.

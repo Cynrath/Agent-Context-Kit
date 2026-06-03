@@ -119,6 +119,25 @@ public sealed class RiskScannerTests
         Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical);
     }
 
+    [Theory]
+    [InlineData("generic")]
+    [InlineData("ec")]
+    [InlineData("pgp")]
+    public void SecretScannerFindsGenericPrivateKeyBlocks(string keyType)
+    {
+        var scanner = new SecretScanner();
+        var privateKeyHeader = keyType switch
+        {
+            "ec" => "-----BEGIN EC " + "PRIVATE KEY-----",
+            "pgp" => "-----BEGIN PGP " + "PRIVATE KEY BLOCK-----",
+            _ => "-----BEGIN " + "PRIVATE KEY-----"
+        };
+
+        var findings = scanner.ScanText("key.pem", privateKeyHeader);
+
+        Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical && finding.Category == RiskCategory.Secret);
+    }
+
     [Fact]
     public void RepositoryScannerIgnoresGitBinAndObjContent()
     {
@@ -135,6 +154,49 @@ public sealed class RiskScannerTests
         Assert.DoesNotContain(result.Files, file => file.StartsWith("bin/", StringComparison.OrdinalIgnoreCase));
         Assert.DoesNotContain(result.Files, file => file.StartsWith("obj/", StringComparison.OrdinalIgnoreCase));
         Assert.DoesNotContain(result.Findings, finding => finding.Severity == RiskSeverity.Critical);
+    }
+
+    [Fact]
+    public void RepositoryScannerTreatsEnvSamplesAsReviewFindingsAndRealEnvAsCritical()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".env.example", "API_URL=https://example.com");
+        repo.Write(".env", "API_URL=https://example.com");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path);
+
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == ".env" &&
+            finding.Severity == RiskSeverity.Critical &&
+            finding.Category == RiskCategory.Secret);
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == ".env.example" &&
+            finding.Severity == RiskSeverity.Medium &&
+            finding.Category == RiskCategory.Configuration);
+        Assert.DoesNotContain(result.Findings, finding =>
+            finding.Path == ".env.example" &&
+            finding.Severity == RiskSeverity.Critical);
+    }
+
+    [Fact]
+    public void RepositoryScannerFindsPrivateKeyAndKeyStoreFileNames()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ssh/id_ed25519", "");
+        repo.Write("certs/signing.pfx", "");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path);
+
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == ".ssh/id_ed25519" &&
+            finding.Severity == RiskSeverity.Critical &&
+            finding.Category == RiskCategory.Secret);
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == "certs/signing.pfx" &&
+            finding.Severity == RiskSeverity.Critical &&
+            finding.Category == RiskCategory.Secret);
     }
 
     [Fact]
@@ -180,6 +242,42 @@ public sealed class RiskScannerTests
         });
 
         Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "private-name");
+    }
+
+    [Fact]
+    public void BrandPiiScannerIgnoresLoopbackWildcardAndDocumentationIpAddresses()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText("notes.md", "Use 127.0.0.1, 0.0.0.0, and 203.0.113.10 in examples.", AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains("IP address", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void BrandPiiScannerReportsPrivateIpAddresses()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText("ops.md", "Internal host is 10.0.0.5.", AckitConfig.Default);
+
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "10.0.0.5");
+    }
+
+    [Fact]
+    public void BrandPiiScannerUsesTokenBoundariesForConfiguredKeywords()
+    {
+        var scanner = new BrandPiiScanner();
+        var config = AckitConfig.Default with
+        {
+            BrandKeywords = ["Acme"]
+        };
+
+        var substringFindings = scanner.ScanText("notes.md", "AcmeCorp is a different token.", config);
+        var tokenFindings = scanner.ScanText("notes.md", "Acme Corp is a configured brand token.", config);
+
+        Assert.DoesNotContain(substringFindings, finding => finding.Category == RiskCategory.Brand && finding.Match == "Acme");
+        Assert.Contains(tokenFindings, finding => finding.Category == RiskCategory.Brand && finding.Match == "Acme");
     }
 }
 

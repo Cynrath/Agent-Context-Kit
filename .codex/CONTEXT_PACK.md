@@ -45,3 +45,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 
 ## v0.2 Progress
 - TASK-0011 completed stack detection expansion with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
+- TASK-0012 completed risk scanner precision improvements for environment samples, private key files, private key blocks, IP filtering, and configured keyword token boundaries.

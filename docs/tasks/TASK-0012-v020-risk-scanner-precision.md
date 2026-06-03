@@ -70,7 +70,7 @@ Improves v0.2 public-release readiness checks while keeping existing release blo
 - `.env.local` or similar non-sample env files remain Critical.
 - `.env.example`, `.env.sample`, `.env.template`, and `.env.dist` are not Critical.
 - Key-store/private-key file names such as `.pfx`, `.p12`, `.key`, `id_rsa`, and `id_ed25519` are Critical.
-- Generic `BEGIN PRIVATE KEY`, EC private key, and PGP private key blocks are Critical.
+- Generic private key, EC private key, and PGP private key block headers are Critical.
 - `127.0.0.1`, `0.0.0.0`, and documentation-reserved IP ranges are ignored.
 - Private/internal IP addresses remain reportable.
 - Configured keyword `Acme` does not match `AcmeCorp`, but does match `Acme Corp`.
@@ -113,4 +113,23 @@ Improves v0.2 public-release readiness checks while keeping existing release blo
 Revert the TASK-0012 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added environment sample precision: `.env.example`, `.env.sample`, `.env.template`, and `.env.dist` are review findings instead of Critical path findings.
+- Kept real environment files such as `.env` and `.env.local` Critical.
+- Added Critical private key/key-store path findings for `id_rsa`, `id_dsa`, `id_ecdsa`, `id_ed25519`, `.pfx`, `.p12`, and `.key`.
+- Expanded private key block matching to generic, RSA, DSA, EC, OpenSSH, PGP, and encrypted private key headers.
+- Ignored wildcard, loopback, broadcast, and documentation-reserved IP addresses.
+- Kept private/internal IP addresses reportable.
+- Added token-boundary matching for configured brand and PII keywords.
+- Tightened token/API-key assignment matching to avoid source-code local variable false positives such as `var token =`.
+- Reworked tests and task text to avoid self-scan private-key header literals.
+- Added focused tests for env sample behavior, key file detection, private key blocks, IP filtering, private IP reporting, and keyword boundaries.
+- Updated security model, security notes, configuration docs, roadmap, project map, changelog, context pack, handoff, and next steps.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 29/29.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings after self-scan fixes.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- Release verification reported known public-release blockers in non-failing mode.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

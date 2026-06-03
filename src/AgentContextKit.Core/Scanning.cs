@@ -432,11 +432,19 @@ public sealed class RiskScanner : IRiskScanner
         var lower = relativeFile.ToLowerInvariant();
         var extension = Path.GetExtension(relativeFile);
 
-        if (fileName.Equals(".env", StringComparison.OrdinalIgnoreCase) ||
-            fileName.StartsWith(".env.", StringComparison.OrdinalIgnoreCase) ||
-            fileName.Equals("secrets.json", StringComparison.OrdinalIgnoreCase))
+        if (IsEnvironmentSampleFile(fileName))
+        {
+            yield return new RiskFinding(RiskSeverity.Medium, RiskCategory.Configuration, relativeFile, "Environment sample file should be reviewed before public release.");
+        }
+        else if (IsSensitiveEnvironmentFile(fileName) ||
+                 fileName.Equals("secrets.json", StringComparison.OrdinalIgnoreCase))
         {
             yield return new RiskFinding(RiskSeverity.Critical, RiskCategory.Secret, relativeFile, "Secret-like configuration file is present.");
+        }
+
+        if (IsPrivateKeyFile(fileName))
+        {
+            yield return new RiskFinding(RiskSeverity.Critical, RiskCategory.Secret, relativeFile, "Private key or key-store file is present.");
         }
 
         if (fileName.Equals("appsettings.Production.json", StringComparison.OrdinalIgnoreCase) ||
@@ -477,6 +485,31 @@ public sealed class RiskScanner : IRiskScanner
                fileName.EndsWith(".bacpac", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".dacpac", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".sql", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsEnvironmentSampleFile(string fileName)
+    {
+        return fileName.Equals(".env.example", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals(".env.sample", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals(".env.template", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals(".env.dist", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsSensitiveEnvironmentFile(string fileName)
+    {
+        return fileName.Equals(".env", StringComparison.OrdinalIgnoreCase) ||
+               fileName.StartsWith(".env.", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsPrivateKeyFile(string fileName)
+    {
+        return fileName.Equals("id_rsa", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals("id_dsa", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals("id_ecdsa", StringComparison.OrdinalIgnoreCase) ||
+               fileName.Equals("id_ed25519", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".pfx", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".p12", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".key", StringComparison.OrdinalIgnoreCase);
     }
 
     private static bool IsProbablyTextFile(string relativeFile)
@@ -520,10 +553,10 @@ public sealed class SecretScanner : ISecretScanner
         new(new Regex(@"\bsk-[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "API key-like value detected."),
         new(new Regex(@"github_pat_[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
         new(new Regex(@"\bghp_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
-        new(new Regex(@"BEGIN (RSA|OPENSSH) PRIVATE KEY", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
+        new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
         new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
         new(new Regex(@"\b(password|pwd|mysql password|sql password)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Password-like assignment detected."),
-        new(new Regex(@"\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
+        new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
         new(new Regex(@"\b(connectionstring|connection string)\b\s*[:=]|\b(data source|user id|uid)" + EqualsSign, RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Connection string-like value detected."),
         new(new Regex(@"\b(smtp|recaptcha|cloudflare)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Medium, RiskCategory.Secret, "Service credential-like setting detected."),
         new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + ")", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
@@ -576,7 +609,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
 
         foreach (var keyword in config.BrandKeywords.Where(keyword => !string.IsNullOrWhiteSpace(keyword)))
         {
-            if (content.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            if (ContainsConfiguredKeyword(content, keyword))
             {
                 findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Brand, relativePath, "Configured brand keyword detected.", keyword));
             }
@@ -584,7 +617,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
 
         foreach (var keyword in config.PiiKeywords.Where(keyword => !string.IsNullOrWhiteSpace(keyword)))
         {
-            if (content.Contains(keyword, StringComparison.OrdinalIgnoreCase))
+            if (ContainsConfiguredKeyword(content, keyword))
             {
                 findings.Add(new RiskFinding(RiskSeverity.High, RiskCategory.Pii, relativePath, "Configured PII keyword detected.", keyword));
             }
@@ -612,7 +645,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         }
 
         var ipAddressMatch = IpAddressRegex.Match(content);
-        if (ipAddressMatch.Success && IsValidIpAddress(ipAddressMatch.Value))
+        if (ipAddressMatch.Success && IsReportableIpAddress(ipAddressMatch.Value))
         {
             findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "IP address-like value detected.", ipAddressMatch.Value));
         }
@@ -620,11 +653,81 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         return findings;
     }
 
-    private static bool IsValidIpAddress(string value)
+    private static bool IsReportableIpAddress(string value)
     {
         var parts = value.Split('.');
-        return parts.Length == 4 &&
-               parts.All(part => int.TryParse(part, out var parsed) && parsed is >= 0 and <= 255);
+        if (parts.Length != 4)
+        {
+            return false;
+        }
+
+        var octets = new int[4];
+        for (var index = 0; index < parts.Length; index++)
+        {
+            if (!int.TryParse(parts[index], out var parsed) || parsed is < 0 or > 255)
+            {
+                return false;
+            }
+
+            octets[index] = parsed;
+        }
+
+        if (octets is [0, 0, 0, 0] or [255, 255, 255, 255])
+        {
+            return false;
+        }
+
+        if (octets[0] == 127)
+        {
+            return false;
+        }
+
+        if (octets[0] == 192 && octets[1] == 0 && octets[2] == 2)
+        {
+            return false;
+        }
+
+        if (octets[0] == 198 && octets[1] == 51 && octets[2] == 100)
+        {
+            return false;
+        }
+
+        if (octets[0] == 203 && octets[1] == 0 && octets[2] == 113)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    private static bool ContainsConfiguredKeyword(string content, string keyword)
+    {
+        var token = keyword.Trim();
+        if (token.Length == 0)
+        {
+            return false;
+        }
+
+        var index = 0;
+        while ((index = content.IndexOf(token, index, StringComparison.OrdinalIgnoreCase)) >= 0)
+        {
+            var beforeOk = index == 0 || IsKeywordBoundary(content[index - 1]);
+            var afterIndex = index + token.Length;
+            var afterOk = afterIndex >= content.Length || IsKeywordBoundary(content[afterIndex]);
+            if (beforeOk && afterOk)
+            {
+                return true;
+            }
+
+            index += token.Length;
+        }
+
+        return false;
+    }
+
+    private static bool IsKeywordBoundary(char value)
+    {
+        return !char.IsLetterOrDigit(value) && value != '_';
     }
 
     private static bool IsDateOrDateTimeLikeValue(string value)
