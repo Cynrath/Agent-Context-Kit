@@ -29,7 +29,7 @@
 - Exit code standardization. Started with centralized CLI constants and an exit code matrix.
 - Public release hardening.
 - More tests.
-- Example workflows.
+- Example workflows. Started with local development, CI, HTML report, public release preflight, and sample scanning flows.
 
 ## v0.4.0-beta
 - Local Web UI prototype.

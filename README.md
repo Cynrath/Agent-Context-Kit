@@ -96,6 +96,7 @@ Start with [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md).
 Key docs:
 - [CLI Reference](docs/CLI_REFERENCE.md)
 - [Examples](docs/EXAMPLES.md)
+- [Example Workflows](docs/EXAMPLE_WORKFLOWS.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)

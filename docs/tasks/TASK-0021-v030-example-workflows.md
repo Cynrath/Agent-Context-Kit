@@ -102,4 +102,12 @@ Improves onboarding and maintainer release readiness. Public release blockers re
 Revert the TASK-0021 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Implemented `docs/EXAMPLE_WORKFLOWS.md` and updated workflow references.
+
+Verification completed:
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 42/42 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

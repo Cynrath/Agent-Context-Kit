@@ -4,6 +4,7 @@
 ```powershell
 ackit init --lang en
 ackit scan
+ackit scan --ci
 ackit doctor
 ```
 
@@ -29,8 +30,14 @@ ackit doctor
 ## CI-Friendly JSON
 ```powershell
 ackit scan --json
+ackit scan --ci --json
 ackit redact-check --profile public-release --json
 ackit doctor --json
+```
+
+## HTML Report
+```powershell
+ackit report --output .ackit/reports/current.html --json
 ```
 
 ## Local Package Validation
@@ -50,3 +57,6 @@ Pop-Location
 ```
 
 See [SAMPLES.md](SAMPLES.md).
+
+## Workflow Collections
+See [EXAMPLE_WORKFLOWS.md](EXAMPLE_WORKFLOWS.md) for copy-paste-ready local development, CI, HTML report, public release preflight, and sample scanning workflows.
