@@ -90,6 +90,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0025-v040-scan-result-dashboard-refinement.md`
 - `docs/tasks/TASK-0026-v040-generated-file-preview-refinement.md`
 - `docs/tasks/TASK-0027-v040-risk-finding-browser-refinement.md`
+- `docs/tasks/TASK-0028-v040-task-preview-refinement.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`

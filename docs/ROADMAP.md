@@ -37,7 +37,7 @@
 - Scan result dashboard. Refined with readiness score, review status, severity breakdown, and recommended checks.
 - Generated file preview. Refined with expected file categories, present/missing status, size metadata, and capped previews.
 - Risk finding browser. Refined with deterministic review queue, finding IDs, match display, and recommended actions.
-- Task preview. Started with latest `docs/tasks` previews.
+- Task preview. Refined with task ID, title, inferred status, size metadata, paths, and capped previews.
 
 ## v0.5.0-beta
 - Optional LLM integration architecture.

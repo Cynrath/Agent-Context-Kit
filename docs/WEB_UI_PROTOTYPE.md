@@ -28,7 +28,7 @@ ackit webui --output docs/local-webui.html --json
 - Stack signals.
 - Risk finding browser with deterministic review queue, finding ID, optional match, and recommended action.
 - Generated agent/context file preview with expected file category, status, size, and capped preview text.
-- Latest task file preview.
+- Latest task file preview with task ID, title, inferred status, size, path, and capped preview text.
 
 ## Safety Behavior
 - The Web UI is a local static HTML file.

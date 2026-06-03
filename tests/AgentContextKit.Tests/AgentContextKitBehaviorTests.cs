@@ -427,10 +427,18 @@ public sealed class TemplateAndGenerationTests
         using var repo = TempRepository.Create();
         repo.Write("AGENTS.md", "<script>alert</script>");
         repo.Write("docs/tasks/TASK-0001-demo.md", "# Demo Task");
+        repo.Write("docs/tasks/TASK-0002-completed.md", """
+            # TASK-0002: Completed Task
+
+            ## Completion notes
+            Completed.
+
+            - The phrase `Not implemented yet.` can appear in explanatory text without reopening the task.
+            """);
         var generator = new WebUiGenerator(new PhysicalFileSystem(), new FixedClock());
         var scan = new ScanResult(
             repo.Path,
-            ["AGENTS.md", "docs/tasks/TASK-0001-demo.md"],
+            ["AGENTS.md", "docs/tasks/TASK-0001-demo.md", "docs/tasks/TASK-0002-completed.md"],
             [new StackInfo(".NET", ".csproj")],
             [
                 new RiskFinding(RiskSeverity.Medium, RiskCategory.Configuration, "config.md", "Review config"),
@@ -471,6 +479,14 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("Missing", content);
         Assert.Contains("Codex", content);
         Assert.Contains("Task Preview", content);
+        Assert.Contains("Task ID", content);
+        Assert.Contains("Task Status", content);
+        Assert.Contains("TASK-0001", content);
+        Assert.Contains("Demo Task", content);
+        Assert.Contains("Open", content);
+        Assert.Contains("TASK-0002", content);
+        Assert.Contains("Completed Task", content);
+        Assert.Contains("Completed", content);
         Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);
         Assert.DoesNotContain("<script>alert</script>", content);
         Assert.True(content.IndexOf("notes.md", StringComparison.Ordinal) < content.IndexOf("config.md", StringComparison.Ordinal));

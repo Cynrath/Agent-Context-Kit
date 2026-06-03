@@ -119,4 +119,22 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0028 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0028.
+
+- Refined the Web UI task preview with a latest-task table that shows task ID, title, inferred status, size, and path.
+- Kept task preview details capped and HTML-encoded.
+- Derived task status from the first meaningful completion-note line so explanatory text does not reopen completed tasks.
+- Added focused Web UI generator assertions for task ID, title, task status, and encoded preview behavior.
+- Updated Web UI, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+
+Verification:
+
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0028-validation-final2.html --json` created the ignored local Web UI with risk summary 0 and TASK-0028 shown as completed.
+- Static Web UI checks found `Task Preview`, `Task ID`, `Title`, `Task Status`, and `Size`.
+- Static Web UI remote asset/script/import checks found no matches.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed. Public release blockers remain maintainer-only TODO package URLs and missing release tag.
+- `git diff --check` passed.
+- Real-name grep found no matches.

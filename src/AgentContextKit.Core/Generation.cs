@@ -766,18 +766,26 @@ public sealed class WebUiGenerator : IWebUiGenerator
     {
         builder.AppendLine("<section id=\"tasks\" class=\"band\">");
         builder.AppendLine("<h2>" + E(Label(language, "Task Preview", "Task Onizleme")) + "</h2>");
-        builder.AppendLine("<p>" + E(Label(language, "Latest task files under docs/tasks.", "docs/tasks altindaki son task dosyalari.")) + "</p>");
+        builder.AppendLine("<p>" + E(Label(language, "Latest task files under docs/tasks with task ID, title, inferred status, size, and capped previews.", "docs/tasks altindaki son task dosyalari; task ID, baslik, cikarilan durum, boyut ve sinirli onizleme.")) + "</p>");
         if (files.Count == 0)
         {
             builder.AppendLine("<p class=\"muted\">" + E(Label(language, "No matching files detected.", "Eslesen dosya bulunmadi.")) + "</p>");
         }
         else
         {
+            builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Task ID</th><th>Title</th><th>Task Status</th><th>Size</th><th>Path</th></tr></thead><tbody>");
+            foreach (var file in files)
+            {
+                var content = ReadFileText(repositoryPath, file);
+                builder.AppendLine("<tr><td><code>" + E(GetTaskId(file)) + "</code></td><td>" + E(GetTaskTitle(file, content)) + "</td><td>" + E(GetTaskStatus(language, content)) + "</td><td>" + E(FormatBytes(ReadFileLength(repositoryPath, file))) + "</td><td><code>" + E(file) + "</code></td></tr>");
+            }
+
+            builder.AppendLine("</tbody></table></div>");
             foreach (var file in files)
             {
                 builder.AppendLine("<details>");
                 builder.AppendLine("<summary><code>" + E(file) + "</code></summary>");
-                builder.AppendLine("<pre>" + E(ReadPreview(repositoryPath, file)) + "</pre>");
+                builder.AppendLine("<pre>" + E(BuildPreview(ReadFileText(repositoryPath, file))) + "</pre>");
                 builder.AppendLine("</details>");
             }
         }
@@ -821,11 +829,7 @@ public sealed class WebUiGenerator : IWebUiGenerator
     {
         try
         {
-            var fullPath = Path.Combine(repositoryPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
-            var content = _fileSystem.ReadAllText(fullPath).Replace("\r", "", StringComparison.Ordinal);
-            var lines = content.Split('\n').Take(18).Select(TrimPreviewLine).ToArray();
-            var preview = string.Join(Environment.NewLine, lines).TrimEnd();
-            return string.IsNullOrWhiteSpace(preview) ? "(empty file)" : preview;
+            return BuildPreview(ReadFileText(repositoryPath, relativePath));
         }
         catch (IOException)
         {
@@ -835,6 +839,80 @@ public sealed class WebUiGenerator : IWebUiGenerator
         {
             return "(preview unavailable)";
         }
+    }
+
+    private string ReadFileText(string repositoryPath, string relativePath)
+    {
+        try
+        {
+            var fullPath = Path.Combine(repositoryPath, relativePath.Replace('/', Path.DirectorySeparatorChar));
+            return _fileSystem.ReadAllText(fullPath).Replace("\r", "", StringComparison.Ordinal);
+        }
+        catch (IOException)
+        {
+            return "(preview unavailable)";
+        }
+        catch (UnauthorizedAccessException)
+        {
+            return "(preview unavailable)";
+        }
+    }
+
+    private static string BuildPreview(string content)
+    {
+        var lines = content.Split('\n').Take(18).Select(TrimPreviewLine).ToArray();
+        var preview = string.Join(Environment.NewLine, lines).TrimEnd();
+        return string.IsNullOrWhiteSpace(preview) ? "(empty file)" : preview;
+    }
+
+    private static string GetTaskId(string relativePath)
+    {
+        var fileName = Path.GetFileName(relativePath);
+        return fileName.Length >= 9 && fileName.StartsWith("TASK-", StringComparison.OrdinalIgnoreCase)
+            ? fileName[..9].ToUpperInvariant()
+            : "TASK-????";
+    }
+
+    private static string GetTaskTitle(string relativePath, string content)
+    {
+        var heading = content
+            .Split('\n')
+            .FirstOrDefault(line => line.StartsWith("# ", StringComparison.Ordinal));
+
+        if (!string.IsNullOrWhiteSpace(heading))
+        {
+            var title = heading[2..].Trim();
+            var separator = title.IndexOf(':', StringComparison.Ordinal);
+            return separator >= 0 && separator + 1 < title.Length ? title[(separator + 1)..].Trim() : title;
+        }
+
+        return Path.GetFileNameWithoutExtension(relativePath);
+    }
+
+    private static string GetTaskStatus(LanguageCode language, string content)
+    {
+        const string completionNotesHeading = "## Completion notes";
+        var headingIndex = content.IndexOf(completionNotesHeading, StringComparison.OrdinalIgnoreCase);
+        if (headingIndex < 0)
+        {
+            return Label(language, "Open", "Acik");
+        }
+
+        var notes = content[(headingIndex + completionNotesHeading.Length)..];
+        var firstNote = notes
+            .Split('\n')
+            .Select(line => line.Trim())
+            .TakeWhile(line => !line.StartsWith("## ", StringComparison.Ordinal))
+            .FirstOrDefault(line => line.Length > 0);
+
+        if (string.IsNullOrWhiteSpace(firstNote))
+        {
+            return Label(language, "Open", "Acik");
+        }
+
+        return firstNote.Equals("Not implemented yet.", StringComparison.OrdinalIgnoreCase)
+            ? Label(language, "Open", "Acik")
+            : Label(language, "Completed", "Tamamlandi");
     }
 
     private static string TrimPreviewLine(string line)
