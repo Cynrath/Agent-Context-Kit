@@ -38,6 +38,7 @@
 - Generated file preview. Refined with expected file categories, present/missing status, size metadata, and capped previews.
 - Risk finding browser. Refined with deterministic review queue, finding IDs, match display, and recommended actions.
 - Task preview. Refined with task ID, title, inferred status, size metadata, paths, and capped previews.
+- Final local readiness consolidation.
 
 ## v0.5.0-beta
 - Optional LLM integration architecture.

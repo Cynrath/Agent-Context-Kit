@@ -91,10 +91,12 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0026-v040-generated-file-preview-refinement.md`
 - `docs/tasks/TASK-0027-v040-risk-finding-browser-refinement.md`
 - `docs/tasks/TASK-0028-v040-task-preview-refinement.md`
+- `docs/tasks/TASK-0029-v040-final-readiness-consolidation.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
 - `docs/V030_READINESS.md`
+- `docs/V040_READINESS.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `global.json`
 - `LICENSE`
@@ -115,6 +117,7 @@ Updated: 2026-06-03
 - `scripts/check-release-blockers.ps1`
 - `scripts/check-v020-readiness.ps1`
 - `scripts/check-v030-readiness.ps1`
+- `scripts/check-v040-readiness.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`

@@ -51,6 +51,21 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1 -FailO
 
 See [V030_READINESS.md](V030_READINESS.md).
 
+## v0.4 Readiness Review
+Run the v0.4 local readiness check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1
+```
+
+Use it as a failing gate for missing v0.4 readiness assets:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues
+```
+
+See [V040_READINESS.md](V040_READINESS.md).
+
 ## Release Blocker Review
 Report current blockers:
 

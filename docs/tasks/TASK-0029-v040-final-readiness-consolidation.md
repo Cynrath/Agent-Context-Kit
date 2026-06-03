@@ -119,4 +119,22 @@ Strengthens local readiness review. Public release remains blocked by maintainer
 Revert the TASK-0029 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Completed in TASK-0029.
+
+- Added `scripts/check-v040-readiness.ps1` with local-only v0.4 asset checks.
+- Added `docs/V040_READINESS.md` with report-only and failing gate usage, expected public blockers, required validation, and v0.5 next-step context.
+- Updated release validation, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+- Kept public-release blockers separate from local v0.4 readiness issues.
+- Checked current .NET CLI guidance through Context7 `/dotnet/docs` and PowerShell script guidance through Microsoft Learn before implementation.
+
+Verification:
+
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1` passed and reported no v0.4 asset issues.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0029-validation-final.html --json` created the ignored local Web UI with risk summary 0 and TASK-0029 shown as completed.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed. Public release blockers remain maintainer-only TODO package URLs and missing release tag.
+- `git diff --check` passed.
+- Real-name grep found no matches.

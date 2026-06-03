@@ -42,6 +42,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Refined Web UI generated file preview with expected file category, status, size, and missing-file hints.
 - Refined Web UI risk finding browser with deterministic review queue, finding IDs, match display, and recommended actions.
 - Refined Web UI task preview with task ID, title, inferred status, size, path, and capped preview text.
+- v0.4 local readiness review script and documentation.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.
