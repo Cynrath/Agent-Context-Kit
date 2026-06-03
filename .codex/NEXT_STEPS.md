@@ -1,6 +1,6 @@
 # Next Steps
 
-1. Continue v0.2 product work with TASK-0014 for expanded generated docs.
+1. Continue v0.2 product work with TASK-0015 for sample repositories.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.

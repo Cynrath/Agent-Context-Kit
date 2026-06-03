@@ -67,6 +67,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0011-v020-stack-detector-expansion.md`
 - `docs/tasks/TASK-0012-v020-risk-scanner-precision.md`
 - `docs/tasks/TASK-0013-v020-json-schema-expansion.md`
+- `docs/tasks/TASK-0014-v020-expanded-generated-docs.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `global.json`

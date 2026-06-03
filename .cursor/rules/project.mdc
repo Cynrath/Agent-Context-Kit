@@ -3,3 +3,11 @@
 - Respect existing architecture.
 - Use task-first workflow.
 - Keep generated changes safe and reviewable.
+- Check repository health and risk summary before editing.
+- Keep push, tag, publish, remote creation, deletion, and automatic redaction maintainer-only.
+
+## Recommended Checks
+- `dotnet build AgentContextKit.sln -c Release --no-restore`
+- `dotnet test AgentContextKit.sln -c Release --no-build`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`

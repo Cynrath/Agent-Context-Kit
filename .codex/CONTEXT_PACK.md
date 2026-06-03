@@ -15,6 +15,18 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Pattern-based redact checks.
 - English/Turkish localization foundation.
 
+## Repository Health
+- README: yes
+- LICENSE: yes
+- SECURITY: yes
+- Tests: yes
+- CI: yes
+- Agent instructions: yes
+
+## Risk Summary
+- No risk findings in the latest local scan.
+- Public release remains blocked by TODO package URLs and missing release tag.
+
 ## Hard Rules
 - No remote upload.
 - No LLM API in MVP.
@@ -29,6 +41,7 @@ Use:
 dotnet restore
 dotnet build -c Release
 dotnet test -c Release
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
@@ -47,3 +60,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0011 completed stack detection expansion with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
 - TASK-0012 completed risk scanner precision improvements for environment samples, private key files, private key blocks, IP filtering, and configured keyword token boundaries.
 - TASK-0013 completed JSON schema version 2 with generated timestamp, repository metadata, and summary fields.
+- TASK-0014 completed expanded generated agent/context docs with repository health, risk summary, and recommended checks.

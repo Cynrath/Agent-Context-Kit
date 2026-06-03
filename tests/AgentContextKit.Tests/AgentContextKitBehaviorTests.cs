@@ -324,6 +324,38 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains(results, result => result.Path == "AGENTS.md" && result.Status == GeneratedFileStatus.SkippedExisting);
         Assert.Equal("original", File.ReadAllText(System.IO.Path.Combine(repo.Path, "AGENTS.md")));
     }
+
+    [Fact]
+    public void AgentGeneratorWritesExpandedAgentContext()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new AgentInstructionGenerator(new PhysicalFileSystem(), new TemplateRenderer(), new FixedClock());
+        var scan = new ScanResult(
+            repo.Path,
+            ["README.md", "AgentContextKit.sln"],
+            [new StackInfo(".NET", ".sln/.slnx/*proj/Program.cs")],
+            [],
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            false);
+
+        var results = generator.Generate(repo.Path, AgentTarget.Codex, LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, "AGENTS.md"));
+
+        Assert.Contains(results, result => result.Path == "AGENTS.md" && result.Created);
+        Assert.Contains("## Repository Health", content);
+        Assert.Contains("## Risk Summary", content);
+        Assert.Contains("## Recommended Checks", content);
+        Assert.Contains("- dotnet build", content);
+        Assert.Contains("- ackit scan", content);
+    }
 }
 
 public sealed class ConfigAndDoctorTests

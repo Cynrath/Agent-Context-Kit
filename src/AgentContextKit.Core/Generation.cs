@@ -62,8 +62,68 @@ public sealed class AgentInstructionGenerator : IAgentInstructionGenerator
             ["RepositoryPath"] = repositoryPath,
             ["GeneratedAt"] = _clock.UtcNow.ToString("u", CultureInfo.InvariantCulture),
             ["StackList"] = stackList,
-            ["FileList"] = visibleFiles.Count == 0 ? "- No files detected" : string.Join(Environment.NewLine, visibleFiles)
+            ["FileList"] = visibleFiles.Count == 0 ? "- No files detected" : string.Join(Environment.NewLine, visibleFiles),
+            ["HealthSummary"] = BuildHealthSummary(scanResult),
+            ["RiskSummary"] = BuildRiskSummary(scanResult),
+            ["RecommendedChecks"] = BuildRecommendedChecks(scanResult)
         };
+    }
+
+    private static string BuildHealthSummary(ScanResult scanResult)
+    {
+        var lines = new[]
+        {
+            $"- README: {YesNo(scanResult.HasReadme)}",
+            $"- LICENSE: {YesNo(scanResult.HasLicense)}",
+            $"- SECURITY: {YesNo(scanResult.HasSecurityPolicy)}",
+            $"- Tests: {YesNo(scanResult.HasTests)}",
+            $"- CI: {YesNo(scanResult.HasCi)}",
+            $"- Agent instructions: {YesNo(scanResult.HasAgentInstructions)}"
+        };
+
+        return string.Join(Environment.NewLine, lines);
+    }
+
+    private static string BuildRiskSummary(ScanResult scanResult)
+    {
+        if (scanResult.Findings.Count == 0)
+        {
+            return "- No risk findings";
+        }
+
+        return string.Join(Environment.NewLine, new[]
+        {
+            $"- Critical: {scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Critical)}",
+            $"- High: {scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.High)}",
+            $"- Medium: {scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Medium)}",
+            $"- Low: {scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Low)}",
+            $"- Info: {scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Info)}"
+        });
+    }
+
+    private static string BuildRecommendedChecks(ScanResult scanResult)
+    {
+        var checks = new List<string>
+        {
+            "- ackit scan",
+            "- ackit doctor",
+            "- ackit redact-check --profile public-release"
+        };
+
+        if (scanResult.Stacks.Any(stack => stack.Name.Contains(".NET", StringComparison.OrdinalIgnoreCase) ||
+                                           stack.Name.Contains("ASP.NET", StringComparison.OrdinalIgnoreCase) ||
+                                           stack.Name.Contains("Blazor", StringComparison.OrdinalIgnoreCase)))
+        {
+            checks.Insert(0, "- dotnet build");
+            checks.Insert(1, "- dotnet test");
+        }
+
+        return string.Join(Environment.NewLine, checks);
+    }
+
+    private static string YesNo(bool value)
+    {
+        return value ? "yes" : "no";
     }
 
     private static IReadOnlyList<(string Path, string TemplateId)> BuildOutputs(AgentTarget target)

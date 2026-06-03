@@ -18,7 +18,7 @@
 - Better risk scanner. Started with environment sample precision, key-file detection, broader private key block detection, IP filtering, and configured keyword token boundaries.
 - `.ackit/config.yml` brand/PII keyword support improvements. Started with token-boundary matching.
 - JSON schema stabilization and expanded fields. Started with schema version 2 metadata and summary fields.
-- More generated docs.
+- More generated docs. Started with expanded agent/context templates that include health, risk, and recommended checks.
 - NuGet package metadata hardening.
 - Sample repositories.
 

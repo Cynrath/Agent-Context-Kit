@@ -1,8 +1,15 @@
 # AI Workflow
 
-1. Read docs.
-2. Create or update a task.
-3. Inspect git status.
-4. Make small changes.
-5. Run tests.
-6. Update handoff.
+1. Read README, architecture, security, and the active task.
+2. Create or update a task before implementation.
+3. Inspect git status and preserve user changes.
+4. Make small, focused changes.
+5. Run relevant checks.
+6. Update docs, task completion notes, and handoff.
+7. Commit a logical unit of work.
+
+## Recommended Checks
+- `dotnet build AgentContextKit.sln -c Release --no-restore`
+- `dotnet test AgentContextKit.sln -c Release --no-build`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`

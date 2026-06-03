@@ -29,6 +29,24 @@
 - Use small logical commits when practical.
 - Do not commit `.env`, dumps, uploads, `bin/`, `obj/`, `node_modules`, backups, or generated junk.
 
+## Repository Health
+- README: yes
+- LICENSE: yes
+- SECURITY: yes
+- Tests: yes
+- CI: yes
+- Agent instructions: yes
+
+## Risk Summary
+- No risk findings in the latest local scan.
+- Public release remains blocked by TODO package URLs and missing release tag.
+
+## Recommended Checks
+- `dotnet build AgentContextKit.sln -c Release --no-restore`
+- `dotnet test AgentContextKit.sln -c Release --no-build`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`
+
 ## Handoff
 If context is low or work pauses, update:
 - `.codex/SESSION_HANDOFF.md`

@@ -114,4 +114,19 @@ Improves agent onboarding and public repository clarity for v0.2.
 Revert the TASK-0014 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added generated template values for repository health, risk summary, and recommended checks.
+- Expanded AGENTS, Claude, Cursor, Copilot, AI workflow, security notes, development standard, handoff, and context pack templates.
+- Updated current generated docs to include health, risk, and recommended checks.
+- Added focused test coverage for expanded generated AGENTS content.
+- Fixed a template source self-scan false positive by converting escaped newline strings to raw multiline strings.
+- Updated roadmap, project map, changelog, context pack, handoff, and next steps.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 31/31.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings after template string cleanup.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- Installed temporary `ackit scan --json` emitted schema version `2` with `riskSummary.total` equal to `0`.
+- Release verification reported known public-release blockers in non-failing mode.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

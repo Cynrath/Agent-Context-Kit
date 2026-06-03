@@ -78,11 +78,27 @@ public static class TemplateCatalog
             ## Stack
             {{StackList}}
 
-            ## Rules
+            ## Repository Health
+            {{HealthSummary}}
+
+            ## Risk Summary
+            {{RiskSummary}}
+
+            ## Required Workflow
             - Read docs before editing.
             - Create or update a task file before implementation.
+            - Inspect git status before edits.
             - Do not overwrite existing files without explicit approval.
             - Keep changes small, tested, and secure.
+            - Update handoff and active task completion notes.
+
+            ## Recommended Checks
+            {{RecommendedChecks}}
+
+            ## Safety Rules
+            - Keep work local and offline unless explicitly approved.
+            - Do not push, publish, tag, create remotes, or redact automatically.
+            - Treat secret/PII/brand findings as release-blocking until reviewed.
             - Run relevant checks before completion.
             """,
             ["tr"] = """
@@ -94,28 +110,116 @@ public static class TemplateCatalog
             ## Stack
             {{StackList}}
 
-            ## Kurallar
+            ## Repository Sagligi
+            {{HealthSummary}}
+
+            ## Risk Ozeti
+            {{RiskSummary}}
+
+            ## Zorunlu Workflow
             - Kodlamadan once dokumanlari oku.
             - Implementation oncesi task dosyasi olustur veya guncelle.
+            - Edit oncesi git durumunu incele.
             - Acik onay olmadan var olan dosyalari ezme.
             - Degisiklikleri kucuk, testli ve guvenli tut.
+            - Handoff ve aktif task completion notlarini guncelle.
+
+            ## Onerilen Kontroller
+            {{RecommendedChecks}}
+
+            ## Guvenlik Kurallari
+            - Acik onay olmadan calismayi local ve offline tut.
+            - Push, publish, tag, remote creation veya automatic redaction yapma.
+            - Secret/PII/brand bulgularini incelenene kadar release-blocking say.
             - Tamamlamadan once ilgili kontrolleri calistir.
             """
         },
         ["CLAUDE"] = new()
         {
-            ["en"] = "# Claude Project Context\n\nUse the same repository rules as AGENTS.md.\n\n{{StackList}}\n",
-            ["tr"] = "# Claude Proje Context\n\nAGENTS.md ile ayni repository kurallarini kullan.\n\n{{StackList}}\n"
+            ["en"] = """
+            # Claude Project Context
+
+            Use the same repository rules as AGENTS.md.
+
+            ## Stack
+            {{StackList}}
+
+            ## Repository Health
+            {{HealthSummary}}
+
+            ## Risk Summary
+            {{RiskSummary}}
+
+            ## Recommended Checks
+            {{RecommendedChecks}}
+            """,
+            ["tr"] = """
+            # Claude Proje Context
+
+            AGENTS.md ile ayni repository kurallarini kullan.
+
+            ## Stack
+            {{StackList}}
+
+            ## Repository Sagligi
+            {{HealthSummary}}
+
+            ## Risk Ozeti
+            {{RiskSummary}}
+
+            ## Onerilen Kontroller
+            {{RecommendedChecks}}
+            """
         },
         ["CURSOR"] = new()
         {
-            ["en"] = "# Cursor Rules\n\n- Respect existing architecture.\n- Use task-first workflow.\n- Keep generated changes safe and reviewable.\n",
-            ["tr"] = "# Cursor Kurallari\n\n- Mevcut mimariye uy.\n- Task-first workflow kullan.\n- Uretilen degisiklikleri guvenli ve incelenebilir tut.\n"
+            ["en"] = """
+            # Cursor Rules
+
+            - Respect existing architecture.
+            - Use task-first workflow.
+            - Keep generated changes safe and reviewable.
+            - Check repository health and risk summary before editing.
+
+            ## Recommended Checks
+            {{RecommendedChecks}}
+            """,
+            ["tr"] = """
+            # Cursor Kurallari
+
+            - Mevcut mimariye uy.
+            - Task-first workflow kullan.
+            - Uretilen degisiklikleri guvenli ve incelenebilir tut.
+            - Edit oncesi repository sagligi ve risk ozetini kontrol et.
+
+            ## Onerilen Kontroller
+            {{RecommendedChecks}}
+            """
         },
         ["COPILOT"] = new()
         {
-            ["en"] = "# Copilot Instructions\n\nPrefer minimal, tested, secure changes that follow the project docs and task files.\n",
-            ["tr"] = "# Copilot Yonergeleri\n\nProje dokumanlari ve task dosyalarina uyan minimal, testli ve guvenli degisiklikleri tercih et.\n"
+            ["en"] = """
+            # Copilot Instructions
+
+            Prefer minimal, tested, secure changes that follow the project docs and task files.
+
+            Repository health:
+            {{HealthSummary}}
+
+            Recommended checks:
+            {{RecommendedChecks}}
+            """,
+            ["tr"] = """
+            # Copilot Yonergeleri
+
+            Proje dokumanlari ve task dosyalarina uyan minimal, testli ve guvenli degisiklikleri tercih et.
+
+            Repository sagligi:
+            {{HealthSummary}}
+
+            Onerilen kontroller:
+            {{RecommendedChecks}}
+            """
         },
         ["PROJECT_MAP"] = new()
         {
@@ -144,18 +248,18 @@ public static class TemplateCatalog
         },
         ["AI_WORKFLOW"] = new()
         {
-            ["en"] = "# AI Workflow\n\n1. Read docs.\n2. Create or update a task.\n3. Inspect git status.\n4. Make small changes.\n5. Run tests.\n6. Update handoff.\n",
-            ["tr"] = "# AI Workflow\n\n1. Dokumanlari oku.\n2. Task olustur veya guncelle.\n3. Git durumunu incele.\n4. Kucuk degisiklikler yap.\n5. Testleri calistir.\n6. Handoff guncelle.\n"
+            ["en"] = "# AI Workflow\n\n1. Read README, architecture, security, and the active task.\n2. Create or update a task before implementation.\n3. Inspect git status and preserve user changes.\n4. Make small, focused changes.\n5. Run relevant checks.\n6. Update docs, task completion notes, and handoff.\n7. Commit a logical unit of work.\n\n## Recommended Checks\n{{RecommendedChecks}}\n",
+            ["tr"] = "# AI Workflow\n\n1. README, architecture, security ve aktif task dosyasini oku.\n2. Implementation oncesi task olustur veya guncelle.\n3. Git durumunu incele ve user degisikliklerini koru.\n4. Kucuk ve odakli degisiklikler yap.\n5. Ilgili kontrolleri calistir.\n6. Docs, task completion notlari ve handoff guncelle.\n7. Mantikli bir is birimi commit et.\n\n## Onerilen Kontroller\n{{RecommendedChecks}}\n"
         },
         ["SECURITY_NOTES"] = new()
         {
-            ["en"] = "# Security Notes\n\n- Do not commit secrets.\n- Review production configuration before public release.\n- Keep redaction checks report-only unless explicitly approved.\n",
-            ["tr"] = "# Guvenlik Notlari\n\n- Secret commit etme.\n- Public release oncesi production config dosyalarini incele.\n- Acik onay olmadan redaction kontrollerini sadece rapor olarak tut.\n"
+            ["en"] = "# Security Notes\n\n- Do not commit secrets.\n- Review production configuration before public release.\n- Keep redaction checks report-only unless explicitly approved.\n- Treat Critical and High findings as blockers until reviewed.\n\n## Current Risk Summary\n{{RiskSummary}}\n",
+            ["tr"] = "# Guvenlik Notlari\n\n- Secret commit etme.\n- Public release oncesi production config dosyalarini incele.\n- Acik onay olmadan redaction kontrollerini sadece rapor olarak tut.\n- Critical ve High bulgulari incelenene kadar blocker say.\n\n## Guncel Risk Ozeti\n{{RiskSummary}}\n"
         },
         ["DEVELOPMENT_STANDARD"] = new()
         {
-            ["en"] = "# Development Standard\n\n- Task-first.\n- Docs-first.\n- Security-first.\n- Tests before completion.\n",
-            ["tr"] = "# Gelistirme Standardi\n\n- Task-first.\n- Docs-first.\n- Security-first.\n- Tamamlama oncesi test.\n"
+            ["en"] = "# Development Standard\n\n- Task-first.\n- Docs-first.\n- Security-first.\n- Tests before completion.\n- Update handoff after major changes.\n- Keep public release actions maintainer-only.\n\n## Recommended Checks\n{{RecommendedChecks}}\n",
+            ["tr"] = "# Gelistirme Standardi\n\n- Task-first.\n- Docs-first.\n- Security-first.\n- Tamamlama oncesi test.\n- Buyuk degisikliklerden sonra handoff guncelle.\n- Public release aksiyonlarini maintainer-only tut.\n\n## Onerilen Kontroller\n{{RecommendedChecks}}\n"
         },
         ["TASK"] = new()
         {
@@ -228,13 +332,13 @@ public static class TemplateCatalog
         },
         ["HANDOFF"] = new()
         {
-            ["en"] = "# Handoff\n\nGenerated: {{GeneratedAt}}\n\n## Current repository\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n",
-            ["tr"] = "# Handoff\n\nUretim zamani: {{GeneratedAt}}\n\n## Repository\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n"
+            ["en"] = "# Handoff\n\nGenerated: {{GeneratedAt}}\n\n## Current Repository\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Repository Health\n{{HealthSummary}}\n\n## Risk Summary\n{{RiskSummary}}\n\n## Recommended Checks\n{{RecommendedChecks}}\n",
+            ["tr"] = "# Handoff\n\nUretim zamani: {{GeneratedAt}}\n\n## Repository\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Repository Sagligi\n{{HealthSummary}}\n\n## Risk Ozeti\n{{RiskSummary}}\n\n## Onerilen Kontroller\n{{RecommendedChecks}}\n"
         },
         ["CONTEXT_PACK"] = new()
         {
-            ["en"] = "# Context Pack\n\n## Project\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Files\n{{FileList}}\n",
-            ["tr"] = "# Context Pack\n\n## Proje\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Dosyalar\n{{FileList}}\n"
+            ["en"] = "# Context Pack\n\n## Project\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Repository Health\n{{HealthSummary}}\n\n## Risk Summary\n{{RiskSummary}}\n\n## Recommended Checks\n{{RecommendedChecks}}\n\n## Files\n{{FileList}}\n",
+            ["tr"] = "# Context Pack\n\n## Proje\n{{ProjectName}}\n\n## Stack\n{{StackList}}\n\n## Repository Sagligi\n{{HealthSummary}}\n\n## Risk Ozeti\n{{RiskSummary}}\n\n## Onerilen Kontroller\n{{RecommendedChecks}}\n\n## Dosyalar\n{{FileList}}\n"
         }
     };
 
