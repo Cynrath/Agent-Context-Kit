@@ -108,4 +108,24 @@ Improves CI/script integration readiness for v0.2.
 Revert the TASK-0013 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Bumped JSON output schema version from `1` to `2`.
+- Added `generatedAtUtc` to JSON command outputs.
+- Added `repositoryName` to scan output.
+- Added repository metadata to doctor and redact-check JSON.
+- Added `riskSummary` to scan and redact-check JSON.
+- Added `checkSummary` to doctor JSON.
+- Added `fileSummary` to generate JSON.
+- Kept human output and exit-code behavior unchanged.
+- Added CLI clock access for JSON metadata while keeping JSON shaping in the CLI layer.
+- Updated JSON tests and added generate summary coverage.
+- Updated JSON output docs, CLI reference, roadmap, project map, changelog, context pack, handoff, and next steps.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 30/30.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan` passed with no risk findings.
+- `powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- Installed temporary `ackit scan --json` emitted schema version `2`, `generatedAtUtc`, `repositoryName`, and `riskSummary`.
+- Release verification reported known public-release blockers in non-failing mode.
+- Temporary package/tool folders were left under the user temp directory for inspection.
+- No push, publish, tag, remote creation, deletion, overwrite of unrelated files, or automatic redaction was performed.

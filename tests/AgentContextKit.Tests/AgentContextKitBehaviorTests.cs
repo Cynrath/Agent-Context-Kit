@@ -396,10 +396,13 @@ public sealed class CliJsonAndMetadataTests
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
         Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("scan", json?["command"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
         Assert.True(json?["fileCount"]?.GetValue<int>() >= 2);
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
     }
 
     [Fact]
@@ -417,9 +420,13 @@ public sealed class CliJsonAndMetadataTests
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(0, result.ExitCode);
-        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
         Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("doctor", json?["command"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
+        Assert.True(json?["checkSummary"]?["total"]?.GetValue<int>() > 0);
+        Assert.Equal(0, json?["checkSummary"]?["failedHighOrCritical"]?.GetValue<int>());
         Assert.True(json?["checks"]?.AsArray().Count > 0);
     }
 
@@ -433,11 +440,32 @@ public sealed class CliJsonAndMetadataTests
         var json = JsonNode.Parse(result.Output);
 
         Assert.Equal(2, result.ExitCode);
-        Assert.Equal(1, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
         Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("redact-check", json?["command"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
         Assert.Equal("public-release", json?["profile"]?.GetValue<string>());
         Assert.Equal(2, json?["exitCode"]?.GetValue<int>());
+        Assert.True(json?["riskSummary"]?["critical"]?.GetValue<int>() > 0);
+    }
+
+    [Fact]
+    public void GenerateJsonIncludesFileSummary()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+
+        var result = RunCli(repo.Path, ["generate", "--target", "codex", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
+        Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
+        Assert.Equal("generate", json?["command"]?.GetValue<string>());
+        Assert.True(json?["fileSummary"]?["total"]?.GetValue<int>() > 0);
+        Assert.True(json?["fileSummary"]?["created"]?.GetValue<int>() > 0);
+        Assert.True(json?["files"]?.AsArray().Count > 0);
     }
 
     [Fact]

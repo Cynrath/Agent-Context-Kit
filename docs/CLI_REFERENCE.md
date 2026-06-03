@@ -12,7 +12,7 @@ dotnet run --project src/AgentContextKit.Cli -- <command>
 Select output/template language. Unknown values fall back to `en`.
 
 ### `--json`
-Emit machine-readable JSON where supported.
+Emit machine-readable JSON where supported. Current JSON output schema version: `2`.
 
 ## Commands
 ### `ackit init`

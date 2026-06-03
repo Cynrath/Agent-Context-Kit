@@ -15,13 +15,22 @@ JSON responses include:
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "toolVersion": "0.1.0-alpha.1",
+  "generatedAtUtc": "2026-06-03T00:00:00+00:00",
   "command": "scan"
 }
 ```
 
 `schemaVersion` describes the JSON output shape, not the repository config format. The schema is early and can change before `1.0.0`.
+
+## Schema Version 2
+Schema version `2` adds:
+- `generatedAtUtc` on JSON command outputs.
+- `repositoryName` on repository-scoped outputs.
+- `riskSummary` on `scan` and `redact-check`.
+- `checkSummary` on `doctor`.
+- `fileSummary` on `generate`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -43,13 +52,55 @@ dotnet run --project src/AgentContextKit.Cli -- scan --json
 Example shape:
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "toolVersion": "0.1.0-alpha.1",
+  "generatedAtUtc": "2026-06-03T00:00:00+00:00",
   "command": "scan",
   "repositoryPath": "...",
+  "repositoryName": "agent-context-kit",
   "fileCount": 12,
   "stacks": [],
   "health": {},
+  "riskSummary": {
+    "total": 0,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "info": 0
+  },
   "findings": []
+}
+```
+
+## Summary Shapes
+`riskSummary`:
+```json
+{
+  "total": 1,
+  "critical": 1,
+  "high": 0,
+  "medium": 0,
+  "low": 0,
+  "info": 0
+}
+```
+
+`checkSummary`:
+```json
+{
+  "total": 13,
+  "passed": 13,
+  "failed": 0,
+  "failedHighOrCritical": 0
+}
+```
+
+`fileSummary`:
+```json
+{
+  "total": 3,
+  "created": 1,
+  "skipped": 2
 }
 ```

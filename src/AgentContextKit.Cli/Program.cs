@@ -6,7 +6,7 @@ namespace AgentContextKit.Cli;
 public static class Program
 {
     private const string Version = "0.1.0-alpha.1";
-    private const int JsonSchemaVersion = 1;
+    private const int JsonSchemaVersion = 2;
 
     public static int Main(string[] args)
     {
@@ -82,6 +82,7 @@ public static class Program
             {
                 schemaVersion = JsonSchemaVersion,
                 toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
                 command = "init",
                 config = ToGeneratedFileDto(result),
                 agentInstructionFiles = agentFiles
@@ -106,7 +107,7 @@ public static class Program
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
         if (json)
         {
-            WriteJson(ToScanDto("scan", scan));
+            WriteJson(ToScanDto("scan", scan, services.Clock.UtcNow));
             return 0;
         }
 
@@ -126,8 +127,10 @@ public static class Program
             {
                 schemaVersion = JsonSchemaVersion,
                 toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
                 command = "generate",
                 target = target.ToString(),
+                fileSummary = ToGeneratedFileSummary(results),
                 files = results.Select(ToGeneratedFileDto).ToArray()
             });
             return 0;
@@ -158,6 +161,7 @@ public static class Program
             {
                 schemaVersion = JsonSchemaVersion,
                 toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
                 command = "task",
                 file = ToGeneratedFileDto(result)
             });
@@ -186,9 +190,13 @@ public static class Program
             {
                 schemaVersion = JsonSchemaVersion,
                 toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
                 command = "redact-check",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
                 profile,
                 exitCode,
+                riskSummary = ToRiskSummary(findings),
                 findings = findings.Select(ToRiskFindingDto).ToArray()
             });
             return exitCode;
@@ -210,8 +218,12 @@ public static class Program
             {
                 schemaVersion = JsonSchemaVersion,
                 toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
                 command = "doctor",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
                 exitCode,
+                checkSummary = ToDoctorCheckSummary(result.Checks),
                 checks = result.Checks.Select(ToDoctorCheckDto).ToArray()
             });
             return exitCode;
@@ -316,14 +328,16 @@ public static class Program
         }));
     }
 
-    private static object ToScanDto(string command, ScanResult scan)
+    private static object ToScanDto(string command, ScanResult scan, DateTimeOffset generatedAtUtc)
     {
         return new
         {
             schemaVersion = JsonSchemaVersion,
             toolVersion = Version,
+            generatedAtUtc,
             command,
             repositoryPath = scan.RepositoryPath,
+            repositoryName = GetRepositoryName(scan.RepositoryPath),
             fileCount = scan.Files.Count,
             stacks = scan.Stacks.Select(stack => new
             {
@@ -343,6 +357,7 @@ public static class Program
                 hasDocker = scan.HasDocker,
                 hasAgentInstructions = scan.HasAgentInstructions
             },
+            riskSummary = ToRiskSummary(scan.Findings),
             findings = scan.Findings.Select(ToRiskFindingDto).ToArray()
         };
     }
@@ -379,6 +394,46 @@ public static class Program
             created = result.Created,
             message = result.Message
         };
+    }
+
+    private static object ToRiskSummary(IReadOnlyList<RiskFinding> findings)
+    {
+        return new
+        {
+            total = findings.Count,
+            critical = findings.Count(finding => finding.Severity == RiskSeverity.Critical),
+            high = findings.Count(finding => finding.Severity == RiskSeverity.High),
+            medium = findings.Count(finding => finding.Severity == RiskSeverity.Medium),
+            low = findings.Count(finding => finding.Severity == RiskSeverity.Low),
+            info = findings.Count(finding => finding.Severity == RiskSeverity.Info)
+        };
+    }
+
+    private static object ToDoctorCheckSummary(IReadOnlyList<DoctorCheck> checks)
+    {
+        return new
+        {
+            total = checks.Count,
+            passed = checks.Count(check => check.Passed),
+            failed = checks.Count(check => !check.Passed),
+            failedHighOrCritical = checks.Count(check => !check.Passed && check.Severity >= RiskSeverity.High)
+        };
+    }
+
+    private static object ToGeneratedFileSummary(IReadOnlyList<GeneratedFileResult> results)
+    {
+        return new
+        {
+            total = results.Count,
+            created = results.Count(result => result.Created),
+            skipped = results.Count(result => !result.Created)
+        };
+    }
+
+    private static string GetRepositoryName(string repositoryPath)
+    {
+        var trimmed = repositoryPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+        return Path.GetFileName(trimmed);
     }
 
     private static string YesNo(bool value)
@@ -473,6 +528,7 @@ public static class Program
             new AgentInstructionGenerator(fileSystem, templateRenderer, clock),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
+            clock,
             textProvider);
     }
 
@@ -484,5 +540,6 @@ public static class Program
         IAgentInstructionGenerator AgentInstructionGenerator,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
+        IClock Clock,
         ITextProvider TextProvider);
 }
