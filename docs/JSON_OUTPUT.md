@@ -6,6 +6,7 @@ Supported commands:
 - `ackit init --json`
 - `ackit scan --json`
 - `ackit report --json`
+- `ackit webui --json`
 - `ackit generate --json`
 - `ackit task "<title>" --json`
 - `ackit redact-check --json`
@@ -34,6 +35,7 @@ Schema version `2` adds:
 - `fileSummary` on `generate`.
 - `ciMode` and `exitCode` on `scan`.
 - `report` generated file metadata on `report`.
+- `webUi` generated file metadata on `webui`.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -114,5 +116,15 @@ Example shape:
   "total": 3,
   "created": 1,
   "skipped": 2
+}
+```
+
+`webUi`:
+```json
+{
+  "path": ".ackit/webui/index.html",
+  "status": "Created",
+  "created": true,
+  "message": "Web UI prototype created."
 }
 ```

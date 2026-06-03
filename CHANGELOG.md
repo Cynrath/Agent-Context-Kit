@@ -37,6 +37,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Example workflow documentation for local development, CI, HTML reports, release preflight, and sample scans.
 - Public release gate orchestration script and documentation.
 - v0.3 local readiness review script and documentation.
+- Offline static Web UI prototype generation with `ackit webui`.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

@@ -33,6 +33,7 @@ Start v0.4 by adding a local-only Web UI prototype that makes scan results easie
 - `.gitignore`
 - `README.md`
 - `README.tr.md`
+- `docs/PRODUCT_SPEC.md`
 - `docs/CLI_REFERENCE.md`
 - `docs/CONFIGURATION.md`
 - `docs/JSON_OUTPUT.md`
@@ -141,4 +142,18 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0024 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Implemented `ackit webui`, `IWebUiGenerator`, `.ackit/webui/` ignore behavior, focused tests, and Web UI prototype documentation.
+
+Verification completed:
+- Context7 `.NET` docs were checked before coding for current encoding/JSON guidance.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0024-validation.html --json` exited `0`, created the local Web UI prototype, and reported zero risk findings.
+- In-app browser `file://` navigation was blocked by browser security policy. Local static checks confirmed required sections exist, no remote asset/script/import references exist, and `.ackit/webui/` is ignored by git.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1 -FailOnIssues` exited `0`; it reported expected public-release blockers and warned about uncommitted implementation changes.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; it reported known public-release blockers in report-only mode.
+- `git diff --check` passed.
+- Real-name grep found no matches.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

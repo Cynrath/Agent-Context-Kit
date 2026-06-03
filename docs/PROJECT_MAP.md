@@ -86,10 +86,12 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0021-v030-example-workflows.md`
 - `docs/tasks/TASK-0022-v030-public-release-hardening.md`
 - `docs/tasks/TASK-0023-v030-final-readiness-consolidation.md`
+- `docs/tasks/TASK-0024-v040-local-web-ui-prototype.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
 - `docs/V030_READINESS.md`
+- `docs/WEB_UI_PROTOTYPE.md`
 - `global.json`
 - `LICENSE`
 - `README.md`

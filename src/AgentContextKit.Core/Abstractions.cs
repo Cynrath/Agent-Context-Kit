@@ -60,6 +60,11 @@ public interface IHtmlReportGenerator
     GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
 }
 
+public interface IWebUiGenerator
+{
+    GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
+}
+
 public interface IFileSystem
 {
     bool FileExists(string path);

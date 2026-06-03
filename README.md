@@ -31,6 +31,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - `ackit scan`: detect stack, docs, tests, CI, Docker, agent files, and risky paths.
 - `ackit scan --ci`: fail automated checks on high or critical risk findings.
 - `ackit report`: create an offline static HTML scan report.
+- `ackit webui`: create an offline static Web UI prototype for scan review.
 - `ackit generate`: generate context and workflow files for supported agent targets.
 - `ackit task`: create structured task files under `docs/tasks`.
 - `ackit redact-check`: report secret/PII/brand/local path risks.
@@ -47,6 +48,7 @@ dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
 dotnet run --project src/AgentContextKit.Cli -- report --json
+dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
 ```
 
@@ -55,6 +57,7 @@ dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --l
 ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
 ackit task "<title>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
@@ -76,11 +79,14 @@ Depending on the command and selected target, AgentContextKit can generate:
 - `docs/tasks/TASK-0001.md`
 - `.codex/HANDOFF.md`
 - `.codex/CONTEXT_PACK.md`
+- `.ackit/reports/scan-report.html`
+- `.ackit/webui/index.html`
 
 ## Safety Behavior
 - Existing files are skipped by default.
 - No automatic secret redaction in the MVP.
 - No remote upload.
+- Static reports and Web UI files are local-only and self-contained.
 - No GitHub push or NuGet publish is performed by the tool.
 - Risk reports are severity based: Critical, High, Medium, Low, Info.
 
@@ -101,6 +107,7 @@ Key docs:
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)
 - [HTML Reports](docs/HTML_REPORTS.md)
+- [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)

@@ -40,6 +40,11 @@ ackit doctor --json
 ackit report --output .ackit/reports/current.html --json
 ```
 
+## Web UI Prototype
+```powershell
+ackit webui --output .ackit/webui/current.html --json
+```
+
 ## Local Package Validation
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
@@ -59,4 +64,4 @@ Pop-Location
 See [SAMPLES.md](SAMPLES.md).
 
 ## Workflow Collections
-See [EXAMPLE_WORKFLOWS.md](EXAMPLE_WORKFLOWS.md) for copy-paste-ready local development, CI, HTML report, public release preflight, and sample scanning workflows.
+See [EXAMPLE_WORKFLOWS.md](EXAMPLE_WORKFLOWS.md) for copy-paste-ready local development, CI, HTML report, Web UI, public release preflight, and sample scanning workflows.

@@ -10,6 +10,7 @@ dotnet test AgentContextKit.sln -c Release --no-build
 dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- report --json
+dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 

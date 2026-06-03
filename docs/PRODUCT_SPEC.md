@@ -10,9 +10,10 @@ AgentContextKit is an offline-first .NET CLI that prepares repositories for safe
 - Report secret/PII/brand/local path risks.
 - Improve OSS readiness with docs and health checks.
 - Provide JSON output for CI/script integrations.
+- Provide local static review artifacts for reports and Web UI prototype review.
 
 ## Non-goals For MVP
-- Web UI.
+- Hosted/server Web UI.
 - LLM API integration.
 - Automatic redaction.
 - Remote repository creation.
@@ -24,9 +25,12 @@ AgentContextKit is an offline-first .NET CLI that prepares repositories for safe
 - Small teams, agencies, and freelancers.
 - Teams cleaning private projects before public release.
 
-## MVP Commands
+## Current Commands
 - `init`
 - `scan`
+- `scan --ci`
+- `report`
+- `webui`
 - `generate`
 - `task`
 - `redact-check`

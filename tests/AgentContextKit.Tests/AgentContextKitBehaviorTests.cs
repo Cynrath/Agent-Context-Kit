@@ -420,6 +420,65 @@ public sealed class TemplateAndGenerationTests
 
         Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../scan.html", LanguageCode.English, scan));
     }
+
+    [Fact]
+    public void WebUiGeneratorCreatesEncodedPrototype()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("AGENTS.md", "<script>alert</script>");
+        repo.Write("docs/tasks/TASK-0001-demo.md", "# Demo Task");
+        var generator = new WebUiGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(
+            repo.Path,
+            ["AGENTS.md", "docs/tasks/TASK-0001-demo.md"],
+            [new StackInfo(".NET", ".csproj")],
+            [new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "notes.md", "<script>alert</script>")],
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            true,
+            true,
+            false,
+            true);
+
+        var result = generator.Generate(repo.Path, ".ackit/webui/index.html", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "webui", "index.html"));
+
+        Assert.True(result.Created);
+        Assert.Contains("Scan Result Dashboard", content);
+        Assert.Contains("Generated File Preview", content);
+        Assert.Contains("Task Preview", content);
+        Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);
+        Assert.DoesNotContain("<script>alert</script>", content);
+    }
+
+    [Fact]
+    public void WebUiGeneratorDoesNotOverwriteExistingPrototype()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/webui/index.html", "original");
+        var generator = new WebUiGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        var result = generator.Generate(repo.Path, ".ackit/webui/index.html", LanguageCode.English, scan);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "webui", "index.html"));
+
+        Assert.False(result.Created);
+        Assert.Equal("original", content);
+    }
+
+    [Fact]
+    public void WebUiGeneratorRejectsUnsafeOutputPath()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new WebUiGenerator(new PhysicalFileSystem(), new FixedClock());
+        var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
+
+        Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../index.html", LanguageCode.English, scan));
+    }
 }
 
 public sealed class ConfigAndDoctorTests
@@ -435,6 +494,7 @@ public sealed class ConfigAndDoctorTests
 
         Assert.Equal("en", config.DefaultLanguage.Value);
         Assert.Contains(".ackit/reports/", config.IgnorePaths);
+        Assert.Contains(".ackit/webui/", config.IgnorePaths);
     }
 
     [Fact]
@@ -592,6 +652,28 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal(".ackit/reports/test-report.html", json?["report"]?["path"]?.GetValue<string>());
         Assert.True(File.Exists(reportPath));
         Assert.Contains("<!doctype html>", File.ReadAllText(reportPath));
+    }
+
+    [Fact]
+    public void WebUiJsonCreatesPrototype()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write("AGENTS.md", "# Agents");
+        repo.Write("docs/tasks/TASK-0001-demo.md", "# Demo Task");
+
+        var result = RunCli(repo.Path, ["webui", "--output", ".ackit/webui/test-index.html", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var webUiPath = System.IO.Path.Combine(repo.Path, ".ackit", "webui", "test-index.html");
+        var content = File.ReadAllText(webUiPath);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("webui", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit/webui/test-index.html", json?["webUi"]?["path"]?.GetValue<string>());
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+        Assert.True(File.Exists(webUiPath));
+        Assert.Contains("AgentContextKit Web UI", content);
+        Assert.Contains("docs/tasks/TASK-0001-demo.md", content);
     }
 
     [Fact]

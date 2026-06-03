@@ -13,6 +13,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Agent instruction generation.
 - Task file generation.
 - Pattern-based redact checks.
+- Offline static HTML report and Web UI generation.
 - English/Turkish localization foundation.
 
 ## Repository Health
@@ -30,7 +31,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 ## Hard Rules
 - No remote upload.
 - No LLM API in MVP.
-- No Web UI in MVP.
+- No hosted Web UI in MVP.
 - No overwrite by default.
 - No automatic redaction.
 - No GitHub push or NuGet publish from agent sessions.
@@ -44,6 +45,7 @@ dotnet test -c Release
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- report --json
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --json
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1
@@ -77,3 +79,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0021 completed example workflow documentation for local development, CI, HTML reports, public release preflight, and sample scans.
 - TASK-0022 completed public release gate orchestration script and documentation.
 - TASK-0023 completed v0.3 local readiness consolidation script and documentation.
+- TASK-0024 completed offline static Web UI prototype generation with `ackit webui`, tests, docs, safe output handling, and ignored `.ackit/webui/`.

@@ -34,6 +34,15 @@ dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Relea
 
 Open `.ackit/reports/current.html` locally. Reports under `.ackit/reports/` are ignored by git.
 
+## Web UI Prototype Review
+Use this to create a local static Web UI for scan review:
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/current.html --json
+```
+
+Open `.ackit/webui/current.html` locally. Web UI files under `.ackit/webui/` are ignored by git and by the default scan config.
+
 ## Public Release Preflight
 Use this before asking the maintainer to approve public release actions:
 

@@ -29,6 +29,9 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 ## Ozellikler
 - `ackit init`: `.ackit/config.yml` olusturur, var olan config'i ezmez.
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
+- `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
+- `ackit report`: offline statik HTML tarama raporu uretir.
+- `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
 - `ackit generate`: desteklenen agent hedefleri icin context ve workflow dosyalari uretir.
 - `ackit task`: `docs/tasks` altinda yapilandirilmis task dosyasi olusturur.
 - `ackit redact-check`: secret/PII/marka/local path risklerini raporlar.
@@ -42,14 +45,19 @@ dotnet restore
 dotnet build -c Release
 dotnet run --project src/AgentContextKit.Cli -- --help
 dotnet run --project src/AgentContextKit.Cli -- scan
+dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
+dotnet run --project src/AgentContextKit.Cli -- report --json
+dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
 ```
 
 ## CLI Komutlari
 ```text
 ackit init [--lang en|tr] [--json]
-ackit scan [--lang en|tr] [--json]
+ackit scan [--lang en|tr] [--json] [--ci]
+ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
 ackit task "<baslik>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
@@ -71,11 +79,14 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - `docs/tasks/TASK-0001.md`
 - `.codex/HANDOFF.md`
 - `.codex/CONTEXT_PACK.md`
+- `.ackit/reports/scan-report.html`
+- `.ackit/webui/index.html`
 
 ## Guvenli Davranis
 - Var olan dosyalar varsayilan olarak atlanir.
 - MVP otomatik secret redaction yapmaz.
 - Uzak servise upload yapmaz.
+- Statik rapor ve Web UI dosyalari lokal ve self-contained uretilir.
 - GitHub push veya NuGet publish yapmaz.
 - Risk raporlari severity bazlidir: Critical, High, Medium, Low, Info.
 
@@ -93,6 +104,9 @@ Onemli dokumanlar:
 - [Examples](docs/EXAMPLES.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
+- [Exit Codes](docs/EXIT_CODES.md)
+- [HTML Reports](docs/HTML_REPORTS.md)
+- [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)

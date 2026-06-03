@@ -24,6 +24,7 @@ piiKeywords: []
 ignorePaths:
   - .ackit/cache/
   - .ackit/reports/
+  - .ackit/webui/
 riskExtensions:
   - .bak
   - .tmp

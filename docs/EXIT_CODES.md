@@ -16,6 +16,7 @@ AgentContextKit uses small, automation-friendly exit codes.
 | `ackit scan` | `0` in default report-only mode |
 | `ackit scan --ci` | `0` with no high/critical findings, `1` with high findings, `2` with critical findings |
 | `ackit report` | `0` when report creation/skip reporting completes |
+| `ackit webui` | `0` when Web UI creation/skip reporting completes |
 | `ackit generate` | `0` when generation/skip reporting completes |
 | `ackit task "<title>"` | `0` when task creation/skip reporting completes |
 | `ackit task` without a title | `1` |

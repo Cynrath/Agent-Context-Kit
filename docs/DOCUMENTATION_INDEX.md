@@ -15,6 +15,7 @@
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.
 - `docs/HTML_REPORTS.md`: offline static HTML report generation.
+- `docs/WEB_UI_PROTOTYPE.md`: offline static Web UI prototype generation.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
 

@@ -29,6 +29,7 @@ logs/
 *.tmp
 *.bak
 .ackit/reports/
+.ackit/webui/
 
 # Archives and backups
 *.zip

@@ -30,6 +30,7 @@ public static class Program
                 "init" => RunInit(repositoryPath, language, json, services),
                 "scan" => RunScan(repositoryPath, config, language, json, ci, services),
                 "report" => RunReport(args, repositoryPath, config, language, json, services),
+                "webui" => RunWebUi(args, repositoryPath, config, language, json, services),
                 "generate" => RunGenerate(args, repositoryPath, config, language, json, services),
                 "task" => RunTask(args, repositoryPath, language, json, services),
                 "redact-check" => RunRedactCheck(args, repositoryPath, config, language, json, services),
@@ -53,6 +54,7 @@ public static class Program
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
         Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit task \"<title>\" [--lang en|tr] [--json]");
         Console.WriteLine("  ackit redact-check [--profile public-release] [--lang en|tr] [--json]");
@@ -140,6 +142,33 @@ public static class Program
                 repositoryName = GetRepositoryName(repositoryPath),
                 riskSummary = ToRiskSummary(scan.Findings),
                 report = ToGeneratedFileDto(result)
+            });
+            return ExitSuccess;
+        }
+
+        PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        return ExitSuccess;
+    }
+
+    private static int RunWebUi(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    {
+        var outputPath = GetOption(args, "--output");
+        var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var result = services.WebUiGenerator.Generate(repositoryPath, outputPath, language, scan);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "webui",
+                repositoryPath,
+                repositoryName = GetRepositoryName(repositoryPath),
+                riskSummary = ToRiskSummary(scan.Findings),
+                webUi = ToGeneratedFileDto(result)
             });
             return ExitSuccess;
         }
@@ -586,6 +615,7 @@ public static class Program
             repositoryScanner,
             new AgentInstructionGenerator(fileSystem, templateRenderer, clock),
             new HtmlReportGenerator(fileSystem, clock),
+            new WebUiGenerator(fileSystem, clock),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
             clock,
@@ -599,6 +629,7 @@ public static class Program
         IRepositoryScanner RepositoryScanner,
         IAgentInstructionGenerator AgentInstructionGenerator,
         IHtmlReportGenerator HtmlReportGenerator,
+        IWebUiGenerator WebUiGenerator,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
         IClock Clock,

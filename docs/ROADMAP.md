@@ -33,11 +33,11 @@
 - Final local readiness consolidation.
 
 ## v0.4.0-beta
-- Local Web UI prototype.
-- Scan result dashboard.
-- Generated file preview.
-- Risk finding browser.
-- Task preview.
+- Local Web UI prototype. Started with offline static `ackit webui`.
+- Scan result dashboard. Started in the generated local Web UI.
+- Generated file preview. Started with agent/context file previews.
+- Risk finding browser. Started with encoded findings table.
+- Task preview. Started with latest `docs/tasks` previews.
 
 ## v0.5.0-beta
 - Optional LLM integration architecture.

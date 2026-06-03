@@ -63,6 +63,24 @@ Safety behavior:
 - Existing files are not overwritten.
 - Reports are self-contained and use no remote assets.
 
+### `ackit webui`
+Generates an offline static Web UI prototype for local scan review. Existing Web UI files are skipped.
+
+```powershell
+ackit webui
+ackit webui --output .ackit/webui/current.html
+ackit webui --output docs/local-webui.html --json
+```
+
+Default output path:
+- `.ackit/webui/index.html`
+
+Safety behavior:
+- Output paths must be repository-relative.
+- Existing files are not overwritten.
+- The prototype is self-contained and uses no remote assets.
+- Repository-controlled text is HTML-encoded.
+
 ### `ackit generate`
 Generates agent context/workflow files. Existing files are skipped.
 
