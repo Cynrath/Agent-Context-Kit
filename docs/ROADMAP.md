@@ -36,7 +36,7 @@
 - Local Web UI prototype. Started with offline static `ackit webui`.
 - Scan result dashboard. Refined with readiness score, review status, severity breakdown, and recommended checks.
 - Generated file preview. Refined with expected file categories, present/missing status, size metadata, and capped previews.
-- Risk finding browser. Started with encoded findings table.
+- Risk finding browser. Refined with deterministic review queue, finding IDs, match display, and recommended actions.
 - Task preview. Started with latest `docs/tasks` previews.
 
 ## v0.5.0-beta

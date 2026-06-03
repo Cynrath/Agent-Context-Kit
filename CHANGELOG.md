@@ -40,6 +40,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Offline static Web UI prototype generation with `ackit webui`.
 - Refined Web UI scan dashboard with readiness score, review status, severity breakdown, and recommended checks.
 - Refined Web UI generated file preview with expected file category, status, size, and missing-file hints.
+- Refined Web UI risk finding browser with deterministic review queue, finding IDs, match display, and recommended actions.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

@@ -122,4 +122,25 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0027 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Implemented risk finding browser refinement inside `WebUiGenerator`.
+
+Risk finding browser now includes:
+- Deterministic review queue sorted by severity, category, path, and message.
+- Stable local finding IDs.
+- Optional match display.
+- Recommended action per severity.
+- No-findings explanation that documents when review queue columns appear.
+
+Verification completed:
+- Context7 `.NET` docs were checked before coding for current deterministic ordering guidance.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0027-validation-final2.html --json` exited `0`, created the ignored local Web UI validation file, and reported zero risk findings.
+- Static Web UI checks found `Risk Finding Browser`, `Review Queue`, `Finding ID`, `Recommended Action`, and `No risk findings`.
+- Static Web UI checks found no remote asset/script/import references.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; it reported known public-release blockers in report-only mode.
+- `git diff --check` passed.
+- Real-name grep found no matches.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.

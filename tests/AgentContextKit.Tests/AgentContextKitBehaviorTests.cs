@@ -432,7 +432,10 @@ public sealed class TemplateAndGenerationTests
             repo.Path,
             ["AGENTS.md", "docs/tasks/TASK-0001-demo.md"],
             [new StackInfo(".NET", ".csproj")],
-            [new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "notes.md", "<script>alert</script>")],
+            [
+                new RiskFinding(RiskSeverity.Medium, RiskCategory.Configuration, "config.md", "Review config"),
+                new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "notes.md", "<script>alert</script>", "<token>")
+            ],
             true,
             true,
             true,
@@ -454,6 +457,12 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("Risk Severity Breakdown", content);
         Assert.Contains("Recommended Checks", content);
         Assert.Contains("dotnet build AgentContextKit.sln", content);
+        Assert.Contains("Review Queue", content);
+        Assert.Contains("Finding ID", content);
+        Assert.Contains("Recommended Action", content);
+        Assert.Contains("RF-001", content);
+        Assert.Contains("Review before CI or release.", content);
+        Assert.Contains("&lt;token&gt;", content);
         Assert.Contains("Generated File Preview", content);
         Assert.Contains("Category", content);
         Assert.Contains("Status", content);
@@ -464,6 +473,7 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("Task Preview", content);
         Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);
         Assert.DoesNotContain("<script>alert</script>", content);
+        Assert.True(content.IndexOf("notes.md", StringComparison.Ordinal) < content.IndexOf("config.md", StringComparison.Ordinal));
     }
 
     [Fact]

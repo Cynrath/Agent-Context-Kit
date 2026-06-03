@@ -685,14 +685,20 @@ public sealed class WebUiGenerator : IWebUiGenerator
         if (scanResult.Findings.Count == 0)
         {
             builder.AppendLine("<p class=\"status ok\">" + E(Label(language, "No risk findings.", "Risk bulgusu yok.")) + "</p>");
+            builder.AppendLine("<p class=\"muted\">" + E(Label(language, "Review Queue is empty. Finding ID and Recommended Action columns appear when findings exist.", "Inceleme kuyrugu bos. Finding ID ve Recommended Action kolonlari bulgu oldugunda gorunur.")) + "</p>");
         }
         else
         {
-            builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Severity</th><th>Category</th><th>Path</th><th>Message</th></tr></thead><tbody>");
-            foreach (var finding in scanResult.Findings.Take(150))
+            var findings = SortFindings(scanResult.Findings).Take(150).ToArray();
+            builder.AppendLine("<p class=\"muted\">" + E(Label(language, "Review Queue: highest severity findings are listed first.", "Inceleme Kuyrugu: en yuksek seviye bulgular once listelenir.")) + "</p>");
+            builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Finding ID</th><th>Severity</th><th>Category</th><th>Path</th><th>Message</th><th>Match</th><th>Recommended Action</th></tr></thead><tbody>");
+            for (var index = 0; index < findings.Length; index++)
             {
+                var finding = findings[index];
                 var severity = finding.Severity.ToString();
-                builder.AppendLine("<tr><td class=\"severity-" + E(severity) + "\">" + E(severity) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td></tr>");
+                var findingId = "RF-" + (index + 1).ToString("000", CultureInfo.InvariantCulture);
+                var match = string.IsNullOrWhiteSpace(finding.Match) ? "-" : finding.Match;
+                builder.AppendLine("<tr><td><code>" + E(findingId) + "</code></td><td class=\"severity-" + E(severity) + "\">" + E(severity) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td><td><code>" + E(match) + "</code></td><td>" + E(GetRecommendedAction(language, finding.Severity)) + "</td></tr>");
             }
 
             builder.AppendLine("</tbody></table></div>");
@@ -703,6 +709,28 @@ public sealed class WebUiGenerator : IWebUiGenerator
         }
 
         builder.AppendLine("</section>");
+    }
+
+    private static IReadOnlyList<RiskFinding> SortFindings(IReadOnlyList<RiskFinding> findings)
+    {
+        return findings
+            .OrderByDescending(finding => finding.Severity)
+            .ThenBy(finding => finding.Category.ToString(), StringComparer.OrdinalIgnoreCase)
+            .ThenBy(finding => finding.Path, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(finding => finding.Message, StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static string GetRecommendedAction(LanguageCode language, RiskSeverity severity)
+    {
+        return severity switch
+        {
+            RiskSeverity.Critical => Label(language, "Block release until reviewed.", "Incelenene kadar release'i bloke edin."),
+            RiskSeverity.High => Label(language, "Review before CI or release.", "CI veya release oncesi inceleyin."),
+            RiskSeverity.Medium => Label(language, "Review before public sharing.", "Public paylasim oncesi inceleyin."),
+            RiskSeverity.Low => Label(language, "Review when practical.", "Uygun zamanda inceleyin."),
+            _ => Label(language, "Informational review.", "Bilgilendirme amacli inceleme.")
+        };
     }
 
     private void AppendGeneratedPreviewSection(StringBuilder builder, string repositoryPath, LanguageCode language, ScanResult scanResult, IReadOnlyList<ExpectedPreviewFile> files)
