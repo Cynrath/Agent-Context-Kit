@@ -23,7 +23,7 @@ ackit webui --output docs/local-webui.html --json
 ```
 
 ## Included Views
-- Scan result dashboard.
+- Scan result dashboard with readiness score, review status, severity breakdown, and recommended checks.
 - Repository health summary.
 - Stack signals.
 - Risk finding browser.

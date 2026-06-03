@@ -513,9 +513,14 @@ public sealed class WebUiGenerator : IWebUiGenerator
 
     private static void AppendDashboard(StringBuilder builder, LanguageCode language, ScanResult scanResult, int taskCount, int contextCount)
     {
+        var readinessScore = CalculateReadinessScore(scanResult);
+        var reviewStatus = GetReviewStatus(language, scanResult);
+
         builder.AppendLine("<section id=\"dashboard\" class=\"band\">");
         builder.AppendLine("<h2>" + E(Label(language, "Scan Result Dashboard", "Tarama Sonucu Paneli")) + "</h2>");
         builder.AppendLine("<div class=\"grid\">");
+        AppendMetric(builder, Label(language, "Readiness Score", "Hazirlik Skoru"), readinessScore.ToString(CultureInfo.InvariantCulture) + "%");
+        AppendMetric(builder, Label(language, "Review Status", "Inceleme Durumu"), reviewStatus);
         AppendMetric(builder, Label(language, "Files", "Dosyalar"), scanResult.Files.Count);
         AppendMetric(builder, Label(language, "Stacks", "Stackler"), scanResult.Stacks.Count);
         AppendMetric(builder, Label(language, "Findings", "Bulgular"), scanResult.Findings.Count);
@@ -523,12 +528,112 @@ public sealed class WebUiGenerator : IWebUiGenerator
         AppendMetric(builder, Label(language, "Task files", "Task dosyalari"), taskCount);
         AppendMetric(builder, Label(language, "Context files", "Context dosyalari"), contextCount);
         builder.AppendLine("</div>");
+        builder.AppendLine("<div class=\"split\">");
+        AppendSeverityBreakdown(builder, language, scanResult);
+        AppendRecommendedChecks(builder, language, scanResult);
+        builder.AppendLine("</div>");
         builder.AppendLine("</section>");
     }
 
     private static void AppendMetric(StringBuilder builder, string label, int value)
     {
-        builder.AppendLine("<div class=\"metric\"><strong>" + E(value.ToString(CultureInfo.InvariantCulture)) + "</strong><span>" + E(label) + "</span></div>");
+        AppendMetric(builder, label, value.ToString(CultureInfo.InvariantCulture));
+    }
+
+    private static void AppendMetric(StringBuilder builder, string label, string value)
+    {
+        builder.AppendLine("<div class=\"metric\"><strong>" + E(value) + "</strong><span>" + E(label) + "</span></div>");
+    }
+
+    private static int CalculateReadinessScore(ScanResult scanResult)
+    {
+        var checks = new[]
+        {
+            scanResult.HasReadme,
+            scanResult.HasLicense,
+            scanResult.HasSecurityPolicy,
+            scanResult.HasContributing,
+            scanResult.HasCodeOfConduct,
+            scanResult.HasChangelog,
+            scanResult.HasTests,
+            scanResult.HasCi,
+            scanResult.HasAgentInstructions,
+            !scanResult.Findings.Any(finding => finding.Severity is RiskSeverity.High or RiskSeverity.Critical)
+        };
+
+        var passed = checks.Count(check => check);
+        return (int)Math.Round((double)passed / checks.Length * 100, MidpointRounding.AwayFromZero);
+    }
+
+    private static string GetReviewStatus(LanguageCode language, ScanResult scanResult)
+    {
+        if (scanResult.Findings.Any(finding => finding.Severity == RiskSeverity.Critical))
+        {
+            return Label(language, "Blocked", "Bloke");
+        }
+
+        if (scanResult.Findings.Any(finding => finding.Severity == RiskSeverity.High))
+        {
+            return Label(language, "Needs review", "Inceleme gerekli");
+        }
+
+        if (scanResult.Findings.Count > 0)
+        {
+            return Label(language, "Review recommended", "Inceleme onerilir");
+        }
+
+        return Label(language, "Ready for local review", "Lokal incelemeye hazir");
+    }
+
+    private static void AppendSeverityBreakdown(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("<div class=\"tile\"><h3>" + E(Label(language, "Risk Severity Breakdown", "Risk Seviye Kirilimi")) + "</h3>");
+        builder.AppendLine("<table><tbody>");
+        AppendSeverityRow(builder, RiskSeverity.Critical, scanResult);
+        AppendSeverityRow(builder, RiskSeverity.High, scanResult);
+        AppendSeverityRow(builder, RiskSeverity.Medium, scanResult);
+        AppendSeverityRow(builder, RiskSeverity.Low, scanResult);
+        AppendSeverityRow(builder, RiskSeverity.Info, scanResult);
+        builder.AppendLine("</tbody></table></div>");
+    }
+
+    private static void AppendSeverityRow(StringBuilder builder, RiskSeverity severity, ScanResult scanResult)
+    {
+        var severityName = severity.ToString();
+        var count = scanResult.Findings.Count(finding => finding.Severity == severity);
+        builder.AppendLine("<tr><th class=\"severity-" + E(severityName) + "\">" + E(severityName) + "</th><td>" + E(count.ToString(CultureInfo.InvariantCulture)) + "</td></tr>");
+    }
+
+    private static void AppendRecommendedChecks(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    {
+        builder.AppendLine("<div class=\"tile\"><h3>" + E(Label(language, "Recommended Checks", "Onerilen Kontroller")) + "</h3>");
+        builder.AppendLine("<ul>");
+        foreach (var check in BuildRecommendedChecks(scanResult))
+        {
+            builder.AppendLine("<li><code>" + E(check) + "</code></li>");
+        }
+
+        builder.AppendLine("</ul></div>");
+    }
+
+    private static IReadOnlyList<string> BuildRecommendedChecks(ScanResult scanResult)
+    {
+        var checks = new List<string>();
+
+        if (scanResult.Stacks.Any(stack => stack.Name.Contains(".NET", StringComparison.OrdinalIgnoreCase) ||
+                                           stack.Name.Contains("ASP.NET", StringComparison.OrdinalIgnoreCase) ||
+                                           stack.Name.Contains("Blazor", StringComparison.OrdinalIgnoreCase)))
+        {
+            checks.Add("dotnet build AgentContextKit.sln -c Release --no-restore");
+            checks.Add("dotnet test AgentContextKit.sln -c Release --no-build");
+        }
+
+        checks.Add("ackit scan --ci");
+        checks.Add("ackit redact-check --profile public-release");
+        checks.Add("ackit report --output .ackit/reports/current.html");
+        checks.Add("ackit webui --output .ackit/webui/current.html");
+
+        return checks;
     }
 
     private static void AppendHealthAndStacks(StringBuilder builder, LanguageCode language, ScanResult scanResult)

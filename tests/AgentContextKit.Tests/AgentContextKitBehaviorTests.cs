@@ -449,6 +449,11 @@ public sealed class TemplateAndGenerationTests
 
         Assert.True(result.Created);
         Assert.Contains("Scan Result Dashboard", content);
+        Assert.Contains("Readiness Score", content);
+        Assert.Contains("Needs review", content);
+        Assert.Contains("Risk Severity Breakdown", content);
+        Assert.Contains("Recommended Checks", content);
+        Assert.Contains("dotnet build AgentContextKit.sln", content);
         Assert.Contains("Generated File Preview", content);
         Assert.Contains("Task Preview", content);
         Assert.Contains("&lt;script&gt;alert&lt;/script&gt;", content);

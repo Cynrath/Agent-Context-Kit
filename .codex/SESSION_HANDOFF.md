@@ -65,9 +65,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0023 with v0.3 readiness script, readiness docs, release validation updates, and release verification.
 - Started TASK-0024 for v0.4 local Web UI prototype.
 - Completed TASK-0024 with `ackit webui`, an offline static Web UI generator, safe output handling, `.ackit/webui/` ignore behavior, focused tests, docs, and release verification.
+- Started TASK-0025 for v0.4 scan result dashboard refinement.
+- Completed TASK-0025 with Web UI readiness score, review status, severity breakdown, recommended checks, focused tests, docs, and release verification.
 
 ## Next Clear Steps
-1. Continue v0.4 product work with TASK-0025 for scan result dashboard refinement.
+1. Continue v0.4 product work with TASK-0026 for generated file preview refinement.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -191,6 +193,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/V030_READINESS.md`
 - `scripts/check-v030-readiness.ps1`
 - `docs/tasks/TASK-0024-v040-local-web-ui-prototype.md`
+- `docs/tasks/TASK-0025-v040-scan-result-dashboard-refinement.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/Generation.cs`
@@ -244,6 +247,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0022 verification: public release gates report-only mode exited 0; public release gates failing mode exited 1 as expected while blockers remain; build passed with 0 warnings and 0 errors; tests passed 42/42; `scan --ci` exited 0 and reported no risk findings; release verification script passed.
 - TASK-0023 verification: v0.3 readiness report-only and `-FailOnIssues` modes exited 0; public release gates report-only mode exited 0; build passed with 0 warnings and 0 errors; tests passed 42/42; `scan --ci` exited 0 and reported no risk findings; release verification script passed.
 - TASK-0024 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0024-validation.html --json` created an ignored local static Web UI with riskSummary 0; static file checks found required sections and no remote asset/script/import references; in-app browser `file://` navigation was blocked by browser policy; `scan --ci` exited 0 and reported no risk findings; v0.3 readiness `-FailOnIssues` exited 0; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0025 verification: build passed with 0 warnings and 0 errors; tests passed 46/46; `webui --output .ackit/webui/task-0025-validation.html --json` created an ignored local static Web UI with riskSummary 0; static file checks found `Readiness Score`, `Review Status`, `Risk Severity Breakdown`, and `Recommended Checks`; static file checks found no remote asset/script/import references; `scan --ci` exited 0 and reported no risk findings; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -256,4 +260,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0024 is implemented and verified. Continue v0.4 product work with TASK-0025 for scan result dashboard refinement. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0025 is implemented and verified. Continue v0.4 product work with TASK-0026 for generated file preview refinement. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, or automatically redact without explicit maintainer instruction.

@@ -122,4 +122,25 @@ No public release approval impact. Public release remains blocked by maintainer-
 Revert the TASK-0025 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Not implemented yet.
+Implemented Web UI dashboard refinement inside `WebUiGenerator`.
+
+Dashboard now includes:
+- Readiness score.
+- Review status.
+- Critical/high/medium/low/info severity breakdown.
+- Recommended local checks derived from detected stack signals.
+
+Verification completed:
+- Context7 `.NET` docs were checked before coding for current HTML encoding/string output guidance.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed with 46/46 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0025-validation.html --json` exited `0`, created the ignored local Web UI validation file, and reported zero risk findings.
+- Static Web UI checks found `Readiness Score`, `Review Status`, `Risk Severity Breakdown`, and `Recommended Checks`.
+- Static Web UI checks found no remote asset/script/import references.
+- `.ackit/webui/` is ignored by git.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; it reported known public-release blockers in report-only mode.
+- `git diff --check` passed.
+- Real-name grep found no matches.
+
+Public release remains blocked by maintainer-only TODO URL selection, release tag creation, push, and NuGet publish approval.
