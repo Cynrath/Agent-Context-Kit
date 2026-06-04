@@ -87,9 +87,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0034 with a local-only v0.5 readiness script, readiness docs, product spec command inventory updates, release/doc index updates, and release verification. No provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
 - Started TASK-0035 for v1.0 stabilization planning.
 - Completed TASK-0035 with `docs/V100_STABILIZATION_PLAN.md`, local v1.0 acceptance gates, public-release boundary notes, validation commands, and follow-up task sequence. No runtime behavior, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
+- Started TASK-0036 for v1.0 stable CLI contract review.
+- Completed TASK-0036 with `docs/CLI_CONTRACT.md`, `scripts/check-cli-contract.ps1`, exit code doc alignment for `prompt-pack` and `context-export`, and release verification. No CLI syntax change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
 
 ## Next Clear Steps
-1. Continue v1.0 stable CLI contract review with TASK-0036.
+1. Continue v1.0 config and generated file convention freeze with TASK-0037.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -228,6 +230,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0033-v050-user-approved-context-export.md`
 - `docs/tasks/TASK-0034-v050-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0035-v100-stabilization-plan.md`
+- `docs/tasks/TASK-0036-v100-stable-cli-contract-review.md`
+- `docs/CLI_CONTRACT.md`
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`
 - `docs/V050_READINESS.md`
 - `docs/V100_STABILIZATION_PLAN.md`
@@ -244,6 +248,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/V040_READINESS.md`
 - `scripts/check-v040-readiness.ps1`
 - `scripts/check-v050-readiness.ps1`
+- `scripts/check-cli-contract.ps1`
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/Generation.cs`
 - `src/AgentContextKit.Core/Configuration.cs`
@@ -311,6 +316,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0033 verification: build passed with 0 warnings and 0 errors; tests passed 56/56; `prompt-pack --output .ackit/prompt-packs/task-0033-source.md --json` created an ignored local source prompt pack with riskSummary 0; `context-export --prompt-pack .ackit/prompt-packs/task-0033-source.md --approve --output .ackit/context-exports/task-0033-validation.json --json` created an ignored local approval manifest with riskSummary 0; static manifest checks found approval mode, source prompt pack path, no-remote-call, and no-API-key fields; missing `--approve` returned exit code 1 as expected; `scan --ci` exited 0 and reported no risk findings; `check-v040-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed and installed help showed `context-export`; `git diff --check` passed; real-name grep found no matches.
 - TASK-0034 verification: `check-v050-readiness.ps1` report-only and `-FailOnIssues` modes exited 0 with no v0.5 asset issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `prompt-pack --output .ackit/prompt-packs/task-0034-validation.md --json` created an ignored local prompt pack with riskSummary 0; `context-export --prompt-pack .ackit/prompt-packs/task-0034-validation.md --approve --output .ackit/context-exports/task-0034-validation.json --json` created an ignored local approval manifest with riskSummary 0; both validation artifacts were confirmed ignored; `scan --ci` exited 0 and reported no risk findings; release verification script passed; public release gates report-only mode completed with known blockers; `git diff --check` passed; real-name grep found no matches.
 - TASK-0035 verification: build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0036 verification: `check-cli-contract.ps1` report-only and `-FailOnIssues` modes exited 0 with no CLI contract issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -324,4 +330,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0035 is implemented and verified. Continue v1.0 stable CLI contract review with TASK-0036. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0036 is implemented and verified. Continue v1.0 config and generated file convention freeze with TASK-0037. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.

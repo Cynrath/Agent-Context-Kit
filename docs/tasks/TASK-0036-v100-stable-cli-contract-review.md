@@ -24,6 +24,7 @@ Define and locally verify the stable v1.0 CLI contract for commands, options, ex
 
 ## Affected files
 - `docs/CLI_CONTRACT.md`
+- `docs/EXIT_CODES.md`
 - `scripts/check-cli-contract.ps1`
 - `docs/ROADMAP.md`
 - `docs/DOCUMENTATION_INDEX.md`
@@ -119,4 +120,23 @@ Clarifies the stable CLI contract path for v1.0. Public release remains blocked 
 Revert the TASK-0036 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed in TASK-0036.
+
+- Added `docs/CLI_CONTRACT.md` with stable command surface, stability rules, global options, output path behavior, exit behavior, JSON contract, safety boundary, and local contract check usage.
+- Added `scripts/check-cli-contract.ps1` to verify local CLI help, CLI reference docs, JSON output docs, release validation docs, README command references, and exit code docs.
+- Updated `docs/EXIT_CODES.md` to include `prompt-pack` and `context-export` exit behavior.
+- Updated roadmap, documentation index, project map, changelog, context pack, next steps, and session handoff docs.
+- Checked current .NET CLI argument forwarding guidance through Context7 `/dotnet/docs` and PowerShell `Set-StrictMode`/`exit` guidance through Microsoft Learn before implementation.
+- No CLI syntax change, provider call, SDK, HTTP client, API key handling, upload, push, tag, publish, remote creation, or automatic redaction was added.
+
+Verification:
+
+- `powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1` passed and reported no CLI contract issues.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnIssues` exited 0.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `git diff --check` passed.
+- Real-name grep found no matches.

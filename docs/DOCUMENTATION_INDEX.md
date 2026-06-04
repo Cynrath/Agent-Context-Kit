@@ -7,6 +7,7 @@
 - `docs/ROADMAP.md`: version roadmap.
 
 ## Usage
+- `docs/CLI_CONTRACT.md`: stable CLI command contract review.
 - `docs/CLI_REFERENCE.md`: command reference.
 - `docs/EXAMPLES.md`: common command flows.
 - `docs/EXAMPLE_WORKFLOWS.md`: copy-paste-ready local workflow collections.

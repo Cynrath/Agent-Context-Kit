@@ -49,6 +49,7 @@
 
 ## v1.0.0
 - Stabilization plan. Added local v1.0 stabilization themes, acceptance gates, and follow-up task sequence.
+- Stable CLI contract review. Added local command surface contract and contract check script.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.
