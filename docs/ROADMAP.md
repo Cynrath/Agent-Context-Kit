@@ -52,6 +52,7 @@
 - Stable CLI contract review. Added local command surface contract and contract check script.
 - Config and generated file convention freeze. Added local conventions and convention check script.
 - Documentation and release gate freeze. Added local release-critical docs/gates check.
+- Final local readiness consolidation. Added local v1.0 readiness review docs and script.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.

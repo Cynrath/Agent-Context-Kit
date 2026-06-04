@@ -57,6 +57,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
@@ -101,3 +102,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0036 completed stable CLI contract documentation and local contract check script.
 - TASK-0037 completed config/generated-file convention documentation and local convention check script.
 - TASK-0038 completed documentation/release gate freeze documentation and local gate check script.
+- TASK-0039 completed v1.0 final local readiness review documentation and local readiness check script.

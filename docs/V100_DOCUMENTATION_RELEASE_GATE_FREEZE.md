@@ -7,7 +7,7 @@ The v1.0 documentation freeze covers:
 - CLI contract and command reference.
 - Config and generated-file conventions.
 - JSON output and exit code docs.
-- Version readiness docs from v0.2 through v0.5.
+- Version readiness docs from v0.2 through v1.0 final local readiness.
 - Public release blockers, public release audit, package metadata review, and public release gate orchestration.
 - Maintainer-only release handoff.
 
@@ -27,6 +27,7 @@ docs/V040_READINESS.md
 docs/V050_READINESS.md
 docs/V100_STABILIZATION_PLAN.md
 docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md
+docs/V100_READINESS.md
 docs/RELEASE_VALIDATION.md
 docs/RELEASE_BLOCKERS.md
 docs/PUBLIC_RELEASE_AUDIT.md
@@ -49,6 +50,7 @@ scripts/check-v030-readiness.ps1
 scripts/check-v040-readiness.ps1
 scripts/check-v050-readiness.ps1
 scripts/check-v100-documentation-release-gates.ps1
+scripts/check-v100-readiness.ps1
 scripts/check-package-metadata.ps1
 scripts/audit-public-release.ps1
 scripts/check-release-blockers.ps1

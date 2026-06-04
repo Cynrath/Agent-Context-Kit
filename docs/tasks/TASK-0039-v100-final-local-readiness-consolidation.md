@@ -29,10 +29,12 @@ Consolidate v1.0 final local readiness after stable CLI contract review, config/
 - `docs/DOCUMENTATION_INDEX.md`
 - `docs/ROADMAP.md`
 - `docs/PROJECT_MAP.md`
+- `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`
 - `CHANGELOG.md`
 - `.codex/SESSION_HANDOFF.md`
 - `.codex/NEXT_STEPS.md`
 - `.codex/CONTEXT_PACK.md`
+- `scripts/check-v100-documentation-release-gates.ps1`
 - `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`
 
 ## DB impact
@@ -92,7 +94,7 @@ Consolidates v1.0 local readiness. Public release remains blocked by maintainer-
 3. Read required project docs before implementation.
 4. Add v1.0 final readiness script.
 5. Add v1.0 final readiness documentation.
-6. Update release validation, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff.
+6. Update release validation, documentation index, roadmap, project map, documentation gate freeze, changelog, context pack, next steps, and session handoff.
 7. Run the v1.0 readiness script in report-only and failing modes.
 8. Run build/test and local scan validation.
 9. Run `scripts/check-cli-contract.ps1 -FailOnIssues`.
@@ -129,4 +131,22 @@ Consolidates v1.0 local readiness. Public release remains blocked by maintainer-
 Revert the TASK-0039 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `scripts/check-v100-readiness.ps1` as a local-only v1.0 final readiness gate.
+- Added `docs/V100_READINESS.md` with usage, expected public blockers, required validation, and maintainer-only release boundary.
+- Updated release validation, documentation index, roadmap, project map, documentation gate freeze docs/script, changelog, context pack, next steps, and session handoff.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1`: passed; public-release blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues`: passed; public-release blockers reported separately.
+- `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci`: passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnIssues`: passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues`: passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues`: passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues`: passed; public-release blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`: passed.
+- `git diff --check`: passed.
+- Real-name grep: no matches.
+- Public release remains blocked by TODO `RepositoryUrl`, TODO `PackageProjectUrl`, missing release tag, and missing maintainer approval for push/publish.
+- No push, publish, tag, remote creation, deletion, upload, provider call, API key handling, automatic redaction, or runtime CLI behavior change was performed.

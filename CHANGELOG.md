@@ -52,6 +52,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Stable CLI contract documentation and local contract check script.
 - Config/generated-file convention documentation and local convention check script.
 - v1.0 documentation/release gate freeze documentation and local gate check script.
+- v1.0 final local readiness review documentation and local readiness check script.
 - Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
 - English/Turkish localization and template foundation.
 - xUnit test coverage for MVP behaviors.

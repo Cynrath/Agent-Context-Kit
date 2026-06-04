@@ -126,6 +126,21 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-releas
 
 See [V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md](V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md).
 
+## v1.0 Final Local Readiness Review
+Run the v1.0 final local readiness check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1
+```
+
+Use it as a failing local gate for missing v1.0 readiness assets:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues
+```
+
+See [V100_READINESS.md](V100_READINESS.md).
+
 ## Release Blocker Review
 Report current blockers:
 
