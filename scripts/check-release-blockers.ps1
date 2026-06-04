@@ -7,6 +7,7 @@ Set-StrictMode -Version Latest
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $projectPath = Join-Path $repoRoot "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"
+$releaseTag = "v0.1.0-alpha.1"
 $blockers = New-Object System.Collections.Generic.List[string]
 $warnings = New-Object System.Collections.Generic.List[string]
 
@@ -70,9 +71,14 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
             Add-Blocker "Working tree has uncommitted changes."
         }
 
+        $releaseTagCommit = git rev-parse "$releaseTag^{commit}" 2>$null
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($releaseTagCommit)) {
+            Add-Blocker "Release tag $releaseTag was not found locally."
+        }
+
         $tags = git tag --points-at HEAD 2>$null
-        if ($LASTEXITCODE -eq 0 -and -not $tags) {
-            Add-Warning "Current HEAD has no release tag."
+        if ($LASTEXITCODE -eq 0 -and -not ($tags -contains $releaseTag)) {
+            Add-Warning "Current HEAD is not $releaseTag; this can be valid for post-push documentation sync. Remote tag verification is manual."
         }
     }
     finally {
@@ -103,10 +109,11 @@ if ($warnings.Count -gt 0) {
 }
 
 Write-Host ""
-Write-Host "Manual gates still required before public release:"
-Write-Host "- Public repository exists at the selected URL and access is confirmed."
-Write-Host "- Explicit maintainer approval for push, tag push, and NuGet publish."
-Write-Host "- Final review of package README, SECURITY, CONTRIBUTING, and changelog."
+Write-Host "Manual post-push gates still required:"
+Write-Host "- Check GitHub Actions latest master run."
+Write-Host "- Confirm repository description and topics."
+Write-Host "- Create GitHub Release page for v0.1.0-alpha.1."
+Write-Host "- Publish NuGet package and verify install."
 
 if ($FailOnBlockers -and $blockers.Count -gt 0) {
     Write-Host ""

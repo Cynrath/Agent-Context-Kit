@@ -9,8 +9,9 @@ Local package metadata is ready for local pack validation:
 - `Authors` is `Cynrath`.
 - `Company` is `Cynrath`.
 
-Public publish remains blocked until:
-- The release tag points at the reviewed commit.
+Public publish remains pending until:
+- GitHub Actions latest `master` run is green.
+- GitHub Release page for `v0.1.0-alpha.1` is prepared.
 - NuGet publish approval has been given.
 
 This review follows Microsoft Learn NuGet package authoring guidance for package ID, version, authors, description, project URL, README, repository metadata, tags, release notes, and license expression:
@@ -59,5 +60,6 @@ Before public publish:
 3. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
 4. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
 5. Run `scripts/verify-release.ps1`.
-6. Confirm tag `v0.1.0-alpha.1` points at the reviewed commit.
-7. Publish only after explicit maintainer approval.
+6. Confirm GitHub Actions latest `master` run is green.
+7. Confirm GitHub Release page for `v0.1.0-alpha.1` exists or is ready.
+8. Publish only after explicit maintainer approval.

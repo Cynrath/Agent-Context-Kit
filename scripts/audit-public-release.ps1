@@ -7,6 +7,7 @@ Set-StrictMode -Version Latest
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $projectPath = Join-Path $repoRoot "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"
+$releaseTag = "v0.1.0-alpha.1"
 $issues = New-Object System.Collections.Generic.List[string]
 $warnings = New-Object System.Collections.Generic.List[string]
 $notes = New-Object System.Collections.Generic.List[string]
@@ -99,9 +100,17 @@ else {
             Add-Issue "Working tree has uncommitted changes."
         }
 
+        $releaseTagCommit = git rev-parse "$releaseTag^{commit}" 2>$null
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($releaseTagCommit)) {
+            Add-Issue "Release tag $releaseTag was not found locally."
+        }
+        else {
+            Add-Note "Release tag ${releaseTag} points to $releaseTagCommit."
+        }
+
         $tags = git tag --points-at HEAD
-        if ($LASTEXITCODE -eq 0 -and -not $tags) {
-            Add-Issue "Current HEAD has no release tag."
+        if ($LASTEXITCODE -eq 0 -and -not ($tags -contains $releaseTag)) {
+            Add-Warning "Current HEAD is not $releaseTag; this can be valid for post-push documentation sync. Remote tag verification is manual."
         }
     }
     finally {

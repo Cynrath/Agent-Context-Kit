@@ -10,4 +10,5 @@
 ## Current Risk Summary
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
-- Public release remains blocked until the release tag points at the reviewed commit and maintainer-controlled push/NuGet publish actions are approved.
+- GitHub source push and tag push are complete for `v0.1.0-alpha.1`.
+- GitHub Release page and NuGet publish remain pending maintainer actions.

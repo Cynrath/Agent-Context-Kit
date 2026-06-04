@@ -157,12 +157,12 @@ foreach ($doc in $releaseValidationDocs) {
 }
 
 $blockerNeedles = @(
-    "Public release is blocked.",
     "RepositoryUrl",
     "PackageProjectUrl",
-    "No public release tag",
-    "No NuGet publish approval",
-    "Push, tag, and publish only"
+    "GitHub publication is complete",
+    "GitHub Release page for",
+    "NuGet publish is pending",
+    "Codex for OSS application pack"
 )
 
 foreach ($needle in $blockerNeedles) {
@@ -170,10 +170,10 @@ foreach ($needle in $blockerNeedles) {
 }
 
 $auditNeedles = @(
-    "Public release is blocked.",
-    "The package URL blockers are resolved.",
-    "Current HEAD must have release tag",
-    "Push, tag, and NuGet publish have not been explicitly approved"
+    "GitHub source publication is complete",
+    "GitHub Release page is pending",
+    "NuGet publish is pending",
+    "release tag to exist locally"
 )
 
 foreach ($needle in $auditNeedles) {
@@ -181,9 +181,9 @@ foreach ($needle in $auditNeedles) {
 }
 
 $gateNeedles = @(
-    "Package metadata URLs are final",
-    "Missing release tag",
-    "No explicit maintainer approval for push or NuGet publish",
+    "Current Post-Push State",
+    "NuGet publish is pending",
+    "GitHub Release page is pending",
     "does not",
     "Follow [MAINTAINER_RELEASE_HANDOFF.md]"
 )
@@ -208,7 +208,7 @@ foreach ($needle in $freezeNeedles) {
 $handoffNeedles = @(
     "RepositoryUrl",
     "PackageProjectUrl",
-    "release tag",
+    "tag pushed",
     "NuGet publish"
 )
 

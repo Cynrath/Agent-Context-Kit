@@ -29,7 +29,12 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 ## Risk Summary
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
-- Public release remains blocked until the release tag points at the reviewed commit and maintainer-controlled push/NuGet publish actions are approved.
+- GitHub repository is public.
+- `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Actions latest `master` run is green.
+- Repository description and topics are set.
+- GitHub Release page is pending.
+- NuGet publish is pending.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -70,12 +75,16 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
-- Local tag `v0.1.0-alpha.1` must point at the final reviewed commit before public tag push.
-- Push and NuGet publish require explicit maintainer approval.
-- `scripts/check-package-metadata.ps1 -FailOnIssues` must exit `0` before any public release.
-- `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
-- `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.
-- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the maintainer-only public release sequence.
+- GitHub repository public: yes.
+- `master` pushed: yes.
+- `v0.1.0-alpha.1` pushed: yes.
+- GitHub Actions latest `master` run: success.
+- Repository description: set.
+- Repository topics: set.
+- GitHub Release page is pending.
+- NuGet publish is pending.
+- Codex for OSS form submission is pending.
+- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the remaining post-push release sequence.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -115,3 +124,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0038 completed documentation/release gate freeze documentation and local gate check script.
 - TASK-0039 completed v1.0 final local readiness review documentation and local readiness check script.
 - TASK-0040 completed public release final cleanup with source archive hygiene, sample-aware stack detection, package URL blocker clarification, and local gate reports.
+- TASK-0046 syncs post-push repository status after `master` and `v0.1.0-alpha.1` were pushed.

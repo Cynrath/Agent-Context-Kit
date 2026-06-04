@@ -13,8 +13,9 @@ AgentContextKit is locally validated through v0.5:
 
 Public release is still blocked by maintainer-only decisions:
 - Keep the selected public repository URL at `https://github.com/Cynrath/agent-context-kit`.
-- Ensure `v0.1.0-alpha.1` points at the reviewed release commit.
-- Push and publish only after maintainer approval.
+- Keep the pushed `master` and `v0.1.0-alpha.1` release state at `aee808244bf33d00808e7e70db6235132c2d3829`.
+- Create the GitHub Release page.
+- Publish NuGet only after maintainer approval.
 
 ## Stabilization Themes
 
@@ -78,7 +79,7 @@ Local acceptance gates:
 - `scripts/verify-release.ps1` passes.
 - Package metadata URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - Temporary tool install validates `ackit --help` and `ackit scan --json`.
-- No push, tag, remote creation, or NuGet publish occurs from agent sessions.
+- No GitHub release creation, remote creation, or NuGet publish occurs from agent sessions.
 
 ## Proposed v1.0 Task Sequence
 1. TASK-0036: stable CLI contract review.

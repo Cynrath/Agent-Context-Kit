@@ -55,12 +55,13 @@ powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-Expected before the final local tag:
+Expected after the GitHub push and tag push:
 - Package metadata report-only mode exits `0` with no metadata issues.
-- Public release audit report-only mode exits `0` but reports the missing release tag.
-- Release blocker report-only mode exits `0` and may warn when `HEAD` has no release tag.
+- Public release audit report-only mode exits `0`.
+- Release blocker report-only mode exits `0`.
+- Remaining external checks are GitHub Actions, GitHub Release page creation, NuGet publish, and NuGet install verification.
 
-Only after the final local tag points at `HEAD` and release actions are explicitly approved should failing public gates be used:
+Before GitHub Release page creation or NuGet publish, use failing public gates:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues

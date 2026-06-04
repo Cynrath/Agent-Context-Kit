@@ -59,12 +59,13 @@ scripts/verify-release.ps1
 ```
 
 ## Public Release Blockers
-Public release remains blocked until all maintainer-only actions are complete:
+GitHub source publication for `v0.1.0-alpha.1` is complete. Remaining maintainer-only actions:
 - Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
-- Ensure `v0.1.0-alpha.1` points at the reviewed release commit.
-- Push and publish only after explicit maintainer approval.
+- Keep `master` and `v0.1.0-alpha.1` associated with `aee808244bf33d00808e7e70db6235132c2d3829`.
+- Create the GitHub Release page.
+- Publish NuGet only after explicit maintainer approval.
 
-Failing public gates are expected to fail until the release tag points at `HEAD` and the working tree is clean.
+Failing public gates should pass locally when package metadata is final, tracked artifact checks are clean, and the release tag exists locally. Remote tag verification and GitHub Release/NuGet publication remain external checks.
 
 ## Local Freeze Validation
 Run:

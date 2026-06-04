@@ -32,7 +32,7 @@ The MVP does not call remote AI APIs, upload repository content, run telemetry, 
 - Keep future LLM features opt-in, reviewed, and auditable.
 
 ## Current Release Status
-The local `0.1.0-alpha.1` package metadata points to `https://github.com/Cynrath/agent-context-kit`. Build, test, scan, package, and gate validation are part of the release process. Public push and NuGet publish remain maintainer-only actions.
+The GitHub repository is public at `https://github.com/Cynrath/agent-context-kit`. `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`. GitHub Actions are green, repository description/topics are set, and package metadata is final. GitHub Release page creation and NuGet publish are pending maintainer actions.
 
 ## Form Text: Why Is This Repository A Good Fit?
 AgentContextKit improves AI-assisted OSS development by generating safe local context, task docs, agent instructions, source hygiene guidance, and release checks before Codex or similar tools work on a repo. It is offline-first, security-focused, and useful to maintainers preparing public releases.

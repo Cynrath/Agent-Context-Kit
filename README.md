@@ -6,6 +6,8 @@ AgentContextKit is a .NET CLI (`ackit`) for developers who use Codex, Claude Cod
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
+Release status: `v0.1.0-alpha.1` is pushed on GitHub. NuGet publication is pending.
+
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
 

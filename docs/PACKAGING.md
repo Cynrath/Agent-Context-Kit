@@ -67,4 +67,4 @@ dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --sourc
 - Do not publish until `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
 - Do not publish until restore/build/test/pack/tool-path validation passes.
 - Do not publish while `ackit scan` reports unaccepted high or critical findings.
-- Do not publish until the release tag points at the reviewed commit and maintainer approval is explicit.
+- Do not publish until GitHub Actions are green, the GitHub Release page is ready, and maintainer approval is explicit.

@@ -1,25 +1,17 @@
 # Public Release Audit
 
-This document records the final local-only public release audit workflow.
+This document records the local-only public release audit workflow after the first GitHub push and tag push.
 
 ## Current Status
-Public release is blocked.
+GitHub source publication is complete for `0.1.0-alpha.1`.
 
-The package URL blockers are resolved. The codebase can pass local build, test, scan, package, and temporary tool install validation, but maintainer-only public release blockers remain:
-- Current HEAD must have release tag `v0.1.0-alpha.1` before public tag push.
-- Push, tag, and NuGet publish have not been explicitly approved.
-
-## Latest Local Result
-TASK-0009 validation passed locally.
-
-Results:
-- Report-only audit exited `0`.
-- Failing audit gate exited `1` as expected while blockers remain.
-- Build passed with 0 warnings and 0 errors.
-- Tests passed, 18/18.
-- `ackit scan` reported no risk findings.
-- `scripts/verify-release.ps1` passed.
-- Release blocker review reported known blockers in non-failing mode.
+- GitHub repository public: yes.
+- `master` pushed: yes.
+- `v0.1.0-alpha.1` tag pushed: yes.
+- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- Package URL blockers are resolved.
+- GitHub Release page is pending.
+- NuGet publish is pending.
 
 ## Audit Command
 Run report-only mode:
@@ -28,13 +20,13 @@ Run report-only mode:
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1
 ```
 
-Run as a failing gate before public release:
+Run as a failing gate before GitHub Release page creation or NuGet publish:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 ```
 
-Before the release tag points at `HEAD`, `-FailOnIssues` is expected to return a non-zero exit code. After the final local tag and clean working tree, it should exit `0`.
+For post-push documentation sync commits, `HEAD` may be newer than the release tag. The audit requires the release tag to exist locally and reports `HEAD` not being tagged as a warning, not a release issue.
 
 ## Gate Orchestration
 Run package metadata, public release audit, and release blocker checks together:
@@ -43,7 +35,7 @@ Run package metadata, public release audit, and release blocker checks together:
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 ```
 
-Use failing mode only after maintainer-only blockers are resolved:
+Use failing mode before GitHub Release page creation or NuGet publish:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
@@ -57,20 +49,23 @@ See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
 - Tracked secret-like config files such as `.env` and `secrets.json`.
 - Tracked environment-specific appsettings files.
 - Dirty working tree state.
-- Release tag presence at `HEAD`.
+- Local release tag presence.
 - Package `Authors` and `Company` metadata use `Cynrath`.
 - `RepositoryUrl` and `PackageProjectUrl` are not placeholders.
 - Package README and license metadata are present.
 
-## Required Manual Resolution
-Before public release:
-1. Confirm package URL metadata points to `https://github.com/Cynrath/agent-context-kit`.
-2. Create the local release tag intentionally on the reviewed commit.
-3. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
-4. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
-5. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
-6. Run `scripts/verify-release.ps1`.
-7. Push, tag, and publish only after explicit maintainer approval.
+Remote tag push, GitHub Actions status, GitHub Release page status, repository topics, and NuGet package availability are external checks and must be verified through GitHub/NuGet or maintainer-controlled commands.
+
+## Required Manual Follow-Up
+Before NuGet publish and release announcement:
+1. Confirm GitHub Actions latest `master` run is green.
+2. Confirm repository description and topics.
+3. Create the GitHub Release page for `v0.1.0-alpha.1`.
+4. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
+5. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
+6. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
+7. Run `scripts/verify-release.ps1`.
+8. Publish to NuGet only after explicit maintainer approval.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for copy-paste-ready maintainer-only commands.
 

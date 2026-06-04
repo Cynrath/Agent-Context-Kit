@@ -247,9 +247,9 @@ else {
 if (Get-Command git -ErrorAction SilentlyContinue) {
     Push-Location $repoRoot
     try {
-        $tags = git tag --points-at HEAD 2>$null
-        if ($LASTEXITCODE -eq 0 -and -not $tags) {
-            Add-PublicBlocker "Current HEAD has no release tag."
+        $releaseTagCommit = git rev-parse "v0.1.0-alpha.1^{commit}" 2>$null
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($releaseTagCommit)) {
+            Add-PublicBlocker "Release tag v0.1.0-alpha.1 was not found locally."
         }
 
         $status = git status --short 2>$null

@@ -27,4 +27,9 @@ The first release should be small, working, documented, and honest about limitat
 - Sample projects under `samples/` are intentionally not reported as main repository stacks.
 - Package metadata uses the selected public URL `https://github.com/Cynrath/agent-context-kit`.
 - Codex for OSS application material is prepared in `docs/CODEX_FOR_OSS_APPLICATION.md`.
-- Public release remains blocked until the release tag points at the reviewed commit, push is approved, and NuGet publish is approved by the maintainer.
+- GitHub repository is public.
+- `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Actions latest `master` run is green.
+- Repository description and topics are set.
+- GitHub Release page is pending.
+- NuGet publish is pending.

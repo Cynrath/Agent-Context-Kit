@@ -154,7 +154,7 @@ Use the blocker check as a failing gate before public release:
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 ```
 
-If the working tree is clean and the release tag points at `HEAD`, the failing gate should return `0`. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
+If the working tree is clean, package metadata is final, and the release tag exists locally, the failing gate should return `0`. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
 
 ## Package Metadata Review
 Run package metadata review in report-only mode:
@@ -193,7 +193,7 @@ Run all public release gates in report-only mode:
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 ```
 
-Run all public release gates as failing checks only after maintainer-only blockers are resolved:
+Run all public release gates as failing checks before GitHub Release page creation or NuGet publish:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
@@ -225,6 +225,9 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Confirm license and security policy are current.
 - Confirm no secrets, dumps, backups, uploads, `bin/`, `obj/`, or generated package outputs are committed.
 - Confirm no permanent global tool install is required for validation.
-- Confirm local tag `v0.1.0-alpha.1` points at the reviewed release commit before pushing the tag.
+- Confirm `origin/master` and remote `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- Confirm GitHub Actions latest `master` run is green.
+- Confirm GitHub Release page exists before release announcement.
+- Confirm NuGet package availability after publish.
 
-See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for maintainer-only push, tag, and NuGet publish steps.
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for remaining post-push GitHub Release and NuGet publish steps.

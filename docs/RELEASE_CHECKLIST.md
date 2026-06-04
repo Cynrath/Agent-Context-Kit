@@ -1,6 +1,6 @@
 # Release Checklist
 
-## Before Any Public Release
+## Local Validation
 - `dotnet restore` passes.
 - `dotnet build -c Release` passes.
 - `dotnet test -c Release` passes.
@@ -21,11 +21,21 @@
 - `docs/RELEASE_BLOCKERS.md` has no unresolved public-release blockers.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` has been reviewed.
 - `RepositoryUrl` and `PackageProjectUrl` point to `https://github.com/Cynrath/agent-context-kit`.
-- Local tag `v0.1.0-alpha.1` points at the reviewed release commit before tag push.
+- Local tag `v0.1.0-alpha.1` exists and points at the reviewed release commit.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 
-## Manual Actions
-- Create remote repository only outside the agent session.
+## Completed GitHub Actions
+- Public repository exists: `https://github.com/Cynrath/agent-context-kit`.
+- `master` is pushed.
+- `v0.1.0-alpha.1` is pushed.
+- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Actions latest `master` run is green.
+- Repository description is set.
+- Repository topics are set.
+
+## Remaining Manual Actions
+- Create GitHub Release page for `v0.1.0-alpha.1`.
+- Publish NuGet package after validation.
+- Verify NuGet global tool install after indexing.
+- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 - Review all generated files before publishing.
-- Push commits and tags only after explicit maintainer approval.
-- Publish NuGet package only after explicit maintainer approval.

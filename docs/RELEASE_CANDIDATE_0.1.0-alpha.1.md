@@ -1,10 +1,10 @@
 # Release Candidate Review: 0.1.0-alpha.1
 
 ## Status
-Local release candidate preparation is complete for the reviewed working tree. Package URL blockers are resolved; public release remains blocked until the final reviewed commit is tagged and maintainer-controlled push/NuGet publish actions are approved.
+Local release candidate preparation is complete and the GitHub source state has been pushed.
 
 ## Scope
-This review validates the local package and CLI without pushing, tag-pushing, publishing, or creating remotes.
+This review validates the local package and CLI. GitHub source push and tag push are complete; NuGet publish and GitHub Release page creation are pending.
 
 ## Required Local Gate
 ```powershell
@@ -26,17 +26,24 @@ The script runs:
 ## Current Known Blockers
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
-- Local tag `v0.1.0-alpha.1` must point at the reviewed commit before public tag push.
-- Public push and NuGet publish require explicit maintainer action.
+- GitHub repository public: yes.
+- `master` pushed: yes.
+- `v0.1.0-alpha.1` tag pushed: yes.
+- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Actions latest `master` run: success.
+- Repository description: set.
+- Repository topics: set.
+- GitHub Release page is pending.
+- NuGet publish is pending.
 
 See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md) for the active blocker list and guard script.
 
-## Manual Actions Before Public Release
+## Remaining Manual Actions
+- Create GitHub Release page for `v0.1.0-alpha.1`.
 - Review package README rendering.
 - Review SECURITY and CONTRIBUTING docs.
 - Run `ackit redact-check --profile public-release`.
 - Run `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers`.
-- Push only after explicit maintainer action outside this automated flow.
 - Publish to NuGet only after explicit maintainer action.
 
 ## Verification Result
@@ -53,4 +60,4 @@ Current local release candidate validation:
 - Installed `ackit --help`: passed.
 - Installed `ackit scan --json`: passed and reported `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
-Full post-commit release gates are rerun after the final release preparation commit so the local tag can point at the reviewed commit.
+Post-push status sync keeps GitHub release page creation and NuGet publish as maintainer-controlled follow-up actions.

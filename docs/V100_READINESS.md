@@ -31,8 +31,10 @@ Public release blockers are reported separately. They do not cause `-FailOnIssue
 The local v1.0 readiness gate is expected to report these blockers until a maintainer explicitly resolves them:
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
-- `v0.1.0-alpha.1` must point at the reviewed release commit before public tag push.
-- Push and NuGet publish have not been explicitly approved.
+- GitHub repository is public.
+- `master` and `v0.1.0-alpha.1` are pushed at `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Release page is pending.
+- NuGet publish is pending.
 
 These blockers are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_AUDIT.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
 

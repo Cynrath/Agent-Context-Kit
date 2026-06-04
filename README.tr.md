@@ -6,6 +6,8 @@ AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benze
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
+Release durumu: `v0.1.0-alpha.1` GitHub'a push edildi. NuGet publish bekliyor.
+
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
 
