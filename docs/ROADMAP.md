@@ -51,6 +51,7 @@
 - Stabilization plan. Added local v1.0 stabilization themes, acceptance gates, and follow-up task sequence.
 - Stable CLI contract review. Added local command surface contract and contract check script.
 - Config and generated file convention freeze. Added local conventions and convention check script.
+- Documentation and release gate freeze. Added local release-critical docs/gates check.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.

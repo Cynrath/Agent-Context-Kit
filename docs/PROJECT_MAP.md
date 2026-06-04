@@ -103,6 +103,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0035-v100-stabilization-plan.md`
 - `docs/tasks/TASK-0036-v100-stable-cli-contract-review.md`
 - `docs/tasks/TASK-0037-v100-config-generated-convention-freeze.md`
+- `docs/tasks/TASK-0038-v100-documentation-release-gate-freeze.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -110,6 +111,7 @@ Updated: 2026-06-03
 - `docs/V040_READINESS.md`
 - `docs/V050_READINESS.md`
 - `docs/V100_STABILIZATION_PLAN.md`
+- `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `global.json`
 - `LICENSE`
@@ -134,6 +136,7 @@ Updated: 2026-06-03
 - `scripts/check-v030-readiness.ps1`
 - `scripts/check-v040-readiness.ps1`
 - `scripts/check-v050-readiness.ps1`
+- `scripts/check-v100-documentation-release-gates.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`

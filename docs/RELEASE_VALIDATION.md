@@ -83,6 +83,49 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailO
 
 See [V050_READINESS.md](V050_READINESS.md).
 
+## v1.0 Local Contract Gates
+Run the stable CLI contract check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1
+```
+
+Use it as a failing local gate:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnIssues
+```
+
+See [CLI_CONTRACT.md](CLI_CONTRACT.md).
+
+Run the config/generated convention check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1
+```
+
+Use it as a failing local gate:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues
+```
+
+See [CONFIG_GENERATED_CONVENTIONS.md](CONFIG_GENERATED_CONVENTIONS.md).
+
+Run the documentation/release gate freeze check:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1
+```
+
+Use it as a failing local gate:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues
+```
+
+See [V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md](V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md).
+
 ## Release Blocker Review
 Report current blockers:
 
@@ -167,3 +210,5 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Confirm license and security policy are current.
 - Confirm no secrets, dumps, backups, uploads, `bin/`, `obj/`, or generated package outputs are committed.
 - Confirm no permanent global tool install is required for validation.
+
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for maintainer-only push, tag, and NuGet publish steps.

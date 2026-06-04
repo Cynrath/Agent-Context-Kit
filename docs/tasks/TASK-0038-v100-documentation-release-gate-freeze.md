@@ -128,4 +128,23 @@ Clarifies final pre-v1.0 local release gate expectations. Public release remains
 Revert the TASK-0038 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed in TASK-0038.
+
+- Added `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md` with release-critical docs, release gate scripts, public release blockers, local freeze validation, and safety boundaries.
+- Added `scripts/check-v100-documentation-release-gates.ps1` to verify release-critical docs, documentation index coverage, release validation references, public blocker docs, public gate docs, audit docs, and maintainer handoff notes.
+- Updated release validation, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+- No CLI syntax change, runtime behavior change, provider call, SDK, HTTP client, API key handling, upload, push, tag, publish, remote creation, or automatic redaction was added.
+
+Verification:
+
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1` passed and reported no documentation/release gate issues.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues` exited 0.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnIssues` exited 0.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues` exited 0.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `git diff --check` passed.
+- Real-name grep found no matches.

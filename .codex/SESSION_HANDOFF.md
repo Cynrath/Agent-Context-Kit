@@ -91,9 +91,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0036 with `docs/CLI_CONTRACT.md`, `scripts/check-cli-contract.ps1`, exit code doc alignment for `prompt-pack` and `context-export`, and release verification. No CLI syntax change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
 - Started TASK-0037 for v1.0 config and generated file convention freeze.
 - Completed TASK-0037 with `docs/CONFIG_GENERATED_CONVENTIONS.md`, `scripts/check-config-generated-conventions.ps1`, `.ackit/cache/` git ignore alignment, and release verification. No runtime config schema change, CLI syntax change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
+- Started TASK-0038 for v1.0 documentation and release gate freeze.
+- Completed TASK-0038 with `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`, `scripts/check-v100-documentation-release-gates.ps1`, release validation/index updates, and release verification. No CLI syntax change, runtime behavior change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
 
 ## Next Clear Steps
-1. Continue v1.0 documentation and release gate freeze with TASK-0038.
+1. Continue v1.0 final local readiness consolidation with TASK-0039.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
@@ -234,11 +236,13 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/tasks/TASK-0035-v100-stabilization-plan.md`
 - `docs/tasks/TASK-0036-v100-stable-cli-contract-review.md`
 - `docs/tasks/TASK-0037-v100-config-generated-convention-freeze.md`
+- `docs/tasks/TASK-0038-v100-documentation-release-gate-freeze.md`
 - `docs/CLI_CONTRACT.md`
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`
 - `docs/V050_READINESS.md`
 - `docs/V100_STABILIZATION_PLAN.md`
+- `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`
 - `README.md`
 - `README.tr.md`
 - `docs/CLI_REFERENCE.md`
@@ -254,6 +258,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `scripts/check-v050-readiness.ps1`
 - `scripts/check-cli-contract.ps1`
 - `scripts/check-config-generated-conventions.ps1`
+- `scripts/check-v100-documentation-release-gates.ps1`
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/Generation.cs`
 - `src/AgentContextKit.Core/Configuration.cs`
@@ -323,6 +328,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0035 verification: build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0036 verification: `check-cli-contract.ps1` report-only and `-FailOnIssues` modes exited 0 with no CLI contract issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0037 verification: `check-config-generated-conventions.ps1` report-only and `-FailOnIssues` modes exited 0 with no config/generated convention issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-cli-contract.ps1 -FailOnIssues` exited 0; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0038 verification: `check-v100-documentation-release-gates.ps1` report-only and `-FailOnIssues` modes exited 0 with no documentation/release gate issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-cli-contract.ps1 -FailOnIssues` exited 0; `check-config-generated-conventions.ps1 -FailOnIssues` exited 0; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -336,4 +342,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0037 is implemented and verified. Continue v1.0 documentation and release gate freeze with TASK-0038. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0038 is implemented and verified. Continue v1.0 final local readiness consolidation with TASK-0039. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
