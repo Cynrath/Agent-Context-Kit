@@ -10,6 +10,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 
 ## Current MVP
 - Safe local scanning.
+- Sample-aware main repository stack detection.
 - Agent instruction generation.
 - Task file generation.
 - Pattern-based redact checks.
@@ -27,6 +28,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 ## Risk Summary
 - No risk findings in the latest local scan.
 - Public release remains blocked by TODO package URLs and missing release tag.
+- Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
 - No remote upload.
@@ -64,6 +66,8 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 
 ## Public Release Blockers
 - `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
+- Recommended public URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
+- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; casing/name alignment is maintainer-only.
 - `scripts/check-package-metadata.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.
@@ -72,6 +76,9 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
 - Tests live in `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`.
+- Source archive hygiene is documented in `docs/SOURCE_ARCHIVE.md`.
+- `winrar_exclude.txt` contains the local ZIP/RAR exclude list.
+- `.cursor/rules/project.mdc` is an intentional AI instruction file.
 
 ## v0.2 Progress
 - TASK-0011 completed stack detection expansion with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
@@ -103,3 +110,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0037 completed config/generated-file convention documentation and local convention check script.
 - TASK-0038 completed documentation/release gate freeze documentation and local gate check script.
 - TASK-0039 completed v1.0 final local readiness review documentation and local readiness check script.
+- TASK-0040 completed public release final cleanup with source archive hygiene, sample-aware stack detection, package URL blocker clarification, and local gate reports.

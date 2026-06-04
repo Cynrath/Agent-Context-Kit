@@ -26,6 +26,7 @@ node_modules/
 # Logs and temp files
 logs/
 *.log
+*.binlog
 *.tmp
 *.bak
 .ackit/cache/
@@ -62,12 +63,12 @@ DataProtection-Keys/
 
 # Generated package output
 nupkg/
+*.nupkg
+*.snupkg
 
 # OS files
 Thumbs.db
 .DS_Store
 
-
-winrar_exclude.txt
 agent-context-kit.rar
 agent-context-kit.zip

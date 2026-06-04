@@ -25,6 +25,7 @@
 - `docs/ARCHITECTURE.md`: solution structure and boundaries.
 - `docs/DEVELOPMENT_STANDARD.md`: engineering workflow.
 - `docs/SOURCE_HYGIENE.md`: source and package hygiene rules.
+- `docs/SOURCE_ARCHIVE.md`: local ZIP/RAR source archive hygiene.
 - `docs/LOCALIZATION.md`: English/Turkish support.
 - `docs/DECISIONS.md`: architecture decision records.
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`: optional future LLM provider architecture.

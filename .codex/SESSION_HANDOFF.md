@@ -95,22 +95,22 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0038 with `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`, `scripts/check-v100-documentation-release-gates.ps1`, release validation/index updates, and release verification. No CLI syntax change, runtime behavior change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
 - Started TASK-0039 for v1.0 final local readiness consolidation.
 - Completed TASK-0039 with `docs/V100_READINESS.md`, `scripts/check-v100-readiness.ps1`, v1.0 release validation/index updates, and local readiness gate consolidation. No CLI syntax change, runtime behavior change, provider call, SDK, HTTP client, API key handling, content upload, push, tag, publish, or remote creation was added.
+- Started TASK-0040 for public release final cleanup, source archive hygiene, self-scan accuracy, and GitHub readiness.
+- Completed TASK-0040 with `docs/SOURCE_ARCHIVE.md`, `winrar_exclude.txt`, sample-aware main stack detection, `.NET CLI / .NET Tool` stack detection, package URL blocker clarification, local artifact cleanup, focused tests, and release gate reports. No push, tag, remote change, NuGet publish, provider call, SDK, HTTP client, API key handling, content upload, or automatic redaction was added.
 
 ## Next Clear Steps
-1. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
-2. Maintainer must select the real public repository URL before any public release.
-3. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
-4. Create a release tag only after explicit maintainer approval.
-5. Run `scripts/check-v100-readiness.ps1 -FailOnIssues` before any v1.0 local readiness handoff.
-6. Run `scripts/check-cli-contract.ps1 -FailOnIssues`.
-7. Run `scripts/check-config-generated-conventions.ps1 -FailOnIssues`.
-8. Run `scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues`.
-9. Run `scripts/check-v050-readiness.ps1 -FailOnIssues`.
-10. Run `scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
-11. Run `scripts/audit-public-release.ps1 -FailOnIssues` after replacing TODO package URLs and creating the release tag.
-12. Run `scripts/check-release-blockers.ps1 -FailOnBlockers` after replacing TODO package URLs.
-13. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
-14. Do not push/tag/publish until explicit maintainer instruction.
+1. Decide the final public repository URL. Recommended review URL: `https://github.com/Cynrath/agent-context-kit`.
+2. Decide whether current `origin` casing/name `https://github.com/Cynrath/Agent-Context-Kit.git` should be kept or aligned.
+3. Replace TODO `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
+4. Run `scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
+5. Create the release tag only after explicit maintainer approval.
+6. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
+7. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
+8. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
+9. Run `scripts/verify-release.ps1`.
+10. Follow `docs/MAINTAINER_RELEASE_HANDOFF.md` for push and NuGet publish.
+11. Use `docs/SOURCE_ARCHIVE.md` and `winrar_exclude.txt` before sharing a local ZIP/RAR.
+12. Do not push/tag/publish until explicit maintainer instruction.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -332,6 +332,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0037 verification: `check-config-generated-conventions.ps1` report-only and `-FailOnIssues` modes exited 0 with no config/generated convention issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-cli-contract.ps1 -FailOnIssues` exited 0; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0038 verification: `check-v100-documentation-release-gates.ps1` report-only and `-FailOnIssues` modes exited 0 with no documentation/release gate issues; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-cli-contract.ps1 -FailOnIssues` exited 0; `check-config-generated-conventions.ps1 -FailOnIssues` exited 0; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
 - TASK-0039 verification: `check-v100-readiness.ps1` report-only and `-FailOnIssues` modes exited 0 with no local readiness asset issues; public-release blockers were reported separately; build passed with 0 warnings and 0 errors; tests passed 56/56; `scan --ci` exited 0 and reported no risk findings; `check-cli-contract.ps1 -FailOnIssues` exited 0; `check-config-generated-conventions.ps1 -FailOnIssues` exited 0; `check-v100-documentation-release-gates.ps1 -FailOnIssues` exited 0; `check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately; release verification script passed; `git diff --check` passed; real-name grep found no matches.
+- TASK-0040 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed, 59/59 tests; `scan --ci` exited 0 and reported no risk findings; self-scan stacks are `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`; `doctor` passed; `scripts/verify-release.ps1` passed; public release gates, audit, and blocker scripts completed in report-only mode with expected TODO URL, missing tag, and maintainer approval blockers.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -345,4 +346,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0039 is implemented and verified. Remaining public release actions are maintainer-only: select the real public URL, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0040 is implemented and verified. Remaining public release actions are maintainer-only: select the real public URL, align or keep the current origin casing/name, update package URLs, create a release tag, push, and publish. Do not push, tag, publish, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.

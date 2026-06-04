@@ -44,6 +44,8 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 
+For main repository stack detection, `StackDetector` ignores sample, docs, generated output, template, and fixture-style paths such as `samples/`, `docs/`, `.ackit/`, `.codex/`, `.cursor/`, `templates/`, `fixtures/`, and test data folders. Those files can still be scanned by `RiskScanner`; the exclusion only prevents sample projects from being reported as the main repository stack. .NET global tool projects are reported as `.NET CLI / .NET Tool` when tool packaging metadata such as `PackAsTool` or `ToolCommandName` is present.
+
 Optional future LLM integration is documented in `docs/LLM_INTEGRATION_ARCHITECTURE.md`. `ILLMProvider` defines the provider-neutral Core boundary, but no provider adapter or live provider call exists today. Future provider implementations should stay behind Core interfaces, use dependency injection, require explicit user consent before export, and keep the CLI limited to argument parsing and output mapping.
 
 ## Output Schema

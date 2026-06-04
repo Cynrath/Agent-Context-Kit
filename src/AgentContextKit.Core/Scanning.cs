@@ -115,9 +115,12 @@ public sealed class StackDetector : IStackDetector
 
     public IReadOnlyList<StackInfo> Detect(string repositoryPath, IReadOnlyList<string> relativeFiles)
     {
-        var files = relativeFiles.ToHashSet(StringComparer.OrdinalIgnoreCase);
+        var stackSignalFiles = relativeFiles
+            .Where(IsMainStackSignalFile)
+            .ToArray();
+        var files = stackSignalFiles.ToHashSet(StringComparer.OrdinalIgnoreCase);
         var stacks = new List<StackInfo>();
-        var projectFiles = relativeFiles
+        var projectFiles = stackSignalFiles
             .Where(IsProjectFile)
             .OrderBy(file => file, StringComparer.OrdinalIgnoreCase)
             .ToArray();
@@ -133,6 +136,11 @@ public sealed class StackDetector : IStackDetector
                               file.Equals("Program.cs", StringComparison.OrdinalIgnoreCase)))
         {
             AddStack(stacks, ".NET", ".sln/.slnx/*proj/Program.cs");
+        }
+
+        if (HasDotNetToolProject(repositoryPath, projectFiles))
+        {
+            AddStack(stacks, ".NET CLI / .NET Tool", "PackAsTool/ToolCommandName");
         }
 
         if (projectSdks.Any(sdk => SdkMatches(sdk, "Microsoft.NET.Sdk.Web")))
@@ -158,7 +166,7 @@ public sealed class StackDetector : IStackDetector
             AddStack(stacks, ".NET Worker Service", "Microsoft.NET.Sdk.Worker");
         }
 
-        if (HasMinimalApiSignal(repositoryPath, relativeFiles))
+        if (HasMinimalApiSignal(repositoryPath, stackSignalFiles))
         {
             AddStack(stacks, "ASP.NET Core Minimal API", "Program.cs WebApplication/Map*");
         }
@@ -263,6 +271,28 @@ public sealed class StackDetector : IStackDetector
                relativeFile.EndsWith(".vbproj", StringComparison.OrdinalIgnoreCase);
     }
 
+    private static bool IsMainStackSignalFile(string relativeFile)
+    {
+        var normalized = relativeFile.Replace('\\', '/').TrimStart('/');
+
+        if (normalized.StartsWith("samples/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("docs/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith(".ackit/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith(".codex/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith(".cursor/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("templates/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("fixtures/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("testdata/", StringComparison.OrdinalIgnoreCase) ||
+            normalized.StartsWith("test-data/", StringComparison.OrdinalIgnoreCase))
+        {
+            return false;
+        }
+
+        return !normalized.Contains("/fixtures/", StringComparison.OrdinalIgnoreCase) &&
+               !normalized.Contains("/testdata/", StringComparison.OrdinalIgnoreCase) &&
+               !normalized.Contains("/test-data/", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static void AddStack(List<StackInfo> stacks, string name, string signal)
     {
         if (!stacks.Any(stack => string.Equals(stack.Name, name, StringComparison.OrdinalIgnoreCase)))
@@ -275,6 +305,15 @@ public sealed class StackDetector : IStackDetector
     {
         return string.Equals(sdk, expected, StringComparison.OrdinalIgnoreCase) ||
                sdk.StartsWith(expected + "/", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private bool HasDotNetToolProject(string repositoryPath, IReadOnlyList<string> projectFiles)
+    {
+        return projectFiles.Any(file =>
+            ReadProjectPropertyValues(repositoryPath, file, "PackAsTool")
+                .Any(value => value.Equals("true", StringComparison.OrdinalIgnoreCase)) ||
+            ReadProjectPropertyValues(repositoryPath, file, "ToolCommandName")
+                .Any(value => !string.IsNullOrWhiteSpace(value)));
     }
 
     private IReadOnlyList<string> ReadProjectSdkValues(string repositoryPath, string relativeFile)
@@ -306,6 +345,36 @@ public sealed class StackDetector : IStackDetector
             }
 
             return values;
+        }
+        catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Xml.XmlException)
+        {
+            return Array.Empty<string>();
+        }
+    }
+
+    private IReadOnlyList<string> ReadProjectPropertyValues(string repositoryPath, string relativeFile, string propertyName)
+    {
+        if (_fileSystem is null)
+        {
+            return Array.Empty<string>();
+        }
+
+        var fullPath = Path.Combine(repositoryPath, relativeFile.Replace('/', Path.DirectorySeparatorChar));
+        if (!_fileSystem.FileExists(fullPath))
+        {
+            return Array.Empty<string>();
+        }
+
+        try
+        {
+            var document = XDocument.Parse(_fileSystem.ReadAllText(fullPath));
+            return document.Root?
+                .Elements("PropertyGroup")
+                .Elements(propertyName)
+                .Select(element => element.Value.Trim())
+                .Where(value => value.Length > 0)
+                .Distinct(StringComparer.OrdinalIgnoreCase)
+                .ToArray() ?? Array.Empty<string>();
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException or System.Xml.XmlException)
         {

@@ -53,6 +53,7 @@
 - Config and generated file convention freeze. Added local conventions and convention check script.
 - Documentation and release gate freeze. Added local release-critical docs/gates check.
 - Final local readiness consolidation. Added local v1.0 readiness review docs and script.
+- Public release final cleanup. Added source archive hygiene, package URL blocker clarification, and sample-aware self-scan stack accuracy.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.
@@ -60,3 +61,6 @@
 - Complete documentation.
 - Reliable test suite.
 - Green CI.
+
+## Post-v1.0
+- Optional sample stack reporting that lists `samples/*` stacks separately from the main repository stack.

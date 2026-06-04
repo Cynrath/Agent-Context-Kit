@@ -7,6 +7,8 @@ Codex must not run these steps unless the maintainer explicitly asks for each pu
 ## Current Blocked State
 - `RepositoryUrl` is `https://github.com/TODO/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/TODO/agent-context-kit`.
+- Recommended final public repository URL for review: `https://github.com/Cynrath/agent-context-kit`.
+- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; decide intentionally whether to keep that casing/name or align the public URL before changing package metadata.
 - `HEAD` has no release tag.
 - No push or NuGet publish has been approved.
 
@@ -16,7 +18,7 @@ Choose the real public repository URL.
 Example placeholder:
 
 ```powershell
-$repoUrl = "https://github.com/<owner>/agent-context-kit"
+$repoUrl = "https://github.com/Cynrath/agent-context-kit"
 ```
 
 Do not use the placeholder value in a public package.
@@ -100,6 +102,7 @@ Do not commit API keys or paste secrets into public logs.
 
 ## Final Checklist
 - Real package URLs are set.
+- Source archive hygiene reviewed with `docs/SOURCE_ARCHIVE.md` if sharing a local ZIP/RAR.
 - Package metadata gate exits `0`.
 - Audit gate exits `0`.
 - Blocker gate exits `0`.

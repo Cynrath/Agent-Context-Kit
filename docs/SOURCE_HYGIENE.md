@@ -8,6 +8,7 @@ This document records repository hygiene rules that should stay true before publ
 - Build outputs must stay out of git.
 - Temporary release package/tool folders must stay under the user temp directory.
 - Public package URL placeholders are tracked separately in [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
+- Local ZIP/RAR source archive hygiene is tracked separately in [SOURCE_ARCHIVE.md](SOURCE_ARCHIVE.md).
 
 ## Source File Rules
 - Keep CLI entry and command routing in `src/AgentContextKit.Cli`.
@@ -18,6 +19,7 @@ This document records repository hygiene rules that should stay true before publ
 
 ## Package Hygiene Rules
 - Do not commit `bin/`, `obj/`, `.nupkg`, temporary tool installs, dumps, backups, or upload folders.
+- Do not share local ZIP/RAR archives that include `.git/`, `.ackit/`, `bin/`, `obj/`, test output, coverage output, logs, packages, or local secrets.
 - Do not publish while `RepositoryUrl` or `PackageProjectUrl` contain placeholders.
 - Do not use permanent global tool installs for release validation.
 - Keep `PackageReadmeFile`, license expression, package tags, and release notes reviewed before publish.

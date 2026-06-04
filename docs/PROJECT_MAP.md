@@ -4,10 +4,10 @@ Updated: 2026-06-04
 
 ## Stack
 - .NET: .sln/.slnx/*proj/Program.cs
-- ASP.NET Core: Microsoft.NET.Sdk.Web
-- ASP.NET Core Minimal API: Program.cs WebApplication/Map*
-- TypeScript: tsconfig.json/*.ts/*.tsx
+- .NET CLI / .NET Tool: PackAsTool/ToolCommandName
 - GitHub Actions: .github/workflows
+
+Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, Node, TypeScript, and Tailwind CSS signals are intentionally not reported as the main repository stack.
 
 ## Files
 - `.codex/CONTEXT_PACK.md`
@@ -64,6 +64,7 @@ Updated: 2026-06-04
 - `docs/SECURITY_NOTES.md`
 - `docs/SAMPLES.md`
 - `docs/SOURCE_HYGIENE.md`
+- `docs/SOURCE_ARCHIVE.md`
 - `docs/SUPPORT.md`
 - `docs/tasks/TASK-0001-foundation.md`
 - `docs/tasks/TASK-0001.md`
@@ -105,6 +106,7 @@ Updated: 2026-06-04
 - `docs/tasks/TASK-0037-v100-config-generated-convention-freeze.md`
 - `docs/tasks/TASK-0038-v100-documentation-release-gate-freeze.md`
 - `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`
+- `docs/tasks/TASK-0040-public-release-final-cleanup.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -158,3 +160,4 @@ Updated: 2026-06-04
 
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
+- Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.

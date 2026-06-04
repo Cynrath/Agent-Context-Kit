@@ -131,4 +131,29 @@ Improves first public GitHub release readiness. Public release remains blocked u
 Revert the TASK-0040 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed.
+
+- Added `docs/SOURCE_ARCHIVE.md` with GitHub source package vs local ZIP/RAR archive guidance.
+- Updated `winrar_exclude.txt` with source archive exclude patterns and made it trackable.
+- Reviewed `.gitignore`; build, test, coverage, logs, archives, local secrets, local `.ackit` artifacts, package files, and binlogs are covered.
+- Removed the empty local `.ackit` artifact directory after verifying it was inside the repository and empty.
+- Kept non-empty `bin/` and `obj/` directories because they contain current restore/build artifacts; deleting `obj/` requires a later `dotnet restore` before `--no-restore` build.
+- Updated `StackDetector` to ignore `samples/`, docs, generated output, templates, and fixture-style paths for main repository stack signals.
+- Preserved risk scanning for sample files.
+- Added `.NET CLI / .NET Tool` detection from `PackAsTool` and `ToolCommandName`.
+- Added focused tests for .NET tool detection, sample stack exclusion, and sample risk scanning.
+- Updated architecture, project map, roadmap, release blocker, public gate, maintainer handoff, OSS, source hygiene, changelog, context, next steps, and session handoff docs.
+- Package metadata reviewed: `Authors=Cynrath`, `Company=Cynrath`, `PackageId=AgentContextKit`, `ToolCommandName=ackit`, `PackageLicenseExpression=MIT`; TODO package URLs remain blockers.
+- Recommended final public repo URL documented as `https://github.com/Cynrath/agent-context-kit`.
+- Current `origin` documented as `https://github.com/Cynrath/Agent-Context-Kit.git`; casing/name alignment remains maintainer-only.
+- `dotnet restore AgentContextKit.sln`: passed.
+- `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 59/59 tests.
+- `dotnet run --project src/AgentContextKit.Cli -- scan --ci`: passed with no risk findings.
+- `dotnet run --project src/AgentContextKit.Cli -- scan`: passed; main stacks are `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
+- `dotnet run --project src/AgentContextKit.Cli -- doctor`: passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`: passed.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1`: completed in report-only mode with expected TODO URL, missing tag, and maintainer approval blockers.
+- `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1`: completed in report-only mode with expected blockers.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1`: completed in report-only mode with expected blockers.
+- No push, tag, remote creation/change, NuGet publish, upload, provider call, API key handling, automatic redaction, or destructive git command was performed.

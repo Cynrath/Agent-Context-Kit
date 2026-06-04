@@ -18,6 +18,26 @@ public sealed class StackDetectorTests
     }
 
     [Fact]
+    public void DetectsDotNetToolProject()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("src/Tool/Tool.csproj", """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <PackAsTool>true</PackAsTool>
+            <ToolCommandName>ackit</ToolCommandName>
+          </PropertyGroup>
+        </Project>
+        """);
+        var detector = new StackDetector(new PhysicalFileSystem());
+
+        var stacks = detector.Detect(repo.Path, ["src/Tool/Tool.csproj"]);
+
+        Assert.Contains(stacks, stack => stack.Name == ".NET");
+        Assert.Contains(stacks, stack => stack.Name == ".NET CLI / .NET Tool");
+    }
+
+    [Fact]
     public void DetectsNodePackageJson()
     {
         var detector = new StackDetector();
@@ -93,6 +113,52 @@ public sealed class StackDetectorTests
         Assert.Contains(stacks, stack => stack.Name == "Bun");
         Assert.Contains(stacks, stack => stack.Name == "TypeScript");
         Assert.Contains(stacks, stack => stack.Name == "Tailwind CSS");
+    }
+
+    [Fact]
+    public void IgnoresSampleStacksWhenDetectingMainRepositoryStacks()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("src/AgentContextKit.Cli/AgentContextKit.Cli.csproj", """
+        <Project Sdk="Microsoft.NET.Sdk">
+          <PropertyGroup>
+            <PackAsTool>true</PackAsTool>
+            <ToolCommandName>ackit</ToolCommandName>
+          </PropertyGroup>
+        </Project>
+        """);
+        repo.Write("samples/dotnet-minimal-api/Sample.MinimalApi.csproj", """<Project Sdk="Microsoft.NET.Sdk.Web"></Project>""");
+        repo.Write("samples/dotnet-minimal-api/Program.cs", """
+        var builder = WebApplication.CreateBuilder(args);
+        var app = builder.Build();
+        app.MapGet("/", () => "ok");
+        app.Run();
+        """);
+        repo.Write("samples/node-tooling/package.json", "{}");
+        repo.Write("samples/node-tooling/tsconfig.json", "{}");
+        repo.Write("samples/node-tooling/tailwind.config.js", "module.exports = {};");
+        var detector = new StackDetector(new PhysicalFileSystem());
+
+        var stacks = detector.Detect(repo.Path,
+        [
+            "AgentContextKit.sln",
+            "src/AgentContextKit.Cli/AgentContextKit.Cli.csproj",
+            ".github/workflows/ci.yml",
+            "samples/dotnet-minimal-api/Sample.MinimalApi.csproj",
+            "samples/dotnet-minimal-api/Program.cs",
+            "samples/node-tooling/package.json",
+            "samples/node-tooling/tsconfig.json",
+            "samples/node-tooling/tailwind.config.js"
+        ]);
+
+        Assert.Contains(stacks, stack => stack.Name == ".NET");
+        Assert.Contains(stacks, stack => stack.Name == ".NET CLI / .NET Tool");
+        Assert.Contains(stacks, stack => stack.Name == "GitHub Actions");
+        Assert.DoesNotContain(stacks, stack => stack.Name == "ASP.NET Core");
+        Assert.DoesNotContain(stacks, stack => stack.Name == "ASP.NET Core Minimal API");
+        Assert.DoesNotContain(stacks, stack => stack.Name == "Node");
+        Assert.DoesNotContain(stacks, stack => stack.Name == "TypeScript");
+        Assert.DoesNotContain(stacks, stack => stack.Name == "Tailwind CSS");
     }
 }
 
@@ -214,6 +280,22 @@ public sealed class RiskScannerTests
         Assert.DoesNotContain(result.Findings, finding =>
             finding.Path == ".env.example" &&
             finding.Severity == RiskSeverity.Critical);
+    }
+
+    [Fact]
+    public void RepositoryScannerStillRiskScansSampleFiles()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("samples/demo/appsettings.Production.json", "{}");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path);
+
+        Assert.Contains(result.Files, file => file == "samples/demo/appsettings.Production.json");
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == "samples/demo/appsettings.Production.json" &&
+            finding.Severity == RiskSeverity.High &&
+            finding.Category == RiskCategory.ProductionConfig);
     }
 
     [Fact]

@@ -11,6 +11,8 @@ The local v0.1.0-alpha.1 package can be built and installed from a temporary loc
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` has a TODO `RepositoryUrl`.
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` has a TODO `PackageProjectUrl`.
 - No public repository URL has been intentionally selected by the maintainer in this session.
+- Recommended final public repository URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
+- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; the casing/name difference is a maintainer-only decision and must not be changed automatically.
 - No public release tag has been created.
 - No NuGet publish approval has been given.
 
@@ -25,6 +27,7 @@ The following checks can pass while public release is still blocked:
 - `dotnet pack`
 - temporary `dotnet tool install --tool-path`
 - `scripts/verify-release.ps1`
+- source archive hygiene checks for local ZIP/RAR sharing
 
 These checks prove local package health. They do not approve publication.
 
@@ -91,15 +94,16 @@ While TODO package URLs remain, `-FailOnIssues` is expected to return a non-zero
 ## Required Manual Resolution
 Before public release:
 1. Select the real public repository URL.
-2. Replace TODO `RepositoryUrl` and `PackageProjectUrl` with that URL.
-3. Run the package metadata script with `-FailOnIssues` and confirm it exits `0`.
-4. Run the full release validation script.
-5. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
-6. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
-7. Run the public release gate orchestration script with `-FailOnIssues` and confirm it exits `0`.
-8. Review package README rendering.
-9. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
-10. Push, tag, and publish only as an explicit maintainer action.
+2. Decide whether the final public URL should use `https://github.com/Cynrath/agent-context-kit` or the current origin casing/name.
+3. Replace TODO `RepositoryUrl` and `PackageProjectUrl` with the selected URL.
+4. Run the package metadata script with `-FailOnIssues` and confirm it exits `0`.
+5. Run the full release validation script.
+6. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
+7. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
+8. Run the public release gate orchestration script with `-FailOnIssues` and confirm it exits `0`.
+9. Review package README rendering.
+10. Review `SECURITY.md`, `CONTRIBUTING.md`, and release notes.
+11. Push, tag, and publish only as an explicit maintainer action.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for the manual handoff sequence.
 
