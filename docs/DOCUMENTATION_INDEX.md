@@ -13,6 +13,7 @@
 - `docs/EXAMPLE_WORKFLOWS.md`: copy-paste-ready local workflow collections.
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
+- `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.
 - `docs/HTML_REPORTS.md`: offline static HTML report generation.

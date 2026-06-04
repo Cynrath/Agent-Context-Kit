@@ -75,3 +75,6 @@ Examples:
 
 ## Safety
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.
+
+## Generated File Conventions
+See [CONFIG_GENERATED_CONVENTIONS.md](CONFIG_GENERATED_CONVENTIONS.md) for the v1.0 target conventions around default config, ignored generated artifact paths, repository-relative output paths, and skip-existing behavior.

@@ -26,6 +26,7 @@ Define and locally verify the v1.0 configuration and generated-file conventions 
 ## Affected files
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`
 - `scripts/check-config-generated-conventions.ps1`
+- `.gitignore`
 - `docs/CONFIGURATION.md`
 - `docs/DOCUMENTATION_INDEX.md`
 - `docs/ROADMAP.md`
@@ -125,4 +126,23 @@ Clarifies stable config and generated-file conventions for v1.0. Public release 
 Revert the TASK-0037 implementation commit. Do not run destructive git commands.
 
 ## Completion notes
-Pending.
+Completed in TASK-0037.
+
+- Added `docs/CONFIG_GENERATED_CONVENTIONS.md` with default config, ignored local artifact paths, generated output paths, skip-existing behavior, repository-relative output behavior, ownership notes, and local convention check usage.
+- Added `scripts/check-config-generated-conventions.ps1` to verify source defaults, generated default config output, `.gitignore`, README files, CLI docs, and convention docs.
+- Added `.ackit/cache/` to `.gitignore` to align git ignore behavior with default config ignore paths.
+- Updated configuration docs, documentation index, roadmap, project map, changelog, context pack, next steps, and session handoff docs.
+- No runtime config schema change, CLI syntax change, provider call, SDK, HTTP client, API key handling, upload, push, tag, publish, remote creation, or automatic redaction was added.
+
+Verification:
+
+- `powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1` passed and reported no config/generated convention issues.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues` exited 0.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 56/56 tests.
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` passed with no risk findings.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnIssues` exited 0.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues` exited 0 with public blockers reported separately.
+- `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed.
+- `git diff --check` passed.
+- Real-name grep found no matches.

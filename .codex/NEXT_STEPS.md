@@ -1,6 +1,6 @@
 # Next Steps
 
-1. Continue v1.0 config and generated file convention freeze with TASK-0037.
+1. Continue v1.0 documentation and release gate freeze with TASK-0038.
 2. Keep public-release blockers unresolved until maintainer selects the real public repository URL.
 3. Maintainer must select the real public repository URL before any public release.
 4. Replace `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.

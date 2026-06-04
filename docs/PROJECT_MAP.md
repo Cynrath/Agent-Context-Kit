@@ -31,6 +31,7 @@ Updated: 2026-06-03
 - `docs/ARCHITECTURE.md`
 - `docs/CLI_CONTRACT.md`
 - `docs/CLI_REFERENCE.md`
+- `docs/CONFIG_GENERATED_CONVENTIONS.md`
 - `docs/CONFIGURATION.md`
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT_STANDARD.md`
@@ -101,6 +102,7 @@ Updated: 2026-06-03
 - `docs/tasks/TASK-0034-v050-final-readiness-consolidation.md`
 - `docs/tasks/TASK-0035-v100-stabilization-plan.md`
 - `docs/tasks/TASK-0036-v100-stable-cli-contract-review.md`
+- `docs/tasks/TASK-0037-v100-config-generated-convention-freeze.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -124,6 +126,7 @@ Updated: 2026-06-03
 - `samples/node-tooling/tsconfig.json`
 - `scripts/audit-public-release.ps1`
 - `scripts/check-cli-contract.ps1`
+- `scripts/check-config-generated-conventions.ps1`
 - `scripts/check-package-metadata.ps1`
 - `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-blockers.ps1`

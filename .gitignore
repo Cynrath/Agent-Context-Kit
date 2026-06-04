@@ -28,6 +28,7 @@ logs/
 *.log
 *.tmp
 *.bak
+.ackit/cache/
 .ackit/reports/
 .ackit/webui/
 .ackit/prompt-packs/
