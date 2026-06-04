@@ -66,3 +66,8 @@ nupkg/
 # OS files
 Thumbs.db
 .DS_Store
+
+
+winrar_exclude.txt
+agent-context-kit.rar
+agent-context-kit.zip
