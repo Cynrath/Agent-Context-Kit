@@ -1,20 +1,28 @@
 # Release Blockers
 
-This document lists known blockers that must be resolved before any public push, tag, NuGet publish, or release announcement.
+This document lists known blockers that must be resolved before any public push, tag push, NuGet publish, or release announcement.
 
 ## Current Status
 Public release is blocked.
 
-The local v0.1.0-alpha.1 package can be built and installed from a temporary local feed, but the package metadata still contains placeholder public URLs.
+The package URL blockers are resolved locally. The selected public repository URL is `https://github.com/Cynrath/agent-context-kit`, and the local `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
+
+Public release remains blocked until the final reviewed commit is tagged, the repository is pushed by the maintainer, and NuGet publish is explicitly approved.
 
 ## Blocking Items
-- `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` has a TODO `RepositoryUrl`.
-- `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` has a TODO `PackageProjectUrl`.
-- No public repository URL has been intentionally selected by the maintainer in this session.
-- Recommended final public repository URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; the casing/name difference is a maintainer-only decision and must not be changed automatically.
-- No public release tag has been created.
+- `v0.1.0-alpha.1` must point at the final reviewed commit before any public push.
+- No public release tag has been pushed.
+- No push approval has been given.
 - No NuGet publish approval has been given.
+
+## Resolved Items
+- `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `Authors` is `Cynrath`.
+- `Company` is `Cynrath`.
+- `PackageId` is `AgentContextKit`.
+- `ToolCommandName` is `ackit`.
+- `PackageLicenseExpression` is `MIT`.
 
 ## Non-Blocking Local Validation
 The following checks can pass while public release is still blocked:
@@ -23,7 +31,7 @@ The following checks can pass while public release is still blocked:
 - `dotnet test -c Release`
 - `ackit scan`
 - `ackit doctor`
-- `scripts/check-package-metadata.ps1` in report-only mode
+- `scripts/check-package-metadata.ps1 -FailOnIssues`
 - `dotnet pack`
 - temporary `dotnet tool install --tool-path`
 - `scripts/verify-release.ps1`
@@ -44,7 +52,7 @@ Run it as a failing release gate:
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 ```
 
-While TODO package URLs remain, `-FailOnBlockers` is expected to return a non-zero exit code.
+If the working tree is clean and `v0.1.0-alpha.1` points at `HEAD`, this gate should exit `0`.
 
 ## Public Release Audit
 Run the broader public release audit:
@@ -89,15 +97,15 @@ Run it as a failing gate before public release:
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 ```
 
-While TODO package URLs remain, `-FailOnIssues` is expected to return a non-zero exit code. See [NUGET_METADATA.md](NUGET_METADATA.md).
+With the final repository URLs in package metadata, this gate should exit `0`. See [NUGET_METADATA.md](NUGET_METADATA.md).
 
 ## Required Manual Resolution
 Before public release:
-1. Select the real public repository URL.
-2. Decide whether the final public URL should use `https://github.com/Cynrath/agent-context-kit` or the current origin casing/name.
-3. Replace TODO `RepositoryUrl` and `PackageProjectUrl` with the selected URL.
-4. Run the package metadata script with `-FailOnIssues` and confirm it exits `0`.
-5. Run the full release validation script.
+1. Confirm the public repository exists at `https://github.com/Cynrath/agent-context-kit`.
+2. Confirm `origin` remains `https://github.com/Cynrath/agent-context-kit.git`.
+3. Run the package metadata script with `-FailOnIssues` and confirm it exits `0`.
+4. Run the full release validation script.
+5. Ensure local tag `v0.1.0-alpha.1` points at the reviewed commit.
 6. Run the audit script with `-FailOnIssues` and confirm it exits `0`.
 7. Run the blocker script with `-FailOnBlockers` and confirm it exits `0`.
 8. Run the public release gate orchestration script with `-FailOnIssues` and confirm it exits `0`.

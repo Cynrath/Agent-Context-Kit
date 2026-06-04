@@ -1,6 +1,6 @@
 # v1.0 Stabilization Plan
 
-This plan turns the v1.0 roadmap into local, reviewable work. It does not approve public release, remote publishing, live LLM provider use, repository upload, or package metadata URL replacement.
+This plan turns the v1.0 roadmap into local, reviewable work. It does not approve public release, remote publishing, live LLM provider use, repository upload, or NuGet publish.
 
 ## Current Boundary
 AgentContextKit is locally validated through v0.5:
@@ -12,9 +12,8 @@ AgentContextKit is locally validated through v0.5:
 - v0.2, v0.3, v0.4, and v0.5 readiness scripts.
 
 Public release is still blocked by maintainer-only decisions:
-- Select the real public repository URL.
-- Replace TODO `RepositoryUrl` and `PackageProjectUrl`.
-- Create a release tag after explicit approval.
+- Keep the selected public repository URL at `https://github.com/Cynrath/agent-context-kit`.
+- Ensure `v0.1.0-alpha.1` points at the reviewed release commit.
 - Push and publish only after maintainer approval.
 
 ## Stabilization Themes
@@ -77,7 +76,7 @@ Review NuGet package metadata, local pack/install validation, and maintainer rel
 
 Local acceptance gates:
 - `scripts/verify-release.ps1` passes.
-- Package metadata TODO URLs remain explicit blockers until maintainer selects the real public URL.
+- Package metadata URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - Temporary tool install validates `ackit --help` and `ackit scan --json`.
 - No push, tag, remote creation, or NuGet publish occurs from agent sessions.
 

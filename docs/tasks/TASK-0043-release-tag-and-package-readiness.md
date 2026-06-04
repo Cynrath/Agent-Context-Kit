@@ -1,7 +1,7 @@
 # TASK-0043: Release Tag And Package Readiness
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Prepare `v0.1.0-alpha.1` for local release validation, package verification, and local annotated tag readiness without pushing tags or publishing packages.
@@ -70,3 +70,15 @@ Ensures package metadata, source hygiene, and public release gates are validated
 - Delete an incorrect local tag only if explicitly approved: `git tag -d v0.1.0-alpha.1`.
 - Revert documentation changes through git if release notes need correction.
 
+## Completion Notes
+Completed during final public release preparation.
+
+- `CHANGELOG.md` now has a dated `0.1.0-alpha.1` section for 2026-06-04.
+- `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`, `docs/RELEASE_CHECKLIST.md`, `docs/PACKAGING.md`, `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md` were refreshed for final URL metadata and release tag readiness.
+- `dotnet restore AgentContextKit.sln` passed.
+- `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build` passed, 59/59 tests.
+- `dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build` passed.
+- Temporary `dotnet tool install --tool-path` passed.
+- Installed `ackit --help` and `ackit scan --json` passed.
+- Local tag creation is intentionally deferred until after the final reviewed commit so `v0.1.0-alpha.1` points at the correct commit.

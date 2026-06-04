@@ -1,7 +1,7 @@
 # TASK-0045: Final Public Release Handoff
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Produce the final local handoff for the first public GitHub release and NuGet alpha package, including exact commands, validation results, remaining external actions, and rollback notes.
@@ -42,7 +42,7 @@ None.
 Public release handoff docs may update public-facing installation and release wording. No runtime SEO or i18n behavior changes.
 
 ## Audit/Security Impact
-This is the final local release safety checkpoint before public push/publish. It must verify no tracked artifacts, real-name terms, placeholder package URLs, high/critical scan findings, or dirty working tree remain.
+This is the final local release safety checkpoint before public push/publish. It must verify no tracked artifacts, prohibited maintainer identity terms, stale package URL blocker wording, high/critical scan findings, or dirty working tree remain.
 
 ## Acceptance Criteria
 - Final validation commands are run and results are recorded.
@@ -70,7 +70,7 @@ This is the final local release safety checkpoint before public push/publish. It
 - `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1`
 - `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1`
 - `git diff --check`
-- `rg -n -S "Sait|Furkan|Selcuk|Selçuk" . --glob "!bin/**" --glob "!obj/**" --glob "!.git/**"`
+- Run the prohibited maintainer identity term scan with `rg` and safe excludes.
 - `git ls-files | rg -n ".(rar|zip|nupkg|snupkg|bak|tmp|binlog|trx)$|(^|/)(bin|obj|TestResults|coverage|publish|out)/"`
 
 ## Risks
@@ -82,3 +82,11 @@ This is the final local release safety checkpoint before public push/publish. It
 - For an incorrect local tag, delete it only after explicit approval with `git tag -d v0.1.0-alpha.1`.
 - Public push and NuGet publish rollback are outside this local preparation task and must be handled by the maintainer.
 
+## Completion Notes
+Completed for local handoff preparation.
+
+- Final release handoff docs now include GitHub description/topics, local validation commands, tag commands, push commands, NuGet publish commands, and post-publish install checks.
+- `docs/CODEX_FOR_OSS_APPLICATION.md` is ready for OSS support/application use.
+- Build and tests passed before the implementation commit.
+- Final post-commit validation and local tag creation are intentionally performed after the reviewed commit so the tag points at the final release commit.
+- Push, tag push, NuGet publish, remote creation, force push, and secret handling remain outside this local preparation.

@@ -5,71 +5,34 @@ All notable changes to AgentContextKit will be documented in this file.
 This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
-### Added
-- Initial repository foundation.
-- .NET 10 solution structure.
-- CLI/Core/Tests projects.
-- MVP CLI commands: `init`, `scan`, `generate`, `task`, `redact-check`, `doctor`, `help`, and `version`.
-- JSON output via `--json` for automation-friendly CLI usage.
-- Config and JSON output documentation.
-- Config schema fields for `schemaVersion`, `ignorePaths`, and `riskExtensions`.
-- JSON output metadata with `schemaVersion` and `toolVersion`.
-- Config-driven ignore path and risky extension scanner behavior.
-- Packaging and release validation docs.
-- `.gitattributes` for repository line-ending consistency.
-- Local release verification script and release candidate review document.
-- Completed documentation index, CLI reference, examples, troubleshooting, FAQ, support, privacy, maintainers, and governance docs.
-- Generated missing agent/context workflow files for Claude, Cursor, Copilot, project map, AI workflow, security notes, task template, and Codex handoff.
-- Release blocker document and local blocker guard script.
-- Source hygiene documentation and final scaffold cleanup.
-- Public release audit document and local audit script.
-- Maintainer-only public release handoff document.
-- v0.2 stack detector expansion for .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
-- v0.2 risk scanner precision for environment samples, private key files, private key blocks, IP filtering, and configured keyword boundaries.
-- JSON output schema version 2 with generated timestamp, repository metadata, and summary fields.
-- Expanded generated agent/context docs with repository health, risk summary, and recommended checks.
-- Safe sample repositories for .NET Minimal API and Node/TypeScript/Tailwind stack detection.
-- NuGet package metadata review script and documentation.
-- v0.2 local readiness review script and documentation.
-- CI mode for `ackit scan --ci` with high/critical exit codes and GitHub Actions integration.
-- Exit code standardization with centralized CLI constants and a documented exit code matrix.
-- Offline static HTML report generation with `ackit report`.
-- Example workflow documentation for local development, CI, HTML reports, release preflight, and sample scans.
-- Public release gate orchestration script and documentation.
-- v0.3 local readiness review script and documentation.
-- Offline static Web UI prototype generation with `ackit webui`.
-- Refined Web UI scan dashboard with readiness score, review status, severity breakdown, and recommended checks.
-- Refined Web UI generated file preview with expected file category, status, size, and missing-file hints.
-- Refined Web UI risk finding browser with deterministic review queue, finding IDs, match display, and recommended actions.
-- Refined Web UI task preview with task ID, title, inferred status, size, path, and capped preview text.
-- v0.4 local readiness review script and documentation.
-- Optional LLM integration architecture with consent gates, provider boundaries, data minimization, and audit requirements.
-- Provider-neutral `ILLMProvider` request/response abstractions with fake-provider tests.
-- Local-only `ackit prompt-pack` dry-run Markdown generation with JSON metadata.
-- Local-only `ackit context-export` approval manifest generation with JSON metadata.
-- v0.5 local readiness review script and documentation.
-- v1.0 stabilization plan with local acceptance gates and follow-up task sequence.
-- Stable CLI contract documentation and local contract check script.
-- Config/generated-file convention documentation and local convention check script.
-- v1.0 documentation/release gate freeze documentation and local gate check script.
-- v1.0 final local readiness review documentation and local readiness check script.
-- Public release final cleanup docs with source archive hygiene and sample-aware self-scan stack detection.
-- Core repository scanner, stack detector, risk scanner, template renderer, task generator, and doctor checks.
-- English/Turkish localization and template foundation.
-- xUnit test coverage for MVP behaviors.
-- GitHub Actions CI.
-- OSS readiness documents.
-### Changed
-- Replaced maintainer real-name metadata with the public pseudonym `Cynrath`.
-### Fixed
-- Added NuGet package readme metadata for local pack readiness.
+- No unreleased changes yet.
 
-## [0.1.0-alpha.1] - Planned
+## [0.1.0-alpha.1] - 2026-06-04
 ### Added
-- CLI skeleton with `init`, `scan`, `generate`, `task`, `redact-check`, `doctor`, `help`, and `version`.
-- Offline repository scanner.
-- Pattern-based risk scanner.
-- English/Turkish localization foundation.
-- Markdown context and workflow generation.
-- Focused unit tests.
-- GitHub Actions CI.
+- Initial offline-first .NET CLI tool package with command name `ackit`.
+- CLI commands: `init`, `scan`, `scan --ci`, `report`, `webui`, `prompt-pack`, `context-export`, `generate`, `task`, `redact-check`, `doctor`, `version`, and `help`.
+- Repository scanner for docs, tests, CI, Docker, generated agent files, package metadata, and stack signals.
+- Sample-aware main stack detection for `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions` without treating `samples/` stacks as the main product stack.
+- Pattern-based secret, PII, brand, risky path, and risky extension scanning.
+- JSON output with schema/tool metadata, generated timestamps, repository metadata, summaries, and CI mode fields.
+- Task-first development document generation under `docs/tasks`.
+- Agent instruction generation for Codex, Claude, Cursor, and GitHub Copilot.
+- Offline static HTML report generation with safe repository-relative output handling.
+- Offline static Web UI prototype generation for local scan review.
+- Local-only dry-run prompt pack generation and explicit-approval context export manifests.
+- English and Turkish output/template foundation.
+- Config schema documentation and generated-file conventions.
+- Focused xUnit test coverage and GitHub Actions CI.
+- Local release verification, package metadata, public release audit, release blocker, public gate, and v1.0 readiness scripts.
+- v1.0 final local readiness review documentation and gate script.
+- Source archive hygiene docs and WinRAR exclude guidance for local ZIP/RAR sharing.
+- OSS readiness, governance, privacy, support, security, package, release, and maintainer handoff documentation.
+
+### Changed
+- Public package and docs metadata use the `Cynrath` persona.
+- Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
+- Public release blockers now track tag, push approval, and NuGet publish approval rather than package URL placeholders.
+
+### Fixed
+- Added NuGet package README metadata for local pack readiness.
+- Refined self-scan stack accuracy so sample ASP.NET Core, Minimal API, TypeScript, and Tailwind CSS signals are not reported as the main repository stack.

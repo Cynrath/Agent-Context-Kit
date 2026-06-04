@@ -1,7 +1,7 @@
 # TASK-0042: Public GitHub Readiness
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Prepare the repository for a clean first public GitHub push without leaking local artifacts, generated outputs, private metadata, or maintainer identity details.
@@ -48,12 +48,12 @@ High release-safety impact. Prevents accidental publication of `.git/`, `.ackit/
 - `winrar_exclude.txt` includes the recommended source archive exclude list.
 - `docs/SOURCE_ARCHIVE.md` documents GitHub source packages versus local working-directory archives.
 - Tracked files do not include forbidden artifacts or local secret-like files.
-- `rg -n -S "Sait|Furkan|Selcuk|Selçuk" .` with safe excludes has no public metadata matches.
+- Prohibited maintainer identity terms have no public metadata matches.
 - `.cursor/rules/project.mdc` remains documented as intentional.
 
 ## Tests
 - `git ls-files | rg -n ".(rar|zip|nupkg|snupkg|bak|tmp|binlog|trx)$|(^|/)(bin|obj|TestResults|coverage|publish|out)/"`
-- `rg -n -S "Sait|Furkan|Selcuk|Selçuk" . --glob "!bin/**" --glob "!obj/**" --glob "!.git/**"`
+- Run the prohibited maintainer identity term scan with `rg` and safe excludes.
 - `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1`
 - `dotnet run --project src/AgentContextKit.Cli -- scan --ci`
 
@@ -64,3 +64,14 @@ High release-safety impact. Prevents accidental publication of `.git/`, `.ackit/
 ## Rollback
 - Restore edited docs and ignore files from git.
 - Regenerate local `.ackit/`, `bin/`, or `obj/` artifacts by running the relevant CLI commands, `dotnet restore`, or `dotnet build`.
+
+## Completion Notes
+Completed during final public release preparation.
+
+- `.gitignore` now covers `.ackit/` plus build outputs, test outputs, coverage, logs, publish/out folders, packages, archives, local secrets, and local appsettings.
+- `winrar_exclude.txt` already matched the recommended local archive exclude list.
+- `docs/SOURCE_ARCHIVE.md` documents GitHub source archives versus local ZIP/RAR archives and notes `.cursor/rules/project.mdc` as intentional.
+- Tracked artifact scan returned no matches.
+- Prohibited maintainer identity term scan returned no matches.
+- Local `bin/` and `obj/` folders were non-empty restore/build artifacts and were kept.
+- Generated `src/AgentContextKit.Cli/bin/Release/net10.0/publish` output was safely removed after package validation.

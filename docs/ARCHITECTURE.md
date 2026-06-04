@@ -48,5 +48,7 @@ For main repository stack detection, `StackDetector` ignores sample, docs, gener
 
 Optional future LLM integration is documented in `docs/LLM_INTEGRATION_ARCHITECTURE.md`. `ILLMProvider` defines the provider-neutral Core boundary, but no provider adapter or live provider call exists today. Future provider implementations should stay behind Core interfaces, use dependency injection, require explicit user consent before export, and keep the CLI limited to argument parsing and output mapping.
 
+Release readiness tooling lives in repository scripts and documentation rather than Core runtime services. Package metadata gates, public release audits, source archive hygiene, and maintainer handoff steps are local-only release checks and do not push, tag-push, publish, upload content, or call remote providers.
+
 ## Output Schema
 Human-readable CLI output is optimized for short terminal feedback. JSON output is produced by the CLI layer from Core models and includes `schemaVersion` and `toolVersion` metadata for automation.

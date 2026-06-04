@@ -24,10 +24,12 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Tests: yes
 - CI: yes
 - Agent instructions: yes
+- Codex for OSS application pack: yes, `docs/CODEX_FOR_OSS_APPLICATION.md`
 
 ## Risk Summary
 - No risk findings in the latest local scan.
-- Public release remains blocked by TODO package URLs and missing release tag.
+- Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
+- Public release remains blocked until the release tag points at the reviewed commit and maintainer-controlled push/NuGet publish actions are approved.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -65,9 +67,11 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
 ## Public Release Blockers
-- `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
-- Recommended public URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; casing/name alignment is maintainer-only.
+- `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
+- Local tag `v0.1.0-alpha.1` must point at the final reviewed commit before public tag push.
+- Push and NuGet publish require explicit maintainer approval.
 - `scripts/check-package-metadata.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.

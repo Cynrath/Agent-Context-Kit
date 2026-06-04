@@ -1,7 +1,7 @@
 # TASK-0041: Repository URL Finalization
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Finalize the public repository URL and align release documentation with the selected public metadata before the first public GitHub release.
@@ -56,7 +56,7 @@ Reduces release risk by ensuring public package metadata points to the intended 
 - `git remote -v`
 - `powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues`
 - `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1`
-- `rg -n -S "TODO/agent-context-kit|placeholder package URL|placeholder public URL" docs .codex README.md README.tr.md CHANGELOG.md`
+- Run a targeted active-doc scan for stale package URL blocker wording.
 
 ## Risks
 - Historical task files can still mention earlier TODO URL states; active release docs must represent the current state.
@@ -66,3 +66,11 @@ Reduces release risk by ensuring public package metadata points to the intended 
 - Revert this task's documentation changes.
 - If the git remote was aligned incorrectly, set it back with `git remote set-url origin <previous-url>`.
 
+## Completion Notes
+Completed during final public release preparation.
+
+- `git remote -v` confirmed `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
+- Package metadata already used `https://github.com/Cynrath/agent-context-kit` for `RepositoryUrl` and `PackageProjectUrl`.
+- Active release docs, package docs, README files, Codex handoff docs, and release gate docs were updated to remove stale URL blocker wording.
+- `scripts/check-package-metadata.ps1 -FailOnIssues` passed.
+- Release blockers now focus on release tag, push approval, and NuGet publish approval.

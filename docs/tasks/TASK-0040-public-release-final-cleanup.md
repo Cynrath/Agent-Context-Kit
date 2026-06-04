@@ -20,7 +20,7 @@ Prepare AgentContextKit for the first public GitHub release with local-only clea
 - Release tag creation.
 - Remote creation, deletion, or URL changes.
 - NuGet publish.
-- Replacing TODO `RepositoryUrl` or `PackageProjectUrl`.
+- Pushing the final public repository.
 - Live LLM provider calls.
 - Provider SDKs, HTTP clients, telemetry, upload, or API key handling.
 - Automatic redaction.
@@ -69,7 +69,7 @@ No CLI syntax change expected. `ackit scan` output should become more accurate f
 Add focused xUnit coverage for sample path stack exclusion and .NET CLI/tool detection.
 
 ## OSS/release impact
-Improves first public GitHub release readiness. Public release remains blocked until maintainer selects the final public repo URL, updates package URLs, creates the tag, pushes, and approves NuGet publishing.
+Improves first public GitHub release readiness. Public release remains blocked until the release tag points at the reviewed commit, the maintainer pushes, and NuGet publishing is approved.
 
 ## Acceptance criteria
 - Task file exists before implementation.
@@ -84,11 +84,11 @@ Improves first public GitHub release readiness. Public release remains blocked u
 - Sample files remain eligible for risk scanning.
 - Focused tests cover sample stack exclusion and .NET tool detection.
 - Package metadata is reviewed: `Authors=Cynrath`, `Company=Cynrath` or blank, `PackageId=AgentContextKit`, `ToolCommandName=ackit`, `PackageLicenseExpression=MIT`.
-- TODO `RepositoryUrl` and `PackageProjectUrl` remain documented as blockers until maintainer selects the final public URL.
-- Current origin URL casing/name is documented as maintainer-only if it differs from the recommended final public URL.
+- `RepositoryUrl` and `PackageProjectUrl` point at the selected public repository URL.
+- Current origin URL is documented.
 - Real-name grep finds no matches for prohibited real-name terms.
 - Required local validation commands are run and documented.
-- Public release gate scripts in report-only mode complete and report expected TODO URL/tag/approval blockers.
+- Public release gate scripts in report-only mode complete and report expected tag/approval blockers.
 - Build/test pass before implementation commit.
 - No push, tag, remote change, NuGet publish, upload, provider call, API key handling, destructive git command, or unrelated file overwrite occurs.
 
@@ -143,9 +143,9 @@ Completed.
 - Added `.NET CLI / .NET Tool` detection from `PackAsTool` and `ToolCommandName`.
 - Added focused tests for .NET tool detection, sample stack exclusion, and sample risk scanning.
 - Updated architecture, project map, roadmap, release blocker, public gate, maintainer handoff, OSS, source hygiene, changelog, context, next steps, and session handoff docs.
-- Package metadata reviewed: `Authors=Cynrath`, `Company=Cynrath`, `PackageId=AgentContextKit`, `ToolCommandName=ackit`, `PackageLicenseExpression=MIT`; TODO package URLs remain blockers.
-- Recommended final public repo URL documented as `https://github.com/Cynrath/agent-context-kit`.
-- Current `origin` documented as `https://github.com/Cynrath/agent-context-kit.git`; casing/name alignment remains maintainer-only.
+- Package metadata reviewed: `Authors=Cynrath`, `Company=Cynrath`, `PackageId=AgentContextKit`, `ToolCommandName=ackit`, `PackageLicenseExpression=MIT`.
+- Final public repo URL documented as `https://github.com/Cynrath/agent-context-kit`.
+- Current `origin` documented as `https://github.com/Cynrath/agent-context-kit.git`.
 - `dotnet restore AgentContextKit.sln`: passed.
 - `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
 - `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 59/59 tests.
@@ -153,7 +153,7 @@ Completed.
 - `dotnet run --project src/AgentContextKit.Cli -- scan`: passed; main stacks are `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 - `dotnet run --project src/AgentContextKit.Cli -- doctor`: passed.
 - `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`: passed.
-- `powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1`: completed in report-only mode with expected TODO URL, missing tag, and maintainer approval blockers.
+- `powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1`: completed in report-only mode with expected missing tag and maintainer approval blockers.
 - `powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1`: completed in report-only mode with expected blockers.
 - `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1`: completed in report-only mode with expected blockers.
 - No push, tag, remote creation/change, NuGet publish, upload, provider call, API key handling, automatic redaction, or destructive git command was performed.

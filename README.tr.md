@@ -4,6 +4,8 @@ AI destekli geliştirme icin offline-first repository context ve guvenlik araci.
 
 AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benzeri AI coding agent kullanan gelistiriciler icin .NET tabanli bir CLI aracidir (`ackit`). Repository yapisini analiz eder, stack sinyallerini tespit eder, guvenli agent yonerge/workflow dosyalari uretir ve public release ya da AI context export oncesi secret/PII/marka sizinti risklerini raporlar.
 
+Public repository URL: `https://github.com/Cynrath/agent-context-kit`
+
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
 
@@ -42,6 +44,8 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - English ve Turkish output/template temeli.
 
 ## Hizli Baslangic
+Kaynak koddan:
+
 ```powershell
 dotnet restore
 dotnet build -c Release
@@ -54,6 +58,14 @@ dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
 dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/prompt-pack.md --approve --json
 dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
+```
+
+NuGet publish sonrasinda:
+
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit --help
+ackit scan --ci
 ```
 
 ## CLI Komutlari

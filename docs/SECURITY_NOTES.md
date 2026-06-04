@@ -9,4 +9,5 @@
 
 ## Current Risk Summary
 - No risk findings in the latest local scan.
-- Public release remains blocked by TODO package URLs and missing release tag.
+- Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
+- Public release remains blocked until the release tag points at the reviewed commit and maintainer-controlled push/NuGet publish actions are approved.

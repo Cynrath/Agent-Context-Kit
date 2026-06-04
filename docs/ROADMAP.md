@@ -12,6 +12,9 @@
 - Basic tests.
 - README, OSS docs, AGENTS.
 - GitHub Actions.
+- Public repository metadata finalization for `https://github.com/Cynrath/agent-context-kit`.
+- Source archive hygiene and local release gate preparation.
+- Codex for OSS application pack.
 
 ## v0.2.0-alpha
 - Stronger stack detector with .NET SDK, ASP.NET Core, Razor, Blazor WebAssembly, Worker Service, Minimal API, package manager, TypeScript, and Tailwind CSS signals.
@@ -54,6 +57,7 @@
 - Documentation and release gate freeze. Added local release-critical docs/gates check.
 - Final local readiness consolidation. Added local v1.0 readiness review docs and script.
 - Public release final cleanup. Added source archive hygiene, package URL blocker clarification, and sample-aware self-scan stack accuracy.
+- First public alpha release handoff. Added final repository URL docs, Codex for OSS application pack, release tag readiness, source archive hygiene, and NuGet handoff guidance.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.

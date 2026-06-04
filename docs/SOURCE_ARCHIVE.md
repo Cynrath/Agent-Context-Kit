@@ -15,7 +15,7 @@ For a normal GitHub push, these local folders are not blockers when they are unt
 - `TestResults/`
 - `coverage/`
 
-The repository `.gitignore` covers build outputs, test output, coverage, logs, temp files, local `.ackit` generated artifact folders, archives, packages, local secrets, dumps, and OS files. The `.git/` directory is not a `.gitignore` concern because Git never tracks its own internal repository database.
+The repository `.gitignore` covers build outputs, test output, coverage, logs, temp files, local `.ackit/` outputs, archives, packages, local secrets, dumps, and OS files. The `.git/` directory is not a `.gitignore` concern because Git never tracks its own internal repository database.
 
 ## Local ZIP/RAR Archive
 Local archives created from the working directory can accidentally include untracked or ignored directories. Before sharing a local ZIP/RAR, exclude repository internals, build artifacts, generated local outputs, packages, logs, temp files, and local secrets.
@@ -48,4 +48,4 @@ Get-ChildItem -Path . -Directory -Force -Recurse | Where-Object { $_.Name -in @(
 If ignored `bin/`, `obj/`, or `.ackit/` folders are empty local artifacts, they can be removed before archiving. If `obj/` was removed, run `dotnet restore AgentContextKit.sln` before using `dotnet build --no-restore`; otherwise `NETSDK1004` is expected because restore assets were intentionally deleted.
 
 ## Public Release Boundary
-Source archive hygiene does not approve public release. Public release still requires maintainer-only URL selection, package metadata update, release tag creation, push approval, and NuGet publish approval.
+Source archive hygiene does not approve public release. Public release still requires the release tag to point at the reviewed commit plus explicit maintainer approval for push and NuGet publish.

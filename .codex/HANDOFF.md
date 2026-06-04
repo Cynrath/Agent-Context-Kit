@@ -7,9 +7,7 @@ agent-context-kit
 
 ## Stack
 - .NET: .sln/.slnx/*proj/Program.cs
-- ASP.NET Core: Microsoft.NET.Sdk.Web
-- ASP.NET Core Minimal API: Program.cs WebApplication/Map*
-- TypeScript: tsconfig.json/*.ts/*.tsx
+- .NET CLI / .NET Tool: PackAsTool/ToolCommandName
 - GitHub Actions: .github/workflows
 
 ## Repository Health
@@ -22,7 +20,8 @@ agent-context-kit
 
 ## Risk Summary
 - No risk findings in the latest local scan.
-- Public release remains blocked by TODO package URLs and missing release tag.
+- Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
+- Public release remains blocked until the release tag points at the reviewed commit and maintainer-controlled push/NuGet publish actions are approved.
 
 ## Recommended Checks
 - `dotnet build AgentContextKit.sln -c Release --no-restore`

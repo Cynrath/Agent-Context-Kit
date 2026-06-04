@@ -154,7 +154,7 @@ Use the blocker check as a failing gate before public release:
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 ```
 
-While TODO package URLs remain, the failing gate is expected to return non-zero. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
+If the working tree is clean and the release tag points at `HEAD`, the failing gate should return `0`. See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
 
 ## Package Metadata Review
 Run package metadata review in report-only mode:
@@ -169,7 +169,7 @@ Use it as a failing gate before public release:
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 ```
 
-While TODO package URLs remain, the failing gate is expected to return non-zero. See [NUGET_METADATA.md](NUGET_METADATA.md).
+With the final package URLs in metadata, the failing gate should return `0`. See [NUGET_METADATA.md](NUGET_METADATA.md).
 
 ## Public Release Audit
 Run the final public release audit in report-only mode:
@@ -225,5 +225,6 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Confirm license and security policy are current.
 - Confirm no secrets, dumps, backups, uploads, `bin/`, `obj/`, or generated package outputs are committed.
 - Confirm no permanent global tool install is required for validation.
+- Confirm local tag `v0.1.0-alpha.1` points at the reviewed release commit before pushing the tag.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for maintainer-only push, tag, and NuGet publish steps.

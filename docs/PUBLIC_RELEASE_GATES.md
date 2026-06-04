@@ -17,11 +17,10 @@ powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 Report-only mode keeps underlying checks non-failing and exits `0` when the scripts complete, while still printing known blockers.
 
 Expected current blockers:
-- TODO `RepositoryUrl`.
-- TODO `PackageProjectUrl`.
-- Missing release tag.
+- Package metadata URLs are final and should pass the metadata gate.
+- Missing release tag until `v0.1.0-alpha.1` points at the final reviewed commit.
 - No explicit maintainer approval for push or NuGet publish.
-- Maintainer-only decision on final public URL. Recommended URL for review: `https://github.com/Cynrath/agent-context-kit`; current local origin is `https://github.com/Cynrath/agent-context-kit.git`.
+- Public repository URL is `https://github.com/Cynrath/agent-context-kit`; current local origin is `https://github.com/Cynrath/agent-context-kit.git`.
 
 ## Failing Gate Mode
 Run only when preparing a real public release:
@@ -30,7 +29,7 @@ Run only when preparing a real public release:
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 ```
 
-While TODO package URLs and missing release tag remain, failing mode is expected to exit non-zero.
+Before the final local tag exists at `HEAD`, failing mode is expected to exit non-zero because the audit gate requires a release tag. After the tag points at the reviewed commit and the working tree is clean, failing mode should exit `0`.
 
 ## Maintainer-Only Actions
 This script does not:

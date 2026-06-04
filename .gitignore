@@ -29,6 +29,7 @@ logs/
 *.binlog
 *.tmp
 *.bak
+.ackit/
 .ackit/cache/
 .ackit/reports/
 .ackit/webui/

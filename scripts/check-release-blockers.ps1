@@ -104,8 +104,8 @@ if ($warnings.Count -gt 0) {
 
 Write-Host ""
 Write-Host "Manual gates still required before public release:"
-Write-Host "- Maintainer-selected public repository URL."
-Write-Host "- Explicit maintainer approval for push, tag, and NuGet publish."
+Write-Host "- Public repository exists at the selected URL and access is confirmed."
+Write-Host "- Explicit maintainer approval for push, tag push, and NuGet publish."
 Write-Host "- Final review of package README, SECURITY, CONTRIBUTING, and changelog."
 
 if ($FailOnBlockers -and $blockers.Count -gt 0) {

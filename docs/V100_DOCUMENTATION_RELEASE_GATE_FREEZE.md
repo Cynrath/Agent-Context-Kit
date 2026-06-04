@@ -60,13 +60,11 @@ scripts/verify-release.ps1
 
 ## Public Release Blockers
 Public release remains blocked until all maintainer-only actions are complete:
-- Select the real public repository URL.
-- Replace TODO `RepositoryUrl`.
-- Replace TODO `PackageProjectUrl`.
-- Create the release tag after explicit maintainer approval.
+- Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
+- Ensure `v0.1.0-alpha.1` points at the reviewed release commit.
 - Push and publish only after explicit maintainer approval.
 
-Failing public gates are expected to fail while these blockers remain.
+Failing public gates are expected to fail until the release tag points at `HEAD` and the working tree is clean.
 
 ## Local Freeze Validation
 Run:
@@ -93,7 +91,6 @@ The documentation/release gate freeze does not:
 - Create or push tags.
 - Create remotes.
 - Publish NuGet packages.
-- Replace package metadata URLs.
 - Upload repository content.
 - Call LLM providers.
 - Read, store, generate, or validate API keys.

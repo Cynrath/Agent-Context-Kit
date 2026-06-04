@@ -45,6 +45,7 @@
 - `docs/GOVERNANCE.md`: decision and release governance.
 - `docs/MAINTAINERS.md`: maintainer responsibilities.
 - `docs/OSS_READINESS.md`: OSS readiness goals.
+- `docs/CODEX_FOR_OSS_APPLICATION.md`: Codex for OSS application pack.
 - `docs/THIRD_PARTY_NOTICES.md`: dependency/license notes.
 
 ## Packaging And Release

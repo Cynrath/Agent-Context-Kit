@@ -1,7 +1,7 @@
 # TASK-0044: Codex For OSS Application Pack
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Create a concise application pack for Codex for OSS or similar OSS support programs using only public project information and the `Cynrath` persona.
@@ -45,7 +45,7 @@ The pack must avoid secrets, private repository content, real-name metadata, and
 - Documentation index links to the pack.
 
 ## Tests
-- `rg -n -S "Sait|Furkan|Selcuk|Selçuk" docs/CODEX_FOR_OSS_APPLICATION.md`
+- Run the prohibited maintainer identity term scan against `docs/CODEX_FOR_OSS_APPLICATION.md`.
 - Manual character count review for the three form-ready sections.
 - `git diff --check`
 
@@ -56,3 +56,13 @@ The pack must avoid secrets, private repository content, real-name metadata, and
 ## Rollback
 - Remove `docs/CODEX_FOR_OSS_APPLICATION.md` and revert index/handoff references.
 
+## Completion Notes
+Completed during final public release preparation.
+
+- Added `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Added the application pack to `docs/DOCUMENTATION_INDEX.md`, `docs/OSS_READINESS.md`, `docs/PROJECT_MAP.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
+- Form-ready text lengths are under 500 characters:
+  - Good fit: 299 characters.
+  - API credits: 281 characters.
+  - Additional notes: 258 characters.
+- The pack uses `Cynrath` and contains no prohibited maintainer identity terms.

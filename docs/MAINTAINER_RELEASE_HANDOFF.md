@@ -2,62 +2,55 @@
 
 This handoff lists the remaining maintainer-only actions for a public release.
 
-Codex must not run these steps unless the maintainer explicitly asks for each public action. The current automated work stops before URL selection, tag creation, push, and NuGet publish.
+Codex must not push commits, push tags, create remotes, or publish NuGet packages unless the maintainer explicitly asks for each public action.
 
-## Current Blocked State
+## Current Ready State
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
-- Recommended final public repository URL for review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; decide intentionally whether to keep that casing/name or align the public URL before changing package metadata.
-- `HEAD` has no release tag.
+- `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
+- `PackageId` is `AgentContextKit`.
+- `ToolCommandName` is `ackit`.
+- `Authors` and `Company` are `Cynrath`.
+- Local tag `v0.1.0-alpha.1` must point at the reviewed release commit before tag push.
 - No push or NuGet publish has been approved.
 
-## Manual Step 1: Select Public URL
-Choose the real public repository URL.
+## GitHub Repository Metadata
+Suggested repository description:
 
-Example placeholder:
-
-```powershell
-$repoUrl = "https://github.com/Cynrath/agent-context-kit"
+```text
+Offline-first CLI for generating safe AI coding agent context, task-first workflows, repo hygiene reports, and multi-agent instruction files.
 ```
 
-Do not use the placeholder value in a public package.
+Suggested GitHub topics:
 
-## Manual Step 2: Update Package Metadata
-Update `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`:
-
-```xml
-<PackageProjectUrl>https://github.com/<owner>/agent-context-kit</PackageProjectUrl>
-<RepositoryUrl>https://github.com/<owner>/agent-context-kit</RepositoryUrl>
+```text
+ai-tools, coding-agents, codex, developer-tools, dotnet, cli, repository-scanner, agents-md, open-source, security
 ```
 
-Then run:
+Codex for OSS application material is prepared in `docs/CODEX_FOR_OSS_APPLICATION.md`.
+
+## Manual Step 1: Final Local Validation
+Run from the repository root:
 
 ```powershell
+git status --short --branch
+git remote -v
+dotnet restore AgentContextKit.sln
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
+dotnet run --project src/AgentContextKit.Cli -- scan --ci
+dotnet run --project src/AgentContextKit.Cli -- doctor
+powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
-powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-The audit will still fail until a release tag exists.
+If the audit fails only because no release tag exists, create the local tag in Manual Step 2 and rerun the failing gates.
 
-## Manual Step 3: Commit Metadata Change
-After review:
-
-```powershell
-git status --short --branch
-git add src/AgentContextKit.Cli/AgentContextKit.Cli.csproj docs/RELEASE_BLOCKERS.md docs/PUBLIC_RELEASE_AUDIT.md
-git commit -m "chore: set public release repository urls"
-```
-
-Adjust staged docs only if they were intentionally updated.
-
-## Manual Step 4: Create Release Tag
-Only after explicit approval:
+## Manual Step 2: Create Local Release Tag
+Only after the final release commit is reviewed:
 
 ```powershell
 git tag -a v0.1.0-alpha.1 -m "AgentContextKit v0.1.0-alpha.1"
@@ -67,24 +60,22 @@ Then re-run:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
-powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
-powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-## Manual Step 5: Push
-Only after explicit approval:
+## Manual Step 3: Push Repository And Tag
+Only after explicit maintainer approval:
 
 ```powershell
-git push origin master
+git push -u origin master
 git push origin v0.1.0-alpha.1
 ```
 
 If the default branch is not `master`, replace it intentionally.
 
-## Manual Step 6: Publish NuGet Package
-Use the verified package from the latest `scripts/verify-release.ps1` temp package directory, or pack again intentionally:
+## Manual Step 4: Publish NuGet Package
+Pack from the reviewed commit:
 
 ```powershell
 $pkg = Join-Path $env:TEMP "ackit-final-nupkg"
@@ -92,13 +83,20 @@ New-Item -ItemType Directory -Force -Path $pkg | Out-Null
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
 ```
 
-Publish only with an approved NuGet API key. Prefer a secure environment variable or a configured credential provider.
+Publish only with an approved NuGet API key stored outside the repository:
 
 ```powershell
 dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
 ```
 
 Do not commit API keys or paste secrets into public logs.
+
+## Post-Publish Install Check
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit --help
+ackit scan --ci
+```
 
 ## Final Checklist
 - Real package URLs are set.

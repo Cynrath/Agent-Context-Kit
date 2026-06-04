@@ -4,6 +4,8 @@ Offline-first repository context and safety tooling for AI-assisted development.
 
 AgentContextKit is a .NET CLI (`ackit`) for developers who use Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI, and similar AI coding agents. It analyzes a repository, detects stack signals, generates safe agent instruction/workflow files, and reports secret/PII/brand leakage risks before public release or AI context export.
 
+Public repository URL: `https://github.com/Cynrath/agent-context-kit`
+
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
 
@@ -42,6 +44,8 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - English and Turkish output/template foundation.
 
 ## Quick Start
+From source:
+
 ```powershell
 dotnet restore
 dotnet build -c Release
@@ -54,6 +58,14 @@ dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
 dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/prompt-pack.md --approve --json
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
+```
+
+After NuGet publication:
+
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit --help
+ackit scan --ci
 ```
 
 ## CLI Commands

@@ -5,10 +5,8 @@ This document records the final local-only public release audit workflow.
 ## Current Status
 Public release is blocked.
 
-The codebase passes local build, test, scan, package, and temporary tool install validation, but maintainer-only public release blockers remain:
-- `RepositoryUrl` is still a TODO placeholder.
-- `PackageProjectUrl` is still a TODO placeholder.
-- Current HEAD has no release tag.
+The package URL blockers are resolved. The codebase can pass local build, test, scan, package, and temporary tool install validation, but maintainer-only public release blockers remain:
+- Current HEAD must have release tag `v0.1.0-alpha.1` before public tag push.
 - Push, tag, and NuGet publish have not been explicitly approved.
 
 ## Latest Local Result
@@ -36,7 +34,7 @@ Run as a failing gate before public release:
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 ```
 
-While maintainer-only blockers remain, `-FailOnIssues` is expected to return a non-zero exit code.
+Before the release tag points at `HEAD`, `-FailOnIssues` is expected to return a non-zero exit code. After the final local tag and clean working tree, it should exit `0`.
 
 ## Gate Orchestration
 Run package metadata, public release audit, and release blocker checks together:
@@ -66,14 +64,13 @@ See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
 
 ## Required Manual Resolution
 Before public release:
-1. Select the real public repository URL.
-2. Replace TODO package URL metadata.
-3. Commit the URL metadata change.
-4. Create the release tag intentionally.
-5. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
-6. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
-7. Run `scripts/verify-release.ps1`.
-8. Push, tag, and publish only after explicit maintainer approval.
+1. Confirm package URL metadata points to `https://github.com/Cynrath/agent-context-kit`.
+2. Create the local release tag intentionally on the reviewed commit.
+3. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
+4. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
+5. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
+6. Run `scripts/verify-release.ps1`.
+7. Push, tag, and publish only after explicit maintainer approval.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for copy-paste-ready maintainer-only commands.
 

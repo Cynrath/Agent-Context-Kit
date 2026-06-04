@@ -29,10 +29,10 @@ Public release blockers are reported separately. They do not cause `-FailOnIssue
 
 ## Expected Public Release Blockers
 The local v1.0 readiness gate is expected to report these blockers until a maintainer explicitly resolves them:
-- `RepositoryUrl` is still a TODO placeholder.
-- `PackageProjectUrl` is still a TODO placeholder.
-- Current HEAD has no release tag.
-- Push, tag, and NuGet publish have not been explicitly approved.
+- `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `v0.1.0-alpha.1` must point at the reviewed release commit before public tag push.
+- Push and NuGet publish have not been explicitly approved.
 
 These blockers are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_AUDIT.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
 
@@ -57,7 +57,6 @@ Use the local maintainer real-name pattern without committing that pattern to do
 
 ## Maintainer-Only Boundary
 This readiness review does not:
-- Replace package metadata URLs.
 - Create or push release tags.
 - Push commits.
 - Create remotes.

@@ -13,8 +13,8 @@ Important fields:
 - `PackageLicenseExpression`: `MIT`
 - `PackageReadmeFile`: `README.md`
 - `RepositoryType`: `git`
-
-`RepositoryUrl` and `PackageProjectUrl` intentionally use TODO placeholders until the public remote is selected.
+- `RepositoryUrl`: `https://github.com/Cynrath/agent-context-kit`
+- `PackageProjectUrl`: `https://github.com/Cynrath/agent-context-kit`
 
 Run the dedicated metadata review before pack or publish checks:
 
@@ -22,7 +22,7 @@ Run the dedicated metadata review before pack or publish checks:
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1
 ```
 
-Use the failing gate only after maintainer-selected public URLs are in place:
+Use the failing gate before any public publish:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
@@ -46,9 +46,25 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 & (Join-Path $tools "ackit.exe") --help
 ```
 
+## Public NuGet Install After Publish
+After the maintainer publishes the package to NuGet:
+
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit --help
+ackit scan --ci
+```
+
+## Manual NuGet Publish
+NuGet publish is not automated by this project. Publish only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
+
+```powershell
+dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
+```
+
 ## Release Blockers
-- Do not publish to NuGet until the real repository URL is set.
 - Do not publish until `scripts/check-package-metadata.ps1 -FailOnIssues` exits `0`.
 - Do not publish until `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
 - Do not publish until restore/build/test/pack/tool-path validation passes.
 - Do not publish while `ackit scan` reports unaccepted high or critical findings.
+- Do not publish until the release tag points at the reviewed commit and maintainer approval is explicit.

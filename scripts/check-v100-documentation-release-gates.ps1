@@ -171,9 +171,8 @@ foreach ($needle in $blockerNeedles) {
 
 $auditNeedles = @(
     "Public release is blocked.",
-    '`RepositoryUrl` is still a TODO placeholder',
-    '`PackageProjectUrl` is still a TODO placeholder',
-    "Current HEAD has no release tag",
+    "The package URL blockers are resolved.",
+    "Current HEAD must have release tag",
     "Push, tag, and NuGet publish have not been explicitly approved"
 )
 
@@ -182,8 +181,7 @@ foreach ($needle in $auditNeedles) {
 }
 
 $gateNeedles = @(
-    'TODO `RepositoryUrl`',
-    'TODO `PackageProjectUrl`',
+    "Package metadata URLs are final",
     "Missing release tag",
     "No explicit maintainer approval for push or NuGet publish",
     "does not",

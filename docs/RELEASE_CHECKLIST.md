@@ -20,10 +20,12 @@
 - `docs/PACKAGING.md` and `docs/RELEASE_VALIDATION.md` are current.
 - `docs/RELEASE_BLOCKERS.md` has no unresolved public-release blockers.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` has been reviewed.
-- `RepositoryUrl` and `PackageProjectUrl` point to the real public repository before publish.
+- `RepositoryUrl` and `PackageProjectUrl` point to `https://github.com/Cynrath/agent-context-kit`.
+- Local tag `v0.1.0-alpha.1` points at the reviewed release commit before tag push.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 
 ## Manual Actions
 - Create remote repository only outside the agent session.
 - Review all generated files before publishing.
+- Push commits and tags only after explicit maintainer approval.
 - Publish NuGet package only after explicit maintainer approval.

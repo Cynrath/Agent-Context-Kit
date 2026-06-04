@@ -25,4 +25,6 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub source packages differ from local working-directory archives because GitHub uses tracked content rather than ignored local artifacts.
 - Self-scan stack detection reports the main product as `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 - Sample projects under `samples/` are intentionally not reported as main repository stacks.
-- Public release remains blocked until package URLs, release tag, push approval, and NuGet publish approval are resolved by the maintainer.
+- Package metadata uses the selected public URL `https://github.com/Cynrath/agent-context-kit`.
+- Codex for OSS application material is prepared in `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Public release remains blocked until the release tag points at the reviewed commit, push is approved, and NuGet publish is approved by the maintainer.

@@ -55,12 +55,12 @@ powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-Expected while TODO package URLs remain:
-- Package metadata report-only mode exits `0` but reports TODO URL blockers.
-- Public release audit report-only mode exits `0` but reports maintainer-only blockers.
-- Release blocker report-only mode exits `0` but reports maintainer-only blockers.
+Expected before the final local tag:
+- Package metadata report-only mode exits `0` with no metadata issues.
+- Public release audit report-only mode exits `0` but reports the missing release tag.
+- Release blocker report-only mode exits `0` and may warn when `HEAD` has no release tag.
 
-Only after the maintainer selects real public URLs and explicitly approves release actions should failing public gates be used:
+Only after the final local tag points at `HEAD` and release actions are explicitly approved should failing public gates be used:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
