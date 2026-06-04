@@ -57,7 +57,7 @@
 - Documentation and release gate freeze. Added local release-critical docs/gates check.
 - Final local readiness consolidation. Added local v1.0 readiness review docs and script.
 - Public release final cleanup. Added source archive hygiene, package URL blocker clarification, and sample-aware self-scan stack accuracy.
-- First public alpha release handoff. Added final repository URL docs, Codex for OSS application pack, release tag readiness, source archive hygiene, and NuGet handoff guidance.
+- First public alpha release handoff. Added final repository URL docs, Codex for OSS application pack, release tag readiness, source archive hygiene, GitHub Release completion, NuGet publication, and global tool install verification.
 - Stable CLI.
 - NuGet global tool release.
 - Stable config format.

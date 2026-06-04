@@ -1,10 +1,10 @@
 # Release Candidate Review: 0.1.0-alpha.1
 
 ## Status
-Local release candidate preparation is complete and the GitHub source state has been pushed.
+Local release candidate preparation is complete. The GitHub source state, GitHub Release page, and NuGet package are published.
 
 ## Scope
-This review validates the local package and CLI. GitHub source push and tag push are complete; NuGet publish and GitHub Release page creation are pending.
+This review validates the local package and CLI. GitHub source push, tag push, GitHub Release page, NuGet publish, and NuGet global tool install verification are complete for `0.1.0-alpha.1`.
 
 ## Required Local Gate
 ```powershell
@@ -23,7 +23,7 @@ The script runs:
 - installed `ackit --help`
 - installed `ackit scan --json`
 
-## Current Known Blockers
+## Current Release State
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository public: yes.
@@ -33,18 +33,19 @@ The script runs:
 - GitHub Actions latest `master` run: success.
 - Repository description: set.
 - Repository topics: set.
-- GitHub Release page is pending.
-- NuGet publish is pending.
+- GitHub Release page: completed.
+- NuGet publish: completed.
+- NuGet global tool install verification: completed.
+- Codex for OSS application pack: ready.
 
-See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md) for the active blocker list and guard script.
+See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md) for the current follow-up list and guard script.
 
 ## Remaining Manual Actions
-- Create GitHub Release page for `v0.1.0-alpha.1`.
 - Review package README rendering.
 - Review SECURITY and CONTRIBUTING docs.
 - Run `ackit redact-check --profile public-release`.
 - Run `powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers`.
-- Publish to NuGet only after explicit maintainer action.
+- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 
 ## Verification Result
 Current local release candidate validation:
@@ -54,10 +55,13 @@ Current local release candidate validation:
 - `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 59/59 tests.
 - `dotnet run --project src/AgentContextKit.Cli -- scan --ci`: passed with no risk findings.
 - `dotnet run --project src/AgentContextKit.Cli -- doctor`: passed, all checks PASS.
+- `dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1`: passed from the published NuGet package.
+- `ackit version`: returned `AgentContextKit 0.1.0-alpha.1`.
+- `ackit --help`: passed after global tool install.
 - `powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues`: passed.
 - `dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build`: passed.
 - Temporary `dotnet tool install --tool-path`: passed.
 - Installed `ackit --help`: passed.
 - Installed `ackit scan --json`: passed and reported `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
-Post-push status sync keeps GitHub release page creation and NuGet publish as maintainer-controlled follow-up actions.
+Post-publication status sync keeps only the Codex for OSS form submission and future roadmap planning as remaining maintainer follow-ups.

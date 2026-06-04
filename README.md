@@ -6,7 +6,7 @@ AgentContextKit is a .NET CLI (`ackit`) for developers who use Codex, Claude Cod
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release status: `v0.1.0-alpha.1` is pushed on GitHub. NuGet publication is pending.
+Release status: `v0.1.0-alpha.1` is published on GitHub and NuGet.
 
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
@@ -62,10 +62,11 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
 ```
 
-After NuGet publication:
+Install from NuGet:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
 ackit --help
 ackit scan --ci
 ```
@@ -146,7 +147,7 @@ Key docs:
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Packaging
-Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). NuGet publishing is a manual maintainer action and is not part of the MVP automation.
+Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.1` package is published as a NuGet global tool.
 
 Public release blockers are tracked in [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md).
 

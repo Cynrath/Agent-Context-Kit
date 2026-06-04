@@ -46,25 +46,26 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 & (Join-Path $tools "ackit.exe") --help
 ```
 
-## Public NuGet Install After Publish
-After the maintainer publishes the package to NuGet:
+## Public NuGet Install
+Install the published package from NuGet:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
 ackit --help
 ackit scan --ci
 ```
 
 ## Manual NuGet Publish
-NuGet publish is not automated by this project. Publish only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
+NuGet publish is not automated by this project. Version `0.1.0-alpha.1` has been published; future versions should be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
 
 ```powershell
 dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
 ```
 
 ## Release Blockers
-- Do not publish until `scripts/check-package-metadata.ps1 -FailOnIssues` exits `0`.
-- Do not publish until `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
-- Do not publish until restore/build/test/pack/tool-path validation passes.
-- Do not publish while `ackit scan` reports unaccepted high or critical findings.
-- Do not publish until GitHub Actions are green, the GitHub Release page is ready, and maintainer approval is explicit.
+- For future releases, do not publish until `scripts/check-package-metadata.ps1 -FailOnIssues` exits `0`.
+- For future releases, do not publish until `scripts/check-release-blockers.ps1 -FailOnBlockers` exits `0`.
+- For future releases, do not publish until restore/build/test/pack/tool-path validation passes.
+- For future releases, do not publish while `ackit scan` reports unaccepted high or critical findings.
+- For future releases, do not publish until GitHub Actions are green, the GitHub Release page is ready, and maintainer approval is explicit.

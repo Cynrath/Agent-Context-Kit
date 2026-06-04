@@ -59,13 +59,13 @@ scripts/verify-release.ps1
 ```
 
 ## Public Release Blockers
-GitHub source publication for `v0.1.0-alpha.1` is complete. Remaining maintainer-only actions:
+GitHub source publication, GitHub Release creation, NuGet publication, and NuGet global tool install verification for `v0.1.0-alpha.1` are complete. Remaining maintainer follow-up:
 - Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 - Keep `master` and `v0.1.0-alpha.1` associated with `aee808244bf33d00808e7e70db6235132c2d3829`.
-- Create the GitHub Release page.
-- Publish NuGet only after explicit maintainer approval.
+- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Continue future roadmap planning from `docs/ROADMAP.md`.
 
-Failing public gates should pass locally when package metadata is final, tracked artifact checks are clean, and the release tag exists locally. Remote tag verification and GitHub Release/NuGet publication remain external checks.
+Failing public gates should pass locally when package metadata is final, tracked artifact checks are clean, and the release tag exists locally. Remote tag verification, GitHub Release status, and NuGet package availability remain external checks.
 
 ## Local Freeze Validation
 Run:

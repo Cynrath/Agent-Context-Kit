@@ -3,16 +3,17 @@
 AgentContextKit package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`.
 
 ## Current Status
-Local package metadata is ready for local pack validation:
+Package metadata is final and `AgentContextKit` version `0.1.0-alpha.1` is published on NuGet:
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `Authors` is `Cynrath`.
 - `Company` is `Cynrath`.
 
-Public publish remains pending until:
+Publication state:
 - GitHub Actions latest `master` run is green.
-- GitHub Release page for `v0.1.0-alpha.1` is prepared.
-- NuGet publish approval has been given.
+- GitHub Release page for `v0.1.0-alpha.1` is completed.
+- NuGet publish is completed.
+- NuGet global tool install verification is completed.
 
 This review follows Microsoft Learn NuGet package authoring guidance for package ID, version, authors, description, project URL, README, repository metadata, tags, release notes, and license expression:
 - https://learn.microsoft.com/nuget/create-packages/package-authoring-best-practices#package-metadata
@@ -35,6 +36,15 @@ With the current package metadata, `-FailOnIssues` should return exit code `0`.
 
 The script is local-only and read-only. It does not pack, push, publish, tag, redact, delete, create remotes, or change package metadata.
 
+## Public Install
+Install the published global tool:
+
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
+ackit --help
+```
+
 ## Required Fields
 - `PackAsTool`: `true`
 - `ToolCommandName`: `ackit`
@@ -53,13 +63,13 @@ The script is local-only and read-only. It does not pack, push, publish, tag, re
 - `PackageReleaseNotes`: non-empty
 - `README.md`: present and explicitly packed into the package root
 
-## Publish Blockers
-Before public publish:
+## Future Publish Gates
+Before future public publish:
 1. Run `scripts/check-package-metadata.ps1 -FailOnIssues`.
 2. Run `scripts/audit-public-release.ps1 -FailOnIssues`.
 3. Run `scripts/check-release-blockers.ps1 -FailOnBlockers`.
 4. Run `scripts/check-public-release-gates.ps1 -FailOnIssues`.
 5. Run `scripts/verify-release.ps1`.
-6. Confirm GitHub Actions latest `master` run is green.
-7. Confirm GitHub Release page for `v0.1.0-alpha.1` exists or is ready.
+6. Confirm GitHub Actions latest release run is green.
+7. Confirm the target GitHub Release page is ready.
 8. Publish only after explicit maintainer approval.

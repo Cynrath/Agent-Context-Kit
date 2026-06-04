@@ -159,10 +159,9 @@ foreach ($doc in $releaseValidationDocs) {
 $blockerNeedles = @(
     "RepositoryUrl",
     "PackageProjectUrl",
-    "GitHub publication is complete",
-    "GitHub Release page for",
-    "NuGet publish is pending",
-    "Codex for OSS application pack"
+    "v0.1.0-alpha.1",
+    "No active release blockers remain",
+    "Codex for OSS application"
 )
 
 foreach ($needle in $blockerNeedles) {
@@ -170,9 +169,9 @@ foreach ($needle in $blockerNeedles) {
 }
 
 $auditNeedles = @(
-    "GitHub source publication is complete",
-    "GitHub Release page is pending",
-    "NuGet publish is pending",
+    "GitHub source publication and NuGet publication are complete",
+    "GitHub Release page: completed",
+    "NuGet global tool install verification: completed",
     "release tag to exist locally"
 )
 
@@ -181,9 +180,9 @@ foreach ($needle in $auditNeedles) {
 }
 
 $gateNeedles = @(
-    "Current Post-Push State",
-    "NuGet publish is pending",
-    "GitHub Release page is pending",
+    "Current Published State",
+    "NuGet publish: completed",
+    "GitHub Release page: completed",
     "does not",
     "Follow [MAINTAINER_RELEASE_HANDOFF.md]"
 )

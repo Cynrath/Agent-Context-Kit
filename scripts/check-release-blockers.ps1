@@ -109,11 +109,10 @@ if ($warnings.Count -gt 0) {
 }
 
 Write-Host ""
-Write-Host "Manual post-push gates still required:"
-Write-Host "- Check GitHub Actions latest master run."
-Write-Host "- Confirm repository description and topics."
-Write-Host "- Create GitHub Release page for v0.1.0-alpha.1."
-Write-Host "- Publish NuGet package and verify install."
+Write-Host "Post-publication follow-ups:"
+Write-Host "- Submit or save the Codex for OSS application form."
+Write-Host "- Continue future roadmap planning."
+Write-Host "- Re-run release gates before future release announcements."
 
 if ($FailOnBlockers -and $blockers.Count -gt 0) {
     Write-Host ""

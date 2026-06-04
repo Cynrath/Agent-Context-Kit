@@ -24,7 +24,7 @@
 - Local tag `v0.1.0-alpha.1` exists and points at the reviewed release commit.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 
-## Completed GitHub Actions
+## Completed Public Release State
 - Public repository exists: `https://github.com/Cynrath/agent-context-kit`.
 - `master` is pushed.
 - `v0.1.0-alpha.1` is pushed.
@@ -32,10 +32,10 @@
 - GitHub Actions latest `master` run is green.
 - Repository description is set.
 - Repository topics are set.
+- GitHub Release page for `v0.1.0-alpha.1` is created.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
+- NuGet global tool install is verified.
 
 ## Remaining Manual Actions
-- Create GitHub Release page for `v0.1.0-alpha.1`.
-- Publish NuGet package after validation.
-- Verify NuGet global tool install after indexing.
 - Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 - Review all generated files before publishing.

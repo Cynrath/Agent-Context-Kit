@@ -32,7 +32,15 @@ The MVP does not call remote AI APIs, upload repository content, run telemetry, 
 - Keep future LLM features opt-in, reviewed, and auditable.
 
 ## Current Release Status
-The GitHub repository is public at `https://github.com/Cynrath/agent-context-kit`. `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`. GitHub Actions are green, repository description/topics are set, and package metadata is final. GitHub Release page creation and NuGet publish are pending maintainer actions.
+The GitHub repository is public at `https://github.com/Cynrath/agent-context-kit`. `v0.1.0-alpha.1` is published on GitHub and NuGet. GitHub Actions are green, repository description/topics are set, package metadata is final, and global tool installation has been verified.
+
+Install command:
+
+```powershell
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
+ackit --help
+```
 
 ## Form Text: Why Is This Repository A Good Fit?
 AgentContextKit improves AI-assisted OSS development by generating safe local context, task docs, agent instructions, source hygiene guidance, and release checks before Codex or similar tools work on a repo. It is offline-first, security-focused, and useful to maintainers preparing public releases.
@@ -41,4 +49,4 @@ AgentContextKit improves AI-assisted OSS development by generating safe local co
 Credits would support OSS maintenance: implementing scanner improvements, expanding tests, reviewing docs, checking release gates, and preparing safer task-first changes. The product remains offline-first by default; any remote provider use would be explicit, reviewed, and opt-in.
 
 ## Form Text: Additional Notes
-The project is designed around local-only safety, clear maintainer gates, no telemetry, no automatic redaction, and no repository upload in the MVP. The first alpha focuses on a practical .NET global tool for safer agent context and public release readiness.
+The project is designed around local-only safety, clear maintainer gates, no telemetry, no automatic redaction, and no repository upload in the MVP. The first alpha is published on GitHub and NuGet as a practical .NET global tool for safer agent context and release readiness.

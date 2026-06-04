@@ -31,5 +31,7 @@ The first release should be small, working, documented, and honest about limitat
 - `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`.
 - GitHub Actions latest `master` run is green.
 - Repository description and topics are set.
-- GitHub Release page is pending.
-- NuGet publish is pending.
+- GitHub Release page is completed: `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
+- NuGet publish is completed for `AgentContextKit` version `0.1.0-alpha.1`.
+- NuGet global tool install is verified.
+- `v0.1.0-alpha.1` is published on GitHub and NuGet.

@@ -6,7 +6,7 @@ AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benze
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release durumu: `v0.1.0-alpha.1` GitHub'a push edildi. NuGet publish bekliyor.
+Release durumu: `v0.1.0-alpha.1` GitHub ve NuGet uzerinde yayinlandi.
 
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
@@ -62,10 +62,11 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
 ```
 
-NuGet publish sonrasinda:
+NuGet ile kurulum:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
 ackit --help
 ackit scan --ci
 ```
@@ -145,7 +146,7 @@ Onemli dokumanlar:
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
-Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. NuGet publish manuel maintainer aksiyonudur ve MVP otomasyonunun parcasi degildir.
+Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.1` paketi NuGet global tool olarak yayinlandi.
 
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 

@@ -7,6 +7,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ## [Unreleased]
 ### Changed
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
+- Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
 
 ## [0.1.0-alpha.1] - 2026-06-04
 ### Added
@@ -32,7 +33,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ### Changed
 - Public package and docs metadata use the `Cynrath` persona.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
-- Public release blockers track post-push follow-up actions such as GitHub Release page creation and NuGet publish.
+- Public release blockers track the completed GitHub Release and NuGet publication state, with Codex for OSS submission as the remaining follow-up.
 
 ### Fixed
 - Added NuGet package README metadata for local pack readiness.

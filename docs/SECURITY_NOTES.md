@@ -11,4 +11,5 @@
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - GitHub source push and tag push are complete for `v0.1.0-alpha.1`.
-- GitHub Release page and NuGet publish remain pending maintainer actions.
+- GitHub Release page and NuGet publish are complete for `v0.1.0-alpha.1`.
+- NuGet global tool install verification is complete.

@@ -1,25 +1,26 @@
 # Release Blockers
 
-This document lists known blockers that remain after the first public GitHub push and tag push.
+This document lists release blockers and follow-ups after the first GitHub and NuGet publication.
 
 ## Current Status
-GitHub publication is complete for the initial alpha source state.
+`v0.1.0-alpha.1` is published.
 
 - GitHub repository public: yes, `https://github.com/Cynrath/agent-context-kit`.
 - `master` pushed: yes.
 - `v0.1.0-alpha.1` tag pushed: yes.
 - `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Release page: completed, `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
+- NuGet publish: completed.
+- NuGet global tool install verification: completed.
 - Package metadata final URL: yes.
 - Codex for OSS application pack: ready, `docs/CODEX_FOR_OSS_APPLICATION.md`.
-- GitHub Actions latest `master` run: success.
-- Repository description: set.
-- Repository topics: set.
 
 ## Blocking Items
-- GitHub Release page for `v0.1.0-alpha.1` is pending.
-- NuGet publish is pending.
-- NuGet install verification is pending until publish completes.
-- Codex for OSS form submission is pending.
+No active release blockers remain for `v0.1.0-alpha.1`.
+
+## Remaining Follow-Ups
+- Submit or save the Codex for OSS application form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Continue future roadmap planning from `docs/ROADMAP.md`.
 
 ## Resolved Items
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
@@ -32,9 +33,14 @@ GitHub publication is complete for the initial alpha source state.
 - Public GitHub repository exists.
 - `master` is pushed.
 - `v0.1.0-alpha.1` is pushed.
-- GitHub Actions latest `master` run is green for `aee808244bf33d00808e7e70db6235132c2d3829`.
+- GitHub Actions latest `master` run was green for the release commit.
 - Repository description matches the maintained release text.
 - Repository topics include the maintained topic set.
+- GitHub Release page exists for `v0.1.0-alpha.1`: `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
+- `dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1` was verified.
+- `ackit version` returned `AgentContextKit 0.1.0-alpha.1`.
+- `ackit --help` was verified.
 
 ## Local Validation
 The following checks validate local source and package readiness. They do not create GitHub releases or publish NuGet packages:
@@ -43,48 +49,24 @@ The following checks validate local source and package readiness. They do not cr
 dotnet restore AgentContextKit.sln
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
+dotnet run --project src/AgentContextKit.Cli -- scan --ci
+dotnet run --project src/AgentContextKit.Cli -- doctor
 powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/audit-public-release.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-blockers.ps1 -FailOnBlockers
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 ```
 
-Remote tag verification can be checked with:
-
+## Install Verification
 ```powershell
-git ls-remote origin "refs/heads/master" "refs/tags/v0.1.0-alpha.1" "refs/tags/v0.1.0-alpha.1^{}"
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+ackit version
+ackit --help
 ```
 
-The local scripts do not create or mutate remote GitHub state.
-
-## GitHub Release Page
-Create a GitHub Release for tag `v0.1.0-alpha.1`.
-
-Suggested title:
-
-```text
-AgentContextKit v0.1.0-alpha.1
-```
-
-Suggested summary:
-
-```text
-Initial alpha release of AgentContextKit, an offline-first .NET global tool for safe AI coding agent context, repository hygiene checks, task-first docs, and public release readiness.
-```
-
-## NuGet Publish
-Publish only after GitHub Actions are green and the GitHub Release page is prepared:
-
-```powershell
-$pkg = Join-Path $env:TEMP "ackit-final-nupkg"
-New-Item -ItemType Directory -Force -Path $pkg | Out-Null
-dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
-```
-
-Do not commit API keys or paste secrets into public logs.
+If the tool is already installed, use `dotnet tool update --global AgentContextKit --version 0.1.0-alpha.1` or a temporary `--tool-path` install.
 
 ## References
 - [Create a NuGet package using MSBuild](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-msbuild)
 - [Package authoring best practices](https://learn.microsoft.com/nuget/create-packages/package-authoring-best-practices#package-metadata)
-- [dotnet pack command](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-pack)
+- [dotnet tool install command](https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-tool-install)

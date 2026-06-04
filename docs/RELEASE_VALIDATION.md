@@ -21,7 +21,7 @@ dotnet run --project src/AgentContextKit.Cli -- doctor
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection. It also runs `scripts/check-release-blockers.ps1` in report-only mode, so local validation can pass while public-release blockers remain visible.
+The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection. It also runs `scripts/check-release-blockers.ps1` in report-only mode, so local validation can keep public release follow-up status visible.
 
 ## v0.2 Readiness Review
 Run the v0.2 local readiness check:
@@ -193,7 +193,7 @@ Run all public release gates in report-only mode:
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1
 ```
 
-Run all public release gates as failing checks before GitHub Release page creation or NuGet publish:
+Run all public release gates as failing checks before future public release announcements or follow-up release work:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
@@ -227,7 +227,8 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Confirm no permanent global tool install is required for validation.
 - Confirm `origin/master` and remote `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
 - Confirm GitHub Actions latest `master` run is green.
-- Confirm GitHub Release page exists before release announcement.
-- Confirm NuGet package availability after publish.
+- Confirm GitHub Release page exists for `v0.1.0-alpha.1`.
+- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
+- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 
-See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for remaining post-push GitHub Release and NuGet publish steps.
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and remaining Codex for OSS submission guidance.

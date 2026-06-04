@@ -27,16 +27,18 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailO
 
 Public release blockers are reported separately. They do not cause `-FailOnIssues` to fail because they require maintainer-only decisions.
 
-## Expected Public Release Blockers
-The local v1.0 readiness gate is expected to report these blockers until a maintainer explicitly resolves them:
+## Published Public Release State
+The local v1.0 readiness gate reports release state separately from local readiness:
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
 - `master` and `v0.1.0-alpha.1` are pushed at `aee808244bf33d00808e7e70db6235132c2d3829`.
-- GitHub Release page is pending.
-- NuGet publish is pending.
+- GitHub Release page for `v0.1.0-alpha.1` is completed.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
+- NuGet global tool install verification is completed.
+- Codex for OSS application pack is ready.
 
-These blockers are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_AUDIT.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
+Current release follow-ups are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_AUDIT.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
 
 ## Required Validation
 Run these local checks before treating v1.0 local readiness as complete:
