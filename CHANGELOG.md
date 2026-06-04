@@ -8,6 +8,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ### Changed
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
 - Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
+- Verified NuGet global tool smoke test in a clean demo app.
 
 ## [0.1.0-alpha.1] - 2026-06-04
 ### Added

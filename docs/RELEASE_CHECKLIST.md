@@ -35,6 +35,7 @@
 - GitHub Release page for `v0.1.0-alpha.1` is created.
 - NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
 - NuGet global tool install is verified.
+- NuGet global tool smoke test is verified in a clean demo app.
 
 ## Remaining Manual Actions
 - Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.

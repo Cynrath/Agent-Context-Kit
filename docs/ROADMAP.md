@@ -24,6 +24,7 @@
 - More generated docs with expanded agent/context templates that include health, risk, and recommended checks.
 - NuGet package metadata hardening with a local metadata review gate.
 - Sample repositories for safe .NET Minimal API and Node/TypeScript/Tailwind stack detection.
+- Turkish localization polish for CLI ASCII fallback wording such as `olusturuldu` and `Tarama ozeti`; this is not a `0.1.0-alpha.1` blocker.
 - Final local readiness consolidation.
 
 ## v0.3.0-beta

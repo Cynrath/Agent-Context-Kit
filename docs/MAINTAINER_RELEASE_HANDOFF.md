@@ -15,6 +15,7 @@ Codex must not push commits, create GitHub releases, publish NuGet packages, or 
 - GitHub Release page: completed, `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
 - NuGet publish: completed.
 - NuGet global tool install verification: completed.
+- NuGet global tool smoke test: completed.
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageId` is `AgentContextKit`.
@@ -42,6 +43,23 @@ If the tool is already installed, use:
 ```powershell
 dotnet tool update --global AgentContextKit --version 0.1.0-alpha.1
 ```
+
+## Verified NuGet Smoke Test
+Completed smoke test evidence:
+
+- Clean test app: external `ackit-smoke-test/DemoApp` directory outside this repository.
+- `ackit init --lang tr` created `.ackit/config.yml`.
+- `ackit scan --ci` reported no risk findings.
+- `ackit generate --target all --lang tr` created `AGENTS.md`, `CLAUDE.md`, `.cursor/rules/project.mdc`, `.github/copilot-instructions.md`, docs, and `.codex` files.
+- `ackit task "Demo smoke test görevi" --lang tr` worked.
+- `ackit report --output .ackit/reports/smoke.html` worked.
+- `ackit webui --output .ackit/webui/index.html` worked.
+- Fake `OPENAI_API_KEY` in `.env.test` was detected by `redact-check` as Critical with exit code `2`.
+- After `.env.test` was deleted, `ackit scan --ci` reported no risk findings.
+- `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
+- `context-export` did not call a remote LLM provider.
+
+`ackit doctor` reported expected health failures on the minimal demo app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata were absent. This is correct repository-health behavior, not a tool issue.
 
 ## GitHub Repository Metadata
 Repository description:

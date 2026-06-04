@@ -214,6 +214,24 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 & (Join-Path $tools "ackit.exe") scan --json
 ```
 
+## Published NuGet Smoke Test
+The `AgentContextKit` version `0.1.0-alpha.1` published global tool has been smoke-tested from NuGet in a clean demo directory:
+
+- `ackit version` returned `AgentContextKit 0.1.0-alpha.1`.
+- `ackit --help` worked.
+- `ackit init --lang tr` created `.ackit/config.yml`.
+- `ackit scan --ci` completed with no risk findings.
+- `ackit generate --target all --lang tr` created agent/context files.
+- `ackit task "Demo smoke test görevi" --lang tr` created a task file.
+- `ackit report --output .ackit/reports/smoke.html` created a local HTML report.
+- `ackit webui --output .ackit/webui/index.html` created a local static Web UI.
+- A fake `OPENAI_API_KEY` in `.env.test` was detected by `redact-check` as Critical and returned exit code `2`.
+- After `.env.test` was removed, `ackit scan --ci` reported no risk findings.
+- `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
+- `context-export` created a local manifest and did not call a remote LLM provider.
+
+`ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
+
 ## Manual Release Gates
 - Run `scripts/check-package-metadata.ps1 -FailOnIssues` and confirm it exits `0`.
 - Run `scripts/audit-public-release.ps1 -FailOnIssues` and confirm it exits `0`.
@@ -229,6 +247,7 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 - Confirm GitHub Actions latest `master` run is green.
 - Confirm GitHub Release page exists for `v0.1.0-alpha.1`.
 - Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
+- Confirm the published NuGet global tool smoke test remains documented and reproducible.
 - Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and remaining Codex for OSS submission guidance.

@@ -115,9 +115,13 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Recorded maintainer-provided evidence that NuGet publish completed, global tool install succeeded, `ackit version` returned `AgentContextKit 0.1.0-alpha.1`, and `ackit --help` worked.
 - Updated active release docs so GitHub Release page, NuGet publish, and NuGet install verification are completed for `v0.1.0-alpha.1`.
 - Remaining release follow-up is Codex for OSS form submission and future roadmap planning.
+- Started and completed TASK-0048 for NuGet global tool smoke test verification documentation.
+- Recorded maintainer-provided evidence that the published `ackit` global tool passed a clean demo app smoke test covering init, scan, generate, task, report, webui, redact-check, JSON output, prompt-pack, and context-export.
+- Documented that `ackit doctor` failures on the minimal smoke-test app are expected repository-health findings, not a tool issue.
+- Added Turkish CLI ASCII fallback localization polish to the v0.2 roadmap backlog as a non-blocking item.
 
 ## Next Clear Steps
-1. Treat TASK-0047 NuGet publish verification and Codex for OSS submission readiness as completed locally.
+1. Treat TASK-0048 NuGet smoke test verification documentation as completed locally.
 2. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 3. Treat GitHub repository public status as complete.
 4. Treat `master` and `v0.1.0-alpha.1` push as complete at `aee808244bf33d00808e7e70db6235132c2d3829`.
@@ -125,7 +129,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 6. Treat repository description and topics as verified set.
 7. Treat GitHub Release page for `v0.1.0-alpha.1` as complete.
 8. Treat NuGet publish for `AgentContextKit` version `0.1.0-alpha.1` as complete.
-9. Treat NuGet global tool install verification as complete.
+9. Treat NuGet global tool install and smoke test verification as complete.
 10. Use `docs/CODEX_FOR_OSS_APPLICATION.md` for the Codex for OSS form.
 11. Do not push, create GitHub releases, publish NuGet packages, delete, force push, or create remotes from the agent session.
 
@@ -353,6 +357,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0041 through TASK-0045 pre-commit verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed, 59/59 tests; `scan --ci` exited 0 and reported no risk findings; `doctor` passed; `scripts/check-package-metadata.ps1 -FailOnIssues` passed; tracked artifact scan returned no matches; prohibited maintainer identity term scan returned no matches; `dotnet pack` passed; temporary `dotnet tool install --tool-path` passed; installed `ackit --help` and `ackit scan --json` passed.
 - TASK-0047 pre-commit verification: GitHub Release page was verified through the GitHub API; NuGet package version `0.1.0-alpha.1` was verified through the NuGet flat-container index; Codex for OSS form-ready text lengths are under 500 characters; `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed, 59/59 tests; `scan --ci` passed with no risk findings and main stacks `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`; `doctor` passed; prohibited maintainer identity term scan returned no matches; tracked artifact scan returned no matches; stale active release wording scan returned no matches; `check-v100-documentation-release-gates.ps1 -FailOnIssues` passed with the expected dirty working tree warning.
 - TASK-0047 post-commit release gates passed: `scripts/check-public-release-gates.ps1 -FailOnIssues`, `scripts/audit-public-release.ps1 -FailOnIssues`, and `scripts/check-release-blockers.ps1 -FailOnBlockers`. The gates reported the expected warning that `HEAD` is a documentation sync commit after `v0.1.0-alpha.1`; remote tag verification remains manual.
+- TASK-0048 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed, 59/59 tests; `scan --ci` passed with no risk findings after exact local smoke-test path wording was generalized; `doctor` passed; prohibited maintainer identity term scan returned no matches; tracked artifact scan returned no matches; `git diff --check` passed; `check-v100-documentation-release-gates.ps1 -FailOnIssues` passed with the expected dirty working tree warning.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -366,4 +371,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0047 is implemented and verified locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, and published on NuGet. Finish the documentation sync commit if it is not already committed, then run clean-working-tree release gates. Do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0048 is implemented and verified locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, and smoke-tested as a global tool. Commit the TASK-0048 documentation sync if it is not already committed. Do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.

@@ -71,6 +71,28 @@ ackit --help
 ackit scan --ci
 ```
 
+Kurulu tool icin hizli dogrulama:
+
+```powershell
+$smoke = Join-Path $env:TEMP "ackit-smoke-test"
+New-Item -ItemType Directory -Force -Path $smoke | Out-Null
+Push-Location $smoke
+dotnet new console -n DemoApp
+Push-Location DemoApp
+ackit init --lang tr
+ackit scan --ci
+ackit generate --target all --lang tr
+ackit task "Demo smoke test gorevi" --lang tr
+ackit report --output .ackit/reports/smoke.html
+ackit webui --output .ackit/webui/index.html
+ackit prompt-pack --output .ackit/prompt-packs/smoke.md --json
+ackit context-export --prompt-pack .ackit/prompt-packs/smoke.md --approve --output .ackit/context-exports/smoke.json --json
+Pop-Location
+Pop-Location
+```
+
+Minimal demo app icinde `ackit doctor`, README, LICENSE, SECURITY, test, CI, `.gitignore` veya package metadata eksiklerini raporlayabilir. Bu beklenen repository-health ciktisidir, tool hatasi degildir.
+
 ## CLI Komutlari
 ```text
 ackit init [--lang en|tr] [--json]

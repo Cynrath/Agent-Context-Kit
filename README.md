@@ -71,6 +71,28 @@ ackit --help
 ackit scan --ci
 ```
 
+Quick installed-tool verification:
+
+```powershell
+$smoke = Join-Path $env:TEMP "ackit-smoke-test"
+New-Item -ItemType Directory -Force -Path $smoke | Out-Null
+Push-Location $smoke
+dotnet new console -n DemoApp
+Push-Location DemoApp
+ackit init --lang tr
+ackit scan --ci
+ackit generate --target all --lang tr
+ackit task "Demo smoke test task" --lang en
+ackit report --output .ackit/reports/smoke.html
+ackit webui --output .ackit/webui/index.html
+ackit prompt-pack --output .ackit/prompt-packs/smoke.md --json
+ackit context-export --prompt-pack .ackit/prompt-packs/smoke.md --approve --output .ackit/context-exports/smoke.json --json
+Pop-Location
+Pop-Location
+```
+
+`ackit doctor` can report missing README, LICENSE, SECURITY, tests, CI, `.gitignore`, or package metadata in a minimal demo app. That is expected repository-health output, not a tool failure.
+
 ## CLI Commands
 ```text
 ackit init [--lang en|tr] [--json]

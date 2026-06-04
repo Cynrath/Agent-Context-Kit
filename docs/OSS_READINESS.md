@@ -34,4 +34,5 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub Release page is completed: `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
 - NuGet publish is completed for `AgentContextKit` version `0.1.0-alpha.1`.
 - NuGet global tool install is verified.
+- NuGet global tool smoke test is verified in a clean demo app, including init, scan, generation, task creation, report, Web UI, prompt-pack, context-export, JSON output, and redact-check Critical detection.
 - `v0.1.0-alpha.1` is published on GitHub and NuGet.
