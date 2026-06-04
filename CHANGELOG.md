@@ -5,6 +5,9 @@ All notable changes to AgentContextKit will be documented in this file.
 This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
+### Added
+- Added a cross-platform GitHub Actions smoke workflow for the published NuGet global tool on Windows, Ubuntu, and macOS.
+
 ### Changed
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
 - Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.

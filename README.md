@@ -93,6 +93,8 @@ Pop-Location
 
 `ackit doctor` can report missing README, LICENSE, SECURITY, tests, CI, `.gitignore`, or package metadata in a minimal demo app. That is expected repository-health output, not a tool failure.
 
+Cross-platform NuGet smoke coverage is tracked by `.github/workflows/cross-platform-smoke.yml`. It installs `AgentContextKit` `0.1.0-alpha.1` as a global tool on Windows, Ubuntu, and macOS, then runs the installed-tool smoke flow against a clean demo app.
+
 ## CLI Commands
 ```text
 ackit init [--lang en|tr] [--json]

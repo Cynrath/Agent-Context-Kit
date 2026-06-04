@@ -27,6 +27,12 @@
 - Turkish localization polish for CLI ASCII fallback wording such as `olusturuldu` and `Tarama ozeti`; this is not a `0.1.0-alpha.1` blocker.
 - Final local readiness consolidation.
 
+## v0.1.0-alpha.2 Preparation
+- Run the published NuGet global tool smoke workflow on Windows, Ubuntu, and macOS before considering an alpha.2 package.
+- Use cross-platform CI smoke results to identify path separator, shell, report output, Web UI output, prompt-pack, and context-export portability issues.
+- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a new tag and NuGet publish.
+- Keep Turkish CLI ASCII fallback localization polish in the v0.2 backlog unless it is explicitly promoted.
+
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.
 - CI mode. Started with `ackit scan --ci` and GitHub Actions integration.

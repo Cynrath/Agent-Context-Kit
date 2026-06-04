@@ -16,6 +16,7 @@ Codex must not push commits, create GitHub releases, publish NuGet packages, or 
 - NuGet publish: completed.
 - NuGet global tool install verification: completed.
 - NuGet global tool smoke test: completed.
+- Cross-platform CI smoke workflow: prepared for Windows, Ubuntu, and macOS.
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageId` is `AgentContextKit`.
@@ -60,6 +61,17 @@ Completed smoke test evidence:
 - `context-export` did not call a remote LLM provider.
 
 `ackit doctor` reported expected health failures on the minimal demo app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata were absent. This is correct repository-health behavior, not a tool issue.
+
+## Cross-Platform CI Smoke Test
+`.github/workflows/cross-platform-smoke.yml` verifies the published NuGet global tool on:
+
+- `windows-latest`
+- `ubuntu-latest`
+- `macos-latest`
+
+The workflow installs .NET 10, installs `AgentContextKit` version `0.1.0-alpha.1` globally, adds the platform-specific `.dotnet/tools` path, creates a clean demo app, runs the installed-tool smoke flow, verifies fake secret detection returns exit code `2`, deletes the fake secret, and finishes with `ackit scan --ci`.
+
+This workflow is alpha.2 preparation only. It does not create tags, publish NuGet packages, or mutate release metadata.
 
 ## GitHub Repository Metadata
 Repository description:
