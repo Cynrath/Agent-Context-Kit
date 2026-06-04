@@ -67,7 +67,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ## Public Release Blockers
 - `RepositoryUrl` and `PackageProjectUrl` are TODO placeholders until the maintainer selects the real public URL.
 - Recommended public URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; casing/name alignment is maintainer-only.
+- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; casing/name alignment is maintainer-only.
 - `scripts/check-package-metadata.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/audit-public-release.ps1 -FailOnIssues` must exit `0` before any public release.
 - `scripts/check-release-blockers.ps1 -FailOnBlockers` must exit `0` before any public release.

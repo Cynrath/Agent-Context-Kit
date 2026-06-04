@@ -145,7 +145,7 @@ Completed.
 - Updated architecture, project map, roadmap, release blocker, public gate, maintainer handoff, OSS, source hygiene, changelog, context, next steps, and session handoff docs.
 - Package metadata reviewed: `Authors=Cynrath`, `Company=Cynrath`, `PackageId=AgentContextKit`, `ToolCommandName=ackit`, `PackageLicenseExpression=MIT`; TODO package URLs remain blockers.
 - Recommended final public repo URL documented as `https://github.com/Cynrath/agent-context-kit`.
-- Current `origin` documented as `https://github.com/Cynrath/Agent-Context-Kit.git`; casing/name alignment remains maintainer-only.
+- Current `origin` documented as `https://github.com/Cynrath/agent-context-kit.git`; casing/name alignment remains maintainer-only.
 - `dotnet restore AgentContextKit.sln`: passed.
 - `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
 - `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 59/59 tests.

@@ -3,7 +3,7 @@
 TASK-0040 public release final cleanup is complete locally; remaining release actions are maintainer-only.
 
 1. Decide the final public repository URL. Recommended review URL: `https://github.com/Cynrath/agent-context-kit`.
-2. Decide whether current `origin` casing/name `https://github.com/Cynrath/Agent-Context-Kit.git` should be kept or aligned.
+2. Decide whether current `origin` casing/name `https://github.com/Cynrath/agent-context-kit.git` should be kept or aligned.
 3. Replace TODO `RepositoryUrl` and `PackageProjectUrl` only after that URL is selected.
 4. Run `powershell -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -FailOnIssues` after replacing TODO package URLs.
 5. Create the release tag only after explicit maintainer approval.

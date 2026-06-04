@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\AgentContextKit.Core\AgentContextKit.Core.csproj" />
@@ -21,8 +21,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>ai;coding-agent;context;security;cli;oss</PackageTags>
     <PackageReleaseNotes>Initial alpha with offline scanning, safe agent context generation, task-first workflow files, redact checks, JSON output, and English/Turkish localization foundation.</PackageReleaseNotes>
-    <PackageProjectUrl>https://github.com/TODO/agent-context-kit</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/TODO/agent-context-kit</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Cynrath/agent-context-kit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Cynrath/agent-context-kit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>

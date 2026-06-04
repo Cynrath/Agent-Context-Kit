@@ -5,10 +5,10 @@ This handoff lists the remaining maintainer-only actions for a public release.
 Codex must not run these steps unless the maintainer explicitly asks for each public action. The current automated work stops before URL selection, tag creation, push, and NuGet publish.
 
 ## Current Blocked State
-- `RepositoryUrl` is `https://github.com/TODO/agent-context-kit`.
-- `PackageProjectUrl` is `https://github.com/TODO/agent-context-kit`.
+- `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
+- `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - Recommended final public repository URL for review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; decide intentionally whether to keep that casing/name or align the public URL before changing package metadata.
+- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; decide intentionally whether to keep that casing/name or align the public URL before changing package metadata.
 - `HEAD` has no release tag.
 - No push or NuGet publish has been approved.
 

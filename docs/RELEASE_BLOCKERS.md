@@ -12,7 +12,7 @@ The local v0.1.0-alpha.1 package can be built and installed from a temporary loc
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` has a TODO `PackageProjectUrl`.
 - No public repository URL has been intentionally selected by the maintainer in this session.
 - Recommended final public repository URL for maintainer review: `https://github.com/Cynrath/agent-context-kit`.
-- Current local `origin` is `https://github.com/Cynrath/Agent-Context-Kit.git`; the casing/name difference is a maintainer-only decision and must not be changed automatically.
+- Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`; the casing/name difference is a maintainer-only decision and must not be changed automatically.
 - No public release tag has been created.
 - No NuGet publish approval has been given.
 

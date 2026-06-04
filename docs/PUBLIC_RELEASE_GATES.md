@@ -21,7 +21,7 @@ Expected current blockers:
 - TODO `PackageProjectUrl`.
 - Missing release tag.
 - No explicit maintainer approval for push or NuGet publish.
-- Maintainer-only decision on final public URL. Recommended URL for review: `https://github.com/Cynrath/agent-context-kit`; current local origin is `https://github.com/Cynrath/Agent-Context-Kit.git`.
+- Maintainer-only decision on final public URL. Recommended URL for review: `https://github.com/Cynrath/agent-context-kit`; current local origin is `https://github.com/Cynrath/agent-context-kit.git`.
 
 ## Failing Gate Mode
 Run only when preparing a real public release:
