@@ -12,22 +12,22 @@ public sealed class TextProvider : ITextProvider
         ["created"] = new()
         {
             ["en"] = "created",
-            ["tr"] = "olusturuldu"
+            ["tr"] = "oluşturuldu"
         },
         ["skipped"] = new()
         {
             ["en"] = "skipped existing",
-            ["tr"] = "var olan atlandi"
+            ["tr"] = "var olan atlandı"
         },
         ["scanSummary"] = new()
         {
             ["en"] = "Scan summary",
-            ["tr"] = "Tarama ozeti"
+            ["tr"] = "Tarama özeti"
         },
         ["doctor"] = new()
         {
             ["en"] = "Doctor checks",
-            ["tr"] = "Doctor kontrolleri"
+            ["tr"] = "Sağlık kontrolleri"
         },
         ["noFindings"] = new()
         {

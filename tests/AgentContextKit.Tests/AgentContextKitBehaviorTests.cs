@@ -901,6 +901,57 @@ public sealed class CliJsonAndMetadataTests
     }
 
     [Fact]
+    public void TurkishScanOutputUsesNaturalUtf8Text()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+
+        var result = RunCli(repo.Path, ["scan", "--lang", "tr"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("Tarama özeti", result.Output);
+        Assert.Contains("Risk bulgusu yok.", result.Output);
+    }
+
+    [Fact]
+    public void TurkishInitOutputUsesNaturalUtf8Text()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["init", "--lang", "tr"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("oluşturuldu", result.Output);
+    }
+
+    [Fact]
+    public void TurkishDoctorOutputUsesNaturalUtf8Text()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["doctor", "--lang", "tr"]);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Contains("Sağlık kontrolleri", result.Output);
+    }
+
+    [Fact]
+    public void TurkishJsonOutputKeepsSchemaFields()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+
+        var result = RunCli(repo.Path, ["scan", "--lang", "tr", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
+        Assert.Equal("scan", json?["command"]?.GetValue<string>());
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+        Assert.DoesNotContain("Tarama özeti", result.Output);
+    }
+
+    [Fact]
     public void ScanWithoutCiPreservesZeroExitForFindings()
     {
         using var repo = TempRepository.Create();

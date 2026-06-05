@@ -1,7 +1,7 @@
 # TASK-0053: Turkish Localization Polish
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Replace visible Turkish ASCII fallback CLI wording with natural UTF-8 Turkish output while preserving JSON behavior.
@@ -62,4 +62,7 @@ None beyond keeping scanner/report behavior unchanged.
 - Restore previous TextProvider values if terminal compatibility issues are found.
 
 ## Completion Notes
-Pending.
+- Updated Turkish human CLI text for created/skipped status, scan summary, and doctor heading.
+- Added tests for `scan --lang tr`, `init --lang tr`, `doctor --lang tr`, and `scan --lang tr --json`.
+- Confirmed JSON output keeps stable schema fields and does not include localized scan summary text.
+- Updated localization docs and README.tr with UTF-8 terminal guidance.

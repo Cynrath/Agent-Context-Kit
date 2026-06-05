@@ -143,6 +143,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 
 ## Lokalizasyon
 Varsayilan dil English'tir. Turkish icin `--lang tr` kullanilir. Bilinmeyen dil degeri English'e duser.
+Turkish human-readable CLI output UTF-8 Turkce karakterler kullanabilir; JSON field adlari ve schema degerleri English/stable kalir.
 
 ## Konfigurasyon Ve JSON
 `.ackit/config.yml` icin [docs/CONFIGURATION.md](docs/CONFIGURATION.md), machine-readable cikti icin [docs/JSON_OUTPUT.md](docs/JSON_OUTPUT.md) dosyasina bakin.
