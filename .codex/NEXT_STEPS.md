@@ -1,6 +1,6 @@
 # Next Steps
 
-TASK-0051 through TASK-0054 alpha.2 hardening task set is implemented locally.
+TASK-0055 alpha.2 release decision, source smoke workflow, and version bump is active.
 
 1. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 2. Treat GitHub repository public status, `master` push, and `v0.1.0-alpha.1` tag push as complete.
@@ -11,8 +11,9 @@ TASK-0051 through TASK-0054 alpha.2 hardening task set is implemented locally.
 7. Treat TASK-0051 scanner allowlist and fixture-noise reduction as implemented and committed locally.
 8. Treat TASK-0052 GitHub Actions Node 24 readiness as implemented and committed locally; hosted validation remains manual after a maintainer push.
 9. Treat TASK-0053 Turkish localization polish as implemented and committed locally.
-10. Treat TASK-0054 alpha.2 release preparation as implemented locally; commit after validation if not committed.
+10. Treat TASK-0054 alpha.2 release preparation as implemented and committed locally.
 11. Treat Codex for OSS form submission as completed per maintainer-provided status.
-12. Do not push, create GitHub releases, publish NuGet packages, redact, delete, force push, or create remotes from the agent session.
-13. Next recommended task: dedicated alpha.2 release decision/version-bump task after hosted CI validation.
-14. Keep the legacy v1.0 readiness reference available: `TASK-0039` and `scripts/check-v100-readiness.ps1`.
+12. Complete TASK-0055 by adding a source/current-branch cross-platform smoke workflow, bumping source metadata to `0.1.0-alpha.2`, syncing docs, running local package smoke, and committing after validation.
+13. Keep `.github/workflows/cross-platform-smoke.yml` pinned to published package `0.1.0-alpha.1` until alpha.2 is published.
+14. Do not push, create GitHub releases, publish NuGet packages, redact, delete, force push, or create remotes from the agent session.
+15. Keep the legacy v1.0 readiness reference available: `TASK-0039` and `scripts/check-v100-readiness.ps1`.
