@@ -32,6 +32,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - GitHub repository is public.
 - Current release tag `v0.1.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run is green.
+- Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description and topics are set.
 - GitHub Release page for `v0.1.0-alpha.2` is completed.
 - NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
@@ -40,6 +41,8 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
 - Alpha.2 hardening and publication verification are complete through TASK-0056.
+- TASK-0057 added GitHub issue templates, a pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs.
+- TASK-0057 pre-commit validation passed: restore, Release build, 67/67 tests, `scan --ci`, `doctor`, `scan --json`, installed `ackit` version/help, hygiene scans, `git diff --check`, and v1.0 documentation release gate.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -84,6 +87,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - `master` pushed: yes.
 - `v0.1.0-alpha.2` pushed: yes.
 - GitHub Actions latest `master` run: success.
+- Latest read-only Actions check: `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded on commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description: set.
 - Repository topics: set.
 - GitHub Release page: completed.
@@ -94,6 +98,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Codex for OSS form submission is completed per maintainer-provided status.
 - Current release publication: TASK-0056 records `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install verification, and Web UI smoke evidence.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the current published release state and future release guidance.
+- GitHub contributor workflow docs were added in TASK-0057: `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -145,3 +150,5 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0054 completed alpha.2 release preparation docs without changing version, tagging, publishing, creating GitHub releases, or pushing.
 - TASK-0055 implements alpha.2 release decision work: source metadata/version bump, source/current-branch smoke workflow, README command cleanup, local alpha.2 package smoke, and release doc sync.
 - TASK-0055 validation passed locally: restore/build/test, scan, doctor, JSON scan, local alpha.2 package smoke, package metadata gate, documentation gate, maintainer identity scan, tracked artifact scan, exact token/local-path scan, and `git diff --check`.
+- TASK-0056 completed alpha.2 publish verification and refreshed agent/public release docs for the published `v0.1.0-alpha.2` state.
+- TASK-0057 is completed for GitHub repo hygiene, issue templates, PR template, maintainer guide, support matrix, contributor onboarding, and issue triage docs. The post-commit public release gate rerun passed with only the expected post-release `HEAD` warning.

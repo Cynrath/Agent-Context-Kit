@@ -9,6 +9,7 @@ Codex must not push commits, create GitHub releases, publish NuGet packages, or 
 - `master` pushed: yes.
 - `v0.1.0-alpha.2` tag pushed: yes.
 - GitHub Actions latest `master` run is green per maintainer-provided release status.
+- Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description is set.
 - Repository topics are set.
 - GitHub Release page for `v0.1.0-alpha.2`: completed.
@@ -16,6 +17,8 @@ Codex must not push commits, create GitHub releases, publish NuGet packages, or 
 - NuGet global tool install verification for `0.1.0-alpha.2`: completed.
 - NuGet global tool smoke test for `0.1.0-alpha.2`: completed.
 - Cross-platform CI smoke validation: completed on commit `868dff3` for Windows, Ubuntu, and macOS.
+- Current published-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
+- Current source-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageId` is `AgentContextKit`.
@@ -72,6 +75,10 @@ The workflow installs .NET 10, installs `AgentContextKit` version `0.1.0-alpha.2
 
 This workflow remains the published-package smoke baseline for the current release. It does not create tags, publish NuGet packages, or mutate release metadata.
 
+Latest read-only GitHub CLI evidence:
+- Workflow run `27015579020`, commit `8dac9237c27ba912d056344155f1c9f901557bf5`, branch `master`, conclusion `success`.
+- Jobs `smoke (windows-2025)`, `smoke (ubuntu-latest)`, and `smoke (macos-latest)` completed successfully.
+
 ## Cross-Platform Source Smoke Test
 `.github/workflows/cross-platform-source-smoke.yml` is added for current-branch alpha.2 validation.
 
@@ -83,7 +90,12 @@ The workflow:
 - Installs `AgentContextKit` version `0.1.0-alpha.2` from the temporary package source into a temporary tool path.
 - Runs `ackit version`, `ackit --help`, clean DemoApp smoke commands, fake-secret `redact-check` expected failure, fake secret cleanup, and final `ackit scan --ci`.
 
-Hosted validation is manual after the maintainer pushes the workflow.
+Latest read-only GitHub CLI evidence:
+- Workflow run `27015579018`, commit `8dac9237c27ba912d056344155f1c9f901557bf5`, branch `master`, conclusion `success`.
+- Jobs `source smoke (windows-2025)`, `source smoke (ubuntu-latest)`, and `source smoke (macos-latest)` completed successfully.
+
+## GitHub Contributor Workflow
+The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
 
 ## Completed Alpha.2 Work
 Alpha.2 publication is completed after the first alpha release.

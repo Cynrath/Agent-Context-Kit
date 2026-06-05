@@ -35,6 +35,7 @@
 - Polished Turkish human CLI output with UTF-8 text while preserving JSON schema behavior.
 - Added cross-platform source smoke coverage that packs the current branch and installs the local package before publication.
 - Updated published-package smoke coverage to install `AgentContextKit` `0.1.0-alpha.2`.
+- Added GitHub issue templates, pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs.
 
 ## CI And Scanner Backlog
 - TASK-0051 scanner allowlist and fixture-noise reduction:
@@ -57,6 +58,9 @@
   - Record GitHub Release, NuGet publish, install verification, and Web UI smoke.
   - Refresh agent instruction files and active release docs.
   - Update published-package smoke to `0.1.0-alpha.2`.
+- TASK-0057 GitHub repo hygiene and support docs:
+  - Add issue templates, pull request template, maintainer guide, support matrix, contributor onboarding, repository hygiene, and issue triage docs.
+  - Record read-only GitHub Actions validation for `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke`.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

@@ -1,0 +1,69 @@
+name: Security hardening
+description: Suggest scanner, privacy, or safe-default hardening without disclosing a vulnerability.
+title: "security: "
+labels:
+  - security
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this for hardening ideas and non-sensitive security improvements.
+
+        Do not share real secrets, API keys, private repository content, exploit details, or production config in public issues. If you need to disclose a vulnerability, follow `SECURITY.md`.
+  - type: dropdown
+    id: category
+    attributes:
+      label: Area
+      options:
+        - Scanner precision
+        - Secret or PII detection
+        - Local-only data handling
+        - Generated files
+        - CI or release hygiene
+        - Documentation
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: risk
+    attributes:
+      label: Risk or hardening goal
+      description: Describe the issue without sensitive details.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested mitigation
+    validations:
+      required: true
+  - type: input
+    id: ackit-version
+    attributes:
+      label: ackit version
+      placeholder: AgentContextKit 0.1.0-alpha.2
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows, Ubuntu, macOS, or not OS-specific
+  - type: input
+    id: dotnet-sdk
+    attributes:
+      label: .NET SDK version
+      placeholder: 10.0.x or not applicable
+  - type: textarea
+    id: command
+    attributes:
+      label: Related command
+      render: shell
+  - type: dropdown
+    id: private-data
+    attributes:
+      label: Does this report require private data to reproduce?
+      options:
+        - "No"
+        - "Yes, I will use the SECURITY.md disclosure path"
+        - "Unsure"
+    validations:
+      required: true

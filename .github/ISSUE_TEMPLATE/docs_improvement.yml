@@ -1,0 +1,57 @@
+name: Documentation improvement
+description: Report missing, stale, or confusing documentation.
+title: "docs: "
+labels:
+  - documentation
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not paste secrets, private repository content, production config, or real API keys in documentation issues.
+  - type: input
+    id: page
+    attributes:
+      label: Document or section
+      placeholder: README.md, docs/CLI_REFERENCE.md, docs/...
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is missing, stale, or confusing?
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-change
+    attributes:
+      label: Suggested change
+  - type: input
+    id: ackit-version
+    attributes:
+      label: ackit version
+      placeholder: AgentContextKit 0.1.0-alpha.2 or not applicable
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows, Ubuntu, macOS, or not applicable
+  - type: input
+    id: dotnet-sdk
+    attributes:
+      label: .NET SDK version
+      placeholder: 10.0.x or not applicable
+  - type: textarea
+    id: command
+    attributes:
+      label: Related command
+      render: shell
+  - type: dropdown
+    id: private-data
+    attributes:
+      label: Does the example involve secrets or private data?
+      options:
+        - "No"
+        - "Yes, and I will use redacted sample data"
+        - "Unsure"
+    validations:
+      required: true

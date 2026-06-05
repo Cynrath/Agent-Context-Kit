@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability disclosure
+    url: https://github.com/Cynrath/agent-context-kit/security/policy
+    about: Please follow SECURITY.md for vulnerability reports. Do not disclose sensitive details in public issues.
+  - name: General documentation
+    url: https://github.com/Cynrath/agent-context-kit/blob/master/docs/DOCUMENTATION_INDEX.md
+    about: Start here for usage, release, support, and maintainer documentation.

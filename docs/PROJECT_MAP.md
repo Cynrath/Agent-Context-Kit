@@ -18,6 +18,12 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `.editorconfig`
 - `.gitattributes`
 - `.github/copilot-instructions.md`
+- `.github/ISSUE_TEMPLATE/bug_report.yml`
+- `.github/ISSUE_TEMPLATE/config.yml`
+- `.github/ISSUE_TEMPLATE/docs_improvement.yml`
+- `.github/ISSUE_TEMPLATE/feature_request.yml`
+- `.github/ISSUE_TEMPLATE/security_hardening.yml`
+- `.github/pull_request_template.md`
 - `.github/workflows/ci.yml`
 - `.github/workflows/cross-platform-source-smoke.yml`
 - `.github/workflows/cross-platform-smoke.yml`
@@ -36,6 +42,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/CODEX_FOR_OSS_APPLICATION.md`
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`
 - `docs/CONFIGURATION.md`
+- `docs/CONTRIBUTOR_ONBOARDING.md`
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT_STANDARD.md`
 - `docs/DOCUMENTATION_INDEX.md`
@@ -44,10 +51,13 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/EXIT_CODES.md`
 - `docs/FAQ.md`
 - `docs/GOVERNANCE.md`
+- `docs/GITHUB_REPO_HYGIENE.md`
 - `docs/HTML_REPORTS.md`
+- `docs/ISSUE_TRIAGE.md`
 - `docs/JSON_OUTPUT.md`
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`
 - `docs/LOCALIZATION.md`
+- `docs/MAINTAINER_GUIDE.md`
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`
 - `docs/MAINTAINERS.md`
 - `docs/NUGET_METADATA.md`
@@ -68,6 +78,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/SAMPLES.md`
 - `docs/SOURCE_HYGIENE.md`
 - `docs/SOURCE_ARCHIVE.md`
+- `docs/SUPPORT_MATRIX.md`
 - `docs/SUPPORT.md`
 - `docs/tasks/TASK-0001-foundation.md`
 - `docs/tasks/TASK-0001.md`
@@ -126,6 +137,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/tasks/TASK-0054-alpha2-release-preparation.md`
 - `docs/tasks/TASK-0055-alpha2-release-decision.md`
 - `docs/tasks/TASK-0056-alpha2-publish-verification.md`
+- `docs/tasks/TASK-0057-github-repo-hygiene-support-docs.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -180,4 +192,4 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
-- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0056-alpha2-publish-verification.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, and refreshed agent instructions.
+- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0057-github-repo-hygiene-support-docs.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, and issue triage docs.

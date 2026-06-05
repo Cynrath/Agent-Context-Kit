@@ -1,0 +1,67 @@
+# Maintainer Guide
+
+This guide is for repository maintainers preparing local changes, releases, and post-release verification for AgentContextKit.
+
+Codex or other agent sessions must not push, tag, create GitHub Releases, publish NuGet packages, create remotes, or handle API keys unless the maintainer explicitly requests that public action.
+
+## Normal Change Flow
+1. Create or update a task file under `docs/tasks/`.
+2. Keep changes small and scoped.
+3. Update docs after behavior or release workflow changes.
+4. Run restore, Release build, tests, `ackit scan --ci`, and `ackit doctor`.
+5. Run hygiene scans for maintainer identity terms, tracked artifacts, and exact token/local-path patterns.
+6. Commit only after validation passes.
+
+## Release Flow
+Use `docs/MAINTAINER_RELEASE_HANDOFF.md` as the current release source of truth.
+
+Before a future release:
+1. Decide the next version and document it in a task.
+2. Update package metadata and CLI runtime version intentionally.
+3. Update README install commands, packaging docs, release validation docs, and changelog.
+4. Run local package validation with a temporary package source and temporary tool path.
+5. Confirm `cross-platform-source-smoke` passes after the release-prep commit is pushed.
+6. Create the release tag only after source validation.
+7. Create the GitHub Release page from the tag.
+8. Publish the NuGet package using a secure maintainer environment.
+9. Verify install or update from NuGet.
+10. Update published-package smoke workflow and public docs to the new version.
+
+## Version Bump Notes
+- Keep `PackageId` as `AgentContextKit`.
+- Keep `ToolCommandName` as `ackit`.
+- Keep `RepositoryUrl` and `PackageProjectUrl` pointed at the public repository.
+- Keep `Authors` and `Company` as `Cynrath`.
+- Do not change generated file conventions without updating docs and tests.
+
+## GitHub Actions Validation
+Current hosted checks:
+- `ci`: build, tests, and repository scan on Ubuntu and Windows.
+- `cross-platform-smoke`: installs the published NuGet global tool on Windows, Ubuntu, and macOS.
+- `cross-platform-source-smoke`: packs the current branch and tests the local package on Windows, Ubuntu, and macOS.
+
+After push, confirm all three workflows are green before tagging or publishing.
+
+Read-only status check:
+
+```powershell
+gh run list --repo Cynrath/agent-context-kit --limit 10
+gh run list --repo Cynrath/agent-context-kit --workflow ci.yml --limit 3
+gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-smoke.yml --limit 3
+gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-source-smoke.yml --limit 3
+```
+
+## NuGet Publish Notes
+- Build and pack from a clean, validated working tree.
+- Use a maintainer-owned NuGet API key stored outside the repository.
+- Do not commit `.nupkg`, `.snupkg`, logs, or generated publish output.
+- Verify `ackit version`, `ackit --help`, and a clean demo-app smoke flow after publication.
+
+## Rollback Notes
+- NuGet packages cannot be truly deleted once published. Prefer deprecating or unlisting a bad package and publishing a fixed version.
+- A GitHub Release page can be edited or marked as pre-release if messaging is wrong.
+- Avoid force-push rollback. Use a corrective commit for docs or source fixes.
+- If a release tag points to the wrong commit, stop and document the incident before any maintainer-only tag action.
+
+## Current Release
+`v0.1.0-alpha.2` is published on GitHub and NuGet. Global tool install, published-package smoke, source smoke, Web UI smoke, and hosted Actions validation are complete.

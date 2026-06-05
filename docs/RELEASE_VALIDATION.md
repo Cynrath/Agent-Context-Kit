@@ -247,13 +247,13 @@ The workflow:
 
 Latest recorded hosted result:
 - Workflow: `cross-platform-smoke`.
-- Commit: `868dff3`.
+- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
-The workflow now installs `0.1.0-alpha.2`; hosted validation after the TASK-0056 push remains a maintainer follow-up.
+The workflow installs `0.1.0-alpha.2` and the TASK-0056 post-publish push has hosted validation completed.
 
 ## Cross-Platform Source Smoke Workflow
 `.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
@@ -267,8 +267,21 @@ The workflow:
 - Does not push, tag, create GitHub Releases, or publish NuGet packages.
 
 Hosted validation status:
-- Local workflow syntax and local package smoke are validated by TASK-0055.
-- Hosted Windows, Ubuntu, and macOS workflow execution remains a maintainer check after source changes are pushed.
+- Workflow: `cross-platform-source-smoke`.
+- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Branch: `master`.
+- Status: Success.
+- Windows, Ubuntu, and macOS jobs succeeded.
+- Source restore/build/test, local pack/install, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` completed successfully.
+
+## CI Workflow
+Latest recorded hosted result:
+- Workflow: `ci`.
+- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Branch: `master`.
+- Status: Success.
+- Ubuntu and Windows jobs succeeded.
+- Restore, Release build, Release tests, and repository `scan --ci` completed successfully.
 
 ## GitHub Actions Node 24 Readiness
 The local workflow files are prepared for the GitHub Actions Node 24 JavaScript action runtime:
@@ -280,7 +293,7 @@ The local workflow files are prepared for the GitHub Actions Node 24 JavaScript 
 - Windows jobs now target `windows-2025` explicitly instead of relying on the moving `windows-latest` label.
 - `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` is not set because the selected official action majors already run on Node 24.
 
-Hosted workflow validation is manual after a maintainer push. This task does not push, tag, create GitHub Releases, or publish NuGet packages.
+Hosted workflow validation is complete for the latest TASK-0056 push. Future workflow changes still require hosted validation after a maintainer push. This task does not push, tag, create GitHub Releases, or publish NuGet packages.
 
 ## Manual Release Gates
 - Run `scripts/check-package-metadata.ps1 -FailOnIssues` and confirm it exits `0`.

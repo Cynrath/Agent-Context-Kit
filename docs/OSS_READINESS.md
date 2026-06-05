@@ -8,7 +8,12 @@ Maintain the completed `v0.1.0-alpha.2` public release and keep future release w
 - License.
 - Security policy.
 - Contribution guide.
+- Contributor onboarding.
 - Code of conduct.
+- Issue templates.
+- Pull request template.
+- Support matrix.
+- Maintainer guide.
 - Changelog.
 - Roadmap.
 - CI.
@@ -30,6 +35,7 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub repository is public.
 - `v0.1.0-alpha.2` tag is pushed.
 - GitHub Actions latest `master` run is green.
+- Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passed for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description and topics are set.
 - GitHub Release page is completed for `v0.1.0-alpha.2`.
 - NuGet publish is completed for `AgentContextKit` version `0.1.0-alpha.2`.
@@ -40,3 +46,4 @@ The first release should be small, working, documented, and honest about limitat
 - Codex for OSS form submission is completed per maintainer-provided status.
 - Published-package smoke workflow now installs `AgentContextKit` `0.1.0-alpha.2`.
 - Local `.ackit/reports/` and `.ackit/webui/` outputs are ignored local review artifacts and are not public release artifacts.
+- GitHub issue templates, pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs are present.

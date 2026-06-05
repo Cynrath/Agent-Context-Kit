@@ -166,6 +166,11 @@ Key docs:
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
+- [Contributor Onboarding](docs/CONTRIBUTOR_ONBOARDING.md)
+- [Support Matrix](docs/SUPPORT_MATRIX.md)
+- [Maintainer Guide](docs/MAINTAINER_GUIDE.md)
+- [GitHub Repo Hygiene](docs/GITHUB_REPO_HYGIENE.md)
+- [Issue Triage](docs/ISSUE_TRIAGE.md)
 - [Maintainer Release Handoff](docs/MAINTAINER_RELEASE_HANDOFF.md)
 - [Public Release Audit](docs/PUBLIC_RELEASE_AUDIT.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)
@@ -180,7 +185,7 @@ Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md)
 Public release blockers are tracked in [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md).
 
 ## Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md).
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/CONTRIBUTOR_ONBOARDING.md](docs/CONTRIBUTOR_ONBOARDING.md). Please use the GitHub issue and pull request templates, and do not include secrets or private repository data in public reports.
 
 ## Security
 See [SECURITY.md](SECURITY.md). Please do not include secrets, private repository contents, or production configuration in public issues.

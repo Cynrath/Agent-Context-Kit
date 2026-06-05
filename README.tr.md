@@ -166,6 +166,11 @@ Onemli dokumanlar:
 - [Source Hygiene](docs/SOURCE_HYGIENE.md)
 - [Security Model](docs/SECURITY_MODEL.md)
 - [Packaging](docs/PACKAGING.md)
+- [Contributor Onboarding](docs/CONTRIBUTOR_ONBOARDING.md)
+- [Support Matrix](docs/SUPPORT_MATRIX.md)
+- [Maintainer Guide](docs/MAINTAINER_GUIDE.md)
+- [GitHub Repo Hygiene](docs/GITHUB_REPO_HYGIENE.md)
+- [Issue Triage](docs/ISSUE_TRIAGE.md)
 - [Maintainer Release Handoff](docs/MAINTAINER_RELEASE_HANDOFF.md)
 - [Public Release Audit](docs/PUBLIC_RELEASE_AUDIT.md)
 - [Release Validation](docs/RELEASE_VALIDATION.md)
@@ -180,7 +185,7 @@ Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/R
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 
 ## Katki
-Bkz. [CONTRIBUTING.md](CONTRIBUTING.md).
+Bkz. [CONTRIBUTING.md](CONTRIBUTING.md) ve [docs/CONTRIBUTOR_ONBOARDING.md](docs/CONTRIBUTOR_ONBOARDING.md). GitHub issue ve pull request template'lerini kullanin; public raporlarda secret veya private repository verisi paylasmayin.
 
 ## Guvenlik
 Bkz. [SECURITY.md](SECURITY.md). Public issue'larda secret, private repository icerigi veya production config paylasmayin.

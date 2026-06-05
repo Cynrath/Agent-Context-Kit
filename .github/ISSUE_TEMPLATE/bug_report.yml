@@ -1,0 +1,69 @@
+name: Bug report
+description: Report a reproducible AgentContextKit issue.
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug. Do not paste secrets, private repository content, production config, or real API keys.
+  - type: input
+    id: ackit-version
+    attributes:
+      label: ackit version
+      description: Run `ackit version`.
+      placeholder: AgentContextKit 0.1.0-alpha.2
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows 2025, Ubuntu latest, macOS latest, or local OS version
+    validations:
+      required: true
+  - type: input
+    id: dotnet-sdk
+    attributes:
+      label: .NET SDK version
+      description: Run `dotnet --version`.
+      placeholder: 10.0.x
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command used
+      description: Paste the command line that failed. Redact private paths and arguments.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or output
+      description: Paste the smallest useful output. Redact secrets, private paths, private repo names, and production config.
+      render: text
+  - type: dropdown
+    id: private-data
+    attributes:
+      label: Does your repository or output contain secrets or private data?
+      options:
+        - "No"
+        - "Yes, and I have redacted it"
+        - "Unsure"
+    validations:
+      required: true

@@ -1,0 +1,55 @@
+name: Feature request
+description: Propose a focused AgentContextKit improvement.
+title: "feat: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please describe the workflow and outcome. Do not include secrets, private repository content, or production config.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What workflow is hard, missing, or error-prone today?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: What should AgentContextKit do?
+    validations:
+      required: true
+  - type: input
+    id: ackit-version
+    attributes:
+      label: ackit version
+      description: Run `ackit version` if this relates to current behavior.
+      placeholder: AgentContextKit 0.1.0-alpha.2
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: Windows, Ubuntu, macOS, or not OS-specific
+  - type: input
+    id: dotnet-sdk
+    attributes:
+      label: .NET SDK version
+      placeholder: 10.0.x or not applicable
+  - type: textarea
+    id: command
+    attributes:
+      label: Related command or workflow
+      render: shell
+  - type: dropdown
+    id: private-data
+    attributes:
+      label: Would this feature process secrets or private repository data?
+      options:
+        - "No"
+        - "Yes, with local-only handling"
+        - "Unsure"
+    validations:
+      required: true

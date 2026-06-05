@@ -20,6 +20,7 @@
 - `docs/WEB_UI_PROTOTYPE.md`: offline static Web UI prototype generation.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
+- `docs/SUPPORT_MATRIX.md`: supported OS, .NET, shell, and command coverage.
 
 ## Architecture And Development
 - `docs/ARCHITECTURE.md`: solution structure and boundaries.
@@ -40,8 +41,12 @@
 
 ## OSS And Maintainers
 - `CONTRIBUTING.md`: contribution rules.
+- `docs/CONTRIBUTOR_ONBOARDING.md`: contributor setup, task-first workflow, and validation.
 - `CODE_OF_CONDUCT.md`: conduct expectations.
 - `docs/SUPPORT.md`: support scope.
+- `docs/MAINTAINER_GUIDE.md`: maintainer change, release, NuGet, and rollback workflow.
+- `docs/GITHUB_REPO_HYGIENE.md`: GitHub metadata, templates, branch protection, and Actions hygiene.
+- `docs/ISSUE_TRIAGE.md`: issue labels, routing, severity, and closure rules.
 - `docs/GOVERNANCE.md`: decision and release governance.
 - `docs/MAINTAINERS.md`: maintainer responsibilities.
 - `docs/OSS_READINESS.md`: OSS readiness goals.
