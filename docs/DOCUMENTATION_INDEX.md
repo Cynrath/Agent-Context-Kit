@@ -44,8 +44,11 @@
 - `docs/CONTRIBUTOR_ONBOARDING.md`: contributor setup, task-first workflow, and validation.
 - `CODE_OF_CONDUCT.md`: conduct expectations.
 - `docs/SUPPORT.md`: support scope.
+- `docs/SUPPORT_MATRIX.md`: supported platforms, .NET version, shells, and tested command classes.
 - `docs/MAINTAINER_GUIDE.md`: maintainer change, release, NuGet, and rollback workflow.
 - `docs/GITHUB_REPO_HYGIENE.md`: GitHub metadata, templates, branch protection, and Actions hygiene.
+- `docs/GITHUB_LABELS.md`: recommended GitHub labels and optional maintainer-only label commands.
+- `docs/GITHUB_SETTINGS_CHECKLIST.md`: repository metadata, branch protection, security, and release settings checklist.
 - `docs/ISSUE_TRIAGE.md`: issue labels, routing, severity, and closure rules.
 - `docs/GOVERNANCE.md`: decision and release governance.
 - `docs/MAINTAINERS.md`: maintainer responsibilities.

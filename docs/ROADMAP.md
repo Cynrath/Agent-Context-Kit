@@ -61,6 +61,20 @@
 - TASK-0057 GitHub repo hygiene and support docs:
   - Add issue templates, pull request template, maintainer guide, support matrix, contributor onboarding, repository hygiene, and issue triage docs.
   - Record read-only GitHub Actions validation for `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke`.
+- TASK-0058 repository settings, badges, labels, and public presentation hardening:
+  - Add compact README badges for Actions, NuGet, license, and .NET 10.
+  - Add GitHub label guidance and repository settings checklist.
+  - Keep label creation, branch protection, and repository settings as maintainer-only manual actions.
+- TASK-0059 scanner SARIF output planning:
+  - Plan SARIF output for GitHub code scanning compatibility without enabling upload by default.
+- TASK-0060 GitHub Actions usage examples:
+  - Add documented workflow snippets for source scan, report generation, and release preflight usage.
+- TASK-0061 sample repository gallery:
+  - Expand sample documentation with screenshots or concise stack examples.
+- TASK-0062 v0.2.0-alpha scanner expansion:
+  - Continue planned stack/risk scanner expansion from the v0.2 roadmap.
+- TASK-0063 README screenshots/Web UI preview assets:
+  - Plan safe public preview images for README and Web UI documentation without exposing local paths or private data.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

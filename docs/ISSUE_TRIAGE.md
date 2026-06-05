@@ -3,17 +3,26 @@
 This document keeps issue handling consistent and safe.
 
 ## Label Recommendations
-- `bug`: reproducible incorrect behavior.
-- `enhancement`: new capability or workflow improvement.
-- `documentation`: docs, examples, or wording.
-- `security`: hardening work that does not disclose a vulnerability.
-- `scanner`: stack/risk scanner behavior.
-- `ci`: GitHub Actions or release validation.
-- `localization`: English or Turkish output/docs.
-- `release`: packaging, versioning, GitHub Release, or NuGet follow-up.
-- `needs-repro`: missing reproduction details.
-- `blocked`: requires maintainer-only external action.
+- `type: bug`: reproducible incorrect behavior.
+- `type: feature`: new capability or workflow improvement.
+- `type: docs`: docs, examples, or wording.
+- `type: ci`: GitHub Actions or release validation.
+- `type: security-hardening`: hardening work that does not disclose a vulnerability.
+- `type: refactor`: internal cleanup without behavior change.
+- `status: needs-triage`: missing maintainer classification.
+- `status: accepted`: accepted for implementation.
+- `status: blocked`: requires maintainer-only external action.
+- `status: duplicate`: duplicate of another issue.
+- `status: wontfix`: intentionally not planned.
+- `area: scanner`: stack/risk scanner behavior.
+- `area: cli`: CLI commands and UX.
+- `area: docs`: documentation surface.
+- `area: workflows`: GitHub Actions or release validation.
+- `area: templates`: generated or GitHub templates.
 - `good first issue`: small, low-risk contributor task.
+- `help wanted`: maintainer welcomes external help.
+
+See `docs/GITHUB_LABELS.md` for colors, descriptions, and optional maintainer-only label commands.
 
 ## Routing
 - Bugs need command, version, OS, .NET SDK version, expected behavior, actual behavior, and redacted output.
@@ -21,6 +30,7 @@ This document keeps issue handling consistent and safe.
 - Security hardening issues should stay non-sensitive. Vulnerability disclosure goes through `SECURITY.md`.
 - Documentation issues should point to a page or section.
 - Release issues should reference the relevant task, release doc, and package version.
+- New public issues should start with `status: needs-triage` until reviewed.
 
 ## Severity Mapping
 - Critical: confirmed secret exposure, unsafe public release artifact, or a command that can leak sensitive content.

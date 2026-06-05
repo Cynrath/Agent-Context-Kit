@@ -2,7 +2,8 @@ name: Bug report
 description: Report a reproducible AgentContextKit issue.
 title: "bug: "
 labels:
-  - bug
+  - "type: bug"
+  - "status: needs-triage"
 body:
   - type: markdown
     attributes:

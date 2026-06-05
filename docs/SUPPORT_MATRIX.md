@@ -44,3 +44,5 @@ This matrix documents the tested and intended support surface for AgentContextKi
 
 ## Validation Source
 The current support claim is based on local validation plus GitHub Actions `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` success for Windows, Ubuntu, and macOS.
+
+TASK-0058 read-only GitHub CLI observation confirmed all three workflows are passing on latest `master`.

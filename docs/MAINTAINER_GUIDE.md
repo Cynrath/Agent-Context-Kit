@@ -51,6 +51,16 @@ gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-smoke.yml
 gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-source-smoke.yml --limit 3
 ```
 
+## GitHub Repository Settings
+Use `docs/GITHUB_SETTINGS_CHECKLIST.md` for maintainer-only repository settings:
+- Description and topics.
+- Default branch and branch protection.
+- Required status checks.
+- Dependabot, secret scanning, and future CodeQL review.
+- Alpha GitHub Release pre-release setting.
+
+Use `docs/GITHUB_LABELS.md` for the recommended label set. Do not create, edit, or delete GitHub labels from an agent session unless the maintainer explicitly asks for that metadata write.
+
 ## NuGet Publish Notes
 - Build and pack from a clean, validated working tree.
 - Use a maintainer-owned NuGet API key stored outside the repository.
@@ -65,3 +75,5 @@ gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-source-sm
 
 ## Current Release
 `v0.1.0-alpha.2` is published on GitHub and NuGet. Global tool install, published-package smoke, source smoke, Web UI smoke, and hosted Actions validation are complete.
+
+TASK-0058 read-only GitHub CLI observation confirms `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` are passing for latest `master`.

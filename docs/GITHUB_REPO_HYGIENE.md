@@ -2,6 +2,8 @@
 
 This document tracks GitHub-facing hygiene for AgentContextKit.
 
+Detailed manual settings are tracked in `docs/GITHUB_SETTINGS_CHECKLIST.md`. Recommended issue and PR labels are tracked in `docs/GITHUB_LABELS.md`.
+
 ## Repository Metadata
 Recommended description:
 
@@ -23,6 +25,20 @@ Recommended `master` protection:
 - Do not require `cross-platform-smoke` for every PR if NuGet availability noise becomes disruptive; keep it required before release announcements.
 - Block force pushes and branch deletion.
 
+Do not configure branch protection from an agent session. Treat branch protection as a maintainer-only GitHub settings action.
+
+## Badges
+README badge set:
+- `ci`
+- `cross-platform-smoke`
+- `cross-platform-source-smoke`
+- NuGet version
+- NuGet downloads
+- License
+- .NET 10
+
+Keep badges compact so the public pitch remains visible near the top of the README.
+
 ## Issue And PR Templates
 The repository includes:
 - Bug report template.
@@ -33,6 +49,19 @@ The repository includes:
 
 Templates must not ask for real secrets, API keys, private repository contents, or production config.
 
+Issue templates should use the label plan in `docs/GITHUB_LABELS.md`, starting new public issues with `status: needs-triage`.
+
+## Labels
+Use `docs/GITHUB_LABELS.md` as the source of truth for:
+- `type:*` labels.
+- `status:*` labels.
+- `priority:*` labels.
+- `area:*` labels.
+- `good first issue`.
+- `help wanted`.
+
+Label creation and edits are maintainer-only GitHub metadata actions. Optional `gh label create` examples are documentation only.
+
 ## Actions Monitoring
 Current workflows:
 - `ci`: source restore, build, tests, and scan on Ubuntu and Windows.
@@ -40,6 +69,12 @@ Current workflows:
 - `cross-platform-source-smoke`: current-branch package smoke on Windows, Ubuntu, and macOS.
 
 Maintainers should check Actions after every push and before any release tag, GitHub Release, or NuGet publish.
+
+Latest read-only GitHub CLI observation for TASK-0058:
+- `ci`: success on `master`.
+- `cross-platform-smoke`: success on `master`.
+- `cross-platform-source-smoke`: success on `master`.
+- Latest checked commit: `c0f1eb2`.
 
 ## Release Checklist
 Use these docs together:

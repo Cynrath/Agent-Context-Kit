@@ -2,7 +2,8 @@ name: Documentation improvement
 description: Report missing, stale, or confusing documentation.
 title: "docs: "
 labels:
-  - documentation
+  - "type: docs"
+  - "status: needs-triage"
 body:
   - type: markdown
     attributes:

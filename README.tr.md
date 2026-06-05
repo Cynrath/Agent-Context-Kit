@@ -1,5 +1,13 @@
 # AgentContextKit
 
+[![ci](https://github.com/Cynrath/agent-context-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/Cynrath/agent-context-kit/actions/workflows/ci.yml)
+[![cross-platform-smoke](https://github.com/Cynrath/agent-context-kit/actions/workflows/cross-platform-smoke.yml/badge.svg)](https://github.com/Cynrath/agent-context-kit/actions/workflows/cross-platform-smoke.yml)
+[![cross-platform-source-smoke](https://github.com/Cynrath/agent-context-kit/actions/workflows/cross-platform-source-smoke.yml/badge.svg)](https://github.com/Cynrath/agent-context-kit/actions/workflows/cross-platform-source-smoke.yml)
+[![NuGet](https://img.shields.io/nuget/v/AgentContextKit?label=NuGet)](https://www.nuget.org/packages/AgentContextKit)
+[![NuGet downloads](https://img.shields.io/nuget/dt/AgentContextKit?label=downloads)](https://www.nuget.org/packages/AgentContextKit)
+[![License](https://img.shields.io/github/license/Cynrath/agent-context-kit)](LICENSE)
+[![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet)](https://dotnet.microsoft.com/)
+
 AI destekli geliştirme icin offline-first repository context ve guvenlik araci.
 
 AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benzeri AI coding agent kullanan gelistiriciler icin .NET tabanli bir CLI aracidir (`ackit`). Repository yapisini analiz eder, stack sinyallerini tespit eder, guvenli agent yonerge/workflow dosyalari uretir ve public release ya da AI context export oncesi secret/PII/marka sizinti risklerini raporlar.
@@ -66,8 +74,8 @@ NuGet ile kurulum:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
-ackit version
 ackit --help
+ackit version
 ackit scan --ci
 ```
 
@@ -168,6 +176,8 @@ Onemli dokumanlar:
 - [Packaging](docs/PACKAGING.md)
 - [Contributor Onboarding](docs/CONTRIBUTOR_ONBOARDING.md)
 - [Support Matrix](docs/SUPPORT_MATRIX.md)
+- [GitHub Labels](docs/GITHUB_LABELS.md)
+- [GitHub Settings Checklist](docs/GITHUB_SETTINGS_CHECKLIST.md)
 - [Maintainer Guide](docs/MAINTAINER_GUIDE.md)
 - [GitHub Repo Hygiene](docs/GITHUB_REPO_HYGIENE.md)
 - [Issue Triage](docs/ISSUE_TRIAGE.md)

@@ -247,7 +247,7 @@ The workflow:
 
 Latest recorded hosted result:
 - Workflow: `cross-platform-smoke`.
-- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Commit: `c0f1eb2`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
@@ -268,7 +268,7 @@ The workflow:
 
 Hosted validation status:
 - Workflow: `cross-platform-source-smoke`.
-- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Commit: `c0f1eb2`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
@@ -277,7 +277,7 @@ Hosted validation status:
 ## CI Workflow
 Latest recorded hosted result:
 - Workflow: `ci`.
-- Commit: `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Commit: `c0f1eb2`.
 - Branch: `master`.
 - Status: Success.
 - Ubuntu and Windows jobs succeeded.

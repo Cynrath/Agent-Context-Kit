@@ -12,6 +12,8 @@ Maintain the completed `v0.1.0-alpha.2` public release and keep future release w
 - Code of conduct.
 - Issue templates.
 - Pull request template.
+- GitHub label plan.
+- GitHub settings checklist.
 - Support matrix.
 - Maintainer guide.
 - Changelog.
@@ -47,3 +49,5 @@ The first release should be small, working, documented, and honest about limitat
 - Published-package smoke workflow now installs `AgentContextKit` `0.1.0-alpha.2`.
 - Local `.ackit/reports/` and `.ackit/webui/` outputs are ignored local review artifacts and are not public release artifacts.
 - GitHub issue templates, pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs are present.
+- README badges are present for `ci`, published-package smoke, source-package smoke, NuGet version, NuGet downloads, license, and .NET 10.
+- GitHub label guidance and repository settings checklist are documented as maintainer-only manual actions.

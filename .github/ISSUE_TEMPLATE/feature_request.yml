@@ -2,7 +2,8 @@ name: Feature request
 description: Propose a focused AgentContextKit improvement.
 title: "feat: "
 labels:
-  - enhancement
+  - "type: feature"
+  - "status: needs-triage"
 body:
   - type: markdown
     attributes:
