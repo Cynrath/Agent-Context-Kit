@@ -139,6 +139,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - Context export manifestleri sadece lokal onayi kaydeder ve content upload yapmaz.
 - GitHub push veya NuGet publish yapmaz.
 - Risk raporlari severity bazlidir: Critical, High, Medium, Low, Info.
+- Scanner, yaygin platform/package domainleri ve acikca gercek olmayan fixture placeholder degerleri icin dar bir safe technical allowlist kullanir; Critical secret patternleri raporlanmaya devam eder.
 
 ## Lokalizasyon
 Varsayilan dil English'tir. Turkish icin `--lang tr` kullanilir. Bilinmeyen dil degeri English'e duser.

@@ -8,7 +8,7 @@ TASK-0051 through TASK-0054 alpha.2 hardening task set is created and active.
 4. Treat NuGet global tool install verification and clean demo app smoke test as complete.
 5. Keep the expected `ackit doctor` minimal-demo health failures documented as correct behavior.
 6. Treat cross-platform CI smoke workflow result as completed successfully on commit `868dff3`.
-7. Complete TASK-0051 scanner allowlist and fixture-noise reduction without weakening Critical secret detection.
+7. Treat TASK-0051 scanner allowlist and fixture-noise reduction as implemented locally; commit after validation if not committed.
 8. Complete TASK-0052 GitHub Actions Node 24 readiness; hosted validation remains manual after a maintainer push.
 9. Complete TASK-0053 Turkish localization polish for human CLI output while preserving JSON schema behavior.
 10. Complete TASK-0054 alpha.2 release preparation docs without bumping version, tagging, publishing, or pushing.

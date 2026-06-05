@@ -139,6 +139,7 @@ Depending on the command and selected target, AgentContextKit can generate:
 - Context export manifests record local approval only and do not upload content.
 - No GitHub push or NuGet publish is performed by the tool.
 - Risk reports are severity based: Critical, High, Medium, Low, Info.
+- The scanner uses a narrow safe technical allowlist for common platform/package domains and clearly non-real fixture placeholders while keeping Critical secret patterns reportable.
 
 ## Localization
 Default language is English. Turkish is supported with `--lang tr`. Unknown language values fall back to English.

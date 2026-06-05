@@ -128,9 +128,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0050 verification passed: restore, Release build, tests, repository `scan --ci`, `doctor`, prohibited maintainer identity scan, tracked artifact scan, `git diff --check`, and v1.0 documentation release gate.
 - Started TASK-0051 through TASK-0054 for alpha.2 hardening: scanner allowlist/fixture-noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and alpha.2 release preparation.
 - Recorded maintainer-provided status that the Codex for OSS form has been submitted.
+- Implemented TASK-0051 scanner noise reduction with safe technical domain allowlisting, fixture-only placeholder email handling, and literal fake-secret marker cleanup without weakening Critical secret detection.
 
 ## Next Clear Steps
-1. Complete TASK-0051 scanner allowlist and fixture-noise reduction.
+1. Validate and commit TASK-0051 scanner allowlist and fixture-noise reduction if not already committed.
 2. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 3. Treat GitHub repository public status as complete.
 4. Treat `master` and `v0.1.0-alpha.1` push as complete at `aee808244bf33d00808e7e70db6235132c2d3829`.

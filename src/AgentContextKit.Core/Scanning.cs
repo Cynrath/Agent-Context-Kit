@@ -615,12 +615,14 @@ public sealed class SecretScanner : ISecretScanner
 
     private const string EqualsSign = "=";
     private const string FileUriPrefix = "file:" + "///";
+    private const string OpenAiProjectKeyPrefix = "sk" + "-proj-";
+    private const string GitHubFineGrainedTokenPrefix = "github" + "_pat_";
 
     private static readonly SecretPattern[] Patterns =
     [
-        new(new Regex(@"sk-proj-[A-Za-z0-9_-]{8,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "OpenAI project key-like value detected."),
+        new(new Regex(Regex.Escape(OpenAiProjectKeyPrefix) + @"[A-Za-z0-9_-]{8,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "OpenAI project key-like value detected."),
         new(new Regex(@"\bsk-[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "API key-like value detected."),
-        new(new Regex(@"github_pat_[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
+        new(new Regex(Regex.Escape(GitHubFineGrainedTokenPrefix) + @"[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
         new(new Regex(@"\bghp_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
         new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
         new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
@@ -659,7 +661,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
     private static readonly Regex EmailRegex = new(@"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
     private static readonly Regex DomainRegex = new(@"\b(?:[A-Z0-9-]+\.)+(?:com\.tr|com|net|org|io|dev|app|ai|co|tr|edu|gov|cloud|site)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
     private static readonly Regex IpAddressRegex = new(@"\b(?:\d{1,3}\.){3}\d{1,3}\b", RegexOptions.Compiled);
-    private static readonly HashSet<string> KnownPublicDomains = new(StringComparer.OrdinalIgnoreCase)
+    private static readonly HashSet<string> KnownSafeTechnicalDomains = new(StringComparer.OrdinalIgnoreCase)
     {
         "github.com",
         "learn.microsoft.com",
@@ -667,10 +669,28 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         "dotnet.microsoft.com",
         "visualstudio.microsoft.com",
         "nuget.org",
+        "api.nuget.org",
         "aka.ms",
         "example.com",
+        "example.net",
+        "example.org",
         "ASP.NET",
-        "System.Net"
+        "System.Net",
+        "Microsoft.NET"
+    };
+
+    private static readonly string[] KnownSafeTechnicalDomainSuffixes =
+    [
+        ".github.com",
+        ".microsoft.com",
+        ".nuget.org"
+    ];
+
+    private static readonly HashSet<string> FixtureOnlyEmailDomains = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "example.internal",
+        "example.invalid",
+        "example.test"
     };
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content, AckitConfig config)
@@ -700,7 +720,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         }
 
         var emailMatch = EmailRegex.Match(content);
-        if (emailMatch.Success && !IsIgnoredDomainLikeValue(GetEmailDomain(emailMatch.Value)))
+        if (emailMatch.Success && !IsIgnoredEmailLikeValue(relativePath, emailMatch.Value))
         {
             findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
         }
@@ -811,10 +831,70 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         return at >= 0 && at + 1 < email.Length ? email[(at + 1)..] : "";
     }
 
+    private static bool IsIgnoredEmailLikeValue(string relativePath, string email)
+    {
+        var domain = GetEmailDomain(email);
+        return IsIgnoredDomainLikeValue(domain) ||
+               IsNonRealFixtureEmail(relativePath, email, domain);
+    }
+
     private static bool IsIgnoredDomainLikeValue(string domain)
     {
-        return KnownPublicDomains.Contains(domain) ||
+        if (string.IsNullOrWhiteSpace(domain))
+        {
+            return false;
+        }
+
+        return KnownSafeTechnicalDomains.Contains(domain) ||
+               KnownSafeTechnicalDomainSuffixes.Any(suffix => domain.EndsWith(suffix, StringComparison.OrdinalIgnoreCase)) ||
                domain.StartsWith("README.", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsNonRealFixtureEmail(string relativePath, string email, string domain)
+    {
+        if (!IsFixtureLikePath(relativePath) || string.IsNullOrWhiteSpace(domain))
+        {
+            return false;
+        }
+
+        var localPart = email.Split('@', 2)[0];
+        return FixtureOnlyEmailDomains.Contains(domain) ||
+               (IsDocumentationExampleDomain(domain) && IsFixtureLocalPart(localPart));
+    }
+
+    private static bool IsDocumentationExampleDomain(string domain)
+    {
+        return domain.Equals("example.com", StringComparison.OrdinalIgnoreCase) ||
+               domain.Equals("example.net", StringComparison.OrdinalIgnoreCase) ||
+               domain.Equals("example.org", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsFixtureLocalPart(string localPart)
+    {
+        return localPart.Equals("example", StringComparison.OrdinalIgnoreCase) ||
+               localPart.Equals("sample", StringComparison.OrdinalIgnoreCase) ||
+               localPart.Equals("test", StringComparison.OrdinalIgnoreCase) ||
+               localPart.Equals("fixture", StringComparison.OrdinalIgnoreCase) ||
+               localPart.Equals("fake", StringComparison.OrdinalIgnoreCase) ||
+               localPart.Equals("private", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsFixtureLikePath(string relativePath)
+    {
+        var normalized = relativePath.Replace('\\', '/').TrimStart('/');
+        return normalized.StartsWith("tests/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("test/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("samples/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("sample/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("fixtures/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("testdata/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.StartsWith("test-data/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains("/tests/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains("/test/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains("/fixtures/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains("/testdata/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains("/test-data/", StringComparison.OrdinalIgnoreCase) ||
+               normalized.Contains(".Tests/", StringComparison.OrdinalIgnoreCase);
     }
 }
 

@@ -73,6 +73,11 @@ Examples:
 - `.backup`
 - `.private`
 
+## Planned Scanner Precision Fields
+Future config versions may add explicit scanner precision fields such as `safeDomains` or `ignoredFindings`.
+
+These fields are not active in schema version `1`. The current scanner uses a conservative built-in safe technical allowlist for common public platform/package domains and fixture-only placeholder data. Any future configurable allowlist should stay local, explicit, and narrow so it does not hide real secrets or PII.
+
 ## Safety
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.
 

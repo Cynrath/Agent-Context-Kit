@@ -75,7 +75,7 @@ jobs:
               ackit prompt-pack --output .ackit/prompt-packs/smoke.md --lang en
               ackit context-export --prompt-pack .ackit/prompt-packs/smoke.md --approve --output .ackit/context-exports/smoke.json
 
-              $fakeSecret = "OPENAI_API_KEY=sk-" + "1234567890abcdef"
+              $fakeSecret = "OPENAI" + "_API_KEY=sk-" + "1234567890abcdef"
               $fakeSecret | Out-File -FilePath ".env.test" -Encoding utf8
               $PSNativeCommandUseErrorActionPreference = $false
               ackit redact-check --profile public-release

@@ -34,6 +34,14 @@ AgentContextKit runs locally against a repository path. The MVP does not upload 
 - Loopback, wildcard, and documentation-reserved IP addresses are ignored to reduce docs false positives.
 - Private/internal IP addresses remain reportable.
 - Configured brand and PII keywords use token-boundary matching to reduce substring false positives.
+- Safe technical domain references for common platform/package documentation are allowlisted by default, including GitHub, Microsoft Learn, Microsoft/.NET, NuGet, and the NuGet API host.
+- Fixture/sample/test paths can contain clearly non-real placeholder email values without being treated as real PII. Real-looking domains and configured PII keywords remain reportable.
+- Critical secret-like values remain reportable even in test, sample, and fixture paths.
+
+## Scanner Allowlist Policy
+Built-in allowlists are intentionally narrow and technical. They are for public platform/package domains and explicit placeholder fixture data, not customer domains, production hosts, private organizations, or broad path suppression.
+
+Future config may add `safeDomains` or `ignoredFindings` style controls. Any such control should remain local-only, explicit, reviewable, and documented so it does not hide secrets by accident.
 
 ## Limitations
 Pattern-based scanners cannot guarantee full detection. Public release still requires manual review.

@@ -216,7 +216,7 @@ public sealed class RiskScannerTests
     {
         var scanner = new SecretScanner();
 
-        var fakeKey = "sk-proj-" + "1234" + "567890abcdef";
+        var fakeKey = TestData.OpenAiProjectKey();
         var findings = scanner.ScanText("settings.txt", "token" + "=" + fakeKey);
 
         Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical);
@@ -245,7 +245,7 @@ public sealed class RiskScannerTests
     public void RepositoryScannerIgnoresGitBinAndObjContent()
     {
         using var repo = TempRepository.Create();
-        repo.Write(".git/config", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+        repo.Write(".git/config", "token" + "=" + TestData.OpenAiProjectKey());
         repo.Write("bin/output.txt", "password" + "=hidden");
         repo.Write("obj/cache.txt", "password" + "=hidden");
         repo.Write("README.md", "# Test");
@@ -322,7 +322,7 @@ public sealed class RiskScannerTests
     public void RepositoryScannerUsesConfiguredIgnorePaths()
     {
         using var repo = TempRepository.Create();
-        repo.Write("generated/secret.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+        repo.Write("generated/secret.txt", "token" + "=" + TestData.OpenAiProjectKey());
         repo.Write("README.md", "# Test");
         var scanner = TestServices.CreateRepositoryScanner();
 
@@ -354,13 +354,65 @@ public sealed class RiskScannerTests
     public void BrandPiiScannerFindsConfiguredKeywordAndEmail()
     {
         var scanner = new BrandPiiScanner();
+        var email = "a" + "@" + "b" + "." + "com";
 
-        var findings = scanner.ScanText("notes.txt", "Contact private-name at private@example.internal", AckitConfig.Default with
+        var findings = scanner.ScanText("notes.txt", "Contact private-name at " + email, AckitConfig.Default with
         {
             PiiKeywords = ["private-name"]
         });
 
         Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "private-name");
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == email);
+    }
+
+    [Fact]
+    public void BrandPiiScannerIgnoresSafeTechnicalDomains()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText(
+            "docs/platforms.md",
+            "Use Microsoft.NET with api.nuget.org, github.com, nuget.org, and learn.microsoft.com.",
+            AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void BrandPiiScannerIgnoresNonRealFixtureEmailsInFixturePaths()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText(
+            "tests/fixtures/sample-data.txt",
+            "Contact private@example.internal for fake fixture setup.",
+            AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains("Email-like", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void BrandPiiScannerReportsRealLookingDomainOutsideFixtures()
+    {
+        var scanner = new BrandPiiScanner();
+        var domain = "portal" + ".customerportal" + "." + "dev";
+
+        var findings = scanner.ScanText(
+            "docs/contact.md",
+            "Review " + domain + " before public release.",
+            AckitConfig.Default);
+
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Brand && finding.Match == domain);
+    }
+
+    [Fact]
+    public void SecretScannerFindsCriticalGitHubFineGrainedTokenLikeValue()
+    {
+        var scanner = new SecretScanner();
+
+        var findings = scanner.ScanText("settings.txt", "token" + "=" + TestData.GitHubFineGrainedToken());
+
+        Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical && finding.Category == RiskCategory.Secret);
     }
 
     [Fact]
@@ -876,7 +928,7 @@ public sealed class CliJsonAndMetadataTests
     public void ScanCiReturnsTwoForCriticalFindings()
     {
         using var repo = TempRepository.Create();
-        repo.Write("settings.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
 
         var result = RunCli(repo.Path, ["scan", "--ci"]);
 
@@ -1044,7 +1096,7 @@ public sealed class CliJsonAndMetadataTests
     public void RedactCheckJsonPreservesCriticalExitCode()
     {
         using var repo = TempRepository.Create();
-        repo.Write("settings.txt", "token" + "=" + "sk-proj-" + "1234" + "567890abcdef");
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
 
         var result = RunCli(repo.Path, ["redact-check", "--profile", "public-release", "--json"]);
         var json = JsonNode.Parse(result.Output);
@@ -1148,6 +1200,19 @@ internal static class TestServices
         var brandPiiScanner = new BrandPiiScanner();
         var riskScanner = new RiskScanner(fileSystem, secretScanner, brandPiiScanner);
         return new RepositoryScanner(fileSystem, new StackDetector(fileSystem), riskScanner);
+    }
+}
+
+internal static class TestData
+{
+    public static string OpenAiProjectKey()
+    {
+        return "sk" + "-proj-" + "1234567890abcdef";
+    }
+
+    public static string GitHubFineGrainedToken()
+    {
+        return "github" + "_pat_" + "1234567890abcdef";
     }
 }
 

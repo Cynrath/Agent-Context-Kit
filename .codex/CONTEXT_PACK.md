@@ -139,3 +139,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0049 prepares a Windows/Ubuntu/macOS GitHub Actions smoke workflow for the published NuGet global tool and documents alpha.2 preparation without tagging or publishing.
 - TASK-0050 records the successful cross-platform smoke workflow result and adds non-blocking CI/scanner-noise backlog items for TASK-0051 and TASK-0052.
 - TASK-0051 through TASK-0054 are created for alpha.2 hardening: scanner allowlist/fixture-noise reduction, Node 24 workflow readiness, Turkish output polish, and alpha.2 release preparation.
+- TASK-0051 implemented conservative scanner noise reduction with safe technical domains, fixture-only placeholder email handling, and preserved Critical secret detection.
