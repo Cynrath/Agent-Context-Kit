@@ -1,7 +1,7 @@
 # OSS Readiness
 
 ## Current Target
-Prepare a credible `0.1.0-alpha.1` foundation with a small but useful CLI.
+Maintain the completed `0.1.0-alpha.1` public release while preparing `v0.1.0-alpha.2` hardening work.
 
 ## Required Signals
 - Clear README.
@@ -37,3 +37,6 @@ The first release should be small, working, documented, and honest about limitat
 - NuGet global tool smoke test is verified in a clean demo app, including init, scan, generation, task creation, report, Web UI, prompt-pack, context-export, JSON output, and redact-check Critical detection.
 - Cross-platform GitHub Actions smoke workflow completed successfully on commit `868dff3` for Windows, Ubuntu, and macOS using the published NuGet global tool.
 - `v0.1.0-alpha.1` is published on GitHub and NuGet.
+- Codex for OSS form submission is completed per maintainer-provided status.
+- `v0.1.0-alpha.2` preparation is in progress locally with scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and release preparation docs.
+- No alpha.2 version bump, tag, GitHub Release, or NuGet publish has been performed.

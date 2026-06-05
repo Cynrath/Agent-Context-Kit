@@ -24,7 +24,7 @@
 - More generated docs with expanded agent/context templates that include health, risk, and recommended checks.
 - NuGet package metadata hardening with a local metadata review gate.
 - Sample repositories for safe .NET Minimal API and Node/TypeScript/Tailwind stack detection.
-- Turkish localization polish for CLI ASCII fallback wording such as `olusturuldu` and `Tarama ozeti`; this is not a `0.1.0-alpha.1` blocker.
+- Further Turkish generated-template and documentation localization polish beyond the current CLI output pass.
 - Final local readiness consolidation.
 
 ## v0.1.0-alpha.2 Preparation
@@ -32,8 +32,8 @@
 - Use cross-platform CI smoke results to identify path separator, shell, report output, Web UI output, prompt-pack, and context-export portability issues.
 - Reduce scanner fixture/domain-like noise while preserving Critical secret detection.
 - Prepare GitHub Actions for Node 24-compatible official action majors and explicit Windows runner labels.
-- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a new tag and NuGet publish.
-- Keep Turkish CLI ASCII fallback localization polish in the v0.2 backlog unless it is explicitly promoted.
+- Polish Turkish human CLI output with UTF-8 text while preserving JSON schema behavior.
+- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a version bump, new tag, GitHub Release, and NuGet publish.
 
 ## CI And Scanner Backlog
 - TASK-0051 scanner allowlist and fixture-noise reduction:
@@ -44,6 +44,12 @@
   - Update official actions to Node 24-compatible majors where safe.
   - Use an explicit Windows runner label to avoid `windows-latest` redirect noise.
   - Hosted validation remains manual after a maintainer push.
+- TASK-0053 Turkish localization polish:
+  - Replace visible Turkish ASCII fallback CLI wording with natural UTF-8 Turkish text.
+  - Keep JSON output schema stable and language-independent.
+- TASK-0054 alpha.2 release preparation:
+  - Keep version unchanged until a dedicated maintainer release task.
+  - Document alpha.2 readiness and remaining manual release actions.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

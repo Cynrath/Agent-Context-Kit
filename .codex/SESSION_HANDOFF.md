@@ -131,9 +131,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Implemented TASK-0051 scanner noise reduction with safe technical domain allowlisting, fixture-only placeholder email handling, and literal fake-secret marker cleanup without weakening Critical secret detection.
 - Implemented TASK-0052 GitHub Actions Node 24 readiness locally: official actions updated, `windows-2025` selected, read-only workflow permissions added, and hosted validation left manual after push.
 - Implemented TASK-0053 Turkish localization polish for human CLI output and added JSON stability coverage.
+- Completed TASK-0054 alpha.2 release preparation docs: current alpha.1 state remains complete, alpha.2 prep is local-only, and manual release actions remain maintainer-only.
 
 ## Next Clear Steps
-1. Validate and commit TASK-0053 Turkish localization polish if not already committed.
+1. Validate and commit TASK-0054 alpha.2 release preparation docs if not already committed.
 2. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 3. Treat GitHub repository public status as complete.
 4. Treat `master` and `v0.1.0-alpha.1` push as complete at `aee808244bf33d00808e7e70db6235132c2d3829`.
@@ -386,4 +387,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0050 is implemented and verified locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, smoke-tested as a global tool, and passed cross-platform CI smoke validation on commit `868dff3`. TASK-0051 through TASK-0054 are active for alpha.2 hardening. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0054 is implemented locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, smoke-tested as a global tool, passed cross-platform CI smoke validation on commit `868dff3`, and Codex for OSS form submission is completed per maintainer-provided status. Alpha.2 hardening is local-only until a maintainer approves push, hosted CI validation, version bump, tag, GitHub Release, and NuGet publish. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.

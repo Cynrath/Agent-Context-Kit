@@ -39,7 +39,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - NuGet global tool smoke test is completed in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- Alpha.2 hardening task set is active: TASK-0051 scanner noise reduction, TASK-0052 Node 24 CI readiness, TASK-0053 Turkish localization polish, and TASK-0054 alpha.2 release preparation.
+- Alpha.2 hardening task set is implemented locally: TASK-0051 scanner noise reduction, TASK-0052 Node 24 CI readiness, TASK-0053 Turkish localization polish, and TASK-0054 alpha.2 release preparation.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -138,7 +138,8 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0048 records NuGet global tool smoke test verification in a clean demo app and keeps Codex for OSS submission as the remaining follow-up.
 - TASK-0049 prepares a Windows/Ubuntu/macOS GitHub Actions smoke workflow for the published NuGet global tool and documents alpha.2 preparation without tagging or publishing.
 - TASK-0050 records the successful cross-platform smoke workflow result and adds non-blocking CI/scanner-noise backlog items for TASK-0051 and TASK-0052.
-- TASK-0051 through TASK-0054 are created for alpha.2 hardening: scanner allowlist/fixture-noise reduction, Node 24 workflow readiness, Turkish output polish, and alpha.2 release preparation.
+- TASK-0051 through TASK-0054 are implemented locally for alpha.2 hardening: scanner allowlist/fixture-noise reduction, Node 24 workflow readiness, Turkish output polish, and alpha.2 release preparation.
 - TASK-0051 implemented conservative scanner noise reduction with safe technical domains, fixture-only placeholder email handling, and preserved Critical secret detection.
 - TASK-0052 updated local workflow files for Node 24-ready official actions and explicit `windows-2025`; hosted workflow validation remains manual after push.
 - TASK-0053 updated Turkish human CLI output to natural UTF-8 text while preserving JSON schema behavior.
+- TASK-0054 completed alpha.2 release preparation docs without changing version, tagging, publishing, creating GitHub releases, or pushing.

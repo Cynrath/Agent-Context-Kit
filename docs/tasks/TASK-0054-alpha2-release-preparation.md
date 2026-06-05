@@ -1,7 +1,7 @@
 # TASK-0054: Alpha.2 Release Preparation
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Prepare `v0.1.0-alpha.2` documentation and handoff state after scanner noise reduction, CI readiness, localization polish, and cross-platform workflow hygiene.
@@ -75,4 +75,8 @@ Improves release auditability by separating completed alpha.1 publication from a
 - Keep published `v0.1.0-alpha.1` release state unchanged.
 
 ## Completion Notes
-Pending.
+- Kept runtime/package version unchanged at `0.1.0-alpha.1`.
+- Documented `v0.1.0-alpha.1` as complete and `v0.1.0-alpha.2` as local preparation in progress.
+- Updated CHANGELOG, ROADMAP, RELEASE_CHECKLIST, OSS_READINESS, MAINTAINER_RELEASE_HANDOFF, RELEASE_VALIDATION-adjacent state, CODEX_FOR_OSS_APPLICATION, PROJECT_MAP, and Codex handoff/context docs.
+- Recorded that Codex for OSS form submission is completed per maintainer-provided status.
+- Left version bump, tag creation, GitHub Release creation, NuGet publish, and push as manual maintainer-only actions.

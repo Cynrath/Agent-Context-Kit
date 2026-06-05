@@ -73,6 +73,22 @@ The workflow installed .NET 10, installed `AgentContextKit` version `0.1.0-alpha
 
 This workflow is alpha.2 preparation only. It does not create tags, publish NuGet packages, or mutate release metadata.
 
+## Next Alpha.2 Work
+Alpha.2 preparation has started locally after the completed `v0.1.0-alpha.1` release.
+
+Implemented locally:
+- Scanner safe technical allowlist and fixture-noise reduction.
+- GitHub Actions Node 24 readiness and explicit Windows runner labels.
+- Turkish human CLI output polish.
+- Alpha.2 release preparation docs.
+
+Not performed:
+- Version bump.
+- New tag.
+- GitHub Release.
+- NuGet publish.
+- Push.
+
 ## GitHub Actions Node 24 Readiness
 The local workflow files have been prepared for Node 24-compatible official actions:
 

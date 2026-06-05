@@ -32,7 +32,7 @@ The MVP does not call remote AI APIs, upload repository content, run telemetry, 
 - Keep future LLM features opt-in, reviewed, and auditable.
 
 ## Current Release Status
-The GitHub repository is public at `https://github.com/Cynrath/agent-context-kit`. `v0.1.0-alpha.1` is published on GitHub and NuGet. GitHub Actions are green, repository description/topics are set, package metadata is final, and global tool installation has been verified.
+The GitHub repository is public at `https://github.com/Cynrath/agent-context-kit`. `v0.1.0-alpha.1` is published on GitHub and NuGet. GitHub Actions are green, repository description/topics are set, package metadata is final, global tool installation has been verified, and the Codex for OSS form has been submitted per maintainer-provided status.
 
 Install command:
 

@@ -37,7 +37,18 @@
 - NuGet global tool install is verified.
 - NuGet global tool smoke test is verified in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on Windows, Ubuntu, and macOS.
+- Codex for OSS form submission is completed per maintainer-provided status.
+
+## Alpha.2 Preparation
+- Scanner fixture/domain-like noise reduction is implemented locally.
+- GitHub Actions Node 24 readiness is implemented locally.
+- Turkish human CLI output polish is implemented locally.
+- Version remains `0.1.0-alpha.1` until a dedicated maintainer release task.
+- No alpha.2 tag has been created.
+- No alpha.2 GitHub Release has been created.
+- No alpha.2 NuGet package has been published.
+- Hosted `ci` and `cross-platform-smoke` validation is required after the next maintainer push.
 
 ## Remaining Manual Actions
-- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
 - Review all generated files before publishing.
+- For alpha.2, approve version bump, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.

@@ -278,6 +278,6 @@ Hosted workflow validation is manual after a maintainer push. This task does not
 - Confirm GitHub Release page exists for `v0.1.0-alpha.1`.
 - Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
 - Confirm the published NuGet global tool smoke test remains documented and reproducible.
-- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Confirm Codex for OSS form submission remains recorded; keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 
-See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and remaining Codex for OSS submission guidance.
+See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and alpha.2 follow-up guidance.

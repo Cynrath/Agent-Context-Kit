@@ -7,8 +7,13 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ## [Unreleased]
 ### Added
 - Added a cross-platform GitHub Actions smoke workflow for the published NuGet global tool on Windows, Ubuntu, and macOS.
+- Added alpha.2 hardening tasks for scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and release preparation.
 
 ### Changed
+- Reduced scanner noise with a conservative safe technical domain allowlist and fixture-only placeholder email handling.
+- Prepared GitHub Actions workflows for Node 24-ready official action majors and explicit Windows runner labeling.
+- Polished Turkish human CLI output while preserving JSON schema fields.
+- Updated alpha.2 release preparation docs without changing the package version, creating a tag, or publishing a package.
 - Recorded successful cross-platform GitHub Actions smoke validation for the published NuGet global tool.
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
 - Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
