@@ -233,7 +233,7 @@ The `AgentContextKit` version `0.1.0-alpha.1` published global tool has been smo
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
 ## Cross-Platform NuGet Smoke Workflow
-`.github/workflows/cross-platform-smoke.yml` is prepared to verify the published global tool on `windows-latest`, `ubuntu-latest`, and `macos-latest`.
+`.github/workflows/cross-platform-smoke.yml` verifies the published global tool on Windows, Ubuntu, and macOS.
 
 The workflow:
 - Installs .NET 10 with `actions/setup-dotnet`.
@@ -241,7 +241,15 @@ The workflow:
 - Adds the global tool path using `%USERPROFILE%\.dotnet\tools` on Windows and `~/.dotnet/tools` on Linux/macOS.
 - Creates a clean console app, initializes git, and runs the installed-tool smoke commands.
 - Verifies fake secret detection returns exit code `2`, deletes the fake secret, and confirms the final `ackit scan --ci` has no risk findings.
-- Runs as alpha.2 preparation only; it does not publish NuGet packages or create tags.
+- Runs as post-release validation and alpha.2 preparation only; it does not publish NuGet packages or create tags.
+
+GitHub Actions result:
+- Workflow: `cross-platform-smoke`.
+- Commit: `868dff3`.
+- Branch: `master`.
+- Status: Success.
+- Windows, Ubuntu, and macOS jobs succeeded.
+- NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
 ## Manual Release Gates
 - Run `scripts/check-package-metadata.ps1 -FailOnIssues` and confirm it exits `0`.

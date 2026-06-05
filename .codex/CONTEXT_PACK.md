@@ -37,7 +37,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
 - NuGet global tool install verification is completed.
 - NuGet global tool smoke test is completed in a clean demo app.
-- Cross-platform CI smoke workflow is prepared for Windows, Ubuntu, and macOS.
+- Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -88,7 +88,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - NuGet publish: completed.
 - NuGet global tool install verification: completed.
 - NuGet smoke test: completed.
-- Cross-platform smoke workflow: prepared.
+- Cross-platform smoke workflow: completed successfully on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is pending.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the published release state and remaining Codex for OSS submission step.
 
@@ -134,3 +134,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0047 syncs NuGet publish verification and Codex for OSS submission readiness after `AgentContextKit` version `0.1.0-alpha.1` was published and globally installed.
 - TASK-0048 records NuGet global tool smoke test verification in a clean demo app and keeps Codex for OSS submission as the remaining follow-up.
 - TASK-0049 prepares a Windows/Ubuntu/macOS GitHub Actions smoke workflow for the published NuGet global tool and documents alpha.2 preparation without tagging or publishing.
+- TASK-0050 records the successful cross-platform smoke workflow result and adds non-blocking CI/scanner-noise backlog items for TASK-0051 and TASK-0052.

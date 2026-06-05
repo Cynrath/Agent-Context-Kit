@@ -89,7 +89,7 @@ Completed.
 - Workflow expects `redact-check` exit code `2`, removes `.env.test`, and finishes with `ackit scan --ci`.
 - Updated README, README.tr, release validation, release checklist, OSS readiness, maintainer handoff, roadmap, changelog, project map, and Codex handoff/context docs.
 - Documented that this is alpha.2 preparation only and does not create a tag or publish a package.
-- Hosted Windows/Ubuntu/macOS execution is pending until the workflow commit is pushed to GitHub.
+- Hosted Windows/Ubuntu/macOS execution later completed successfully on commit `868dff3`; TASK-0050 records the result sync.
 - `dotnet restore AgentContextKit.sln`: passed.
 - `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
 - `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 59/59 tests.

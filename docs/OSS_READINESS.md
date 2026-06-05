@@ -35,5 +35,5 @@ The first release should be small, working, documented, and honest about limitat
 - NuGet publish is completed for `AgentContextKit` version `0.1.0-alpha.1`.
 - NuGet global tool install is verified.
 - NuGet global tool smoke test is verified in a clean demo app, including init, scan, generation, task creation, report, Web UI, prompt-pack, context-export, JSON output, and redact-check Critical detection.
-- Cross-platform GitHub Actions smoke workflow is prepared for Windows, Ubuntu, and macOS using the published NuGet global tool.
+- Cross-platform GitHub Actions smoke workflow completed successfully on commit `868dff3` for Windows, Ubuntu, and macOS using the published NuGet global tool.
 - `v0.1.0-alpha.1` is published on GitHub and NuGet.

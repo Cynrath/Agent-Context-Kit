@@ -33,6 +33,15 @@
 - Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a new tag and NuGet publish.
 - Keep Turkish CLI ASCII fallback localization polish in the v0.2 backlog unless it is explicitly promoted.
 
+## CI And Scanner Backlog
+- TASK-0051 scanner allowlist and fixture-noise reduction:
+  - Treat the internal placeholder email fixture (`private` + `[at]` + `example.internal`) as non-secret test data.
+  - Reduce domain-like noise for framework/package strings such as `Microsoft[dot]NET`.
+  - Reduce domain-like noise for package registry references such as `api[dot]nuget[dot]org`.
+- TASK-0052 GitHub Actions Node 24 readiness:
+  - Track the Node.js 20 actions runtime deprecation warning as non-blocking CI maintenance.
+  - Track the `windows-latest` redirect notice as non-blocking CI maintenance.
+
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.
 - CI mode. Started with `ackit scan --ci` and GitHub Actions integration.

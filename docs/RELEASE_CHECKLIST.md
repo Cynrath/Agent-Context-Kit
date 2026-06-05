@@ -36,7 +36,7 @@
 - NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
 - NuGet global tool install is verified.
 - NuGet global tool smoke test is verified in a clean demo app.
-- Cross-platform CI smoke workflow is prepared for Windows, Ubuntu, and macOS.
+- Cross-platform CI smoke workflow succeeded on Windows, Ubuntu, and macOS.
 
 ## Remaining Manual Actions
 - Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.

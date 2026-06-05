@@ -94,6 +94,7 @@ Pop-Location
 Minimal demo app icinde `ackit doctor`, README, LICENSE, SECURITY, test, CI, `.gitignore` veya package metadata eksiklerini raporlayabilir. Bu beklenen repository-health ciktisidir, tool hatasi degildir.
 
 Cross-platform NuGet smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.1` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
+Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Komutlari
 ```text

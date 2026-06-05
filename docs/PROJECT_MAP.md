@@ -118,6 +118,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/tasks/TASK-0047-nuget-publish-verification.md`
 - `docs/tasks/TASK-0048-nuget-smoke-test-verification.md`
 - `docs/tasks/TASK-0049-cross-platform-ci-smoke-test.md`
+- `docs/tasks/TASK-0050-cross-platform-smoke-result-sync.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -172,4 +173,4 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
-- Final public release preparation: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0049-cross-platform-ci-smoke-test.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release page, published NuGet package, verified global tool install, NuGet smoke test evidence, cross-platform CI smoke workflow, and Codex for OSS submission guidance.
+- Final public release preparation: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0050-cross-platform-smoke-result-sync.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release page, published NuGet package, verified global tool install, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, and Codex for OSS submission guidance.

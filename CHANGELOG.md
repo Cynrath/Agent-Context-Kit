@@ -9,6 +9,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added a cross-platform GitHub Actions smoke workflow for the published NuGet global tool on Windows, Ubuntu, and macOS.
 
 ### Changed
+- Recorded successful cross-platform GitHub Actions smoke validation for the published NuGet global tool.
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
 - Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
 - Verified NuGet global tool smoke test in a clean demo app.
