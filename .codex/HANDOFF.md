@@ -21,13 +21,14 @@ agent-context-kit
 ## Risk Summary
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
-- GitHub source push and tag push are complete for `v0.1.0-alpha.1`.
-- GitHub Release page and NuGet publish are complete for `v0.1.0-alpha.1`.
-- NuGet global tool install verification is complete.
-- Codex for OSS form submission remains as the active follow-up.
+- GitHub source push and tag push are complete for `v0.1.0-alpha.2`.
+- GitHub Release page and NuGet publish are complete for `v0.1.0-alpha.2`.
+- NuGet global tool install verification is complete for `0.1.0-alpha.2`.
+- Codex for OSS form submission is complete per maintainer-provided status.
 
 ## Recommended Checks
 - `dotnet build AgentContextKit.sln -c Release --no-restore`
 - `dotnet test AgentContextKit.sln -c Release --no-build`
-- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor`
 - `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`

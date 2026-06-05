@@ -1,19 +1,18 @@
 # Public Release Audit
 
-This document records the local-only public release audit workflow after the first GitHub and NuGet publication.
+This document records the local-only public release audit workflow after the current GitHub and NuGet publication.
 
 ## Current Status
-GitHub source publication and NuGet publication are complete for `0.1.0-alpha.1`.
+GitHub source publication and NuGet publication are complete for `0.1.0-alpha.2`.
 
 - GitHub repository public: yes.
 - `master` pushed: yes.
-- `v0.1.0-alpha.1` tag pushed: yes.
-- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- `v0.1.0-alpha.2` tag pushed: yes.
 - Package URL blockers are resolved.
 - GitHub Release page: completed.
 - NuGet publish: completed.
 - NuGet global tool install verification: completed.
-- Codex for OSS application pack: ready.
+- Codex for OSS application submission: completed per maintainer-provided status.
 
 ## Audit Command
 Run report-only mode:
@@ -59,9 +58,9 @@ See [PUBLIC_RELEASE_GATES.md](PUBLIC_RELEASE_GATES.md).
 Remote tag push, GitHub Actions status, GitHub Release page status, repository topics, and NuGet package availability are external checks and must be verified through GitHub/NuGet or maintainer-controlled commands.
 
 ## Required Manual Follow-Up
-For the published `0.1.0-alpha.1` state:
+For the published `0.1.0-alpha.2` state:
 1. Keep the GitHub Release page and NuGet package linked from maintainer-facing docs.
-2. Use `docs/CODEX_FOR_OSS_APPLICATION.md` to submit or save the Codex for OSS form.
+2. Keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted Codex for OSS application reference.
 3. Re-run `scripts/audit-public-release.ps1 -FailOnIssues` before future release announcements.
 4. Re-run `scripts/check-release-blockers.ps1 -FailOnBlockers` before future release announcements.
 5. Re-run `scripts/check-public-release-gates.ps1 -FailOnIssues` before future release announcements.

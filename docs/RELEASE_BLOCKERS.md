@@ -1,25 +1,24 @@
 # Release Blockers
 
-This document lists release blockers and follow-ups after the first GitHub and NuGet publication.
+This document lists release blockers and follow-ups after the current GitHub and NuGet publication.
 
 ## Current Status
-`v0.1.0-alpha.1` is published.
+`v0.1.0-alpha.2` is published and verified.
 
 - GitHub repository public: yes, `https://github.com/Cynrath/agent-context-kit`.
 - `master` pushed: yes.
-- `v0.1.0-alpha.1` tag pushed: yes.
-- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
-- GitHub Release page: completed, `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
+- `v0.1.0-alpha.2` tag pushed: yes.
+- GitHub Release page for `v0.1.0-alpha.2`: completed.
 - NuGet publish: completed.
-- NuGet global tool install verification: completed.
+- NuGet global tool install verification for `0.1.0-alpha.2`: completed.
 - Package metadata final URL: yes.
-- Codex for OSS application pack: ready, `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Codex for OSS application submission: completed per maintainer-provided status.
 
 ## Blocking Items
-No active release blockers remain for `v0.1.0-alpha.1`.
+No active release blockers remain for `v0.1.0-alpha.2`.
 
 ## Remaining Follow-Ups
-- Submit or save the Codex for OSS application form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
+- Keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 - Continue future roadmap planning from `docs/ROADMAP.md`.
 
 ## Resolved Items
@@ -32,14 +31,14 @@ No active release blockers remain for `v0.1.0-alpha.1`.
 - `PackageLicenseExpression` is `MIT`.
 - Public GitHub repository exists.
 - `master` is pushed.
-- `v0.1.0-alpha.1` is pushed.
+- `v0.1.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run was green for the release commit.
 - Repository description matches the maintained release text.
 - Repository topics include the maintained topic set.
-- GitHub Release page exists for `v0.1.0-alpha.1`: `https://github.com/Cynrath/agent-context-kit/releases/tag/v0.1.0-alpha.1`.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
-- `dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1` was verified.
-- `ackit version` returned `AgentContextKit 0.1.0-alpha.1`.
+- GitHub Release page exists for `v0.1.0-alpha.2`.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
+- `dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2` was verified.
+- `ackit version` returned `AgentContextKit 0.1.0-alpha.2`.
 - `ackit --help` was verified.
 
 ## Local Validation
@@ -59,12 +58,12 @@ powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 
 
 ## Install Verification
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit version
 ackit --help
 ```
 
-If the tool is already installed, use `dotnet tool update --global AgentContextKit --version 0.1.0-alpha.1` or a temporary `--tool-path` install.
+If the tool is already installed, use `dotnet tool update --global AgentContextKit --version 0.1.0-alpha.2` or a temporary `--tool-path` install.
 
 ## References
 - [Create a NuGet package using MSBuild](https://learn.microsoft.com/en-us/nuget/create-packages/creating-a-package-msbuild)

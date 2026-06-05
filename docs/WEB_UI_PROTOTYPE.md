@@ -39,6 +39,7 @@ ackit webui --output docs/local-webui.html --json
 - Existing Web UI files are skipped by default.
 - Output paths must stay inside the repository.
 - `.ackit/webui/` is ignored by git and by the default scan config.
+- Generated Web UI files can include local repository paths and local audit context. Keep them local; do not attach them to public GitHub Releases or NuGet packages.
 
 ## JSON Output
 `ackit webui --json` returns generated file metadata and a risk summary:
@@ -65,4 +66,4 @@ ackit webui --output docs/local-webui.html --json
 ```
 
 ## Review Notes
-The Web UI prototype is for local review. It does not approve public release, publish packages, push commits, create release tags, replace release blocker checks, or start a hosted application.
+The Web UI prototype is for local review. It does not approve public release, publish packages, push commits, create release tags, replace release blocker checks, or start a hosted application. Treat generated Web UI files as local-only artifacts, not public release artifacts.

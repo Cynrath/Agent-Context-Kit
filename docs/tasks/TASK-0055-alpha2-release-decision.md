@@ -3,6 +3,8 @@
 ## Purpose
 Prepare `AgentContextKit` for `v0.1.0-alpha.2` without pushing, tagging, creating a GitHub Release, or publishing a NuGet package.
 
+TASK-0056 supersedes the pre-publication parts of this task after `v0.1.0-alpha.2` was pushed, released on GitHub, published on NuGet, and install-verified.
+
 ## Scope
 - Bump source/package metadata to `0.1.0-alpha.2`.
 - Keep the existing cross-platform published-package smoke workflow pinned to the already published `0.1.0-alpha.1` package.
@@ -58,11 +60,11 @@ No permission model changes. The new workflow uses read-only repository contents
 ## Acceptance Criteria
 - Task documentation exists before implementation.
 - `ackit --help` replaces stale `ackit help` examples.
-- README install commands continue to point at the published `0.1.0-alpha.1` package until alpha.2 is published.
+- README install commands remain pinned to the then-current published package until alpha.2 publication. TASK-0056 updates them to `0.1.0-alpha.2`.
 - Source metadata and CLI runtime version report `0.1.0-alpha.2`.
 - `PackageReleaseNotes` describes alpha.2 scanner noise, allowlist, Node 24 readiness, Turkish CLI output, and cross-platform validation improvements.
 - A new `cross-platform-source-smoke` workflow packs and installs the current source package version on Windows, Ubuntu, and macOS.
-- Existing `cross-platform-smoke` remains the published-package smoke workflow for `0.1.0-alpha.1`.
+- Existing `cross-platform-smoke` remained the published-package smoke workflow for `0.1.0-alpha.1` until TASK-0056 updated it to `0.1.0-alpha.2`.
 - Changelog and release docs clearly separate published alpha.1 from alpha.2 preparation.
 - Local package smoke installs the packed alpha.2 package from a temporary source and `ackit version` reports `AgentContextKit 0.1.0-alpha.2`.
 - No push, tag, GitHub Release creation, or NuGet publish is performed.
@@ -112,10 +114,10 @@ No permission model changes. The new workflow uses read-only repository contents
 
 ## Implementation Notes
 - Source/package metadata and CLI runtime version are prepared as `0.1.0-alpha.2`.
-- Existing published-package smoke workflow remains pinned to `0.1.0-alpha.1`.
+- Existing published-package smoke workflow remained pinned to `0.1.0-alpha.1` until alpha.2 publication verification.
 - Added `cross-platform-source-smoke` for current-branch package validation on Windows, Ubuntu, and macOS.
 - README quick smoke examples initialize git before running `ackit init` and `ackit --help` is used in command lists.
-- Public install examples remain pinned to `0.1.0-alpha.1` until alpha.2 is published.
+- Public install examples are updated by TASK-0056 after alpha.2 publication verification.
 
 ## Status
 - Completed locally.

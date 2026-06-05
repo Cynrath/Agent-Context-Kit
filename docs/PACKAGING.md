@@ -47,17 +47,17 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 ```
 
 ## Public NuGet Install
-Install the published package from NuGet. Keep this command on `0.1.0-alpha.1` until alpha.2 is published:
+Install the published package from NuGet:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit version
 ackit --help
 ackit scan --ci
 ```
 
 ## Manual NuGet Publish
-NuGet publish is not automated by this project. Version `0.1.0-alpha.1` has been published. Source/package metadata is prepared for `0.1.0-alpha.2`, but that package must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
+NuGet publish is not automated by this project. Version `0.1.0-alpha.2` has been published and install-verified. Future versions must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
 
 ```powershell
 dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.2.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY

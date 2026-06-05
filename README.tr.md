@@ -6,7 +6,7 @@ AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benze
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release durumu: `v0.1.0-alpha.1` GitHub ve NuGet uzerinde yayinlandi. Mevcut `master` kaynak kodu `0.1.0-alpha.2` hazirligindadir; alpha.2 yayinlanana kadar NuGet kurulum komutu `0.1.0-alpha.1` olarak kalir.
+Current release: `v0.1.0-alpha.2` GitHub ve NuGet uzerinde yayinlandi; global tool kurulumu dogrulandi.
 
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
@@ -65,7 +65,7 @@ dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" 
 NuGet ile kurulum:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit version
 ackit --help
 ackit scan --ci
@@ -94,8 +94,8 @@ Pop-Location
 
 Minimal demo app icinde `ackit doctor`, README, LICENSE, SECURITY, test, CI, `.gitignore` veya package metadata eksiklerini raporlayabilir. Bu beklenen repository-health ciktisidir, tool hatasi degildir.
 
-Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.1` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
-Mevcut kaynak alpha.2 smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` ile takip edilir. Bu workflow mevcut branch'i lokalde paketler ve yayin yapmadan `0.1.0-alpha.2` paketini gecici package source uzerinden kurar.
+Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.2` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
+Mevcut kaynak smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` ile takip edilir. Bu workflow mevcut branch'i lokalde paketler ve paketi yayin yapmadan gecici package source uzerinden kurar.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Komutlari
@@ -136,7 +136,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - Var olan dosyalar varsayilan olarak atlanir.
 - MVP otomatik secret redaction yapmaz.
 - Uzak servise upload yapmaz.
-- Statik rapor ve Web UI dosyalari lokal ve self-contained uretilir.
+- Statik rapor ve Web UI dosyalari lokal ve self-contained uretilir; lokal repository path gosterebilir ve public release artifact olarak paylasilmamalidir.
 - Prompt paketleri lokal dry-run ciktisidir ve remote LLM provider cagrisi yapmaz.
 - Context export manifestleri sadece lokal onayi kaydeder ve content upload yapmaz.
 - GitHub push veya NuGet publish yapmaz.
@@ -175,7 +175,7 @@ Onemli dokumanlar:
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
-Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.1` paketi NuGet global tool olarak yayinlandi; public kurulum ornekleri yalnizca `0.1.0-alpha.2` yayinlandiktan sonra guncellenecek.
+Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.2` paketi NuGet global tool olarak yayinlandi.
 
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 

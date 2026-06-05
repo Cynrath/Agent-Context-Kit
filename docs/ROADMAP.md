@@ -27,15 +27,14 @@
 - Further Turkish generated-template and documentation localization polish beyond the current CLI output pass.
 - Final local readiness consolidation.
 
-## v0.1.0-alpha.2 Preparation
-- Run the published NuGet global tool smoke workflow on Windows, Ubuntu, and macOS before considering an alpha.2 package.
-- Use cross-platform CI smoke results to identify path separator, shell, report output, Web UI output, prompt-pack, and context-export portability issues.
-- Reduce scanner fixture/domain-like noise while preserving Critical secret detection.
-- Prepare GitHub Actions for Node 24-compatible official action majors and explicit Windows runner labels.
-- Polish Turkish human CLI output with UTF-8 text while preserving JSON schema behavior.
-- Bump source/package metadata to `0.1.0-alpha.2` only for reviewed source preparation.
-- Add cross-platform source smoke coverage that packs the current branch and installs the local package before publication.
-- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a push, new tag, GitHub Release, and NuGet publish.
+## v0.1.0-alpha.2
+- Published on GitHub and NuGet.
+- Verified NuGet global tool install, `ackit version`, `ackit --help`, and local Web UI generation.
+- Reduced scanner fixture/domain-like noise while preserving Critical secret detection.
+- Prepared GitHub Actions for Node 24-compatible official action majors and explicit Windows runner labels.
+- Polished Turkish human CLI output with UTF-8 text while preserving JSON schema behavior.
+- Added cross-platform source smoke coverage that packs the current branch and installs the local package before publication.
+- Updated published-package smoke coverage to install `AgentContextKit` `0.1.0-alpha.2`.
 
 ## CI And Scanner Backlog
 - TASK-0051 scanner allowlist and fixture-noise reduction:
@@ -54,7 +53,10 @@
 - TASK-0055 alpha.2 release decision:
   - Bump source/package metadata to `0.1.0-alpha.2`.
   - Add current-branch source smoke workflow coverage.
-  - Keep published-package smoke pinned to `0.1.0-alpha.1` until alpha.2 is published.
+- TASK-0056 alpha.2 publish verification:
+  - Record GitHub Release, NuGet publish, install verification, and Web UI smoke.
+  - Refresh agent instruction files and active release docs.
+  - Update published-package smoke to `0.1.0-alpha.2`.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

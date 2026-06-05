@@ -9,6 +9,7 @@ This document records repository hygiene rules that should stay true before publ
 - Temporary release package/tool folders must stay under the user temp directory.
 - Public package URLs are set to the selected repository URL and tracked in [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md).
 - Local ZIP/RAR source archive hygiene is tracked separately in [SOURCE_ARCHIVE.md](SOURCE_ARCHIVE.md).
+- `.ackit/reports/` and `.ackit/webui/` outputs are local review artifacts. They can include local repository paths and should not be shared as public release artifacts.
 
 ## Source File Rules
 - Keep CLI entry and command routing in `src/AgentContextKit.Cli`.
@@ -19,6 +20,7 @@ This document records repository hygiene rules that should stay true before publ
 
 ## Package Hygiene Rules
 - Do not commit `bin/`, `obj/`, `.nupkg`, temporary tool installs, dumps, backups, or upload folders.
+- Do not commit or publish `.ackit/reports/` or `.ackit/webui/` outputs as release artifacts.
 - Do not share local ZIP/RAR archives that include `.git/`, `.ackit/`, `bin/`, `obj/`, test output, coverage output, logs, packages, or local secrets.
 - Do not publish if `RepositoryUrl` or `PackageProjectUrl` stop pointing at `https://github.com/Cynrath/agent-context-kit`.
 - Do not use permanent global tool installs for release validation.

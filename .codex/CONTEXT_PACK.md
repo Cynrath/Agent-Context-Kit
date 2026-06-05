@@ -30,16 +30,16 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
-- `master` and `v0.1.0-alpha.1` are pushed and point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- Current release tag `v0.1.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run is green.
 - Repository description and topics are set.
-- GitHub Release page for `v0.1.0-alpha.1` is completed.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
-- NuGet global tool install verification is completed.
-- NuGet global tool smoke test is completed in a clean demo app.
+- GitHub Release page for `v0.1.0-alpha.2` is completed.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
+- NuGet global tool install verification is completed for `0.1.0-alpha.2`.
+- NuGet global tool smoke test is completed, including `ackit --help` and Web UI generation.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- Alpha.2 hardening task set is implemented locally: TASK-0051 scanner noise reduction, TASK-0052 Node 24 CI readiness, TASK-0053 Turkish localization polish, and TASK-0054 alpha.2 release preparation.
+- Alpha.2 hardening and publication verification are complete through TASK-0056.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -82,7 +82,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
 - GitHub repository public: yes.
 - `master` pushed: yes.
-- `v0.1.0-alpha.1` pushed: yes.
+- `v0.1.0-alpha.2` pushed: yes.
 - GitHub Actions latest `master` run: success.
 - Repository description: set.
 - Repository topics: set.
@@ -92,8 +92,8 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - NuGet smoke test: completed.
 - Cross-platform smoke workflow: completed successfully on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- Next release preparation: TASK-0055 is completed locally for the `v0.1.0-alpha.2` source version bump and source smoke workflow; no tag, push, GitHub Release, or NuGet publish has been performed.
-- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the published release state and alpha.2 follow-up guidance.
+- Current release publication: TASK-0056 records `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install verification, and Web UI smoke evidence.
+- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the current published release state and future release guidance.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

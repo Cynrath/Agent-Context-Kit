@@ -29,6 +29,7 @@ ackit report --output .ackit/reports/current.html --json
 - Existing report files are skipped by default.
 - Output paths must stay inside the repository.
 - `.ackit/reports/` is ignored by git.
+- Generated reports can include local repository paths and local audit context. Keep them local; do not attach them to public GitHub Releases or NuGet packages.
 
 ## JSON Output
 `ackit report --json` returns generated file metadata and a risk summary:
@@ -55,4 +56,4 @@ ackit report --output .ackit/reports/current.html --json
 ```
 
 ## Review Notes
-HTML reports are local artifacts for review. They do not approve public release, publish packages, push commits, create release tags, or replace release blocker checks.
+HTML reports are local artifacts for review. They do not approve public release, publish packages, push commits, create release tags, or replace release blocker checks. Treat generated reports as local-only artifacts, not public release artifacts.

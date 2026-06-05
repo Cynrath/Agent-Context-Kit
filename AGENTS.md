@@ -38,14 +38,25 @@
 - CI: yes
 - Agent instructions: yes
 
+## Stack
+- .NET: .sln/.slnx/*proj/Program.cs
+- .NET CLI / .NET Tool: PackAsTool/ToolCommandName
+- GitHub Actions: .github/workflows
+
+## Release Status
+- Current release: `v0.1.0-alpha.2` published on GitHub and NuGet.
+- NuGet global tool install verification: completed.
+- GitHub Release page: completed.
+- Published-package smoke workflow installs `AgentContextKit` `0.1.0-alpha.2`.
+
 ## Risk Summary
 - No risk findings in the latest local scan.
-- Public release remains blocked by TODO package URLs and missing release tag.
 
 ## Recommended Checks
 - `dotnet build AgentContextKit.sln -c Release --no-restore`
 - `dotnet test AgentContextKit.sln -c Release --no-build`
-- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci`
+- `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor`
 - `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1`
 
 ## Handoff

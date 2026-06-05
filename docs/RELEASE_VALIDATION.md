@@ -216,10 +216,11 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 ```
 
 ## Published NuGet Smoke Test
-The `AgentContextKit` version `0.1.0-alpha.1` published global tool has been smoke-tested from NuGet in a clean demo directory:
+The `AgentContextKit` version `0.1.0-alpha.2` published global tool has been smoke-tested from NuGet:
 
-- `ackit version` returned `AgentContextKit 0.1.0-alpha.1`.
+- `ackit version` returned `AgentContextKit 0.1.0-alpha.2`.
 - `ackit --help` worked.
+- `ackit webui` created `.ackit/webui/index.html`.
 - `ackit init --lang tr` created `.ackit/config.yml`.
 - `ackit scan --ci` completed with no risk findings.
 - `ackit generate --target all --lang tr` created agent/context files.
@@ -238,13 +239,13 @@ The `AgentContextKit` version `0.1.0-alpha.1` published global tool has been smo
 
 The workflow:
 - Installs .NET 10 with `actions/setup-dotnet`.
-- Installs `AgentContextKit` version `0.1.0-alpha.1` as a NuGet global tool.
+- Installs `AgentContextKit` version `0.1.0-alpha.2` as a NuGet global tool.
 - Adds the global tool path using `%USERPROFILE%\.dotnet\tools` on Windows and `~/.dotnet/tools` on Linux/macOS.
 - Creates a clean console app, initializes git, and runs the installed-tool smoke commands.
 - Verifies fake secret detection returns exit code `2`, deletes the fake secret, and confirms the final `ackit scan --ci` has no risk findings.
-- Runs as post-release validation and alpha.2 preparation only; it does not publish NuGet packages or create tags.
+- Runs as post-release validation only; it does not publish NuGet packages or create tags.
 
-GitHub Actions result:
+Latest recorded hosted result:
 - Workflow: `cross-platform-smoke`.
 - Commit: `868dff3`.
 - Branch: `master`.
@@ -252,8 +253,10 @@ GitHub Actions result:
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
+The workflow now installs `0.1.0-alpha.2`; hosted validation after the TASK-0056 push remains a maintainer follow-up.
+
 ## Cross-Platform Source Smoke Workflow
-`.github/workflows/cross-platform-source-smoke.yml` verifies the current branch before alpha.2 publication.
+`.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
 
 The workflow:
 - Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
@@ -265,7 +268,7 @@ The workflow:
 
 Hosted validation status:
 - Local workflow syntax and local package smoke are validated by TASK-0055.
-- Hosted Windows, Ubuntu, and macOS workflow execution remains manual after the maintainer pushes the source workflow.
+- Hosted Windows, Ubuntu, and macOS workflow execution remains a maintainer check after source changes are pushed.
 
 ## GitHub Actions Node 24 Readiness
 The local workflow files are prepared for the GitHub Actions Node 24 JavaScript action runtime:
@@ -290,10 +293,9 @@ Hosted workflow validation is manual after a maintainer push. This task does not
 - Confirm license and security policy are current.
 - Confirm no secrets, dumps, backups, uploads, `bin/`, `obj/`, or generated package outputs are committed.
 - Confirm no permanent global tool install is required for validation.
-- Confirm `origin/master` and remote `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
 - Confirm GitHub Actions latest `master` run is green.
-- Confirm GitHub Release page exists for `v0.1.0-alpha.1`.
-- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
+- Confirm GitHub Release page exists for the current release tag.
+- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.2`.
 - Confirm the published NuGet global tool smoke test remains documented and reproducible.
 - Confirm Codex for OSS form submission remains recorded; keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 

@@ -3,7 +3,7 @@
 AgentContextKit package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`.
 
 ## Current Status
-Package metadata is prepared for source package version `0.1.0-alpha.2`. `AgentContextKit` version `0.1.0-alpha.1` remains the currently published NuGet package:
+Package metadata is final for `AgentContextKit` version `0.1.0-alpha.2`, which is the currently published NuGet package:
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `Authors` is `Cynrath`.
@@ -11,10 +11,9 @@ Package metadata is prepared for source package version `0.1.0-alpha.2`. `AgentC
 
 Publication state:
 - GitHub Actions latest `master` run is green.
-- GitHub Release page for `v0.1.0-alpha.1` is completed.
+- GitHub Release page for `v0.1.0-alpha.2` is completed.
 - NuGet publish is completed.
 - NuGet global tool install verification is completed.
-- Alpha.2 NuGet publish is pending and must be maintainer-approved.
 
 This review follows Microsoft Learn NuGet package authoring guidance for package ID, version, authors, description, project URL, README, repository metadata, tags, release notes, and license expression:
 - https://learn.microsoft.com/nuget/create-packages/package-authoring-best-practices#package-metadata
@@ -41,7 +40,7 @@ The script is local-only and read-only. It does not pack, push, publish, tag, re
 Install the currently published global tool:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit version
 ackit --help
 ```

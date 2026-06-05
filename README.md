@@ -6,7 +6,7 @@ AgentContextKit is a .NET CLI (`ackit`) for developers who use Codex, Claude Cod
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release status: `v0.1.0-alpha.1` is published on GitHub and NuGet. Current `master` source is preparing `0.1.0-alpha.2`; keep the NuGet install command on `0.1.0-alpha.1` until alpha.2 is published.
+Current release: `v0.1.0-alpha.2` is published on GitHub and NuGet, and the global tool install has been verified.
 
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
@@ -65,7 +65,7 @@ dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --l
 Install from NuGet:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit version
 ackit --help
 ackit scan --ci
@@ -94,8 +94,8 @@ Pop-Location
 
 `ackit doctor` can report missing README, LICENSE, SECURITY, tests, CI, `.gitignore`, or package metadata in a minimal demo app. That is expected repository-health output, not a tool failure.
 
-Cross-platform published-package smoke coverage is tracked by `.github/workflows/cross-platform-smoke.yml`. It installs `AgentContextKit` `0.1.0-alpha.1` as a global tool on Windows, Ubuntu, and macOS, then runs the installed-tool smoke flow against a clean demo app.
-Current-source alpha.2 smoke coverage is tracked by `.github/workflows/cross-platform-source-smoke.yml`. It packs the current branch locally and installs `0.1.0-alpha.2` from the workflow's temporary package source without publishing it.
+Cross-platform published-package smoke coverage is tracked by `.github/workflows/cross-platform-smoke.yml`. It installs `AgentContextKit` `0.1.0-alpha.2` as a global tool on Windows, Ubuntu, and macOS, then runs the installed-tool smoke flow against a clean demo app.
+Current-source smoke coverage is tracked by `.github/workflows/cross-platform-source-smoke.yml`. It packs the current branch locally and installs the package from the workflow's temporary package source without publishing it.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Commands
@@ -136,7 +136,7 @@ Depending on the command and selected target, AgentContextKit can generate:
 - Existing files are skipped by default.
 - No automatic secret redaction in the MVP.
 - No remote upload.
-- Static reports and Web UI files are local-only and self-contained.
+- Static reports and Web UI files are local-only and self-contained; they can include local repository paths and should not be shared as public release artifacts.
 - Prompt packs are local dry-run artifacts and do not call remote LLM providers.
 - Context export manifests record local approval only and do not upload content.
 - No GitHub push or NuGet publish is performed by the tool.
@@ -175,7 +175,7 @@ Key docs:
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Packaging
-Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.1` package is published as a NuGet global tool; update public install examples only after `0.1.0-alpha.2` is published.
+Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.2` package is published as a NuGet global tool.
 
 Public release blockers are tracked in [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md).
 

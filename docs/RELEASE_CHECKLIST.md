@@ -21,36 +21,32 @@
 - `docs/RELEASE_BLOCKERS.md` has no unresolved public-release blockers.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` has been reviewed.
 - `RepositoryUrl` and `PackageProjectUrl` point to `https://github.com/Cynrath/agent-context-kit`.
-- Local tag `v0.1.0-alpha.1` exists and points at the reviewed release commit.
+- Local current release tag exists and points at the reviewed release commit.
 - No secrets, dumps, uploads, backups, `bin/`, `obj/`, or generated junk are committed.
 
 ## Completed Public Release State
 - Public repository exists: `https://github.com/Cynrath/agent-context-kit`.
 - `master` is pushed.
-- `v0.1.0-alpha.1` is pushed.
-- `master` and `v0.1.0-alpha.1` point to `aee808244bf33d00808e7e70db6235132c2d3829`.
+- `v0.1.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run is green.
 - Repository description is set.
 - Repository topics are set.
-- GitHub Release page for `v0.1.0-alpha.1` is created.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
-- NuGet global tool install is verified.
+- GitHub Release page for `v0.1.0-alpha.2` is created.
+- NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
+- NuGet global tool install is verified for `0.1.0-alpha.2`.
 - NuGet global tool smoke test is verified in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
 
-## Alpha.2 Preparation
+## Alpha.2 Published State
 - Scanner fixture/domain-like noise reduction is implemented locally.
 - GitHub Actions Node 24 readiness is implemented locally.
 - Turkish human CLI output polish is implemented locally.
-- Source/package metadata and CLI runtime version are prepared as `0.1.0-alpha.2`.
-- Local alpha.2 pack and temporary tool-path smoke must pass before release approval.
-- `cross-platform-source-smoke` must pass after the next maintainer push.
-- No alpha.2 tag has been created.
-- No alpha.2 GitHub Release has been created.
-- No alpha.2 NuGet package has been published.
-- Hosted `ci`, published-package smoke, and source smoke validation are required after the next maintainer push.
+- Source/package metadata and CLI runtime version are `0.1.0-alpha.2`.
+- Local alpha.2 pack and temporary tool-path smoke passed before publication.
+- `v0.1.0-alpha.2` tag, GitHub Release, NuGet publish, and install verification are complete.
+- Hosted `ci`, published-package smoke, and source smoke validation remain maintainer checks after future pushes.
 
 ## Remaining Manual Actions
-- Review all generated files before publishing.
-- For alpha.2, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.
+- Review all generated files before future publishing.
+- For the next release, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.

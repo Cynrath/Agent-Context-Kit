@@ -134,18 +134,14 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Completed TASK-0054 alpha.2 release preparation docs: current alpha.1 state remains complete, alpha.2 prep is local-only, and manual release actions remain maintainer-only.
 
 ## Next Clear Steps
-1. Validate and commit TASK-0054 alpha.2 release preparation docs if not already committed.
+1. Complete TASK-0056 docs/workflow/agent instruction sync for the published `v0.1.0-alpha.2` state.
 2. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 3. Treat GitHub repository public status as complete.
-4. Treat `master` and `v0.1.0-alpha.1` push as complete at `aee808244bf33d00808e7e70db6235132c2d3829`.
-5. Treat GitHub Actions latest `master` run as verified green.
+4. Treat `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install, `ackit --help`, and Web UI smoke as complete per maintainer-provided evidence.
+5. Treat GitHub Actions latest `master` run as a maintainer-side hosted check after push.
 6. Treat repository description and topics as verified set.
-7. Treat GitHub Release page for `v0.1.0-alpha.1` as complete.
-8. Treat NuGet publish for `AgentContextKit` version `0.1.0-alpha.1` as complete.
-9. Treat NuGet global tool install and smoke test verification as complete.
-10. Treat cross-platform CI smoke workflow as completed successfully on commit `868dff3`.
-11. Treat Codex for OSS form submission as completed per maintainer-provided status.
-12. Do not push, create GitHub releases, publish NuGet packages, delete, force push, or create remotes from the agent session.
+7. Treat Codex for OSS form submission as completed per maintainer-provided status.
+8. Do not push, create GitHub releases, publish NuGet packages, delete, force push, or create remotes from the agent session.
 
 ## Changed Files
 - `.codex/SESSION_HANDOFF.md`
@@ -336,7 +332,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0006 verification: all expected docs/generated files exist; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed.
 - TASK-0007 verification: blocker check report-only mode exited 0; blocker check `-FailOnBlockers` exited 1 as expected due placeholder URLs and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 - TASK-0008 verification: build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
-- TASK-0009 verification: audit report-only mode exited 0; audit `-FailOnIssues` exited 1 as expected due placeholder URLs, missing release tag, and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
+- TASK-0009 verification: audit report-only mode exited 0; audit `-FailOnIssues` exited 1 as expected due placeholder URLs, absent release-tag state, and uncommitted changes; build passed with 0 warnings and 0 errors; tests passed 18/18; scan reported no risk findings; release verification script passed and reported blockers in non-failing mode.
 - TASK-0010 verification: `git diff --check` passed; scan reported no risk findings; audit and blocker scripts exited 0 in report-only mode and reported known maintainer-only blockers.
 - TASK-0011 verification: build passed with 0 warnings and 0 errors; tests passed 21/21; scan reported no risk findings; release verification script passed and reported known blockers in non-failing mode.
 - TASK-0012 verification: build passed with 0 warnings and 0 errors; tests passed 29/29; scan reported no risk findings after self-scan fixes; release verification script passed and reported known blockers in non-failing mode.
@@ -377,6 +373,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0055 started with `docs/tasks/TASK-0055-alpha2-release-decision.md` to separate the alpha.2 source version bump and source smoke workflow from the already published `v0.1.0-alpha.1` package smoke workflow.
 - TASK-0055 implementation updated source/package metadata and CLI runtime version to `0.1.0-alpha.2`, added `.github/workflows/cross-platform-source-smoke.yml`, kept `.github/workflows/cross-platform-smoke.yml` pinned to the published `0.1.0-alpha.1` package, refreshed README/package/release docs, and updated metadata/JSON docs for the current source version.
 - TASK-0055 verification: `dotnet restore AgentContextKit.sln` passed; `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors; `dotnet test AgentContextKit.sln -c Release --no-build` passed, 67/67 tests; `scan --ci` passed with no risk findings; `doctor` passed; `scan --json` reported `toolVersion` `0.1.0-alpha.2`; local `dotnet pack` created the alpha.2 package; temporary tool-path install passed; installed `ackit version` returned `AgentContextKit 0.1.0-alpha.2`; installed `ackit --help` passed; local demo source smoke passed including expected fake-secret exit code 2 and final clean scan; package metadata gate passed; documentation/release gate passed with the expected dirty working tree warning; maintainer identity scan, tracked artifact scan, and exact token/local-path scan returned no matches; `git diff --check` passed with an LF normalization warning for the edited project file.
+- TASK-0056 started after maintainer-provided evidence that `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install, `ackit version`, `ackit --help`, and Web UI smoke are complete.
+- TASK-0056 updates active README, agent instruction files, release docs, package docs, published-package smoke workflow, and Codex handoff files to treat `v0.1.0-alpha.2` as the current published and verified release. No push, tag creation, GitHub Release creation, or NuGet publish is performed by the agent.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -390,4 +388,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0055 is implemented and validated locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, smoke-tested as a global tool, passed cross-platform CI smoke validation on commit `868dff3`, and Codex for OSS form submission is completed per maintainer-provided status. Alpha.2 preparation is local-only until a maintainer approves push, hosted CI validation, tag, GitHub Release, and NuGet publish. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0056 is implemented or in progress locally; `v0.1.0-alpha.2` is pushed, released on GitHub, published on NuGet, install-verified as a global tool, and Web UI smoke-tested per maintainer-provided evidence. Codex for OSS form submission is completed per maintainer-provided status. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.

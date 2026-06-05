@@ -5,13 +5,13 @@ All notable changes to AgentContextKit will be documented in this file.
 This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
-### Added
-- Prepared the next alpha.2 release notes and source package validation flow.
+_No unreleased changes._
 
-## [0.1.0-alpha.2] - Unreleased
+## [0.1.0-alpha.2] - 2026-06-05
 ### Added
 - Added a cross-platform source smoke workflow that packs the current branch and installs `AgentContextKit` `0.1.0-alpha.2` from a temporary local package source on Windows, Ubuntu, and macOS.
 - Added alpha.2 hardening tasks for scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and release preparation.
+- Published `v0.1.0-alpha.2` on GitHub and NuGet and verified global tool installation.
 
 ### Changed
 - Reduced scanner noise with a conservative safe technical domain allowlist and fixture-only placeholder email handling.
@@ -19,8 +19,8 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Reduced fixture placeholder noise without suppressing real source/docs email or secret findings.
 - Prepared GitHub Actions workflows for Node 24-ready official action majors and explicit Windows runner labeling.
 - Polished Turkish human CLI output while preserving JSON schema fields.
-- Bumped source/package metadata and CLI runtime version to `0.1.0-alpha.2` without creating a tag, GitHub Release, or NuGet publication.
-- Kept the published-package smoke workflow pinned to the published `0.1.0-alpha.1` NuGet package.
+- Bumped source/package metadata and CLI runtime version to `0.1.0-alpha.2`.
+- Updated the published-package smoke workflow to install `AgentContextKit` `0.1.0-alpha.2`.
 - Recorded successful cross-platform GitHub Actions smoke validation for the published NuGet global tool.
 - Synced post-push GitHub release status docs after `master` and `v0.1.0-alpha.1` were pushed.
 - Verified NuGet publication and global tool install for `AgentContextKit` version `0.1.0-alpha.1`.
