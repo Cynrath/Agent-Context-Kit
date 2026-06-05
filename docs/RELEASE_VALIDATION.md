@@ -251,6 +251,17 @@ GitHub Actions result:
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
+## GitHub Actions Node 24 Readiness
+The local workflow files are prepared for the GitHub Actions Node 24 JavaScript action runtime:
+
+- `ci.yml` uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
+- `cross-platform-smoke.yml` uses `actions/setup-dotnet@v5`.
+- Both workflows set read-only `contents: read` permissions.
+- Windows jobs now target `windows-2025` explicitly instead of relying on the moving `windows-latest` label.
+- `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` is not set because the selected official action majors already run on Node 24.
+
+Hosted workflow validation is manual after a maintainer push. This task does not push, tag, create GitHub Releases, or publish NuGet packages.
+
 ## Manual Release Gates
 - Run `scripts/check-package-metadata.ps1 -FailOnIssues` and confirm it exits `0`.
 - Run `scripts/audit-public-release.ps1 -FailOnIssues` and confirm it exits `0`.

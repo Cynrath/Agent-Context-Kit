@@ -9,7 +9,7 @@ TASK-0051 through TASK-0054 alpha.2 hardening task set is created and active.
 5. Keep the expected `ackit doctor` minimal-demo health failures documented as correct behavior.
 6. Treat cross-platform CI smoke workflow result as completed successfully on commit `868dff3`.
 7. Treat TASK-0051 scanner allowlist and fixture-noise reduction as implemented locally; commit after validation if not committed.
-8. Complete TASK-0052 GitHub Actions Node 24 readiness; hosted validation remains manual after a maintainer push.
+8. Treat TASK-0052 GitHub Actions Node 24 readiness as implemented locally; hosted validation remains manual after a maintainer push.
 9. Complete TASK-0053 Turkish localization polish for human CLI output while preserving JSON schema behavior.
 10. Complete TASK-0054 alpha.2 release preparation docs without bumping version, tagging, publishing, or pushing.
 11. Treat Codex for OSS form submission as completed per maintainer-provided status.

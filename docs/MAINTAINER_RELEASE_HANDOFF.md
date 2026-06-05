@@ -73,6 +73,19 @@ The workflow installed .NET 10, installed `AgentContextKit` version `0.1.0-alpha
 
 This workflow is alpha.2 preparation only. It does not create tags, publish NuGet packages, or mutate release metadata.
 
+## GitHub Actions Node 24 Readiness
+The local workflow files have been prepared for Node 24-compatible official actions:
+
+- `ci.yml`: `actions/checkout@v6`, `actions/setup-dotnet@v5`, `windows-2025`, read-only `contents: read`.
+- `cross-platform-smoke.yml`: `actions/setup-dotnet@v5`, `windows-2025`, read-only `contents: read`.
+- `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` is not required for the current local workflow because the selected official action majors are Node 24-ready.
+
+Manual validation required after the next maintainer push:
+- Confirm `ci` succeeds on Ubuntu and Windows.
+- Confirm `cross-platform-smoke` succeeds on Windows, Ubuntu, and macOS.
+- Confirm no Node.js 20 runtime warning remains.
+- Confirm no `windows-latest` redirect notice remains.
+
 ## GitHub Repository Metadata
 Repository description:
 
@@ -86,8 +99,8 @@ GitHub topics:
 ai-tools, coding-agents, codex, developer-tools, dotnet, cli, repository-scanner, agents-md, open-source, security
 ```
 
-## Remaining Step: Codex For OSS Form
-Use `docs/CODEX_FOR_OSS_APPLICATION.md`.
+## Codex For OSS Form
+The Codex for OSS form has been submitted per maintainer-provided status. Keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 
 Form-ready sections are included for:
 - Why this repository is a good fit.

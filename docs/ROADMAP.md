@@ -30,6 +30,8 @@
 ## v0.1.0-alpha.2 Preparation
 - Run the published NuGet global tool smoke workflow on Windows, Ubuntu, and macOS before considering an alpha.2 package.
 - Use cross-platform CI smoke results to identify path separator, shell, report output, Web UI output, prompt-pack, and context-export portability issues.
+- Reduce scanner fixture/domain-like noise while preserving Critical secret detection.
+- Prepare GitHub Actions for Node 24-compatible official action majors and explicit Windows runner labels.
 - Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a new tag and NuGet publish.
 - Keep Turkish CLI ASCII fallback localization polish in the v0.2 backlog unless it is explicitly promoted.
 
@@ -39,8 +41,9 @@
   - Reduce domain-like noise for framework/package strings such as `Microsoft[dot]NET`.
   - Reduce domain-like noise for package registry references such as `api[dot]nuget[dot]org`.
 - TASK-0052 GitHub Actions Node 24 readiness:
-  - Track the Node.js 20 actions runtime deprecation warning as non-blocking CI maintenance.
-  - Track the `windows-latest` redirect notice as non-blocking CI maintenance.
+  - Update official actions to Node 24-compatible majors where safe.
+  - Use an explicit Windows runner label to avoid `windows-latest` redirect noise.
+  - Hosted validation remains manual after a maintainer push.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

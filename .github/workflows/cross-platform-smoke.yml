@@ -8,6 +8,9 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   smoke:
     name: smoke (${{ matrix.os }})
@@ -16,13 +19,13 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - windows-latest
+          - windows-2025
           - ubuntu-latest
           - macos-latest
 
     steps:
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
 

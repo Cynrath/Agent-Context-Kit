@@ -1,7 +1,7 @@
 # TASK-0052: GitHub Actions Node 24 Readiness
 
 ## Status
-Planned.
+Completed.
 
 ## Purpose
 Prepare GitHub Actions workflows for the Node 24 JavaScript action runtime and document non-blocking hosted runner image warnings.
@@ -67,4 +67,8 @@ Reduces CI maintenance risk by moving official actions toward Node 24-compatible
 - If hosted CI fails after a manual push, restore the previous action major versions and rerun CI.
 
 ## Completion Notes
-Pending.
+- Reviewed official action/readiness sources for Node 24 migration and hosted runner labels.
+- Updated `ci.yml` to `actions/checkout@v6`, `actions/setup-dotnet@v5`, read-only `contents: read`, and `windows-2025`.
+- Updated `cross-platform-smoke.yml` to `actions/setup-dotnet@v5`, read-only `contents: read`, and `windows-2025`.
+- Left `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` unset because the selected official action majors are Node 24-ready.
+- Documented that hosted GitHub Actions validation is manual after a maintainer push.
