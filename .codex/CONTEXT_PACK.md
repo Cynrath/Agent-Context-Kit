@@ -38,6 +38,8 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - NuGet global tool install verification is completed.
 - NuGet global tool smoke test is completed in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
+- Codex for OSS form submission is completed per maintainer-provided status.
+- Alpha.2 hardening task set is active: TASK-0051 scanner noise reduction, TASK-0052 Node 24 CI readiness, TASK-0053 Turkish localization polish, and TASK-0054 alpha.2 release preparation.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -89,8 +91,9 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - NuGet global tool install verification: completed.
 - NuGet smoke test: completed.
 - Cross-platform smoke workflow: completed successfully on Windows, Ubuntu, and macOS.
-- Codex for OSS form submission is pending.
-- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the published release state and remaining Codex for OSS submission step.
+- Codex for OSS form submission is completed per maintainer-provided status.
+- Next release preparation: `v0.1.0-alpha.2` hardening is in progress; no version bump, tag, push, GitHub Release, or NuGet publish has been performed.
+- `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the published release state and alpha.2 follow-up guidance.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -135,3 +138,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0048 records NuGet global tool smoke test verification in a clean demo app and keeps Codex for OSS submission as the remaining follow-up.
 - TASK-0049 prepares a Windows/Ubuntu/macOS GitHub Actions smoke workflow for the published NuGet global tool and documents alpha.2 preparation without tagging or publishing.
 - TASK-0050 records the successful cross-platform smoke workflow result and adds non-blocking CI/scanner-noise backlog items for TASK-0051 and TASK-0052.
+- TASK-0051 through TASK-0054 are created for alpha.2 hardening: scanner allowlist/fixture-noise reduction, Node 24 workflow readiness, Turkish output polish, and alpha.2 release preparation.

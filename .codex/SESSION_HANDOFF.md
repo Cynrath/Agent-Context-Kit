@@ -126,9 +126,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Recorded maintainer-provided GitHub Actions evidence that `cross-platform-smoke` succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Added non-blocking backlog entries for Node.js 20 actions runtime deprecation, `windows-latest` redirect notice, scanner fixture email noise, `Microsoft[dot]NET` domain-like noise, and `api[dot]nuget[dot]org` domain-like noise.
 - TASK-0050 verification passed: restore, Release build, tests, repository `scan --ci`, `doctor`, prohibited maintainer identity scan, tracked artifact scan, `git diff --check`, and v1.0 documentation release gate.
+- Started TASK-0051 through TASK-0054 for alpha.2 hardening: scanner allowlist/fixture-noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and alpha.2 release preparation.
+- Recorded maintainer-provided status that the Codex for OSS form has been submitted.
 
 ## Next Clear Steps
-1. Treat TASK-0050 cross-platform smoke result sync and CI warning backlog as completed locally.
+1. Complete TASK-0051 scanner allowlist and fixture-noise reduction.
 2. Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
 3. Treat GitHub repository public status as complete.
 4. Treat `master` and `v0.1.0-alpha.1` push as complete at `aee808244bf33d00808e7e70db6235132c2d3829`.
@@ -138,7 +140,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 8. Treat NuGet publish for `AgentContextKit` version `0.1.0-alpha.1` as complete.
 9. Treat NuGet global tool install and smoke test verification as complete.
 10. Treat cross-platform CI smoke workflow as completed successfully on commit `868dff3`.
-11. Use `docs/CODEX_FOR_OSS_APPLICATION.md` for the Codex for OSS form.
+11. Treat Codex for OSS form submission as completed per maintainer-provided status.
 12. Do not push, create GitHub releases, publish NuGet packages, delete, force push, or create remotes from the agent session.
 
 ## Changed Files
@@ -381,4 +383,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0050 is implemented and verified locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, smoke-tested as a global tool, and passed cross-platform CI smoke validation on commit `868dff3`. Commit the TASK-0050 sync if it has not been committed yet. Do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0050 is implemented and verified locally; `v0.1.0-alpha.1` is pushed, tagged, published on GitHub, published on NuGet, smoke-tested as a global tool, and passed cross-platform CI smoke validation on commit `868dff3`. TASK-0051 through TASK-0054 are active for alpha.2 hardening. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload content, or automatically redact without explicit maintainer instruction.
