@@ -6,7 +6,7 @@ AgentContextKit is a .NET CLI (`ackit`) for developers who use Codex, Claude Cod
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release status: `v0.1.0-alpha.1` is published on GitHub and NuGet.
+Release status: `v0.1.0-alpha.1` is published on GitHub and NuGet. Current `master` source is preparing `0.1.0-alpha.2`; keep the NuGet install command on `0.1.0-alpha.1` until alpha.2 is published.
 
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
@@ -79,6 +79,7 @@ New-Item -ItemType Directory -Force -Path $smoke | Out-Null
 Push-Location $smoke
 dotnet new console -n DemoApp
 Push-Location DemoApp
+git init
 ackit init --lang tr
 ackit scan --ci
 ackit generate --target all --lang tr
@@ -93,7 +94,8 @@ Pop-Location
 
 `ackit doctor` can report missing README, LICENSE, SECURITY, tests, CI, `.gitignore`, or package metadata in a minimal demo app. That is expected repository-health output, not a tool failure.
 
-Cross-platform NuGet smoke coverage is tracked by `.github/workflows/cross-platform-smoke.yml`. It installs `AgentContextKit` `0.1.0-alpha.1` as a global tool on Windows, Ubuntu, and macOS, then runs the installed-tool smoke flow against a clean demo app.
+Cross-platform published-package smoke coverage is tracked by `.github/workflows/cross-platform-smoke.yml`. It installs `AgentContextKit` `0.1.0-alpha.1` as a global tool on Windows, Ubuntu, and macOS, then runs the installed-tool smoke flow against a clean demo app.
+Current-source alpha.2 smoke coverage is tracked by `.github/workflows/cross-platform-source-smoke.yml`. It packs the current branch locally and installs `0.1.0-alpha.2` from the workflow's temporary package source without publishing it.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Commands
@@ -109,7 +111,7 @@ ackit task "<title>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
 ackit doctor [--lang en|tr] [--json]
 ackit version
-ackit help
+ackit --help
 ```
 
 ## Generated Files
@@ -173,7 +175,7 @@ Key docs:
 See [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Packaging
-Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.1` package is published as a NuGet global tool.
+Local package validation is documented in [docs/PACKAGING.md](docs/PACKAGING.md) and [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.1` package is published as a NuGet global tool; update public install examples only after `0.1.0-alpha.2` is published.
 
 Public release blockers are tracked in [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md).
 

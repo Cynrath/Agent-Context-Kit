@@ -1,6 +1,6 @@
 # Maintainer Release Handoff
 
-This handoff records the completed `v0.1.0-alpha.1` GitHub and NuGet release state and the remaining Codex for OSS submission follow-up.
+This handoff records the completed `v0.1.0-alpha.1` GitHub and NuGet release state and the local `v0.1.0-alpha.2` source preparation state.
 
 Codex must not push commits, create GitHub releases, publish NuGet packages, or handle API keys unless the maintainer explicitly asks for each public action.
 
@@ -65,13 +65,26 @@ Completed smoke test evidence:
 ## Cross-Platform CI Smoke Test
 `.github/workflows/cross-platform-smoke.yml` verified the published NuGet global tool on commit `868dff3`:
 
-- `windows-latest`
+- `windows-2025`
 - `ubuntu-latest`
 - `macos-latest`
 
 The workflow installed .NET 10, installed `AgentContextKit` version `0.1.0-alpha.1` globally, added the platform-specific `.dotnet/tools` path, created a clean demo app, ran the installed-tool smoke flow, verified fake secret detection returned exit code `2`, deleted the fake secret, and finished with `ackit scan --ci`.
 
-This workflow is alpha.2 preparation only. It does not create tags, publish NuGet packages, or mutate release metadata.
+This workflow remains the published-package smoke baseline for `0.1.0-alpha.1`. It does not create tags, publish NuGet packages, or mutate release metadata.
+
+## Cross-Platform Source Smoke Test
+`.github/workflows/cross-platform-source-smoke.yml` is added for current-branch alpha.2 validation.
+
+The workflow:
+- Runs on `windows-2025`, `ubuntu-latest`, and `macos-latest`.
+- Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
+- Runs restore, Release build, and Release tests.
+- Packs the current source into a temporary package directory.
+- Installs `AgentContextKit` version `0.1.0-alpha.2` from the temporary package source into a temporary tool path.
+- Runs `ackit version`, `ackit --help`, clean DemoApp smoke commands, fake-secret `redact-check` expected failure, fake secret cleanup, and final `ackit scan --ci`.
+
+Hosted validation is manual after the maintainer pushes the workflow.
 
 ## Next Alpha.2 Work
 Alpha.2 preparation has started locally after the completed `v0.1.0-alpha.1` release.
@@ -81,9 +94,10 @@ Implemented locally:
 - GitHub Actions Node 24 readiness and explicit Windows runner labels.
 - Turkish human CLI output polish.
 - Alpha.2 release preparation docs.
+- Source/package metadata and CLI runtime version bump to `0.1.0-alpha.2`.
+- Cross-platform source smoke workflow for the current branch.
 
 Not performed:
-- Version bump.
 - New tag.
 - GitHub Release.
 - NuGet publish.
@@ -94,11 +108,13 @@ The local workflow files have been prepared for Node 24-compatible official acti
 
 - `ci.yml`: `actions/checkout@v6`, `actions/setup-dotnet@v5`, `windows-2025`, read-only `contents: read`.
 - `cross-platform-smoke.yml`: `actions/setup-dotnet@v5`, `windows-2025`, read-only `contents: read`.
+- `cross-platform-source-smoke.yml`: `actions/checkout@v6`, `actions/setup-dotnet@v5`, `windows-2025`, read-only `contents: read`.
 - `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` is not required for the current local workflow because the selected official action majors are Node 24-ready.
 
 Manual validation required after the next maintainer push:
 - Confirm `ci` succeeds on Ubuntu and Windows.
 - Confirm `cross-platform-smoke` succeeds on Windows, Ubuntu, and macOS.
+- Confirm `cross-platform-source-smoke` succeeds on Windows, Ubuntu, and macOS before alpha.2 publication.
 - Confirm no Node.js 20 runtime warning remains.
 - Confirm no `windows-latest` redirect notice remains.
 
@@ -124,10 +140,13 @@ Form-ready sections are included for:
 - Additional notes.
 
 ## Future Release Checklist
-- Update version and release notes intentionally.
+- Review the prepared `0.1.0-alpha.2` version and release notes intentionally.
 - Run restore/build/test/scan/doctor.
+- Run local pack and temporary tool-path smoke.
+- Confirm hosted `cross-platform-source-smoke` succeeds after push.
 - Run release gates.
 - Push release commits and tag only after review.
 - Create GitHub Release.
 - Publish NuGet with a secure API key outside the repository.
 - Verify install from NuGet.
+- After NuGet publication, update published-package smoke and public install docs to `0.1.0-alpha.2`.

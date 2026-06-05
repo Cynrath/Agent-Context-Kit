@@ -92,7 +92,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - NuGet smoke test: completed.
 - Cross-platform smoke workflow: completed successfully on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- Next release preparation: TASK-0055 is active for the `v0.1.0-alpha.2` source version bump and source smoke workflow; no tag, push, GitHub Release, or NuGet publish has been performed.
+- Next release preparation: TASK-0055 is completed locally for the `v0.1.0-alpha.2` source version bump and source smoke workflow; no tag, push, GitHub Release, or NuGet publish has been performed.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the published release state and alpha.2 follow-up guidance.
 
 ## Source Hygiene
@@ -143,4 +143,5 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0052 updated local workflow files for Node 24-ready official actions and explicit `windows-2025`; hosted workflow validation remains manual after push.
 - TASK-0053 updated Turkish human CLI output to natural UTF-8 text while preserving JSON schema behavior.
 - TASK-0054 completed alpha.2 release preparation docs without changing version, tagging, publishing, creating GitHub releases, or pushing.
-- TASK-0055 started alpha.2 release decision work: source metadata/version bump, source/current-branch smoke workflow, README command cleanup, local alpha.2 package smoke, and release doc sync.
+- TASK-0055 implements alpha.2 release decision work: source metadata/version bump, source/current-branch smoke workflow, README command cleanup, local alpha.2 package smoke, and release doc sync.
+- TASK-0055 validation passed locally: restore/build/test, scan, doctor, JSON scan, local alpha.2 package smoke, package metadata gate, documentation gate, maintainer identity scan, tracked artifact scan, exact token/local-path scan, and `git diff --check`.

@@ -14,6 +14,8 @@ Prepare `AgentContextKit` for `v0.1.0-alpha.2` without pushing, tagging, creatin
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`
 - `src/AgentContextKit.Cli/Program.cs`
 - `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`
+- `scripts/check-package-metadata.ps1`
+- `scripts/check-release-blockers.ps1`
 - `.github/workflows/cross-platform-source-smoke.yml`
 - `.github/workflows/cross-platform-smoke.yml`
 - `README.md`
@@ -26,6 +28,10 @@ Prepare `AgentContextKit` for `v0.1.0-alpha.2` without pushing, tagging, creatin
 - `docs/PROJECT_MAP.md`
 - `docs/PACKAGING.md`
 - `docs/RELEASE_CHECKLIST.md`
+- `docs/NUGET_METADATA.md`
+- `docs/JSON_OUTPUT.md`
+- `docs/HTML_REPORTS.md`
+- `docs/WEB_UI_PROTOTYPE.md`
 - `.codex/SESSION_HANDOFF.md`
 - `.codex/NEXT_STEPS.md`
 - `.codex/CONTEXT_PACK.md`
@@ -74,6 +80,25 @@ No permission model changes. The new workflow uses read-only repository contents
 - Exact token/local-path pattern scan
 - `git diff --check`
 
+## Validation Results
+- `dotnet restore AgentContextKit.sln`: passed.
+- `dotnet build AgentContextKit.sln -c Release --no-restore`: passed with 0 warnings and 0 errors.
+- `dotnet test AgentContextKit.sln -c Release --no-build`: passed, 67/67 tests.
+- `dotnet run --project src/AgentContextKit.Cli -- scan --ci`: passed with no risk findings.
+- `dotnet run --project src/AgentContextKit.Cli -- doctor`: passed.
+- `dotnet run --project src/AgentContextKit.Cli -- scan --json`: passed and reported `toolVersion` `0.1.0-alpha.2`.
+- Local `dotnet pack`: created `AgentContextKit.0.1.0-alpha.2.nupkg`.
+- Temporary tool-path install from the local package source: passed.
+- Installed `ackit version`: returned `AgentContextKit 0.1.0-alpha.2`.
+- Installed `ackit --help`: passed.
+- Local demo app source smoke: passed for init, scan, generate, task, report, Web UI, expected fake-secret failure, fake secret cleanup, and final scan.
+- Package metadata gate: passed.
+- Documentation/release gate: passed with the expected dirty working tree warning.
+- Maintainer identity scan: no matches.
+- Tracked artifact scan: no matches.
+- Exact token/local-path pattern scan: no matches.
+- `git diff --check`: passed with an LF normalization warning for the edited project file.
+
 ## Risks
 - Source and package versions can drift if `Program.cs`, tests, and project metadata are not updated together.
 - The source smoke workflow can accidentally test the published package if local package source/tool-path arguments are wrong.
@@ -85,5 +110,12 @@ No permission model changes. The new workflow uses read-only repository contents
 - Restore CLI/package version metadata and version assertions to the previous published version.
 - Keep published `0.1.0-alpha.1` release artifacts unchanged.
 
+## Implementation Notes
+- Source/package metadata and CLI runtime version are prepared as `0.1.0-alpha.2`.
+- Existing published-package smoke workflow remains pinned to `0.1.0-alpha.1`.
+- Added `cross-platform-source-smoke` for current-branch package validation on Windows, Ubuntu, and macOS.
+- README quick smoke examples initialize git before running `ackit init` and `ackit --help` is used in command lists.
+- Public install examples remain pinned to `0.1.0-alpha.1` until alpha.2 is published.
+
 ## Status
-- Planned.
+- Completed locally.

@@ -1,7 +1,7 @@
 # OSS Readiness
 
 ## Current Target
-Maintain the completed `0.1.0-alpha.1` public release while preparing `v0.1.0-alpha.2` hardening work.
+Maintain the completed `0.1.0-alpha.1` public release while preparing `v0.1.0-alpha.2` source validation and release handoff work.
 
 ## Required Signals
 - Clear README.
@@ -38,5 +38,7 @@ The first release should be small, working, documented, and honest about limitat
 - Cross-platform GitHub Actions smoke workflow completed successfully on commit `868dff3` for Windows, Ubuntu, and macOS using the published NuGet global tool.
 - `v0.1.0-alpha.1` is published on GitHub and NuGet.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- `v0.1.0-alpha.2` preparation is in progress locally with scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, and release preparation docs.
-- No alpha.2 version bump, tag, GitHub Release, or NuGet publish has been performed.
+- Source/package metadata and CLI runtime version are prepared as `0.1.0-alpha.2`.
+- `v0.1.0-alpha.2` local preparation is completed with scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source smoke workflow coverage, and release preparation docs.
+- No alpha.2 tag, GitHub Release, or NuGet publish has been performed.
+- Hosted `cross-platform-source-smoke` validation remains manual after the maintainer pushes the source workflow.

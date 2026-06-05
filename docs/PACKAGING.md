@@ -8,7 +8,7 @@ Current package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.
 Important fields:
 - `PackageId`: `AgentContextKit`
 - `ToolCommandName`: `ackit`
-- `Version`: `0.1.0-alpha.1`
+- `Version`: `0.1.0-alpha.2`
 - `Authors`: `Cynrath`
 - `PackageLicenseExpression`: `MIT`
 - `PackageReadmeFile`: `README.md`
@@ -35,19 +35,19 @@ See [RELEASE_BLOCKERS.md](RELEASE_BLOCKERS.md) before any public publish.
 ```powershell
 $pkg = Join-Path $env:TEMP "ackit-nupkg"
 New-Item -ItemType Directory -Force -Path $pkg | Out-Null
-dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
+dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release -o $pkg
 ```
 
 ## Temporary Tool Install
 ```powershell
 $tools = Join-Path $env:TEMP "ackit-tools"
 New-Item -ItemType Directory -Force -Path $tools | Out-Null
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.2 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") --help
 ```
 
 ## Public NuGet Install
-Install the published package from NuGet:
+Install the published package from NuGet. Keep this command on `0.1.0-alpha.1` until alpha.2 is published:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.1.0-alpha.1
@@ -57,10 +57,10 @@ ackit scan --ci
 ```
 
 ## Manual NuGet Publish
-NuGet publish is not automated by this project. Version `0.1.0-alpha.1` has been published; future versions should be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
+NuGet publish is not automated by this project. Version `0.1.0-alpha.1` has been published. Source/package metadata is prepared for `0.1.0-alpha.2`, but that package must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
 
 ```powershell
-dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
+dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.2.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
 ```
 
 ## Release Blockers

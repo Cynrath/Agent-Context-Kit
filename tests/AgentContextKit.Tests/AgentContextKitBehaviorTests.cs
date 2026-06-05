@@ -890,7 +890,7 @@ public sealed class CliJsonAndMetadataTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
-        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.Equal("0.1.0-alpha.2", json?["toolVersion"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("scan", json?["command"]?.GetValue<string>());
         Assert.False(json?["ciMode"]?.GetValue<bool>());
@@ -1134,7 +1134,7 @@ public sealed class CliJsonAndMetadataTests
 
         Assert.Equal(0, result.ExitCode);
         Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
-        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.Equal("0.1.0-alpha.2", json?["toolVersion"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("doctor", json?["command"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
@@ -1154,7 +1154,7 @@ public sealed class CliJsonAndMetadataTests
 
         Assert.Equal(2, result.ExitCode);
         Assert.Equal(2, json?["schemaVersion"]?.GetValue<int>());
-        Assert.Equal("0.1.0-alpha.1", json?["toolVersion"]?.GetValue<string>());
+        Assert.Equal("0.1.0-alpha.2", json?["toolVersion"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["generatedAtUtc"]?.GetValue<string>()));
         Assert.Equal("redact-check", json?["command"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(json?["repositoryName"]?.GetValue<string>()));
@@ -1191,7 +1191,8 @@ public sealed class CliJsonAndMetadataTests
         Assert.Contains("<Authors>Cynrath</Authors>", projectFile);
         Assert.Contains("<Company>Cynrath</Company>", projectFile);
         Assert.Contains("<Copyright>Copyright (c) 2026 Cynrath</Copyright>", projectFile);
-        Assert.Contains("<PackageReleaseNotes>", projectFile);
+        Assert.Contains("<Version>0.1.0-alpha.2</Version>", projectFile);
+        Assert.Contains("Scanner noise reduction, safe technical allowlist, Node 24-ready GitHub Actions, Turkish CLI output polish, and cross-platform validation improvements.", projectFile);
         Assert.Contains("<PackageProjectUrl>https://github.com/Cynrath/agent-context-kit</PackageProjectUrl>", projectFile);
         Assert.Contains("<RepositoryUrl>https://github.com/Cynrath/agent-context-kit</RepositoryUrl>", projectFile);
         Assert.Contains("<RepositoryType>git</RepositoryType>", projectFile);

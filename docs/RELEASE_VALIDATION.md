@@ -209,7 +209,8 @@ $tools = Join-Path $env:TEMP "ackit-tools-$stamp"
 New-Item -ItemType Directory -Force -Path $pkg, $tools | Out-Null
 
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.2 --ignore-failed-sources
+& (Join-Path $tools "ackit.exe") version
 & (Join-Path $tools "ackit.exe") --help
 & (Join-Path $tools "ackit.exe") scan --json
 ```
@@ -232,7 +233,7 @@ The `AgentContextKit` version `0.1.0-alpha.1` published global tool has been smo
 
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
-## Cross-Platform NuGet Smoke Workflow
+## Cross-Platform Published-Package Smoke Workflow
 `.github/workflows/cross-platform-smoke.yml` verifies the published global tool on Windows, Ubuntu, and macOS.
 
 The workflow:
@@ -251,11 +252,27 @@ GitHub Actions result:
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
+## Cross-Platform Source Smoke Workflow
+`.github/workflows/cross-platform-source-smoke.yml` verifies the current branch before alpha.2 publication.
+
+The workflow:
+- Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
+- Runs restore, Release build, and Release tests.
+- Packs `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` into a temporary package directory.
+- Installs `AgentContextKit` version `0.1.0-alpha.2` from that temporary package source into a temporary tool path.
+- Runs `ackit version`, `ackit --help`, a clean demo app smoke flow, expected fake-secret `redact-check` failure, fake secret cleanup, and final `ackit scan --ci`.
+- Does not push, tag, create GitHub Releases, or publish NuGet packages.
+
+Hosted validation status:
+- Local workflow syntax and local package smoke are validated by TASK-0055.
+- Hosted Windows, Ubuntu, and macOS workflow execution remains manual after the maintainer pushes the source workflow.
+
 ## GitHub Actions Node 24 Readiness
 The local workflow files are prepared for the GitHub Actions Node 24 JavaScript action runtime:
 
 - `ci.yml` uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - `cross-platform-smoke.yml` uses `actions/setup-dotnet@v5`.
+- `cross-platform-source-smoke.yml` uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - Both workflows set read-only `contents: read` permissions.
 - Windows jobs now target `windows-2025` explicitly instead of relying on the moving `windows-latest` label.
 - `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true` is not set because the selected official action majors already run on Node 24.

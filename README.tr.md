@@ -6,7 +6,7 @@ AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benze
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Release durumu: `v0.1.0-alpha.1` GitHub ve NuGet uzerinde yayinlandi.
+Release durumu: `v0.1.0-alpha.1` GitHub ve NuGet uzerinde yayinlandi. Mevcut `master` kaynak kodu `0.1.0-alpha.2` hazirligindadir; alpha.2 yayinlanana kadar NuGet kurulum komutu `0.1.0-alpha.1` olarak kalir.
 
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
@@ -79,6 +79,7 @@ New-Item -ItemType Directory -Force -Path $smoke | Out-Null
 Push-Location $smoke
 dotnet new console -n DemoApp
 Push-Location DemoApp
+git init
 ackit init --lang tr
 ackit scan --ci
 ackit generate --target all --lang tr
@@ -93,7 +94,8 @@ Pop-Location
 
 Minimal demo app icinde `ackit doctor`, README, LICENSE, SECURITY, test, CI, `.gitignore` veya package metadata eksiklerini raporlayabilir. Bu beklenen repository-health ciktisidir, tool hatasi degildir.
 
-Cross-platform NuGet smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.1` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
+Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.1` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
+Mevcut kaynak alpha.2 smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` ile takip edilir. Bu workflow mevcut branch'i lokalde paketler ve yayin yapmadan `0.1.0-alpha.2` paketini gecici package source uzerinden kurar.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Komutlari
@@ -109,7 +111,7 @@ ackit task "<baslik>" [--lang en|tr] [--json]
 ackit redact-check [--profile public-release] [--lang en|tr] [--json]
 ackit doctor [--lang en|tr] [--json]
 ackit version
-ackit help
+ackit --help
 ```
 
 ## Uretilen Dosyalar
@@ -173,7 +175,7 @@ Onemli dokumanlar:
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
-Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.1` paketi NuGet global tool olarak yayinlandi.
+Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.1` paketi NuGet global tool olarak yayinlandi; public kurulum ornekleri yalnizca `0.1.0-alpha.2` yayinlandiktan sonra guncellenecek.
 
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 

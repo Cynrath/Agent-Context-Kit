@@ -33,7 +33,9 @@
 - Reduce scanner fixture/domain-like noise while preserving Critical secret detection.
 - Prepare GitHub Actions for Node 24-compatible official action majors and explicit Windows runner labels.
 - Polish Turkish human CLI output with UTF-8 text while preserving JSON schema behavior.
-- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a version bump, new tag, GitHub Release, and NuGet publish.
+- Bump source/package metadata to `0.1.0-alpha.2` only for reviewed source preparation.
+- Add cross-platform source smoke coverage that packs the current branch and installs the local package before publication.
+- Keep alpha.2 preparation local and CI-driven until a maintainer explicitly approves a push, new tag, GitHub Release, and NuGet publish.
 
 ## CI And Scanner Backlog
 - TASK-0051 scanner allowlist and fixture-noise reduction:
@@ -48,8 +50,11 @@
   - Replace visible Turkish ASCII fallback CLI wording with natural UTF-8 Turkish text.
   - Keep JSON output schema stable and language-independent.
 - TASK-0054 alpha.2 release preparation:
-  - Keep version unchanged until a dedicated maintainer release task.
   - Document alpha.2 readiness and remaining manual release actions.
+- TASK-0055 alpha.2 release decision:
+  - Bump source/package metadata to `0.1.0-alpha.2`.
+  - Add current-branch source smoke workflow coverage.
+  - Keep published-package smoke pinned to `0.1.0-alpha.1` until alpha.2 is published.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

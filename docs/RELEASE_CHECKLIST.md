@@ -43,12 +43,14 @@
 - Scanner fixture/domain-like noise reduction is implemented locally.
 - GitHub Actions Node 24 readiness is implemented locally.
 - Turkish human CLI output polish is implemented locally.
-- Version remains `0.1.0-alpha.1` until a dedicated maintainer release task.
+- Source/package metadata and CLI runtime version are prepared as `0.1.0-alpha.2`.
+- Local alpha.2 pack and temporary tool-path smoke must pass before release approval.
+- `cross-platform-source-smoke` must pass after the next maintainer push.
 - No alpha.2 tag has been created.
 - No alpha.2 GitHub Release has been created.
 - No alpha.2 NuGet package has been published.
-- Hosted `ci` and `cross-platform-smoke` validation is required after the next maintainer push.
+- Hosted `ci`, published-package smoke, and source smoke validation are required after the next maintainer push.
 
 ## Remaining Manual Actions
 - Review all generated files before publishing.
-- For alpha.2, approve version bump, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.
+- For alpha.2, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.

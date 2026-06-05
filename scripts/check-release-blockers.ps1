@@ -110,7 +110,7 @@ if ($warnings.Count -gt 0) {
 
 Write-Host ""
 Write-Host "Post-publication follow-ups:"
-Write-Host "- Submit or save the Codex for OSS application form."
+Write-Host "- Keep the submitted Codex for OSS application material as the local reference."
 Write-Host "- Continue future roadmap planning."
 Write-Host "- Re-run release gates before future release announcements."
 
