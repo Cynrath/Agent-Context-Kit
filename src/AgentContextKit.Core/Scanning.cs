@@ -670,6 +670,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         "visualstudio.microsoft.com",
         "nuget.org",
         "api.nuget.org",
+        "json.schemastore.org",
         "aka.ms",
         "example.com",
         "example.net",

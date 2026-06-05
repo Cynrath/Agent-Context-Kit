@@ -46,6 +46,24 @@ Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly,
 
 Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
+### `ackit sarif`
+Generates a privacy-first SARIF 2.1.0 report from scanner findings. Existing SARIF files are skipped.
+
+```powershell
+ackit sarif --output .ackit/reports/ackit.sarif
+ackit sarif --output .ackit/reports/ackit.sarif --json
+```
+
+Required output path:
+- `--output <repo-relative.sarif>`
+
+Safety behavior:
+- Output paths must be repository-relative.
+- Existing files are not overwritten.
+- SARIF artifact locations are repository-relative and use `/` separators.
+- Raw scanner match values are not written to SARIF.
+- GitHub Code Scanning upload is not performed by this command.
+
 ### `ackit report`
 Generates an offline static HTML scan report. Existing report files are skipped.
 

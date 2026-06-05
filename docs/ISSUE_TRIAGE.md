@@ -30,12 +30,13 @@ See `docs/GITHUB_LABELS.md` for colors, descriptions, and optional maintainer-on
 - Security hardening issues should stay non-sensitive. Vulnerability disclosure goes through `SECURITY.md`.
 - Documentation issues should point to a page or section.
 - Release issues should reference the relevant task, release doc, and package version.
+- SARIF or GitHub Code Scanning issues should include the `ackit sarif` command used, tool version, operating system, whether upload was local/example/active workflow, and a redacted SARIF snippet when safe.
 - New public issues should start with `status: needs-triage` until reviewed.
 
 ## Severity Mapping
 - Critical: confirmed secret exposure, unsafe public release artifact, or a command that can leak sensitive content.
 - High: release-blocking behavior, broken install, broken CI, or incorrect scanner behavior that hides meaningful risk.
-- Medium: confusing output, false positives that block normal work, missing docs for common flows.
+- Medium: confusing output, false positives that block normal work, invalid SARIF shape, missing docs for common flows.
 - Low: polish, small doc gaps, wording, or backlog cleanup.
 
 ## Duplicate And Invalid Closure

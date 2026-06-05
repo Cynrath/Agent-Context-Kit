@@ -27,6 +27,7 @@ node_modules/
 logs/
 *.log
 *.binlog
+*.sarif
 *.tmp
 *.bak
 .ackit/

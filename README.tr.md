@@ -42,6 +42,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit init`: `.ackit/config.yml` olusturur, var olan config'i ezmez.
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
+- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
 - `ackit prompt-pack`: remote cagri yapmadan gelecekteki LLM context incelemesi icin lokal dry-run prompt paketi uretir.
@@ -63,6 +64,7 @@ dotnet run --project src/AgentContextKit.Cli -- --help
 dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- scan --json
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
 dotnet run --project src/AgentContextKit.Cli -- report --json
 dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
@@ -77,6 +79,7 @@ dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit --help
 ackit version
 ackit scan --ci
+ackit sarif --output .ackit/reports/ackit.sarif
 ```
 
 Kurulu tool icin hizli dogrulama:
@@ -110,6 +113,7 @@ Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 ```text
 ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
+ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
@@ -136,6 +140,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - `.codex/HANDOFF.md`
 - `.codex/CONTEXT_PACK.md`
 - `.ackit/reports/scan-report.html`
+- `.ackit/reports/ackit.sarif`
 - `.ackit/webui/index.html`
 - `.ackit/prompt-packs/prompt-pack.md`
 - `.ackit/context-exports/context-export-manifest.json`
@@ -145,6 +150,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - MVP otomatik secret redaction yapmaz.
 - Uzak servise upload yapmaz.
 - Statik rapor ve Web UI dosyalari lokal ve self-contained uretilir; lokal repository path gosterebilir ve public release artifact olarak paylasilmamalidir.
+- SARIF raporlari lokal generated artifact'tir; file location degerleri repository-relative yazilir ve ham secret match degerleri SARIF'e yazilmaz.
 - Prompt paketleri lokal dry-run ciktisidir ve remote LLM provider cagrisi yapmaz.
 - Context export manifestleri sadece lokal onayi kaydeder ve content upload yapmaz.
 - GitHub push veya NuGet publish yapmaz.
@@ -168,6 +174,7 @@ Onemli dokumanlar:
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)
 - [HTML Reports](docs/HTML_REPORTS.md)
+- [SARIF Output](docs/SARIF_OUTPUT.md)
 - [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md)
 - [Troubleshooting](docs/TROUBLESHOOTING.md)
 - [Architecture](docs/ARCHITECTURE.md)

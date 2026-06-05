@@ -21,6 +21,7 @@ The v1.0 target command surface is:
 ```text
 ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
+ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
@@ -49,6 +50,7 @@ ackit help
 ## Output Paths
 Generated local artifacts must stay repository-relative:
 - `.ackit/reports/scan-report.html`
+- `.ackit/reports/ackit.sarif`
 - `.ackit/webui/index.html`
 - `.ackit/prompt-packs/prompt-pack.md`
 - `.ackit/context-exports/context-export-manifest.json`
@@ -85,6 +87,7 @@ The stable CLI contract does not include:
 - Provider SDK setup.
 - API key read, storage, generation, or validation.
 - Repository upload.
+- GitHub Code Scanning upload.
 - Automatic redaction or deletion.
 
 These remain maintainer-only or future explicitly documented tasks.

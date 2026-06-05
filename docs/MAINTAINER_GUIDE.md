@@ -51,6 +51,11 @@ gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-smoke.yml
 gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-source-smoke.yml --limit 3
 ```
 
+## SARIF And Code Scanning
+`ackit sarif --output .ackit/reports/ackit.sarif` creates a local SARIF 2.1.0 scanner report with repository-relative paths and no raw scanner match values.
+
+The repository does not enable GitHub Code Scanning upload by default. `docs/examples/github-actions-sarif-upload.yml` is a non-active example only. Before enabling it as a real workflow, maintainers should review the generated SARIF artifact, confirm `security-events: write` permission is acceptable, and decide whether Code Scanning alerts should become part of release validation.
+
 ## GitHub Repository Settings
 Use `docs/GITHUB_SETTINGS_CHECKLIST.md` for maintainer-only repository settings:
 - Description and topics.

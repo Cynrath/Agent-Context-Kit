@@ -29,6 +29,7 @@ tests/
 - `IAgentInstructionGenerator`
 - `IHtmlReportGenerator`
 - `IWebUiGenerator`
+- `ISarifReportWriter`
 - `ILLMProvider`
 - `IFileSystem`
 - `IClock`
@@ -41,6 +42,8 @@ The CLI must not contain business logic. Core services are designed to be testab
 `HtmlReportGenerator` creates self-contained local HTML reports from scan results. It encodes repository content, rejects output paths outside the repository, and skips existing files by default.
 
 `WebUiGenerator` creates self-contained local Web UI prototype files from scan results and selected local task/context previews. It uses the same local-only trust boundary as HTML reports: encoded repository text, repository-relative output, no external assets, and no overwrite by default.
+
+`SarifReportWriter` creates SARIF 2.1.0 scanner output from existing scan results. It keeps output local, requires a repository-relative `.sarif` path, maps findings to stable `ACKIT` rule IDs, emits repository-relative artifact URIs, and omits raw scanner match values.
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 

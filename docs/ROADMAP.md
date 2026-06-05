@@ -65,8 +65,10 @@
   - Add compact README badges for Actions, NuGet, license, and .NET 10.
   - Add GitHub label guidance and repository settings checklist.
   - Keep label creation, branch protection, and repository settings as maintainer-only manual actions.
-- TASK-0059 scanner SARIF output planning:
-  - Plan SARIF output for GitHub code scanning compatibility without enabling upload by default.
+- TASK-0059 scanner SARIF output and GitHub Code Scanning readiness:
+  - Add `ackit sarif --output <repo-relative.sarif>` for privacy-first SARIF 2.1.0 scanner output.
+  - Keep SARIF locations repository-relative and omit raw scanner match values.
+  - Add documentation and a non-active GitHub Actions upload example without enabling upload by default.
 - TASK-0060 GitHub Actions usage examples:
   - Add documented workflow snippets for source scan, report generation, and release preflight usage.
 - TASK-0061 sample repository gallery:

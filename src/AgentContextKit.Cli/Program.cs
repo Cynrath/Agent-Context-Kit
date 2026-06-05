@@ -29,6 +29,7 @@ public static class Program
                 "version" or "--version" => RunVersion(),
                 "init" => RunInit(repositoryPath, language, json, services),
                 "scan" => RunScan(repositoryPath, config, language, json, ci, services),
+                "sarif" => RunSarif(args, repositoryPath, config, language, json, services),
                 "report" => RunReport(args, repositoryPath, config, language, json, services),
                 "webui" => RunWebUi(args, repositoryPath, config, language, json, services),
                 "prompt-pack" => RunPromptPack(args, repositoryPath, config, language, json, services),
@@ -55,6 +56,7 @@ public static class Program
         Console.WriteLine("Usage:");
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
+        Console.WriteLine("  ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]");
         Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]");
@@ -126,6 +128,41 @@ public static class Program
 
         PrintScan(scan, language, services);
         return exitCode;
+    }
+
+    private static int RunSarif(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
+    {
+        var outputPath = GetOption(args, "--output");
+        if (string.IsNullOrWhiteSpace(outputPath))
+        {
+            Console.Error.WriteLine("ackit sarif requires --output <repo-relative.sarif>.");
+            return ExitError;
+        }
+
+        var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+        var result = services.SarifReportWriter.Generate(repositoryPath, outputPath, scan, Version);
+        var criticalHighCount = scan.Findings.Count(finding => finding.Severity is RiskSeverity.Critical or RiskSeverity.High);
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "sarif",
+                repositoryName = GetRepositoryName(repositoryPath),
+                riskSummary = ToRiskSummary(scan.Findings),
+                criticalHighCount,
+                sarif = ToGeneratedFileDto(result)
+            });
+            return ExitSuccess;
+        }
+
+        PrintGeneratedResult(result, services.TextProvider, language);
+        Console.WriteLine($"SARIF findings: {scan.Findings.Count}");
+        Console.WriteLine($"Critical/high findings: {criticalHighCount}");
+        return ExitSuccess;
     }
 
     private static int RunReport(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
@@ -695,6 +732,7 @@ public static class Program
             new WebUiGenerator(fileSystem, clock),
             new PromptPackGenerator(fileSystem, clock),
             new ContextExportManifestGenerator(fileSystem, clock),
+            new SarifReportWriter(fileSystem),
             new TaskFileGenerator(fileSystem, templateRenderer),
             new RepositoryDoctor(fileSystem),
             clock,
@@ -711,6 +749,7 @@ public static class Program
         IWebUiGenerator WebUiGenerator,
         IPromptPackGenerator PromptPackGenerator,
         IContextExportManifestGenerator ContextExportManifestGenerator,
+        ISarifReportWriter SarifReportWriter,
         ITaskFileGenerator TaskFileGenerator,
         RepositoryDoctor Doctor,
         IClock Clock,

@@ -15,6 +15,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Task file generation.
 - Pattern-based redact checks.
 - Offline static HTML report, Web UI, dry-run prompt pack, and local context export manifest generation.
+- Privacy-first local SARIF 2.1.0 scanner output.
 - English/Turkish localization foundation.
 
 ## Repository Health
@@ -45,6 +46,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - TASK-0057 pre-commit validation passed: restore, Release build, 67/67 tests, `scan --ci`, `doctor`, `scan --json`, installed `ackit` version/help, hygiene scans, `git diff --check`, and v1.0 documentation release gate.
 - TASK-0058 added README badges, GitHub label guidance, repository settings checklist, and public presentation hardening docs.
 - TASK-0058 pre-commit validation passed: restore, Release build, 67/67 tests, `scan --ci`, `doctor`, `scan --json`, installed `ackit` version/help, hygiene scans, `git diff --check`, and v1.0 documentation release gate.
+- TASK-0059 is completed locally for privacy-first `ackit sarif --output <repo-relative.sarif>` output, SARIF docs, and non-active Code Scanning upload examples.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -63,6 +65,7 @@ dotnet build -c Release
 dotnet test -c Release
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- sarif --output .ackit/reports/ackit.sarif
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- report --json
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --json
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- prompt-pack --json
@@ -101,7 +104,8 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Current release publication: TASK-0056 records `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install verification, and Web UI smoke evidence.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the current published release state and future release guidance.
 - GitHub contributor workflow docs were added in TASK-0057: `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
-- Public repository presentation docs are being added in TASK-0058: `docs/GITHUB_LABELS.md` and `docs/GITHUB_SETTINGS_CHECKLIST.md`.
+- Public repository presentation docs were added in TASK-0058: `docs/GITHUB_LABELS.md` and `docs/GITHUB_SETTINGS_CHECKLIST.md`.
+- SARIF output docs and example GitHub Code Scanning upload workflow are added in TASK-0059: `docs/SARIF_OUTPUT.md` and `docs/examples/github-actions-sarif-upload.yml`.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -156,3 +160,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0056 completed alpha.2 publish verification and refreshed agent/public release docs for the published `v0.1.0-alpha.2` state.
 - TASK-0057 is completed for GitHub repo hygiene, issue templates, PR template, maintainer guide, support matrix, contributor onboarding, and issue triage docs. The post-commit public release gate rerun passed with only the expected post-release `HEAD` warning.
 - TASK-0058 is completed locally for repository settings, badges, labels, and public presentation hardening. GitHub CLI read-only status shows latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passing after TASK-0057. The post-commit public release gate rerun passed with only the expected post-release `HEAD` warning.
+- TASK-0059 adds scanner SARIF output and GitHub Code Scanning readiness docs. Upload stays example-only and maintainer-controlled. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` checks, hygiene scans, `git diff --check`, and v1.0 documentation gate. Post-commit public release gate rerun passed with no blocking items and only the expected post-release `HEAD` warning.

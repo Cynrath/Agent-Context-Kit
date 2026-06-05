@@ -32,6 +32,7 @@ v0.5 may add optional LLM-assisted workflows, but the default product remains of
 - `init`
 - `scan`
 - `scan --ci`
+- `sarif`
 - `report`
 - `webui`
 - `prompt-pack`

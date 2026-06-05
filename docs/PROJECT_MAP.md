@@ -48,6 +48,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/DOCUMENTATION_INDEX.md`
 - `docs/EXAMPLES.md`
 - `docs/EXAMPLE_WORKFLOWS.md`
+- `docs/examples/github-actions-sarif-upload.yml`
 - `docs/EXIT_CODES.md`
 - `docs/FAQ.md`
 - `docs/GOVERNANCE.md`
@@ -78,6 +79,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/SECURITY_MODEL.md`
 - `docs/SECURITY_NOTES.md`
 - `docs/SAMPLES.md`
+- `docs/SARIF_OUTPUT.md`
 - `docs/SOURCE_HYGIENE.md`
 - `docs/SOURCE_ARCHIVE.md`
 - `docs/SUPPORT_MATRIX.md`
@@ -141,6 +143,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/tasks/TASK-0056-alpha2-publish-verification.md`
 - `docs/tasks/TASK-0057-github-repo-hygiene-support-docs.md`
 - `docs/tasks/TASK-0058-repository-settings-badges-labels.md`
+- `docs/tasks/TASK-0059-scanner-sarif-output.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -187,6 +190,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `src/AgentContextKit.Core/FileSystem.cs`
 - `src/AgentContextKit.Core/Generation.cs`
 - `src/AgentContextKit.Core/Models.cs`
+- `src/AgentContextKit.Core/Sarif.cs`
 - `src/AgentContextKit.Core/Scanning.cs`
 - `src/AgentContextKit.Core/Templates.cs`
 - `tests/AgentContextKit.Tests/AgentContextKit.Tests.csproj`
@@ -195,4 +199,4 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
-- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0058-repository-settings-badges-labels.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, and repository settings checklist.
+- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0059-scanner-sarif-output.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, and non-active Code Scanning upload example docs.

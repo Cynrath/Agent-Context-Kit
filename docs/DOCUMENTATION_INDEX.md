@@ -16,6 +16,7 @@
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.
+- `docs/SARIF_OUTPUT.md`: SARIF 2.1.0 scanner output for local CI and future GitHub Code Scanning workflows.
 - `docs/HTML_REPORTS.md`: offline static HTML report generation.
 - `docs/WEB_UI_PROTOTYPE.md`: offline static Web UI prototype generation.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
@@ -58,6 +59,7 @@
 
 ## Packaging And Release
 - `docs/PACKAGING.md`: NuGet tool packaging.
+- `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.
 - `docs/NUGET_METADATA.md`: NuGet package metadata review workflow.
 - `docs/V020_READINESS.md`: v0.2 local readiness review.
 - `docs/V030_READINESS.md`: v0.3 local readiness review.

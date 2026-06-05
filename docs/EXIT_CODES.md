@@ -15,6 +15,7 @@ AgentContextKit uses small, automation-friendly exit codes.
 | `ackit init` | `0` when config inspection/write completes |
 | `ackit scan` | `0` in default report-only mode |
 | `ackit scan --ci` | `0` with no high/critical findings, `1` with high findings, `2` with critical findings |
+| `ackit sarif` | `0` when SARIF creation/skip reporting completes, `1` when required output path is missing or invalid |
 | `ackit report` | `0` when report creation/skip reporting completes |
 | `ackit webui` | `0` when Web UI creation/skip reporting completes |
 | `ackit prompt-pack` | `0` when prompt-pack creation/skip reporting completes |

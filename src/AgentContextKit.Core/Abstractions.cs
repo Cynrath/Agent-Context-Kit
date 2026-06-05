@@ -75,6 +75,11 @@ public interface IContextExportManifestGenerator
     GeneratedFileResult Generate(string repositoryPath, ContextExportSpec spec, ScanResult scanResult);
 }
 
+public interface ISarifReportWriter
+{
+    GeneratedFileResult Generate(string repositoryPath, string relativeOutputPath, ScanResult scanResult, string toolVersion);
+}
+
 public interface ILLMProvider
 {
     string Name { get; }

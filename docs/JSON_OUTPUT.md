@@ -5,6 +5,7 @@ AgentContextKit supports machine-readable JSON output for automation and CI usag
 Supported commands:
 - `ackit init --json`
 - `ackit scan --json`
+- `ackit sarif --json`
 - `ackit report --json`
 - `ackit webui --json`
 - `ackit prompt-pack --json`
@@ -36,6 +37,7 @@ Schema version `2` adds:
 - `checkSummary` on `doctor`.
 - `fileSummary` on `generate`.
 - `ciMode` and `exitCode` on `scan`.
+- `sarif` generated file metadata on `sarif`.
 - `report` generated file metadata on `report`.
 - `webUi` generated file metadata on `webui`.
 - `promptPack` generated file metadata on `prompt-pack`.
@@ -130,6 +132,16 @@ Example shape:
   "status": "Created",
   "created": true,
   "message": "Web UI prototype created."
+}
+```
+
+`sarif`:
+```json
+{
+  "path": ".ackit/reports/ackit.sarif",
+  "status": "Created",
+  "created": true,
+  "message": "SARIF report created."
 }
 ```
 

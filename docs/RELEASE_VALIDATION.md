@@ -9,6 +9,7 @@ dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
 dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/release-validation.sarif
 dotnet run --project src/AgentContextKit.Cli -- report --json
 dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- prompt-pack --output .ackit/prompt-packs/release-validation.md --json
@@ -22,6 +23,18 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
 The script creates temporary package/tool folders under the user temp directory and leaves them in place for inspection. It also runs `scripts/check-release-blockers.ps1` in report-only mode, so local validation can keep public release follow-up status visible.
+
+## SARIF Output Validation
+Generate and parse a local SARIF report:
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/release-validation.sarif
+Get-Content .ackit/reports/release-validation.sarif | ConvertFrom-Json
+```
+
+The output is local-only and ignored by git when written under `.ackit/reports/`. It should use SARIF `2.1.0`, repository-relative artifact URIs, stable `ACKIT` rule IDs, and no raw secret match values.
+
+`docs/examples/github-actions-sarif-upload.yml` shows a non-active GitHub Code Scanning upload example. Do not copy it into `.github/workflows/` until a maintainer has intentionally approved Code Scanning upload and repository permissions.
 
 ## v0.2 Readiness Review
 Run the v0.2 local readiness check:

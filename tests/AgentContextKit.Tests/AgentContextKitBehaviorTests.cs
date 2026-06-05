@@ -462,6 +462,111 @@ public sealed class RiskScannerTests
     }
 }
 
+public sealed class SarifReportWriterTests
+{
+    [Fact]
+    public void SarifEmptyFindingsProducesValidReport()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var scan = CreateScan(repo.Path, []);
+
+        var result = writer.Generate(repo.Path, ".ackit/reports/empty.sarif", scan, "0.1.0-test");
+        var json = JsonNode.Parse(File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "empty.sarif")));
+
+        Assert.True(result.Created);
+        Assert.Equal("2.1.0", json?["version"]?.GetValue<string>());
+        Assert.Equal("https://json.schemastore.org/sarif-2.1.0.json", json?["$schema"]?.GetValue<string>());
+        Assert.Equal("AgentContextKit", json?["runs"]?[0]?["tool"]?["driver"]?["name"]?.GetValue<string>());
+        Assert.Equal("0.1.0-test", json?["runs"]?[0]?["tool"]?["driver"]?["version"]?.GetValue<string>());
+        Assert.Equal(0, json?["runs"]?[0]?["results"]?.AsArray().Count);
+    }
+
+    [Fact]
+    public void SarifSecretFindingDoesNotExposeRawMatch()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var fakeKey = TestData.OpenAiProjectKey();
+        var scan = CreateScan(repo.Path,
+        [
+            new RiskFinding(RiskSeverity.Critical, RiskCategory.Secret, "settings.txt", "API key-like value detected.", fakeKey)
+        ]);
+
+        writer.Generate(repo.Path, ".ackit/reports/secret.sarif", scan, "0.1.0-test");
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "secret.sarif"));
+        var json = JsonNode.Parse(content);
+        var result = json?["runs"]?[0]?["results"]?[0];
+
+        Assert.DoesNotContain(fakeKey, content);
+        Assert.Equal("ACKIT001", result?["ruleId"]?.GetValue<string>());
+        Assert.Equal("error", result?["level"]?.GetValue<string>());
+        Assert.Equal("settings.txt", result?["locations"]?[0]?["physicalLocation"]?["artifactLocation"]?["uri"]?.GetValue<string>());
+    }
+
+    [Fact]
+    public void SarifNormalizesPathsWithoutAbsoluteLocalPathLeakage()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var absolutePath = System.IO.Path.Combine(repo.Path, "src", "Secrets.cs");
+        var scan = CreateScan(repo.Path,
+        [
+            new RiskFinding(RiskSeverity.Low, RiskCategory.LocalPath, absolutePath, "Local filesystem path detected."),
+            new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, @"docs\Contact.md", "Email-like value detected.")
+        ]);
+
+        writer.Generate(repo.Path, ".ackit/reports/paths.sarif", scan, "0.1.0-test");
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "paths.sarif"));
+        var json = JsonNode.Parse(content);
+
+        Assert.DoesNotContain(repo.Path, content);
+        var windowsDrivePrefix = "C:" + "\\";
+        var workspaceDrivePrefix = "O:" + "\\";
+        Assert.DoesNotContain(windowsDrivePrefix, content);
+        Assert.DoesNotContain(workspaceDrivePrefix, content);
+        Assert.Equal("src/Secrets.cs", json?["runs"]?[0]?["results"]?[0]?["locations"]?[0]?["physicalLocation"]?["artifactLocation"]?["uri"]?.GetValue<string>());
+        Assert.Equal("docs/Contact.md", json?["runs"]?[0]?["results"]?[1]?["locations"]?[0]?["physicalLocation"]?["artifactLocation"]?["uri"]?.GetValue<string>());
+    }
+
+    [Fact]
+    public void SarifMapsMediumAndLowSeverityLevels()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var scan = CreateScan(repo.Path,
+        [
+            new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, "docs/contact.md", "Email-like value detected."),
+            new RiskFinding(RiskSeverity.Low, RiskCategory.Brand, "docs/site.md", "Domain-like value detected.")
+        ]);
+
+        writer.Generate(repo.Path, ".ackit/reports/severity.sarif", scan, "0.1.0-test");
+        var json = JsonNode.Parse(File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "severity.sarif")));
+
+        Assert.Equal("warning", json?["runs"]?[0]?["results"]?[0]?["level"]?.GetValue<string>());
+        Assert.Equal("note", json?["runs"]?[0]?["results"]?[1]?["level"]?.GetValue<string>());
+    }
+
+    private static ScanResult CreateScan(string repositoryPath, IReadOnlyList<RiskFinding> findings)
+    {
+        return new ScanResult(
+            repositoryPath,
+            ["README.md"],
+            [new StackInfo(".NET", ".sln/.slnx/*proj/Program.cs")],
+            findings,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false);
+    }
+}
+
 public sealed class TemplateAndGenerationTests
 {
     [Fact]
@@ -1039,6 +1144,26 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal(".ackit/reports/test-report.html", json?["report"]?["path"]?.GetValue<string>());
         Assert.True(File.Exists(reportPath));
         Assert.Contains("<!doctype html>", File.ReadAllText(reportPath));
+    }
+
+    [Fact]
+    public void SarifJsonCreatesParseableSarifReport()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+
+        var result = RunCli(repo.Path, ["sarif", "--output", ".ackit/reports/test.sarif", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var sarifPath = System.IO.Path.Combine(repo.Path, ".ackit", "reports", "test.sarif");
+        var sarif = JsonNode.Parse(File.ReadAllText(sarifPath));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("sarif", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit/reports/test.sarif", json?["sarif"]?["path"]?.GetValue<string>());
+        Assert.Equal(0, json?["riskSummary"]?["total"]?.GetValue<int>());
+        Assert.True(File.Exists(sarifPath));
+        Assert.Equal("2.1.0", sarif?["version"]?.GetValue<string>());
+        Assert.Equal("AgentContextKit", sarif?["runs"]?[0]?["tool"]?["driver"]?["name"]?.GetValue<string>());
     }
 
     [Fact]
