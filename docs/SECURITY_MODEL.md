@@ -40,11 +40,14 @@ AgentContextKit runs locally against a repository path. The MVP does not upload 
 - Safe technical domain references for common platform/package documentation are allowlisted by default, including GitHub, Microsoft Learn, Microsoft/.NET, NuGet, and the NuGet API host.
 - Fixture/sample/test paths can contain clearly non-real placeholder email values without being treated as real PII. Real-looking domains and configured PII keywords remain reportable.
 - Critical secret-like values remain reportable even in test, sample, and fixture paths.
+- Configured `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` suppress only narrow non-Critical scanner noise.
+- Configured `ignoredFindingIds` uses stable scanner rule IDs documented in `docs/SCANNER_RULES.md`.
+- Provider-token-like patterns include OpenAI-like keys, GitHub-like tokens, AWS access key-like values, and bearer token-like values without requiring raw matches in SARIF.
 
 ## Scanner Allowlist Policy
 Built-in allowlists are intentionally narrow and technical. They are for public platform/package domains and explicit placeholder fixture data, not customer domains, production hosts, private organizations, or broad path suppression.
 
-Future config may add `safeDomains` or `ignoredFindings` style controls. Any such control should remain local-only, explicit, reviewable, and documented so it does not hide secrets by accident.
+Config allowlists are local-only, explicit, reviewable, and documented. They cannot silently suppress Critical findings. Legacy `ignorePaths` excludes files from scanning and should be used sparingly because it hides files from reports.
 
 ## SARIF Output Privacy
 `ackit sarif` is designed as a local report format, not an upload action. The generated SARIF file:

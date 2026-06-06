@@ -44,6 +44,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit init`: `.ackit/config.yml` olusturur, var olan config'i ezmez.
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
+- Stabil scanner rule ID'leri ve safe technical domain, bilinen non-Critical path ve kabul edilen non-Critical rule ID'leri icin dar config allowlist destegi.
 - `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Mevcut source icinde vardir ve sonraki alpha paket icin planlanmistir.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
@@ -170,6 +171,7 @@ Komuta ve hedefe gore AgentContextKit su dosyalari uretebilir:
 - GitHub push veya NuGet publish yapmaz.
 - Risk raporlari severity bazlidir: Critical, High, Medium, Low, Info.
 - Scanner, yaygin platform/package domainleri ve acikca gercek olmayan fixture placeholder degerleri icin dar bir safe technical allowlist kullanir; Critical secret patternleri raporlanmaya devam eder.
+- Config scanner allowlist'leri non-Critical noise bulgularini bastirabilir, ancak Critical bulgular raporlanmaya devam eder.
 
 ## Lokalizasyon
 Varsayilan dil English'tir. Turkish icin `--lang tr` kullanilir. Bilinmeyen dil degeri English'e duser.
@@ -188,6 +190,7 @@ Onemli dokumanlar:
 - [Demo Scenarios](docs/DEMO_SCENARIOS.md)
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
+- [Scanner Rules](docs/SCANNER_RULES.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)
 - [HTML Reports](docs/HTML_REPORTS.md)

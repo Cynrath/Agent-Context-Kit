@@ -546,6 +546,7 @@ public static class Program
     {
         return new
         {
+            ruleId = RiskRuleCatalog.GetRuleId(finding),
             severity = finding.Severity.ToString(),
             category = finding.Category.ToString(),
             path = finding.Path,

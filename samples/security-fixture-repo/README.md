@@ -16,6 +16,8 @@ This sample demonstrates safe scanner fixture wording without storing real secre
 - `ackit scan --ci` should not report high or critical findings.
 - `ackit redact-check` should not report critical findings.
 - The sample explains fake-secret testing without writing real credentials or exact sensitive token prefixes.
+- Scanner rule catalog demos should use `ACKIT` IDs and placeholder text only.
+- Config allowlist demos should use non-Critical fixture paths or safe domains; Critical secret-like fixtures should remain reportable in separate temporary local tests.
 
 ## Safe Fake-Secret Notes
 Do not put real credentials in samples.
@@ -26,6 +28,20 @@ When documenting fake tokens, split sensitive-looking prefixes, for example:
 - `OPENAI_API_KEY` followed by an equals sign
 
 This keeps public docs readable without storing exact token-like values.
+
+## Config Allowlist Notes
+For local experiments, use placeholder-only values:
+
+```yaml
+safeDomains:
+  - docs.example.invalid
+ignoredPaths:
+  - fixture-output/
+ignoredFindingIds:
+  - ACKIT003
+```
+
+These settings are for non-Critical scanner noise. Critical findings are intentionally not suppressed by the new allowlist fields.
 
 ## Suggested Commands
 ```powershell

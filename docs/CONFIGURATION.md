@@ -32,6 +32,9 @@ riskExtensions:
   - .tmp
   - .log
   - .sql
+safeDomains: []
+ignoredPaths: []
+ignoredFindingIds: []
 ```
 
 ## Fields
@@ -73,10 +76,41 @@ Examples:
 - `.backup`
 - `.private`
 
-## Planned Scanner Precision Fields
-Future config versions may add explicit scanner precision fields such as `safeDomains` or `ignoredFindings`.
+### `safeDomains`
+Additional exact domains to treat as safe technical references for domain-like Low findings.
 
-These fields are not active in schema version `1`. The current scanner uses a conservative built-in safe technical allowlist for common public platform/package domains and fixture-only placeholder data. Any future configurable allowlist should stay local, explicit, and narrow so it does not hide real secrets or PII.
+Examples:
+- `docs.example.invalid`
+- `*.trusted.example`
+
+Rules:
+- Exact domains match only the exact domain.
+- A leading `*.` matches subdomains only.
+- This field does not suppress Critical secret-like findings.
+
+### `ignoredPaths`
+Repository-relative paths where non-Critical findings are suppressed but files remain visible in scan file lists.
+
+Examples:
+- `generated-reports/`
+- `fixtures/public-placeholders/`
+- `docs/known-safe-notes.md`
+
+This differs from `ignorePaths`, which excludes matching files from scanning and file enumeration. Prefer `ignoredPaths` for known non-Critical noise because it keeps repository visibility.
+
+### `ignoredFindingIds`
+Stable scanner rule IDs to suppress for non-Critical findings.
+
+Examples:
+- `ACKIT002`
+- `ACKIT003`
+
+Critical findings cannot be silently ignored by this field. If a Critical secret-like finding appears, remove the value, rotate credentials if needed, or move secrets out of source.
+
+## Scanner Precision Fields
+The scanner uses a conservative built-in safe technical allowlist for common public platform/package domains and fixture-only placeholder data. Configurable allowlists are local, explicit, and narrow. They do not delete, redact, upload, publish, or mutate files.
+
+See [SCANNER_RULES.md](SCANNER_RULES.md) for rule IDs, SARIF mapping, and suppression behavior.
 
 ## Safety
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.

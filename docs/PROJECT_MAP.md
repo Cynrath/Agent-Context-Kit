@@ -83,6 +83,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/ROADMAP.md`
 - `docs/SECURITY_MODEL.md`
 - `docs/SECURITY_NOTES.md`
+- `docs/SCANNER_RULES.md`
 - `docs/SAMPLE_GALLERY.md`
 - `docs/SAMPLES.md`
 - `docs/SARIF_OUTPUT.md`
@@ -152,6 +153,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/tasks/TASK-0059-scanner-sarif-output.md`
 - `docs/tasks/TASK-0060-github-actions-usage-examples.md`
 - `docs/tasks/TASK-0061-sample-repository-gallery.md`
+- `docs/tasks/TASK-0062-v020-scanner-expansion.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -214,4 +216,4 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
-- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0061-sample-repository-gallery.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, and sample smoke helper.
+- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0062-v020-scanner-expansion.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, sample smoke helper, scanner rule catalog hardening, config allowlist foundation, and expanded scanner risk patterns.

@@ -67,6 +67,11 @@ The published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`. Use 
 
 The repository does not enable GitHub Code Scanning upload by default. `docs/examples/github-actions-sarif-upload.yml` is a non-active example only. Before enabling it as a real workflow, maintainers should review the generated SARIF artifact, confirm `security-events: write` permission is acceptable, and decide whether Code Scanning alerts should become part of release validation.
 
+## Scanner Rules And Allowlists
+Use `docs/SCANNER_RULES.md` as the source of truth for stable `ACKIT` rule IDs, default severity, SARIF level mapping, and remediation guidance.
+
+Config fields `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` are for narrow non-Critical scanner noise. They should not be used to hide real secrets, production config, private customer data, or release blockers. Critical findings remain reportable by design.
+
 See `docs/GITHUB_ACTIONS_USAGE.md` for documented CI examples and failure interpretation.
 
 ## GitHub Repository Settings
@@ -94,4 +99,4 @@ Use `docs/GITHUB_LABELS.md` for the recommended label set. Do not create, edit, 
 ## Current Release
 `v0.1.0-alpha.2` is published on GitHub and NuGet. Global tool install, published-package smoke, source smoke, Web UI smoke, and hosted Actions validation are complete.
 
-TASK-0060 read-only GitHub CLI observation confirms `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` are passing for latest `master` after `feat: add SARIF report output`.
+TASK-0062 read-only GitHub CLI observation confirms `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` are passing for latest `master` after `docs: add sample gallery and demo scenarios`.

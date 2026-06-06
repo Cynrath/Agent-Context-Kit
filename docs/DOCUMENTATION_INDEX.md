@@ -17,6 +17,7 @@
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
+- `docs/SCANNER_RULES.md`: scanner rule catalog, SARIF mapping, and config allowlist behavior.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.
 - `docs/SARIF_OUTPUT.md`: SARIF 2.1.0 scanner output for local CI and future GitHub Code Scanning workflows.
@@ -40,6 +41,7 @@
 ## Security And Privacy
 - `SECURITY.md`: security policy.
 - `docs/SECURITY_MODEL.md`: scanner and trust boundary model.
+- `docs/SCANNER_RULES.md`: stable `ACKIT` rule IDs and Critical suppression boundaries.
 - `docs/SECURITY_NOTES.md`: generated security notes.
 - `docs/PRIVACY.md`: local-only data handling.
 

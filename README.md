@@ -44,6 +44,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - `ackit init`: create `.ackit/config.yml` without overwriting existing config.
 - `ackit scan`: detect stack, docs, tests, CI, Docker, agent files, and risky paths.
 - `ackit scan --ci`: fail automated checks on high or critical risk findings.
+- Stable scanner rule IDs and narrow config allowlists for safe technical domains, known non-Critical paths, and accepted non-Critical rule IDs.
 - `ackit sarif`: create a privacy-first SARIF 2.1.0 scanner report for CI/security review. Available in current source and planned for the next alpha package.
 - `ackit report`: create an offline static HTML scan report.
 - `ackit webui`: create an offline static Web UI prototype for scan review.
@@ -170,6 +171,7 @@ Depending on the command and selected target, AgentContextKit can generate:
 - No GitHub push or NuGet publish is performed by the tool.
 - Risk reports are severity based: Critical, High, Medium, Low, Info.
 - The scanner uses a narrow safe technical allowlist for common platform/package domains and clearly non-real fixture placeholders while keeping Critical secret patterns reportable.
+- Configured scanner allowlists can suppress non-Critical noise, but Critical findings remain reportable.
 
 ## Localization
 Default language is English. Turkish is supported with `--lang tr`. Unknown language values fall back to English.
@@ -188,6 +190,7 @@ Key docs:
 - [Demo Scenarios](docs/DEMO_SCENARIOS.md)
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
+- [Scanner Rules](docs/SCANNER_RULES.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)
 - [HTML Reports](docs/HTML_REPORTS.md)

@@ -72,6 +72,94 @@ public sealed record RiskFinding(
     string Message,
     string? Match = null);
 
+public sealed record RiskRule(
+    string Id,
+    string Name,
+    RiskCategory Category,
+    RiskSeverity DefaultSeverity,
+    string Description,
+    string Recommendation);
+
+public static class RiskRuleCatalog
+{
+    public static readonly RiskRule SecretLike = new(
+        "ACKIT001",
+        "SecretLike",
+        RiskCategory.Secret,
+        RiskSeverity.Critical,
+        "Secret-like value, credential, key, or production secret risk.",
+        "Remove the secret from source, rotate the credential if it was real, and move runtime values to a safe local secret store.");
+
+    public static readonly RiskRule PiiOrBrandLike = new(
+        "ACKIT002",
+        "PiiOrBrandLike",
+        RiskCategory.Pii,
+        RiskSeverity.Medium,
+        "PII-like, brand-like, email-like, or domain-like value requiring review.",
+        "Confirm the value is intended for public release or replace it with a safe placeholder.");
+
+    public static readonly RiskRule GeneratedOrBuildArtifact = new(
+        "ACKIT003",
+        "GeneratedOrBuildArtifact",
+        RiskCategory.BuildArtifact,
+        RiskSeverity.Medium,
+        "Generated, build, package, backup, database, or archive artifact requiring review.",
+        "Remove generated artifacts from source control and keep local outputs ignored.");
+
+    public static readonly RiskRule LocalPathOrPrivateLocation = new(
+        "ACKIT004",
+        "LocalPathOrPrivateLocation",
+        RiskCategory.LocalPath,
+        RiskSeverity.Low,
+        "Local path, user profile path, file URI, or private machine location requiring review.",
+        "Replace absolute local paths with repository-relative paths or documentation-safe placeholders.");
+
+    public static readonly RiskRule RepositoryHygiene = new(
+        "ACKIT005",
+        "RepositoryHygiene",
+        RiskCategory.RepositoryHygiene,
+        RiskSeverity.Medium,
+        "Repository hygiene, configuration, documentation, or release readiness issue.",
+        "Review the repository hygiene item before public release or generated context export.");
+
+    public static readonly RiskRule GeneralFinding = new(
+        "ACKIT999",
+        "GeneralFinding",
+        RiskCategory.RepositoryHygiene,
+        RiskSeverity.Info,
+        "General AgentContextKit scanner finding.",
+        "Review the finding and decide whether it should remain in the repository.");
+
+    public static IReadOnlyList<RiskRule> All { get; } =
+    [
+        SecretLike,
+        PiiOrBrandLike,
+        GeneratedOrBuildArtifact,
+        LocalPathOrPrivateLocation,
+        RepositoryHygiene,
+        GeneralFinding
+    ];
+
+    public static RiskRule GetRule(RiskFinding finding)
+    {
+        var id = GetRuleId(finding);
+        return All.First(rule => string.Equals(rule.Id, id, StringComparison.OrdinalIgnoreCase));
+    }
+
+    public static string GetRuleId(RiskFinding finding)
+    {
+        return finding.Category switch
+        {
+            RiskCategory.Secret or RiskCategory.ProductionConfig => SecretLike.Id,
+            RiskCategory.Pii or RiskCategory.Brand => PiiOrBrandLike.Id,
+            RiskCategory.BuildArtifact => GeneratedOrBuildArtifact.Id,
+            RiskCategory.LocalPath => LocalPathOrPrivateLocation.Id,
+            RiskCategory.RepositoryHygiene or RiskCategory.Documentation or RiskCategory.Configuration => RepositoryHygiene.Id,
+            _ => GeneralFinding.Id
+        };
+    }
+}
+
 public sealed record ProjectMap(IReadOnlyList<string> Files, IReadOnlyList<StackInfo> Stacks);
 
 public sealed record ScanResult(
@@ -114,7 +202,10 @@ public sealed record AckitConfig(
     IReadOnlyList<string> BrandKeywords,
     IReadOnlyList<string> PiiKeywords,
     IReadOnlyList<string> IgnorePaths,
-    IReadOnlyList<string> RiskExtensions)
+    IReadOnlyList<string> RiskExtensions,
+    IReadOnlyList<string> SafeDomains,
+    IReadOnlyList<string> IgnoredPaths,
+    IReadOnlyList<string> IgnoredFindingIds)
 {
     public static AckitConfig Default => new(
         1,
@@ -122,7 +213,10 @@ public sealed record AckitConfig(
         Array.Empty<string>(),
         Array.Empty<string>(),
         [".ackit/cache/", ".ackit/reports/", ".ackit/webui/", ".ackit/prompt-packs/", ".ackit/context-exports/"],
-        [".bak", ".tmp", ".log", ".sql"]);
+        [".bak", ".tmp", ".log", ".sql"],
+        Array.Empty<string>(),
+        Array.Empty<string>(),
+        Array.Empty<string>());
 }
 
 public enum LlmMessageRole

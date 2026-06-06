@@ -78,7 +78,10 @@
   - Add `samples/dotnet-console`, `samples/generic-empty-repo`, and `samples/security-fixture-repo`.
   - Keep generated sample outputs local-only and uncommitted.
 - TASK-0062 v0.2.0-alpha scanner expansion:
-  - Continue planned stack/risk scanner expansion from the v0.2 roadmap.
+  - Add a central scanner rule catalog for stable `ACKIT` IDs.
+  - Add config-driven `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` for narrow non-Critical noise suppression.
+  - Keep Critical secret-like findings reportable even when allowlists are configured.
+  - Expand private key, environment config, database artifact, package/archive, local path, and provider-token-like detection.
 - TASK-0063 README screenshots/Web UI preview assets:
   - Plan safe public preview images for README and Web UI documentation without exposing local paths or private data.
 - TASK-0064 next alpha release decision for SARIF package:

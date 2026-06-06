@@ -46,6 +46,8 @@ ackit scan --ci --json
 
 Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly, .NET Worker Service, ASP.NET Core Minimal API, Node, npm, pnpm, Yarn, Bun, TypeScript, Vite, Next.js, Nuxt, Angular, Tailwind CSS, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration files when matching local files are present.
 
+Risk findings include stable `ACKIT` rule IDs in JSON output. See [SCANNER_RULES.md](SCANNER_RULES.md) for the rule catalog and [CONFIGURATION.md](CONFIGURATION.md) for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`.
+
 Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
 ### `ackit sarif`
@@ -177,6 +179,8 @@ Exit codes:
 - `0`: no findings
 - `1`: warning findings
 - `2`: critical findings
+
+Config allowlists can suppress non-Critical scanner noise, but Critical secret-like findings remain reportable.
 
 ### `ackit doctor`
 Reports repository health.

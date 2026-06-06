@@ -150,6 +150,8 @@ Pop-Location
 - Expected risk behavior:
   - No critical findings in committed files.
   - Fake-secret behavior is documented with split notation rather than exact token-like prefixes.
+  - `ACKIT` rule IDs and config allowlist behavior can be demonstrated with placeholder-only values.
+  - Critical secret-like findings should remain reportable in temporary local tests and should not be committed.
 
 ## Local Report And Web UI Demos
 Reports and Web UI files are local-only outputs:

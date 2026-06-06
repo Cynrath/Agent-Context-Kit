@@ -12,9 +12,13 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added sample repository gallery and demo scenario docs for onboarding.
 - Added safe sample repositories for .NET console, generic empty repository health gaps, and security fixture wording.
 - Added a local sample smoke helper script.
+- Added a central scanner rule catalog with stable `ACKIT` rule IDs, default severity context, and SARIF help metadata.
+- Added configurable `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` scanner allowlist fields for narrow non-Critical noise suppression.
+- Added scanner coverage for additional package artifacts, provider-token-like values, bearer token-like values, and Unix home path leakage.
 
 ### Changed
 - Clarified that the published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`; SARIF is available in current source and planned for the next alpha package.
+- JSON finding objects now include additive `ruleId` metadata.
 
 ## [0.1.0-alpha.2] - 2026-06-05
 ### Added

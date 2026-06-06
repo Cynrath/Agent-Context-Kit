@@ -23,6 +23,9 @@ public sealed class AckitConfigReader : IAckitConfigReader
         var piiKeywords = new List<string>();
         var ignorePaths = new List<string>();
         var riskExtensions = new List<string>();
+        var safeDomains = new List<string>();
+        var ignoredPaths = new List<string>();
+        var ignoredFindingIds = new List<string>();
         var section = "";
 
         foreach (var rawLine in _fileSystem.ReadAllText(path).Split('\n'))
@@ -73,10 +76,32 @@ public sealed class AckitConfigReader : IAckitConfigReader
                 continue;
             }
 
+            if (line.StartsWith("ignoredPaths:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = "ignoredPath";
+                AddInlineList(ignoredPaths, line);
+                continue;
+            }
+
             if (line.StartsWith("riskExtensions:", StringComparison.OrdinalIgnoreCase))
             {
                 section = "extension";
                 AddInlineList(riskExtensions, line);
+                continue;
+            }
+
+            if (line.StartsWith("safeDomains:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = "safeDomain";
+                AddInlineList(safeDomains, line);
+                continue;
+            }
+
+            if (line.StartsWith("ignoredFindingIds:", StringComparison.OrdinalIgnoreCase) ||
+                line.StartsWith("allowedFindingIds:", StringComparison.OrdinalIgnoreCase))
+            {
+                section = "ignoredFindingId";
+                AddInlineList(ignoredFindingIds, line);
                 continue;
             }
 
@@ -107,6 +132,18 @@ public sealed class AckitConfigReader : IAckitConfigReader
             {
                 riskExtensions.Add(NormalizeExtension(value));
             }
+            else if (section == "safeDomain")
+            {
+                safeDomains.Add(value);
+            }
+            else if (section == "ignoredPath")
+            {
+                ignoredPaths.Add(value);
+            }
+            else if (section == "ignoredFindingId")
+            {
+                ignoredFindingIds.Add(value);
+            }
         }
 
         return new AckitConfig(
@@ -115,7 +152,10 @@ public sealed class AckitConfigReader : IAckitConfigReader
             brandKeywords,
             piiKeywords,
             ignorePaths.Count == 0 ? AckitConfig.Default.IgnorePaths : NormalizeIgnorePaths(ignorePaths),
-            riskExtensions.Count == 0 ? AckitConfig.Default.RiskExtensions : NormalizeExtensions(riskExtensions));
+            riskExtensions.Count == 0 ? AckitConfig.Default.RiskExtensions : NormalizeExtensions(riskExtensions),
+            NormalizeDomains(safeDomains),
+            NormalizeIgnorePaths(ignoredPaths),
+            NormalizeFindingIds(ignoredFindingIds));
     }
 
     private static void AddInlineList(List<string> target, string line)
@@ -155,10 +195,57 @@ public sealed class AckitConfigReader : IAckitConfigReader
             .ToArray();
     }
 
+    private static IReadOnlyList<string> NormalizeDomains(IReadOnlyList<string> domains)
+    {
+        return domains
+            .Where(domain => !string.IsNullOrWhiteSpace(domain))
+            .Select(NormalizeDomain)
+            .Where(domain => domain.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
+    private static IReadOnlyList<string> NormalizeFindingIds(IReadOnlyList<string> findingIds)
+    {
+        return findingIds
+            .Where(findingId => !string.IsNullOrWhiteSpace(findingId))
+            .Select(findingId => findingId.Trim().Trim('"').ToUpperInvariant())
+            .Where(findingId => findingId.Length > 0)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+    }
+
     private static string NormalizeExtension(string extension)
     {
         var value = extension.Trim().Trim('"');
         return value.StartsWith(".", StringComparison.Ordinal) ? value : "." + value;
+    }
+
+    private static string NormalizeDomain(string domain)
+    {
+        var value = domain.Trim().Trim('"').TrimEnd('/').ToLowerInvariant();
+        var wildcard = value.StartsWith("*.", StringComparison.Ordinal);
+        if (wildcard)
+        {
+            value = value[2..];
+        }
+
+        if (value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            value = value["https://".Length..];
+        }
+        else if (value.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+        {
+            value = value["http://".Length..];
+        }
+
+        var slash = value.IndexOf('/', StringComparison.Ordinal);
+        if (slash >= 0)
+        {
+            value = value[..slash];
+        }
+
+        return wildcard && value.Length > 0 ? "*." + value : value;
     }
 }
 
@@ -195,6 +282,9 @@ public sealed class AckitConfigWriter : IAckitConfigWriter
           - .tmp
           - .log
           - .sql
+        safeDomains: []
+        ignoredPaths: []
+        ignoredFindingIds: []
         """;
 
         _fileSystem.WriteAllText(path, content + Environment.NewLine);

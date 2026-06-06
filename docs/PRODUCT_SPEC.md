@@ -8,6 +8,7 @@ AgentContextKit is an offline-first .NET CLI that prepares repositories for safe
 - Detect repository stack and project structure.
 - Establish task-first development workflow.
 - Report secret/PII/brand/local path risks.
+- Use stable scanner rule IDs and narrow config allowlists for maintainable risk reporting.
 - Improve OSS readiness with docs and health checks.
 - Provide JSON output for CI/script integrations.
 - Provide local static review artifacts for reports and Web UI prototype review.

@@ -42,6 +42,7 @@ Schema version `2` adds:
 - `webUi` generated file metadata on `webui`.
 - `promptPack` generated file metadata on `prompt-pack`.
 - `contextExport` generated file metadata on `context-export`.
+- `ruleId` on scanner finding objects. This is additive and uses the stable rule IDs from [SCANNER_RULES.md](SCANNER_RULES.md).
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -90,6 +91,18 @@ Example shape:
     "info": 0
   },
   "findings": []
+}
+```
+
+Finding shape:
+```json
+{
+  "ruleId": "ACKIT003",
+  "severity": "Medium",
+  "category": "BuildArtifact",
+  "path": "artifacts/package.nupkg",
+  "message": "File extension should be reviewed before public release.",
+  "match": null
 }
 ```
 

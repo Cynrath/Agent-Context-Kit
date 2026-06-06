@@ -149,7 +149,7 @@ Verification completed:
 - `dotnet build AgentContextKit.sln -c Release --no-restore` passed with 0 warnings and 0 errors.
 - `dotnet test AgentContextKit.sln -c Release --no-build` passed with 46/46 tests.
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- webui --output .ackit/webui/task-0024-validation.html --json` exited `0`, created the local Web UI prototype, and reported zero risk findings.
-- In-app browser `file://` navigation was blocked by browser security policy. Local static checks confirmed required sections exist, no remote asset/script/import references exist, and `.ackit/webui/` is ignored by git.
+- In-app browser `file` + `://` navigation was blocked by browser security policy. Local static checks confirmed required sections exist, no remote asset/script/import references exist, and `.ackit/webui/` is ignored by git.
 - `dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci` exited `0` and reported no risk findings.
 - `powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1 -FailOnIssues` exited `0`; it reported expected public-release blockers and warned about uncommitted implementation changes.
 - `powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1` passed; it reported known public-release blockers in report-only mode.

@@ -49,6 +49,11 @@ powershell -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
 
 The script scans committed sample repositories from their own directories because the CLI scans the current working directory. It does not generate or commit `.ackit/` output.
 
+## Scanner Rule Catalog Validation
+Scanner tests cover stable `ACKIT` rule ID mapping, additive JSON `ruleId` output, SARIF rule metadata, config-driven `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`, and the rule that Critical findings remain reportable.
+
+See [SCANNER_RULES.md](SCANNER_RULES.md) and [CONFIGURATION.md](CONFIGURATION.md).
+
 ## v0.2 Readiness Review
 Run the v0.2 local readiness check:
 

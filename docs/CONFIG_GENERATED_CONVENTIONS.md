@@ -27,6 +27,9 @@ riskExtensions:
   - .tmp
   - .log
   - .sql
+safeDomains: []
+ignoredPaths: []
+ignoredFindingIds: []
 ```
 
 Config conventions:
@@ -34,6 +37,8 @@ Config conventions:
 - Unknown language values fall back to English.
 - `ignorePaths` are repository-relative and prefix-matched case-insensitively.
 - `riskExtensions` are normalized with a leading dot.
+- `safeDomains` are exact domains or leading-wildcard subdomain rules.
+- `ignoredPaths` and `ignoredFindingIds` suppress only non-Critical findings.
 - Config changes must be backward-compatible or documented as a pre-v1.0 breaking change.
 
 ## Ignored Local Artifact Paths

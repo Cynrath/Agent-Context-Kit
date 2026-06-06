@@ -490,9 +490,80 @@ public sealed class RiskScanner : IRiskScanner
         }
 
         return findings
+            .Where(finding => !IsSuppressedByConfig(finding, config))
             .OrderByDescending(finding => finding.Severity)
             .ThenBy(finding => finding.Path, StringComparer.OrdinalIgnoreCase)
             .ToArray();
+    }
+
+    private static bool IsSuppressedByConfig(RiskFinding finding, AckitConfig config)
+    {
+        if (finding.Severity == RiskSeverity.Critical)
+        {
+            return false;
+        }
+
+        if (MatchesConfiguredPath(finding.Path, config.IgnoredPaths))
+        {
+            return true;
+        }
+
+        var ruleId = RiskRuleCatalog.GetRuleId(finding);
+        return config.IgnoredFindingIds.Any(ignoredId => string.Equals(ignoredId, ruleId, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool MatchesConfiguredPath(string relativePath, IReadOnlyList<string> configuredPaths)
+    {
+        var normalized = relativePath.Replace('\\', '/').TrimStart('/');
+
+        foreach (var configuredPath in configuredPaths)
+        {
+            var rule = configuredPath.Replace('\\', '/').TrimStart('/');
+            if (rule.Length == 0)
+            {
+                continue;
+            }
+
+            if (rule.EndsWith("*", StringComparison.Ordinal))
+            {
+                var prefix = rule[..^1];
+                if (prefix.Length > 0 && normalized.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (rule.StartsWith("*", StringComparison.Ordinal))
+            {
+                var suffix = rule[1..];
+                if (suffix.Length > 0 && normalized.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (rule.EndsWith("/", StringComparison.Ordinal))
+            {
+                if (normalized.StartsWith(rule, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (string.Equals(normalized, rule, StringComparison.OrdinalIgnoreCase) ||
+                normalized.StartsWith(rule + "/", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static IEnumerable<RiskFinding> AnalyzePath(string relativeFile, AckitConfig config)
@@ -543,6 +614,8 @@ public sealed class RiskScanner : IRiskScanner
         return fileName.EndsWith(".zip", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".rar", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".7z", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".nupkg", StringComparison.OrdinalIgnoreCase) ||
+               fileName.EndsWith(".snupkg", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".bak", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".tmp", StringComparison.OrdinalIgnoreCase) ||
                fileName.EndsWith(".log", StringComparison.OrdinalIgnoreCase) ||
@@ -624,13 +697,16 @@ public sealed class SecretScanner : ISecretScanner
         new(new Regex(@"\bsk-[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "API key-like value detected."),
         new(new Regex(Regex.Escape(GitHubFineGrainedTokenPrefix) + @"[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
         new(new Regex(@"\bghp_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
+        new(new Regex(@"\bgh[osru]_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
+        new(new Regex(@"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b", RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS access key-like value detected."),
         new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
         new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
         new(new Regex(@"\b(password|pwd|mysql password|sql password)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Password-like assignment detected."),
         new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
+        new(new Regex(@"\bbearer\s+[A-Za-z0-9._-]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Bearer token-like value detected."),
         new(new Regex(@"\b(connectionstring|connection string)\b\s*[:=]|\b(data source|user id|uid)" + EqualsSign, RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Connection string-like value detected."),
         new(new Regex(@"\b(smtp|recaptcha|cloudflare)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Medium, RiskCategory.Secret, "Service credential-like setting detected."),
-        new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + ")", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
+        new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + @"|/(?:home|Users)/[^\s""'<>]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
     ];
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content)
@@ -721,14 +797,14 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         }
 
         var emailMatch = EmailRegex.Match(content);
-        if (emailMatch.Success && !IsIgnoredEmailLikeValue(relativePath, emailMatch.Value))
+        if (emailMatch.Success && !IsIgnoredEmailLikeValue(relativePath, emailMatch.Value, config))
         {
             findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
         }
 
         var domainMatch = DomainRegex.Matches(content)
             .Select(match => match.Value)
-            .FirstOrDefault(domain => !IsIgnoredDomainLikeValue(domain) && !emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefault(domain => !IsIgnoredDomainLikeValue(domain, config) && !emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase));
 
         if (!string.IsNullOrWhiteSpace(domainMatch))
         {
@@ -832,14 +908,14 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         return at >= 0 && at + 1 < email.Length ? email[(at + 1)..] : "";
     }
 
-    private static bool IsIgnoredEmailLikeValue(string relativePath, string email)
+    private static bool IsIgnoredEmailLikeValue(string relativePath, string email, AckitConfig config)
     {
         var domain = GetEmailDomain(email);
-        return IsIgnoredDomainLikeValue(domain) ||
+        return IsIgnoredDomainLikeValue(domain, config) ||
                IsNonRealFixtureEmail(relativePath, email, domain);
     }
 
-    private static bool IsIgnoredDomainLikeValue(string domain)
+    private static bool IsIgnoredDomainLikeValue(string domain, AckitConfig config)
     {
         if (string.IsNullOrWhiteSpace(domain))
         {
@@ -848,7 +924,41 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
 
         return KnownSafeTechnicalDomains.Contains(domain) ||
                KnownSafeTechnicalDomainSuffixes.Any(suffix => domain.EndsWith(suffix, StringComparison.OrdinalIgnoreCase)) ||
+               IsConfiguredSafeDomain(domain, config.SafeDomains) ||
                domain.StartsWith("README.", StringComparison.OrdinalIgnoreCase);
+    }
+
+    private static bool IsConfiguredSafeDomain(string domain, IReadOnlyList<string> safeDomains)
+    {
+        var normalized = domain.Trim().TrimEnd('.').ToLowerInvariant();
+
+        foreach (var configuredDomain in safeDomains)
+        {
+            var rule = configuredDomain.Trim().TrimEnd('.').ToLowerInvariant();
+            if (rule.Length == 0)
+            {
+                continue;
+            }
+
+            if (rule.StartsWith("*.", StringComparison.Ordinal))
+            {
+                var suffix = rule[1..];
+                if (normalized.Length > suffix.Length &&
+                    normalized.EndsWith(suffix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+
+                continue;
+            }
+
+            if (string.Equals(normalized, rule, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static bool IsNonRealFixtureEmail(string relativePath, string email, string domain)

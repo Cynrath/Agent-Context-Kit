@@ -351,6 +351,73 @@ public sealed class RiskScannerTests
     }
 
     [Fact]
+    public void RepositoryScannerSuppressesConfiguredIgnoredPathFindingsButKeepsFileVisible()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("generated-output/archive.bak", "not secret");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            IgnoredPaths = ["generated-output/"]
+        });
+
+        Assert.Contains(result.Files, file => file == "generated-output/archive.bak");
+        Assert.DoesNotContain(result.Findings, finding => finding.Path == "generated-output/archive.bak");
+    }
+
+    [Fact]
+    public void RepositoryScannerUsesIgnoredFindingIdsForNonCriticalFindings()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("artifacts/tool.nupkg", "not secret");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            IgnoredFindingIds = ["ACKIT003"]
+        });
+
+        Assert.DoesNotContain(result.Findings, finding => finding.Path == "artifacts/tool.nupkg");
+    }
+
+    [Fact]
+    public void RepositoryScannerDoesNotSuppressCriticalSecretFindingsWithIgnoredFindingIds()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            IgnoredFindingIds = ["ACKIT001"]
+        });
+
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == "settings.txt" &&
+            finding.Severity == RiskSeverity.Critical &&
+            finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
+    public void RepositoryScannerDoesNotSuppressCriticalSecretFindingsWithIgnoredPaths()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("fixtures/settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path, AckitConfig.Default with
+        {
+            IgnoredPaths = ["fixtures/"]
+        });
+
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == "fixtures/settings.txt" &&
+            finding.Severity == RiskSeverity.Critical &&
+            finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
     public void BrandPiiScannerFindsConfiguredKeywordAndEmail()
     {
         var scanner = new BrandPiiScanner();
@@ -374,6 +441,23 @@ public sealed class RiskScannerTests
             "docs/platforms.md",
             "Use Microsoft.NET with api.nuget.org, github.com, nuget.org, and learn.microsoft.com.",
             AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void BrandPiiScannerUsesConfiguredSafeDomains()
+    {
+        var scanner = new BrandPiiScanner();
+        var configuredDomain = "internal" + ".tooling" + ".dev";
+
+        var findings = scanner.ScanText(
+            "docs/platforms.md",
+            "Use " + configuredDomain + " for local fixture docs.",
+            AckitConfig.Default with
+            {
+                SafeDomains = [configuredDomain]
+            });
 
         Assert.DoesNotContain(findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
     }
@@ -413,6 +497,56 @@ public sealed class RiskScannerTests
         var findings = scanner.ScanText("settings.txt", "token" + "=" + TestData.GitHubFineGrainedToken());
 
         Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical && finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
+    public void SecretScannerFindsCriticalAwsAccessKeyLikeValue()
+    {
+        var scanner = new SecretScanner();
+
+        var findings = scanner.ScanText("settings.txt", "key" + "=" + TestData.AwsAccessKey());
+
+        Assert.Contains(findings, finding => finding.Severity == RiskSeverity.Critical && finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
+    public void SecretScannerFindsBearerTokenLikeValue()
+    {
+        var scanner = new SecretScanner();
+
+        var findings = scanner.ScanText("headers.txt", "Authorization: Bearer " + "abcdefghijklmnopqrstuvwxyz123456");
+
+        Assert.Contains(findings, finding => finding.Severity == RiskSeverity.High && finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
+    public void SecretScannerFindsUnixHomeAndFileUriPaths()
+    {
+        var scanner = new SecretScanner();
+
+        var unixFindings = scanner.ScanText("docs/paths.md", "Local path: " + "/" + "home/example/project.");
+        var fileUriFindings = scanner.ScanText("docs/paths.md", "Local URI: " + "file:" + "///tmp/project.");
+
+        Assert.Contains(unixFindings, finding => finding.Severity == RiskSeverity.Low && finding.Category == RiskCategory.LocalPath);
+        Assert.Contains(fileUriFindings, finding => finding.Severity == RiskSeverity.Low && finding.Category == RiskCategory.LocalPath);
+    }
+
+    [Fact]
+    public void RepositoryScannerFindsPackageDatabaseAndCertificateArtifacts()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("artifacts/tool.nupkg", "not secret");
+        repo.Write("artifacts/tool.snupkg", "not secret");
+        repo.Write("data/app.sqlite", "not secret");
+        repo.Write("certs/signing.p12", "not secret");
+        var scanner = TestServices.CreateRepositoryScanner();
+
+        var result = scanner.Scan(repo.Path);
+
+        Assert.Contains(result.Findings, finding => finding.Path == "artifacts/tool.nupkg" && finding.Category == RiskCategory.BuildArtifact);
+        Assert.Contains(result.Findings, finding => finding.Path == "artifacts/tool.snupkg" && finding.Category == RiskCategory.BuildArtifact);
+        Assert.Contains(result.Findings, finding => finding.Path == "data/app.sqlite" && finding.Category == RiskCategory.BuildArtifact);
+        Assert.Contains(result.Findings, finding => finding.Path == "certs/signing.p12" && finding.Severity == RiskSeverity.Critical);
     }
 
     [Fact]
@@ -480,6 +614,33 @@ public sealed class SarifReportWriterTests
         Assert.Equal("AgentContextKit", json?["runs"]?[0]?["tool"]?["driver"]?["name"]?.GetValue<string>());
         Assert.Equal("0.1.0-test", json?["runs"]?[0]?["tool"]?["driver"]?["version"]?.GetValue<string>());
         Assert.Equal(0, json?["runs"]?[0]?["results"]?.AsArray().Count);
+    }
+
+    [Fact]
+    public void SarifRulesUseCentralRiskRuleCatalogMetadata()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var scan = CreateScan(repo.Path, []);
+
+        writer.Generate(repo.Path, ".ackit/reports/rules.sarif", scan, "0.1.0-test");
+        var json = JsonNode.Parse(File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "rules.sarif")));
+        var rules = json?["runs"]?[0]?["tool"]?["driver"]?["rules"]?.AsArray();
+
+        Assert.Equal(RiskRuleCatalog.All.Count, rules?.Count);
+        Assert.Contains(rules!, rule => rule?["id"]?.GetValue<string>() == "ACKIT001" &&
+                                        (rule?["help"]?["text"]?.GetValue<string>()?.Contains("Remove the secret", StringComparison.OrdinalIgnoreCase) ?? false));
+        Assert.Contains(rules!, rule => rule?["id"]?.GetValue<string>() == "ACKIT999");
+    }
+
+    [Fact]
+    public void RiskRuleCatalogKeepsStableRuleIdMapping()
+    {
+        Assert.Equal("ACKIT001", RiskRuleCatalog.GetRuleId(new RiskFinding(RiskSeverity.Critical, RiskCategory.Secret, "settings.txt", "secret")));
+        Assert.Equal("ACKIT002", RiskRuleCatalog.GetRuleId(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, "docs/contact.md", "pii")));
+        Assert.Equal("ACKIT003", RiskRuleCatalog.GetRuleId(new RiskFinding(RiskSeverity.Medium, RiskCategory.BuildArtifact, "artifact.zip", "artifact")));
+        Assert.Equal("ACKIT004", RiskRuleCatalog.GetRuleId(new RiskFinding(RiskSeverity.Low, RiskCategory.LocalPath, "docs/path.md", "path")));
+        Assert.Equal("ACKIT005", RiskRuleCatalog.GetRuleId(new RiskFinding(RiskSeverity.Medium, RiskCategory.Configuration, ".env.example", "config")));
     }
 
     [Fact]
@@ -952,6 +1113,13 @@ public sealed class ConfigAndDoctorTests
           - generated/
         riskExtensions:
           - snapshot
+        safeDomains:
+          - docs.example.invalid
+          - "*.trusted.example"
+        ignoredPaths:
+          - reports/
+        ignoredFindingIds:
+          - ackit003
         """);
         var reader = new AckitConfigReader(new PhysicalFileSystem());
 
@@ -963,6 +1131,10 @@ public sealed class ConfigAndDoctorTests
         Assert.Contains("private-name", config.PiiKeywords);
         Assert.Contains("generated/", config.IgnorePaths);
         Assert.Contains(".snapshot", config.RiskExtensions);
+        Assert.Contains("docs.example.invalid", config.SafeDomains);
+        Assert.Contains("*.trusted.example", config.SafeDomains);
+        Assert.Contains("reports/", config.IgnoredPaths);
+        Assert.Contains("ACKIT003", config.IgnoredFindingIds);
     }
 
     [Fact]
@@ -1390,6 +1562,11 @@ internal static class TestData
     public static string GitHubFineGrainedToken()
     {
         return "github" + "_pat_" + "1234567890abcdef";
+    }
+
+    public static string AwsAccessKey()
+    {
+        return "AKIA" + "1234567890ABCDEF";
     }
 }
 

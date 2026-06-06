@@ -20,7 +20,7 @@ The SARIF file includes:
 - Tool name: `AgentContextKit`
 - Tool information URI: `https://github.com/Cynrath/agent-context-kit`
 - Tool version
-- Stable AgentContextKit rules
+- Stable AgentContextKit rules from the central scanner rule catalog
 - Scanner findings as SARIF results
 
 `--output` is required in the first SARIF MVP so users explicitly choose where the generated report is written. Recommended local path: `.ackit/reports/ackit.sarif`.
@@ -53,6 +53,8 @@ For example, if a secret-like value is detected, SARIF records the rule, severit
 | `ACKIT004` | `LocalPathOrPrivateLocation` | Local path or private machine location findings. |
 | `ACKIT005` | `RepositoryHygiene` | Repository hygiene, configuration, documentation, or release readiness findings. |
 | `ACKIT999` | `GeneralFinding` | General fallback finding. |
+
+The rule catalog also provides default severity context and recommendation/help text. See [SCANNER_RULES.md](SCANNER_RULES.md) for the full catalog and config allowlist behavior.
 
 ## JSON Command Result
 `ackit sarif --json` prints a command summary, not the SARIF payload.

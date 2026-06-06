@@ -14,6 +14,8 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Agent instruction generation.
 - Task file generation.
 - Pattern-based redact checks.
+- Stable scanner rule catalog with `ACKIT` rule IDs.
+- Configurable non-Critical scanner allowlists through `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`.
 - Offline static HTML report, Web UI, dry-run prompt pack, and local context export manifest generation.
 - Privacy-first local SARIF 2.1.0 scanner output.
 - English/Turkish localization foundation.
@@ -33,7 +35,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - GitHub repository is public.
 - Current release tag `v0.1.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run is green.
-- Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Read-only GitHub CLI validation on 2026-06-06 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `docs: add sample gallery and demo scenarios`.
 - Repository description and topics are set.
 - GitHub Release page for `v0.1.0-alpha.2` is completed.
 - NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
@@ -49,8 +51,9 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - TASK-0059 is completed locally for privacy-first `ackit sarif --output <repo-relative.sarif>` output, SARIF docs, and non-active Code Scanning upload examples.
 - TASK-0060 is completed locally for GitHub Actions usage examples, SARIF availability wording, and CI docs polish.
 - TASK-0061 is committed locally for sample repository gallery, demo scenarios, onboarding examples, safe sample repositories, and a local sample smoke helper.
+- TASK-0062 is committed locally for scanner rule catalog hardening, config-driven non-Critical allowlists, expanded scanner risk patterns, additive JSON `ruleId`, SARIF catalog metadata, and scanner docs.
 - Published NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source includes it and the next alpha package should include it.
-- Read-only GitHub CLI validation on 2026-06-06 confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `feat: add SARIF report output`.
+- Read-only GitHub CLI validation on 2026-06-06 confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `docs: add sample gallery and demo scenarios`.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -112,6 +115,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - SARIF output docs and example GitHub Code Scanning upload workflow are added in TASK-0059: `docs/SARIF_OUTPUT.md` and `docs/examples/github-actions-sarif-upload.yml`.
 - GitHub Actions CI usage docs and additional documentation-only workflow examples are added in TASK-0060.
 - Sample gallery and demo scenario docs are added in TASK-0061, along with safe sample repositories and a local sample smoke helper.
+- Scanner rule catalog and configurable allowlist docs are being added in TASK-0062.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -169,3 +173,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0059 adds scanner SARIF output and GitHub Code Scanning readiness docs. Upload stays example-only and maintainer-controlled. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` checks, hygiene scans, `git diff --check`, and v1.0 documentation gate. Post-commit public release gate rerun passed with no blocking items and only the expected post-release `HEAD` warning.
 - TASK-0060 clarifies source/current-package SARIF availability and adds GitHub Actions usage examples without activating any new workflow or upload. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` checks, hygiene scans, `git diff --check`, and v1.0 documentation gate. Post-commit public release gate rerun passed with no blocking items and only the expected post-release `HEAD` warning.
 - TASK-0061 adds sample gallery and demo docs without committing generated sample artifacts. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` version/help, sample smoke, hygiene scans, `git diff --check`, and v1.0 documentation release gate. The post-commit public release gate passed with no blocking items and only the expected post-release `HEAD` warning.
+- TASK-0062 adds central scanner rule catalog metadata, additive JSON `ruleId`, SARIF rule help metadata, config-driven `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`, expanded scanner risk patterns, and `docs/SCANNER_RULES.md`. Pre-commit validation passed with restore, Release build, 83/83 tests, self-scan, doctor, JSON scan, SARIF generation/parse, sample smoke, installed `ackit` version/help, hygiene scans, `git diff --check`, config/generated convention gate, v0.2 readiness gate, and v1.0 documentation release gate. The post-commit public release gate passed with no blocking items and only the expected post-release `HEAD` warning.

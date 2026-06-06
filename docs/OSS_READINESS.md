@@ -37,7 +37,7 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub repository is public.
 - `v0.1.0-alpha.2` tag is pushed.
 - GitHub Actions latest `master` run is green.
-- Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passed for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
+- Read-only GitHub CLI validation on 2026-06-06 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passed after `docs: add sample gallery and demo scenarios`.
 - Repository description and topics are set.
 - GitHub Release page is completed for `v0.1.0-alpha.2`.
 - NuGet publish is completed for `AgentContextKit` version `0.1.0-alpha.2`.
@@ -56,3 +56,4 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub Actions CI usage docs and documentation-only workflow examples are present for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
 - Sample gallery and demo scenario docs are present for safe onboarding without committing generated artifacts.
 - Sample repositories cover .NET console, ASP.NET Core Minimal API, Node/TypeScript/Tailwind, generic empty repository health gaps, and safe security fixture wording.
+- Current source includes scanner rule catalog hardening, additive JSON `ruleId` metadata, config-driven non-Critical allowlists, and expanded risk patterns for v0.2.0-alpha preparation.

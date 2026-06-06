@@ -51,7 +51,7 @@ public sealed class SarifReportWriter : ISarifReportWriter
                             Name = "AgentContextKit",
                             InformationUri = "https://github.com/Cynrath/agent-context-kit",
                             Version = toolVersion,
-                            Rules = SarifRuleCatalog.All
+                            Rules = RiskRuleCatalog.All.Select(ToSarifRule).ToArray()
                         }
                     },
                     Results = scanResult.Findings
@@ -64,7 +64,7 @@ public sealed class SarifReportWriter : ISarifReportWriter
 
     private static SarifResult ToResult(string repositoryPath, RiskFinding finding)
     {
-        var rule = SarifRuleCatalog.GetRule(finding);
+        var rule = RiskRuleCatalog.GetRule(finding);
         return new SarifResult
         {
             RuleId = rule.Id,
@@ -188,6 +188,27 @@ public sealed class SarifReportWriter : ISarifReportWriter
             ? "AgentContextKit finding."
             : message.Trim();
     }
+
+    private static SarifRule ToSarifRule(RiskRule rule)
+    {
+        return new SarifRule
+        {
+            Id = rule.Id,
+            Name = rule.Name,
+            ShortDescription = new SarifMessage
+            {
+                Text = rule.Description
+            },
+            FullDescription = new SarifMessage
+            {
+                Text = $"{rule.Description} Default severity: {rule.DefaultSeverity}."
+            },
+            Help = new SarifMessage
+            {
+                Text = rule.Recommendation
+            }
+        };
+    }
 }
 
 public sealed class SarifReport
@@ -242,6 +263,12 @@ public sealed class SarifRule
 
     [JsonPropertyName("shortDescription")]
     public SarifMessage ShortDescription { get; init; } = new();
+
+    [JsonPropertyName("fullDescription")]
+    public SarifMessage? FullDescription { get; init; }
+
+    [JsonPropertyName("help")]
+    public SarifMessage? Help { get; init; }
 }
 
 public sealed class SarifResult
@@ -290,49 +317,4 @@ public sealed class SarifRegion
 {
     [JsonPropertyName("startLine")]
     public int StartLine { get; init; }
-}
-
-internal static class SarifRuleCatalog
-{
-    public static readonly IReadOnlyList<SarifRule> All =
-    [
-        Rule("ACKIT001", "SecretLike", "Secret-like value, credential, key, or production secret risk."),
-        Rule("ACKIT002", "PiiOrBrandLike", "PII-like or brand/domain-like value requiring review."),
-        Rule("ACKIT003", "GeneratedOrBuildArtifact", "Generated, build, package, backup, or artifact file requiring review."),
-        Rule("ACKIT004", "LocalPathOrPrivateLocation", "Local path or private machine location requiring review."),
-        Rule("ACKIT005", "RepositoryHygiene", "Repository hygiene or release readiness issue."),
-        Rule("ACKIT999", "GeneralFinding", "General AgentContextKit scanner finding.")
-    ];
-
-    public static SarifRule GetRule(RiskFinding finding)
-    {
-        var id = GetRuleId(finding);
-        return All.First(rule => rule.Id == id);
-    }
-
-    private static string GetRuleId(RiskFinding finding)
-    {
-        return finding.Category switch
-        {
-            RiskCategory.Secret or RiskCategory.ProductionConfig => "ACKIT001",
-            RiskCategory.Pii or RiskCategory.Brand => "ACKIT002",
-            RiskCategory.BuildArtifact => "ACKIT003",
-            RiskCategory.LocalPath => "ACKIT004",
-            RiskCategory.RepositoryHygiene or RiskCategory.Documentation or RiskCategory.Configuration => "ACKIT005",
-            _ => "ACKIT999"
-        };
-    }
-
-    private static SarifRule Rule(string id, string name, string description)
-    {
-        return new SarifRule
-        {
-            Id = id,
-            Name = name,
-            ShortDescription = new SarifMessage
-            {
-                Text = description
-            }
-        };
-    }
 }

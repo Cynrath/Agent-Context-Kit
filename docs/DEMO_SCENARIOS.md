@@ -47,6 +47,15 @@ Pop-Location
 
 See [SAMPLE_GALLERY.md](SAMPLE_GALLERY.md).
 
+## Scanner Rule Catalog Demo
+Review the rule catalog and config allowlist behavior:
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli -- scan --json
+```
+
+Finding objects include stable `ruleId` values when findings are present. See [SCANNER_RULES.md](SCANNER_RULES.md) and [CONFIGURATION.md](CONFIGURATION.md) for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`.
+
 ## Web UI Demo
 Create a local-only Web UI file:
 
