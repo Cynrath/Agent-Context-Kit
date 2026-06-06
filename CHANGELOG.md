@@ -9,6 +9,9 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added source-only `ackit sarif --output <repo-relative.sarif>` documentation and GitHub Code Scanning readiness notes for the next alpha package.
 - Added documentation-only GitHub Actions examples for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
 - Added GitHub Actions usage guidance for CI command order, privacy, failure interpretation, and SARIF upload decisions.
+- Added sample repository gallery and demo scenario docs for onboarding.
+- Added safe sample repositories for .NET console, generic empty repository health gaps, and security fixture wording.
+- Added a local sample smoke helper script.
 
 ### Changed
 - Clarified that the published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`; SARIF is available in current source and planned for the next alpha package.

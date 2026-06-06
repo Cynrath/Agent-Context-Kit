@@ -40,6 +40,15 @@ The output is local-only and ignored by git when written under `.ackit/reports/`
 
 See [GITHUB_ACTIONS_USAGE.md](GITHUB_ACTIONS_USAGE.md) for CI command ordering, published-tool versus source-package smoke guidance, and SARIF upload criteria.
 
+## Sample Smoke Validation
+Run sample smoke checks from the repository root:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
+```
+
+The script scans committed sample repositories from their own directories because the CLI scans the current working directory. It does not generate or commit `.ackit/` output.
+
 ## v0.2 Readiness Review
 Run the v0.2 local readiness check:
 

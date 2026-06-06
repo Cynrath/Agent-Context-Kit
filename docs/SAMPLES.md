@@ -5,10 +5,25 @@ AgentContextKit includes small sample repositories under `samples/`.
 The samples are designed for local scan and generated-doc experiments. They intentionally avoid secrets, environment files, uploads, backups, private keys, package artifacts, and generated build outputs.
 
 ## Available Samples
+- `samples/dotnet-console`: .NET console stack detection.
 - `samples/dotnet-minimal-api`: .NET Minimal API stack detection.
 - `samples/node-tooling`: Node, TypeScript, and Tailwind CSS stack detection.
+- `samples/generic-empty-repo`: minimal repository health-gap demo.
+- `samples/security-fixture-repo`: safe security fixture wording and redact-check demo.
 
-## Scan The .NET Sample
+See [SAMPLE_GALLERY.md](SAMPLE_GALLERY.md) for detailed expected stacks, health gaps, generated files, and risk behavior.
+
+## Scan The .NET Console Sample
+```powershell
+Push-Location samples/dotnet-console
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
+Pop-Location
+```
+
+Expected stack signals:
+- `.NET`
+
+## Scan The Minimal API Sample
 ```powershell
 Push-Location samples/dotnet-minimal-api
 dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
@@ -31,6 +46,26 @@ Expected stack signals:
 - `Node`
 - `TypeScript`
 - `Tailwind CSS`
+
+## Scan The Empty Repository Sample
+```powershell
+Push-Location samples/generic-empty-repo
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- doctor
+Pop-Location
+```
+
+`doctor` can fail here because the sample intentionally lacks release-quality repository metadata.
+
+## Scan The Security Fixture Sample
+```powershell
+Push-Location samples/security-fixture-repo
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- redact-check --profile public-release
+Pop-Location
+```
+
+This sample contains no real secrets and avoids exact sensitive token-like prefixes.
 
 ## Safety
 Do not add secrets, `.env` files, dumps, backups, uploads, private keys, package outputs, `node_modules`, `bin`, or `obj` directories to samples.

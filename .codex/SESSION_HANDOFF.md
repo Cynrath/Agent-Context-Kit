@@ -399,6 +399,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0060 pre-commit validation passed: restore, Release build, 72/72 tests, repository `scan --ci`, `doctor`, `scan --json`, SARIF generation and `ConvertFrom-Json` parse, installed `ackit version`/`ackit --help`, SARIF local-path/token scan, maintainer identity scan, tracked artifact scan, exact fake token/local-path scan, `git diff --check`, and v1.0 documentation release gate.
 - TASK-0060 public release gate was run before commit and failed only because the working tree had uncommitted changes; package metadata was clean and the post-release `HEAD` warning remains expected for post-tag sync commits.
 - TASK-0060 post-commit public release gate rerun passed with no blocking items; the expected warning remains that current `HEAD` is after `v0.1.0-alpha.2` and remote tag verification is manual.
+- TASK-0061 started for sample repository gallery, demo scenarios, and onboarding examples.
+- TASK-0061 read-only GitHub CLI validation confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs succeeded after `docs: add GitHub Actions usage examples`.
+- TASK-0061 adds safe sample repositories for .NET console, generic empty repository health gaps, and security fixture wording, plus sample gallery/demo docs and a local sample smoke helper.
+- TASK-0061 pre-commit validation passed: restore, Release build, 72/72 tests, repository `scan --ci`, doctor, JSON scan, SARIF generation/parse, installed `ackit version`/`ackit --help`, sample smoke, maintainer identity scan, tracked artifact scan, exact token/local-path scans, `git diff --check`, and v1.0 documentation release gate.
+- TASK-0061 public release gate was run before commit and failed only because the working tree had uncommitted changes; package metadata was clean and the post-release `HEAD` warning remains expected.
+- TASK-0061 post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote tag verification note remained.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -412,4 +418,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0060 is implemented locally. `v0.1.0-alpha.2` is pushed, released on GitHub, published on NuGet, install-verified as a global tool, Web UI smoke-tested, and hosted Actions-validated. Codex for OSS form submission is completed per maintainer-provided status. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload SARIF/content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0061 is implemented locally; TASK-0061 is committed and its post-commit public release gate passed with no blocking items. `v0.1.0-alpha.2` is pushed, released on GitHub, published on NuGet, install-verified as a global tool, Web UI smoke-tested, and hosted Actions-validated. Codex for OSS form submission is completed per maintainer-provided status. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload SARIF/content, or automatically redact without explicit maintainer instruction.

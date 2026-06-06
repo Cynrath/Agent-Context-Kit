@@ -72,6 +72,8 @@ It shows two documentation-only approaches:
 
 The example is not active. It is not copied into `.github/workflows`, and this task does not upload SARIF to GitHub Code Scanning.
 
+For a hands-on local source demo, see [DEMO_SCENARIOS.md](DEMO_SCENARIOS.md).
+
 ## GitHub Code Scanning Upload Note
 Uploading SARIF to GitHub Code Scanning requires a workflow permission such as:
 

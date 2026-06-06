@@ -11,6 +11,8 @@
 - `docs/CLI_REFERENCE.md`: command reference.
 - `docs/EXAMPLES.md`: common command flows.
 - `docs/EXAMPLE_WORKFLOWS.md`: copy-paste-ready local workflow collections.
+- `docs/SAMPLE_GALLERY.md`: sample repository gallery with expected stacks, health gaps, commands, and risk behavior.
+- `docs/DEMO_SCENARIOS.md`: guided published package, source, sample, Web UI, report, and SARIF demos.
 - `docs/GITHUB_ACTIONS_USAGE.md`: GitHub Actions CI usage, SARIF, and smoke workflow guidance.
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
@@ -60,6 +62,7 @@
 
 ## Packaging And Release
 - `docs/PACKAGING.md`: NuGet tool packaging.
+- `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.
 - `docs/examples/github-actions-published-tool-smoke.yml`: non-active published NuGet tool smoke example.

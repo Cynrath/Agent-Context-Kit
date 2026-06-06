@@ -112,6 +112,15 @@ Cross-platform published-package smoke coverage is tracked by `.github/workflows
 Current-source smoke coverage is tracked by `.github/workflows/cross-platform-source-smoke.yml`. It packs the current branch locally and installs the package from the workflow's temporary package source without publishing it.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
+## Try It On A Sample
+```powershell
+Push-Location samples/dotnet-console
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+Pop-Location
+```
+
+See [Sample Gallery](docs/SAMPLE_GALLERY.md) and [Demo Scenarios](docs/DEMO_SCENARIOS.md) for more guided examples.
+
 ## CLI Commands
 `ackit sarif` is part of the current source command surface after `v0.1.0-alpha.2`; it is not in the published `0.1.0-alpha.2` NuGet global tool.
 
@@ -175,6 +184,8 @@ Key docs:
 - [CLI Reference](docs/CLI_REFERENCE.md)
 - [Examples](docs/EXAMPLES.md)
 - [Example Workflows](docs/EXAMPLE_WORKFLOWS.md)
+- [Sample Gallery](docs/SAMPLE_GALLERY.md)
+- [Demo Scenarios](docs/DEMO_SCENARIOS.md)
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)

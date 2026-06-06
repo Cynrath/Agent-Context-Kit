@@ -43,6 +43,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`
 - `docs/CONFIGURATION.md`
 - `docs/CONTRIBUTOR_ONBOARDING.md`
+- `docs/DEMO_SCENARIOS.md`
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT_STANDARD.md`
 - `docs/DOCUMENTATION_INDEX.md`
@@ -82,6 +83,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/ROADMAP.md`
 - `docs/SECURITY_MODEL.md`
 - `docs/SECURITY_NOTES.md`
+- `docs/SAMPLE_GALLERY.md`
 - `docs/SAMPLES.md`
 - `docs/SARIF_OUTPUT.md`
 - `docs/SOURCE_HYGIENE.md`
@@ -149,6 +151,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/tasks/TASK-0058-repository-settings-badges-labels.md`
 - `docs/tasks/TASK-0059-scanner-sarif-output.md`
 - `docs/tasks/TASK-0060-github-actions-usage-examples.md`
+- `docs/tasks/TASK-0061-sample-repository-gallery.md`
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
@@ -164,14 +167,20 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `README.md`
 - `README.tr.md`
 - `samples/README.md`
+- `samples/dotnet-console/Program.cs`
+- `samples/dotnet-console/README.md`
+- `samples/dotnet-console/Sample.Console.csproj`
 - `samples/dotnet-minimal-api/Program.cs`
 - `samples/dotnet-minimal-api/README.md`
 - `samples/dotnet-minimal-api/Sample.MinimalApi.csproj`
+- `samples/generic-empty-repo/README.md`
 - `samples/node-tooling/package.json`
 - `samples/node-tooling/README.md`
 - `samples/node-tooling/src/index.ts`
 - `samples/node-tooling/tailwind.config.js`
 - `samples/node-tooling/tsconfig.json`
+- `samples/security-fixture-repo/config/placeholder-settings.txt`
+- `samples/security-fixture-repo/README.md`
 - `scripts/audit-public-release.ps1`
 - `scripts/check-cli-contract.ps1`
 - `scripts/check-config-generated-conventions.ps1`
@@ -184,6 +193,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-v050-readiness.ps1`
 - `scripts/check-v100-documentation-release-gates.ps1`
 - `scripts/check-v100-readiness.ps1`
+- `scripts/test-samples.ps1`
 - `scripts/verify-release.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`
@@ -204,4 +214,4 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
-- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0060-github-actions-usage-examples.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, and GitHub Actions usage examples.
+- Final public release preparation and alpha.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0061-sample-repository-gallery.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, and sample smoke helper.

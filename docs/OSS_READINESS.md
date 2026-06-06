@@ -54,3 +54,5 @@ The first release should be small, working, documented, and honest about limitat
 - Current source after `v0.1.0-alpha.2` includes `ackit sarif`; the published NuGet `0.1.0-alpha.2` package does not include that command.
 - The next alpha package is expected to include SARIF output.
 - GitHub Actions CI usage docs and documentation-only workflow examples are present for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
+- Sample gallery and demo scenario docs are present for safe onboarding without committing generated artifacts.
+- Sample repositories cover .NET console, ASP.NET Core Minimal API, Node/TypeScript/Tailwind, generic empty repository health gaps, and safe security fixture wording.

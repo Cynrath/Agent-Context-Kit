@@ -114,3 +114,12 @@ Do not upload SARIF when:
 - `docs/examples/github-actions-source-package-smoke.yml`
 
 These files are examples only. Copy them into `.github/workflows/` only after repository-specific review.
+
+## Sample Repositories In CI
+Use `scripts/test-samples.ps1` for local sample smoke validation. If copied into CI, run it after restore/build/test and keep generated sample outputs ignored:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
+```
+
+See [SAMPLE_GALLERY.md](SAMPLE_GALLERY.md) and [DEMO_SCENARIOS.md](DEMO_SCENARIOS.md).

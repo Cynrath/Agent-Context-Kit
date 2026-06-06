@@ -1,13 +1,9 @@
-# Node Tooling Sample
+# .NET Console Sample
 
-Safe sample repository for AgentContextKit stack detection.
+This sample is a minimal .NET console repository for AgentContextKit scanner demos.
 
-Expected stack signals:
-- Node
-- TypeScript
-- Tailwind CSS
-
-This sample does not require package installation and does not contain secrets or environment files.
+## Expected Stack
+- `.NET`
 
 ## Expected Health Gaps
 - No license file.
@@ -18,10 +14,11 @@ This sample does not require package installation and does not contain secrets o
 
 ## Suggested Commands
 ```powershell
-Push-Location samples/node-tooling
+Push-Location samples/dotnet-console
 dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan
 dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
 Pop-Location
 ```
 
-Main repository note: this sample should not make the root repository report Node, TypeScript, or Tailwind CSS as the main product stack.
+## Safety
+This sample contains no secrets, generated artifacts, `bin/`, `obj/`, or package output.

@@ -112,6 +112,15 @@ Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform
 Mevcut kaynak smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` ile takip edilir. Bu workflow mevcut branch'i lokalde paketler ve paketi yayin yapmadan gecici package source uzerinden kurar.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
+## Ornek Uzerinde Dene
+```powershell
+Push-Location samples/dotnet-console
+dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+Pop-Location
+```
+
+Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
+
 ## CLI Komutlari
 `ackit sarif`, `v0.1.0-alpha.2` sonrasindaki mevcut source komut yuzeyinin parcasidir; yayinlanmis `0.1.0-alpha.2` NuGet global tool icinde yoktur.
 
@@ -175,6 +184,8 @@ Baslangic icin [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md) dosyas
 Onemli dokumanlar:
 - [CLI Reference](docs/CLI_REFERENCE.md)
 - [Examples](docs/EXAMPLES.md)
+- [Sample Gallery](docs/SAMPLE_GALLERY.md)
+- [Demo Scenarios](docs/DEMO_SCENARIOS.md)
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)

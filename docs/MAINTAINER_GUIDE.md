@@ -51,6 +51,15 @@ gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-smoke.yml
 gh run list --repo Cynrath/agent-context-kit --workflow cross-platform-source-smoke.yml --limit 3
 ```
 
+## Sample And Demo Docs
+Use `docs/SAMPLE_GALLERY.md` and `docs/DEMO_SCENARIOS.md` for onboarding examples. Keep sample repositories small, safe, and artifact-free. Do not commit generated `.ackit/` report, Web UI, SARIF, prompt-pack, context-export, `bin/`, `obj/`, `node_modules`, package, archive, or local secret outputs.
+
+Local sample smoke helper:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
+```
+
 ## SARIF And Code Scanning
 Current source after `v0.1.0-alpha.2` includes `ackit sarif --output .ackit/reports/ackit.sarif`, which creates a local SARIF 2.1.0 scanner report with repository-relative paths and no raw scanner match values.
 

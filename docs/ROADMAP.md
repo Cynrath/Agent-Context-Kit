@@ -74,11 +74,16 @@
   - Add documented workflow snippets for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
   - Add GitHub Actions usage guidance for CI command order, privacy notes, failure interpretation, and SARIF upload decisions.
 - TASK-0061 sample repository gallery:
-  - Expand sample documentation with screenshots or concise stack examples.
+  - Add sample repository gallery, demo scenarios, and safe onboarding examples.
+  - Add `samples/dotnet-console`, `samples/generic-empty-repo`, and `samples/security-fixture-repo`.
+  - Keep generated sample outputs local-only and uncommitted.
 - TASK-0062 v0.2.0-alpha scanner expansion:
   - Continue planned stack/risk scanner expansion from the v0.2 roadmap.
 - TASK-0063 README screenshots/Web UI preview assets:
   - Plan safe public preview images for README and Web UI documentation without exposing local paths or private data.
+- TASK-0064 next alpha release decision for SARIF package:
+  - Decide the next alpha package version that includes source-only SARIF support.
+  - Update package smoke workflows, README install commands, and release notes after publication.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.
