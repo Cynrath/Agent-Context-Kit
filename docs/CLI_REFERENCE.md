@@ -7,6 +7,8 @@ During development, run commands through:
 dotnet run --project src/AgentContextKit.Cli -- <command>
 ```
 
+Availability note: the published NuGet package `AgentContextKit` `0.1.0-alpha.2` does not include `ackit sarif`. The SARIF command is available in current source after `v0.1.0-alpha.2` and is planned for the next alpha package.
+
 See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
 
 ## Global Options
@@ -50,12 +52,16 @@ Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 Generates a privacy-first SARIF 2.1.0 report from scanner findings. Existing SARIF files are skipped.
 
 ```powershell
-ackit sarif --output .ackit/reports/ackit.sarif
-ackit sarif --output .ackit/reports/ackit.sarif --json
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif --json
 ```
 
 Required output path:
 - `--output <repo-relative.sarif>`
+
+Published package note:
+- `ackit sarif` is not available in NuGet `0.1.0-alpha.2`.
+- Use source/current-branch execution until the next alpha package includes the command.
 
 Safety behavior:
 - Output paths must be repository-relative.

@@ -17,6 +17,8 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 
+The `sarif` command is a current-source validation step after `v0.1.0-alpha.2`. It is not available in the published NuGet `0.1.0-alpha.2` global tool and should be treated as next-alpha source functionality until a later package is published.
+
 ## Scripted Validation
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
@@ -35,6 +37,8 @@ Get-Content .ackit/reports/release-validation.sarif | ConvertFrom-Json
 The output is local-only and ignored by git when written under `.ackit/reports/`. It should use SARIF `2.1.0`, repository-relative artifact URIs, stable `ACKIT` rule IDs, and no raw secret match values.
 
 `docs/examples/github-actions-sarif-upload.yml` shows a non-active GitHub Code Scanning upload example. Do not copy it into `.github/workflows/` until a maintainer has intentionally approved Code Scanning upload and repository permissions.
+
+See [GITHUB_ACTIONS_USAGE.md](GITHUB_ACTIONS_USAGE.md) for CI command ordering, published-tool versus source-package smoke guidance, and SARIF upload criteria.
 
 ## v0.2 Readiness Review
 Run the v0.2 local readiness check:
@@ -245,6 +249,8 @@ The `AgentContextKit` version `0.1.0-alpha.2` published global tool has been smo
 - `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
 - `context-export` created a local manifest and did not call a remote LLM provider.
 
+The published `0.1.0-alpha.2` smoke test does not include `ackit sarif`; SARIF was added to source after that package.
+
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
 ## Cross-Platform Published-Package Smoke Workflow
@@ -260,13 +266,13 @@ The workflow:
 
 Latest recorded hosted result:
 - Workflow: `cross-platform-smoke`.
-- Commit: `c0f1eb2`.
+- Commit: `aaaad5f`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
-The workflow installs `0.1.0-alpha.2` and the TASK-0056 post-publish push has hosted validation completed.
+The workflow installs `0.1.0-alpha.2`. It does not exercise `ackit sarif` because that command is source-only after `v0.1.0-alpha.2`.
 
 ## Cross-Platform Source Smoke Workflow
 `.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
@@ -281,16 +287,17 @@ The workflow:
 
 Hosted validation status:
 - Workflow: `cross-platform-source-smoke`.
-- Commit: `c0f1eb2`.
+- Commit: `aaaad5f`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - Source restore/build/test, local pack/install, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` completed successfully.
+- Source/package smoke is the correct workflow class for testing source-only commands such as `ackit sarif` before the next alpha package is published.
 
 ## CI Workflow
 Latest recorded hosted result:
 - Workflow: `ci`.
-- Commit: `c0f1eb2`.
+- Commit: `aaaad5f`.
 - Branch: `master`.
 - Status: Success.
 - Ubuntu and Windows jobs succeeded.

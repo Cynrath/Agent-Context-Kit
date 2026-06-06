@@ -16,6 +16,8 @@ Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
 Current release: `v0.1.0-alpha.2` is published on GitHub and NuGet, and the global tool install has been verified.
 
+Source note: current `master` includes `ackit sarif` after `v0.1.0-alpha.2`. The published NuGet package `0.1.0-alpha.2` does not include the SARIF command; it is planned for the next alpha package.
+
 ## Problem
 AI coding agents often work with incomplete, stale, or unsafe project context. That can lead to wrong file edits, leaked production settings, weak task planning, missing tests, inconsistent agent instructions, and accidental exposure when a private project becomes public.
 
@@ -42,7 +44,7 @@ The MVP does not call remote AI APIs and does not upload repository contents. Th
 - `ackit init`: create `.ackit/config.yml` without overwriting existing config.
 - `ackit scan`: detect stack, docs, tests, CI, Docker, agent files, and risky paths.
 - `ackit scan --ci`: fail automated checks on high or critical risk findings.
-- `ackit sarif`: create a privacy-first SARIF 2.1.0 scanner report for CI/security review.
+- `ackit sarif`: create a privacy-first SARIF 2.1.0 scanner report for CI/security review. Available in current source and planned for the next alpha package.
 - `ackit report`: create an offline static HTML scan report.
 - `ackit webui`: create an offline static Web UI prototype for scan review.
 - `ackit prompt-pack`: create a local dry-run prompt pack for future LLM context review without remote calls.
@@ -79,8 +81,9 @@ dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit --help
 ackit version
 ackit scan --ci
-ackit sarif --output .ackit/reports/ackit.sarif
 ```
+
+The published `0.1.0-alpha.2` package does not include `ackit sarif`. Use the source command shown above until the next alpha package is published.
 
 Quick installed-tool verification:
 
@@ -110,6 +113,8 @@ Current-source smoke coverage is tracked by `.github/workflows/cross-platform-so
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Commands
+`ackit sarif` is part of the current source command surface after `v0.1.0-alpha.2`; it is not in the published `0.1.0-alpha.2` NuGet global tool.
+
 ```text
 ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
@@ -170,6 +175,7 @@ Key docs:
 - [CLI Reference](docs/CLI_REFERENCE.md)
 - [Examples](docs/EXAMPLES.md)
 - [Example Workflows](docs/EXAMPLE_WORKFLOWS.md)
+- [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)

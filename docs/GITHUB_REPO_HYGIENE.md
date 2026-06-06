@@ -70,11 +70,19 @@ Current workflows:
 
 Maintainers should check Actions after every push and before any release tag, GitHub Release, or NuGet publish.
 
-Latest read-only GitHub CLI observation for TASK-0058:
+Documentation-only examples live under `docs/examples/`:
+- `github-actions-scan-ci.yml`
+- `github-actions-sarif-upload.yml`
+- `github-actions-published-tool-smoke.yml`
+- `github-actions-source-package-smoke.yml`
+
+Do not treat docs examples as active workflows until they are copied into `.github/workflows/` after review. `docs/GITHUB_ACTIONS_USAGE.md` explains published-tool versus source-package smoke and SARIF upload criteria.
+
+Latest read-only GitHub CLI observation for TASK-0060:
 - `ci`: success on `master`.
 - `cross-platform-smoke`: success on `master`.
 - `cross-platform-source-smoke`: success on `master`.
-- Latest checked commit: `c0f1eb2`.
+- Latest checked commit: `aaaad5f`.
 
 ## Release Checklist
 Use these docs together:

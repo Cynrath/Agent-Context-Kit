@@ -392,6 +392,13 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0059 pre-commit validation passed: restore, Release build, 72/72 tests, repository `scan --ci`, `doctor`, `scan --json`, SARIF generation and `ConvertFrom-Json` parse, installed `ackit version`/`ackit --help`, SARIF local-path/token scan, maintainer identity scan, tracked artifact scan, exact fake token/local-path scan, `git diff --check`, and v1.0 documentation release gate.
 - TASK-0059 public release gate was run before commit and failed only because the working tree had uncommitted changes; package metadata was clean and the post-release `HEAD` warning remains expected for post-tag sync commits.
 - TASK-0059 post-commit public release gate rerun passed with no blocking items; the expected warning remains that current `HEAD` is after `v0.1.0-alpha.2` and remote tag verification is manual.
+- TASK-0060 started for GitHub Actions usage examples, SARIF availability wording, and CI docs polish.
+- TASK-0060 read-only GitHub CLI validation confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs succeeded after `feat: add SARIF report output`; workflow-dispatch reruns for published-package and source-package smoke also succeeded.
+- TASK-0060 clarifies that published NuGet `0.1.0-alpha.2` does not include `ackit sarif`, while current source includes it and the next alpha package should include it.
+- TASK-0060 adds documentation-only GitHub Actions examples under `docs/examples/` and does not activate SARIF upload in real workflows.
+- TASK-0060 pre-commit validation passed: restore, Release build, 72/72 tests, repository `scan --ci`, `doctor`, `scan --json`, SARIF generation and `ConvertFrom-Json` parse, installed `ackit version`/`ackit --help`, SARIF local-path/token scan, maintainer identity scan, tracked artifact scan, exact fake token/local-path scan, `git diff --check`, and v1.0 documentation release gate.
+- TASK-0060 public release gate was run before commit and failed only because the working tree had uncommitted changes; package metadata was clean and the post-release `HEAD` warning remains expected for post-tag sync commits.
+- TASK-0060 post-commit public release gate rerun passed with no blocking items; the expected warning remains that current `HEAD` is after `v0.1.0-alpha.2` and remote tag verification is manual.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
@@ -405,4 +412,4 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Update task/docs before and after implementation.
 
 ## Context Compaction Resume Point
-If context is compacted, continue from this file. The MVP foundation through TASK-0059 is implemented locally. `v0.1.0-alpha.2` is pushed, released on GitHub, published on NuGet, install-verified as a global tool, Web UI smoke-tested, and hosted Actions-validated. Codex for OSS form submission is completed per maintainer-provided status. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload SARIF/content, or automatically redact without explicit maintainer instruction.
+If context is compacted, continue from this file. The MVP foundation through TASK-0060 is implemented locally. `v0.1.0-alpha.2` is pushed, released on GitHub, published on NuGet, install-verified as a global tool, Web UI smoke-tested, and hosted Actions-validated. Codex for OSS form submission is completed per maintainer-provided status. Continue without asking, but do not push, create GitHub releases, publish NuGet packages, create remotes, delete files, call remote LLM APIs, handle API keys, upload SARIF/content, or automatically redact without explicit maintainer instruction.

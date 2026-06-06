@@ -1,6 +1,8 @@
 # SARIF Output
 
-AgentContextKit can write scanner findings as SARIF 2.1.0 for CI review and future GitHub Code Scanning workflows.
+AgentContextKit current source can write scanner findings as SARIF 2.1.0 for CI review and future GitHub Code Scanning workflows.
+
+Availability note: the published NuGet package `AgentContextKit` `0.1.0-alpha.2` does not include `ackit sarif`. Use source/current-branch execution today; the command is planned for the next alpha package.
 
 ## What SARIF Is
 SARIF is a standard JSON format for static analysis results. Security platforms and CI systems can read it to show findings with rules, severity levels, messages, and file locations.
@@ -9,7 +11,7 @@ SARIF is a standard JSON format for static analysis results. Security platforms 
 `ackit sarif` runs the normal repository scan and risk scanner, then writes a SARIF file.
 
 ```powershell
-ackit sarif --output .ackit/reports/ackit.sarif
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
 ```
 
 The SARIF file includes:
@@ -56,7 +58,7 @@ For example, if a secret-like value is detected, SARIF records the rule, severit
 `ackit sarif --json` prints a command summary, not the SARIF payload.
 
 ```powershell
-ackit sarif --output .ackit/reports/ackit.sarif --json
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif --json
 ```
 
 Use the output file path to read or upload the SARIF artifact.
@@ -64,7 +66,9 @@ Use the output file path to read or upload the SARIF artifact.
 ## CI Usage Example
 The example workflow is stored at `docs/examples/github-actions-sarif-upload.yml`.
 
-It shows how a maintainer could install the published tool, generate SARIF, and upload it with `github/codeql-action/upload-sarif`.
+It shows two documentation-only approaches:
+- use the next published package after SARIF support is released; or
+- build and install the current source package locally in CI.
 
 The example is not active. It is not copied into `.github/workflows`, and this task does not upload SARIF to GitHub Code Scanning.
 

@@ -16,6 +16,8 @@ Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
 Current release: `v0.1.0-alpha.2` GitHub ve NuGet uzerinde yayinlandi; global tool kurulumu dogrulandi.
 
+Kaynak notu: mevcut `master` source, `v0.1.0-alpha.2` sonrasinda `ackit sarif` komutunu icerir. Yayinlanmis NuGet paketi `0.1.0-alpha.2` SARIF komutunu icermez; bu komut sonraki alpha pakete planlanmistir.
+
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
 
@@ -42,7 +44,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit init`: `.ackit/config.yml` olusturur, var olan config'i ezmez.
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
-- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir.
+- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Mevcut source icinde vardir ve sonraki alpha paket icin planlanmistir.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
 - `ackit prompt-pack`: remote cagri yapmadan gelecekteki LLM context incelemesi icin lokal dry-run prompt paketi uretir.
@@ -79,8 +81,9 @@ dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
 ackit --help
 ackit version
 ackit scan --ci
-ackit sarif --output .ackit/reports/ackit.sarif
 ```
+
+Yayinlanmis `0.1.0-alpha.2` paketi `ackit sarif` komutunu icermez. Sonraki alpha paket yayinlanana kadar yukaridaki source komutunu kullanin.
 
 Kurulu tool icin hizli dogrulama:
 
@@ -110,6 +113,8 @@ Mevcut kaynak smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` 
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
 ## CLI Komutlari
+`ackit sarif`, `v0.1.0-alpha.2` sonrasindaki mevcut source komut yuzeyinin parcasidir; yayinlanmis `0.1.0-alpha.2` NuGet global tool icinde yoktur.
+
 ```text
 ackit init [--lang en|tr] [--json]
 ackit scan [--lang en|tr] [--json] [--ci]
@@ -170,6 +175,7 @@ Baslangic icin [docs/DOCUMENTATION_INDEX.md](docs/DOCUMENTATION_INDEX.md) dosyas
 Onemli dokumanlar:
 - [CLI Reference](docs/CLI_REFERENCE.md)
 - [Examples](docs/EXAMPLES.md)
+- [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)

@@ -51,3 +51,6 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub issue templates, pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs are present.
 - README badges are present for `ci`, published-package smoke, source-package smoke, NuGet version, NuGet downloads, license, and .NET 10.
 - GitHub label guidance and repository settings checklist are documented as maintainer-only manual actions.
+- Current source after `v0.1.0-alpha.2` includes `ackit sarif`; the published NuGet `0.1.0-alpha.2` package does not include that command.
+- The next alpha package is expected to include SARIF output.
+- GitHub Actions CI usage docs and documentation-only workflow examples are present for scan CI, SARIF upload, published-tool smoke, and source-package smoke.

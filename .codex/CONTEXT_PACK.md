@@ -47,6 +47,9 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - TASK-0058 added README badges, GitHub label guidance, repository settings checklist, and public presentation hardening docs.
 - TASK-0058 pre-commit validation passed: restore, Release build, 67/67 tests, `scan --ci`, `doctor`, `scan --json`, installed `ackit` version/help, hygiene scans, `git diff --check`, and v1.0 documentation release gate.
 - TASK-0059 is completed locally for privacy-first `ackit sarif --output <repo-relative.sarif>` output, SARIF docs, and non-active Code Scanning upload examples.
+- TASK-0060 is completed locally for GitHub Actions usage examples, SARIF availability wording, and CI docs polish.
+- Published NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source includes it and the next alpha package should include it.
+- Read-only GitHub CLI validation on 2026-06-06 confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `feat: add SARIF report output`.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
 ## Hard Rules
@@ -106,6 +109,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - GitHub contributor workflow docs were added in TASK-0057: `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
 - Public repository presentation docs were added in TASK-0058: `docs/GITHUB_LABELS.md` and `docs/GITHUB_SETTINGS_CHECKLIST.md`.
 - SARIF output docs and example GitHub Code Scanning upload workflow are added in TASK-0059: `docs/SARIF_OUTPUT.md` and `docs/examples/github-actions-sarif-upload.yml`.
+- GitHub Actions CI usage docs and additional documentation-only workflow examples are added in TASK-0060.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -161,3 +165,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0057 is completed for GitHub repo hygiene, issue templates, PR template, maintainer guide, support matrix, contributor onboarding, and issue triage docs. The post-commit public release gate rerun passed with only the expected post-release `HEAD` warning.
 - TASK-0058 is completed locally for repository settings, badges, labels, and public presentation hardening. GitHub CLI read-only status shows latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passing after TASK-0057. The post-commit public release gate rerun passed with only the expected post-release `HEAD` warning.
 - TASK-0059 adds scanner SARIF output and GitHub Code Scanning readiness docs. Upload stays example-only and maintainer-controlled. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` checks, hygiene scans, `git diff --check`, and v1.0 documentation gate. Post-commit public release gate rerun passed with no blocking items and only the expected post-release `HEAD` warning.
+- TASK-0060 clarifies source/current-package SARIF availability and adds GitHub Actions usage examples without activating any new workflow or upload. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` checks, hygiene scans, `git diff --check`, and v1.0 documentation gate. Post-commit public release gate rerun passed with no blocking items and only the expected post-release `HEAD` warning.

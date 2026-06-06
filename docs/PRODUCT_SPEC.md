@@ -29,6 +29,8 @@ v0.5 may add optional LLM-assisted workflows, but the default product remains of
 - Teams cleaning private projects before public release.
 
 ## Current Commands
+This list describes current source. The published NuGet `0.1.0-alpha.2` package does not include `sarif`; it is planned for the next alpha package.
+
 - `init`
 - `scan`
 - `scan --ci`

@@ -5,7 +5,13 @@ All notable changes to AgentContextKit will be documented in this file.
 This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
-_No unreleased changes._
+### Added
+- Added source-only `ackit sarif --output <repo-relative.sarif>` documentation and GitHub Code Scanning readiness notes for the next alpha package.
+- Added documentation-only GitHub Actions examples for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
+- Added GitHub Actions usage guidance for CI command order, privacy, failure interpretation, and SARIF upload decisions.
+
+### Changed
+- Clarified that the published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`; SARIF is available in current source and planned for the next alpha package.
 
 ## [0.1.0-alpha.2] - 2026-06-05
 ### Added

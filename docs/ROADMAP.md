@@ -70,7 +70,9 @@
   - Keep SARIF locations repository-relative and omit raw scanner match values.
   - Add documentation and a non-active GitHub Actions upload example without enabling upload by default.
 - TASK-0060 GitHub Actions usage examples:
-  - Add documented workflow snippets for source scan, report generation, and release preflight usage.
+  - Clarify that NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source includes it and the next alpha package will include it.
+  - Add documented workflow snippets for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
+  - Add GitHub Actions usage guidance for CI command order, privacy notes, failure interpretation, and SARIF upload decisions.
 - TASK-0061 sample repository gallery:
   - Expand sample documentation with screenshots or concise stack examples.
 - TASK-0062 v0.2.0-alpha scanner expansion:
