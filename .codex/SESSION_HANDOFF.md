@@ -4,12 +4,12 @@
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
 ## Current Task
-- TASK-0063 README screenshots, Web UI preview assets, and visual documentation polish is committed locally.
-- The local branch was fast-forwarded to `origin/master` at `a856aac` before edits.
-- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful before local edits.
-- Added task tracking, visual asset policy, Web UI preview guidance, README preview links, and a safe generic flow diagram.
-- Local report/Web UI smoke passed, generated task-specific `.ackit` artifacts were removed after Test-Path validation, and full validation passed.
-- Post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote tag verification note remained.
+- TASK-0064 v0.2.0-alpha.1 release preparation is committed locally.
+- The local branch started clean and aligned with `origin/master`.
+- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `6d38f11`.
+- Release decision: prepare `0.2.0-alpha.1` locally because current source includes SARIF, scanner rule catalog, config allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery, Web UI preview, and visual asset guidance.
+- Published NuGet `0.1.0-alpha.2` remains the current public install package until a maintainer publishes `0.2.0-alpha.1`.
+- Local package smoke and source validation passed. Post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote tag verification note remained.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

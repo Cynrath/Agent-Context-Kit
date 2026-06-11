@@ -47,6 +47,12 @@
 - `v0.1.0-alpha.2` tag, GitHub Release, NuGet publish, and install verification are complete.
 - Hosted `ci`, published-package smoke, and source smoke validation remain maintainer checks after future pushes.
 
+## v0.2.0-alpha.1 Candidate State
+- Source/package metadata and CLI runtime version are prepared as `0.2.0-alpha.1`.
+- `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog, configurable allowlist fields, additive JSON `ruleId`, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance are candidate release content.
+- Published install commands remain pinned to `0.1.0-alpha.2` until `0.2.0-alpha.1` is published.
+- Before publication, maintainers must push the release-prep commit, confirm hosted CI/source smoke, create the `v0.2.0-alpha.1` tag, create the GitHub Release, publish NuGet, and verify install.
+
 ## Remaining Manual Actions
 - Review all generated files before future publishing.
 - For the next release, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.

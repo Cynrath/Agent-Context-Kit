@@ -52,8 +52,9 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - TASK-0060 is completed locally for GitHub Actions usage examples, SARIF availability wording, and CI docs polish.
 - TASK-0061 is committed locally for sample repository gallery, demo scenarios, onboarding examples, safe sample repositories, and a local sample smoke helper.
 - TASK-0062 is committed locally for scanner rule catalog hardening, config-driven non-Critical allowlists, expanded scanner risk patterns, additive JSON `ruleId`, SARIF catalog metadata, and scanner docs.
-- TASK-0063 is committed locally for README preview guidance, Web UI preview docs, visual asset policy, and safe public diagram assets.
-- Published NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source includes it and the next alpha package should include it.
+- TASK-0063 is committed for README preview guidance, Web UI preview docs, visual asset policy, and safe public diagram assets.
+- TASK-0064 is committed locally to prepare source/package metadata as the `0.2.0-alpha.1` candidate.
+- Published NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source is being prepared as `0.2.0-alpha.1` and includes it.
 - Read-only GitHub CLI validation for TASK-0063 confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded on `master` before local edits.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
@@ -118,6 +119,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Sample gallery and demo scenario docs are added in TASK-0061, along with safe sample repositories and a local sample smoke helper.
 - Scanner rule catalog and configurable allowlist docs were added in TASK-0062.
 - README preview, Web UI preview guidance, visual asset policy, and a safe generic flow diagram were added in TASK-0063.
+- TASK-0064 release decision: prepare `0.2.0-alpha.1` locally for SARIF, scanner rule catalog, config allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery, Web UI preview, and visual asset guidance.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.
@@ -177,3 +179,4 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0061 adds sample gallery and demo docs without committing generated sample artifacts. Pre-commit validation passed with restore, Release build, 72/72 tests, self-scan, doctor, JSON scan, SARIF generation/parse, installed `ackit` version/help, sample smoke, hygiene scans, `git diff --check`, and v1.0 documentation release gate. The post-commit public release gate passed with no blocking items and only the expected post-release `HEAD` warning.
 - TASK-0062 adds central scanner rule catalog metadata, additive JSON `ruleId`, SARIF rule help metadata, config-driven `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`, expanded scanner risk patterns, and `docs/SCANNER_RULES.md`. Pre-commit validation passed with restore, Release build, 83/83 tests, self-scan, doctor, JSON scan, SARIF generation/parse, sample smoke, installed `ackit` version/help, hygiene scans, `git diff --check`, config/generated convention gate, v0.2 readiness gate, and v1.0 documentation release gate. The post-commit public release gate passed with no blocking items and only the expected post-release `HEAD` warning.
 - TASK-0063 adds README preview guidance, `docs/VISUAL_ASSETS.md`, `docs/WEB_UI_PREVIEW.md`, and a safe generic flow diagram. Validation passed with restore, Release build, 83/83 tests, self-scan, doctor, JSON scan, SARIF generation/parse, sample smoke, installed `ackit` version/help, hygiene scans, `git diff --check`, v1.0 documentation release gate, and post-commit public release gate. The final public gate kept only the expected post-release `HEAD` warning and manual remote tag verification note.
+- TASK-0064 prepares `0.2.0-alpha.1` locally. Local package smoke passed with `ackit sarif`, SARIF parse, DemoApp smoke, expected fake-secret exit code 2, and final clean scan. Source validation, hygiene, config/v0.2/v1.0 gates, `scripts/verify-release.ps1`, and post-commit public release gate passed. Push, tag, GitHub Release, NuGet publish, install verification, and README published install update remain future maintainer actions.

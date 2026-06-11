@@ -2,6 +2,7 @@
 # Copy into .github/workflows only after review.
 # GitHub Code Scanning upload requires maintainer approval and security-events: write.
 # The published AgentContextKit 0.1.0-alpha.2 package does not include ackit sarif.
+# Current source is prepared as the AgentContextKit 0.2.0-alpha.1 package candidate.
 
 name: ackit-sarif-upload-example
 
@@ -28,8 +29,8 @@ jobs:
 
       - name: Install AgentContextKit with SARIF support
         run: |
-          # Replace this version after the next alpha package with ackit sarif is published.
-          dotnet tool install --global AgentContextKit --version 0.1.0-alpha.3
+          # Use this candidate version only after 0.2.0-alpha.1 is published.
+          dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 
       - name: Add .NET tools to PATH
         run: echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
@@ -71,7 +72,7 @@ jobs:
         run: |
           $tools = Join-Path $env:RUNNER_TEMP "ackit-tools"
           New-Item -ItemType Directory -Force -Path $tools | Out-Null
-          dotnet tool install AgentContextKit --tool-path $tools --add-source "$env:ACKIT_PACKAGE_SOURCE" --version 0.1.0-alpha.2 --ignore-failed-sources
+          dotnet tool install AgentContextKit --tool-path $tools --add-source "$env:ACKIT_PACKAGE_SOURCE" --version 0.2.0-alpha.1 --ignore-failed-sources
           $tools | Out-File -FilePath $env:GITHUB_PATH -Append
 
       - name: Generate SARIF

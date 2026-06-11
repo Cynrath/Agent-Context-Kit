@@ -16,7 +16,7 @@ Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
 Current release: `v0.1.0-alpha.2` GitHub ve NuGet uzerinde yayinlandi; global tool kurulumu dogrulandi.
 
-Kaynak notu: mevcut `master` source, `v0.1.0-alpha.2` sonrasinda `ackit sarif` komutunu icerir. Yayinlanmis NuGet paketi `0.1.0-alpha.2` SARIF komutunu icermez; bu komut sonraki alpha pakete planlanmistir.
+Kaynak notu: mevcut `master` source, `0.2.0-alpha.1` paket adayi olarak hazirlanir ve `ackit sarif` komutunu icerir. Yayinlanmis NuGet paketi `0.1.0-alpha.2` SARIF komutunu icermez.
 
 ## Preview
 Web UI dashboard; readiness score, stack signals, health checks, findings, generated context files ve task previews alanlarini gosterir.
@@ -52,7 +52,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
 - Stabil scanner rule ID'leri ve safe technical domain, bilinen non-Critical path ve kabul edilen non-Critical rule ID'leri icin dar config allowlist destegi.
-- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Mevcut source icinde vardir ve sonraki alpha paket icin planlanmistir.
+- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Mevcut source ve `0.2.0-alpha.1` paket adayi icinde vardir.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
 - `ackit prompt-pack`: remote cagri yapmadan gelecekteki LLM context incelemesi icin lokal dry-run prompt paketi uretir.
@@ -91,7 +91,7 @@ ackit version
 ackit scan --ci
 ```
 
-Yayinlanmis `0.1.0-alpha.2` paketi `ackit sarif` komutunu icermez. Sonraki alpha paket yayinlanana kadar yukaridaki source komutunu kullanin.
+Yayinlanmis `0.1.0-alpha.2` paketi `ackit sarif` komutunu icermez. `0.2.0-alpha.1` yayinlanana kadar yukaridaki source komutunu kullanin.
 
 Kurulu tool icin hizli dogrulama:
 
@@ -130,7 +130,7 @@ Pop-Location
 Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
 
 ## CLI Komutlari
-`ackit sarif`, `v0.1.0-alpha.2` sonrasindaki mevcut source komut yuzeyinin parcasidir; yayinlanmis `0.1.0-alpha.2` NuGet global tool icinde yoktur.
+`ackit sarif`, mevcut source ve `0.2.0-alpha.1` paket adayinin parcasidir; yayinlanmis `0.1.0-alpha.2` NuGet global tool icinde yoktur.
 
 ```text
 ackit init [--lang en|tr] [--json]
@@ -226,7 +226,7 @@ Onemli dokumanlar:
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
-Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.2` paketi NuGet global tool olarak yayinlandi.
+Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.2` paketi NuGet global tool olarak yayinlandi; mevcut source `0.2.0-alpha.1` paket adayi olarak hazirlanir.
 
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 

@@ -2,6 +2,8 @@
 
 AgentContextKit reads optional configuration from `.ackit/config.yml`.
 
+Config allowlist fields are part of the current source and `0.2.0-alpha.1` package candidate. The published NuGet `0.1.0-alpha.2` package does not include the full scanner rule catalog and allowlist feature set.
+
 The MVP parser intentionally supports a small YAML-like subset:
 - `key: value`
 - inline lists such as `brandKeywords: ["example"]`

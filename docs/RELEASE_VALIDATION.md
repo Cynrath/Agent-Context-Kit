@@ -17,7 +17,24 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 
-The `sarif` command is a current-source validation step after `v0.1.0-alpha.2`. It is not available in the published NuGet `0.1.0-alpha.2` global tool and should be treated as next-alpha source functionality until a later package is published.
+The `sarif` command is a current-source and `0.2.0-alpha.1` candidate validation step. It is not available in the published NuGet `0.1.0-alpha.2` global tool until the new package is published.
+
+## v0.2.0-alpha.1 Candidate Package Validation
+Use temporary directories outside the repository:
+
+```powershell
+$pkg = Join-Path $env:TEMP "ackit-v020-alpha1-nupkg"
+$tools = Join-Path $env:TEMP "ackit-v020-alpha1-tools"
+New-Item -ItemType Directory -Force -Path $pkg,$tools | Out-Null
+dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release -o $pkg
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
+& (Join-Path $tools "ackit.exe") version
+& (Join-Path $tools "ackit.exe") --help
+& (Join-Path $tools "ackit.exe") sarif --output .ackit/reports/task-0064-local.sarif
+Get-Content .ackit/reports/task-0064-local.sarif | ConvertFrom-Json
+```
+
+Do not commit the package, temporary tool install, or generated SARIF output.
 
 ## Scripted Validation
 ```powershell
@@ -252,7 +269,7 @@ $tools = Join-Path $env:TEMP "ackit-tools-$stamp"
 New-Item -ItemType Directory -Force -Path $pkg, $tools | Out-Null
 
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.2 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") version
 & (Join-Path $tools "ackit.exe") --help
 & (Join-Path $tools "ackit.exe") scan --json
@@ -275,7 +292,7 @@ The `AgentContextKit` version `0.1.0-alpha.2` published global tool has been smo
 - `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
 - `context-export` created a local manifest and did not call a remote LLM provider.
 
-The published `0.1.0-alpha.2` smoke test does not include `ackit sarif`; SARIF was added to source after that package.
+The published `0.1.0-alpha.2` smoke test does not include `ackit sarif`; SARIF is part of current source and the `0.2.0-alpha.1` package candidate.
 
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
@@ -292,13 +309,13 @@ The workflow:
 
 Latest recorded hosted result:
 - Workflow: `cross-platform-smoke`.
-- Commit: `aaaad5f`.
+- Commit: `6d38f11`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
-The workflow installs `0.1.0-alpha.2`. It does not exercise `ackit sarif` because that command is source-only after `v0.1.0-alpha.2`.
+The workflow installs the current published package `0.1.0-alpha.2`. It does not exercise `ackit sarif` because that command is part of current source and the `0.2.0-alpha.1` package candidate.
 
 ## Cross-Platform Source Smoke Workflow
 `.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
@@ -307,23 +324,23 @@ The workflow:
 - Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - Runs restore, Release build, and Release tests.
 - Packs `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` into a temporary package directory.
-- Installs `AgentContextKit` version `0.1.0-alpha.2` from that temporary package source into a temporary tool path.
+- Installs `AgentContextKit` version `0.2.0-alpha.1` from that temporary package source into a temporary tool path.
 - Runs `ackit version`, `ackit --help`, a clean demo app smoke flow, expected fake-secret `redact-check` failure, fake secret cleanup, and final `ackit scan --ci`.
 - Does not push, tag, create GitHub Releases, or publish NuGet packages.
 
 Hosted validation status:
 - Workflow: `cross-platform-source-smoke`.
-- Commit: `aaaad5f`.
+- Commit: `6d38f11`.
 - Branch: `master`.
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - Source restore/build/test, local pack/install, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` completed successfully.
-- Source/package smoke is the correct workflow class for testing source-only commands such as `ackit sarif` before the next alpha package is published.
+- Source/package smoke is the correct workflow class for testing candidate commands such as `ackit sarif` before `0.2.0-alpha.1` is published.
 
 ## CI Workflow
 Latest recorded hosted result:
 - Workflow: `ci`.
-- Commit: `aaaad5f`.
+- Commit: `6d38f11`.
 - Branch: `master`.
 - Status: Success.
 - Ubuntu and Windows jobs succeeded.

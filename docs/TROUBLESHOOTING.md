@@ -13,7 +13,7 @@ If build/test fails, capture the exact command and output.
 Use an isolated temp source and exact version:
 
 ```powershell
-dotnet tool install AgentContextKit --tool-path <temp-tools> --add-source <temp-nupkg> --version 0.1.0-alpha.2 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path <temp-tools> --add-source <temp-nupkg> --version 0.2.0-alpha.1 --ignore-failed-sources
 ```
 
 ## PowerShell cannot run scripts

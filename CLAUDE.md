@@ -17,8 +17,10 @@ Use the same repository rules as AGENTS.md.
 
 ## Release Status
 - Current release: `v0.1.0-alpha.2` published and verified on GitHub and NuGet.
+- Current source/package candidate: `0.2.0-alpha.1` prepared locally; not pushed, tagged, released, or published yet.
 - NuGet global tool install verification: completed.
 - Published-package smoke workflow installs `AgentContextKit` `0.1.0-alpha.2`.
+- Source-package smoke workflow installs the local `AgentContextKit` `0.2.0-alpha.1` candidate.
 
 ## Risk Summary
 - No risk findings in the latest local scan.

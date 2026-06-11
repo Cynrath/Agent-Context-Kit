@@ -4,9 +4,16 @@ All notable changes to AgentContextKit will be documented in this file.
 
 This project follows Semantic Versioning where practical before `1.0.0`.
 
-## [Unreleased]
+## [0.2.0-alpha.1] - Unreleased
 ### Added
-- Added source-only `ackit sarif --output <repo-relative.sarif>` documentation and GitHub Code Scanning readiness notes for the next alpha package.
+- Added `ackit sarif` source command for SARIF 2.1.0 output.
+- Added scanner rule catalog with stable `ACKIT` rule IDs.
+- Added additive JSON `ruleId` field.
+- Added config allowlist foundation: `safeDomains`, `ignoredPaths`, `ignoredFindingIds`.
+- Added expanded scanner patterns.
+- Added sample gallery and demo scenarios.
+- Added Web UI preview and visual asset guidance.
+- Added `ackit sarif --output <repo-relative.sarif>` documentation and GitHub Code Scanning readiness notes for the `0.2.0-alpha.1` package candidate.
 - Added documentation-only GitHub Actions examples for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
 - Added GitHub Actions usage guidance for CI command order, privacy, failure interpretation, and SARIF upload decisions.
 - Added sample repository gallery and demo scenario docs for onboarding.
@@ -17,8 +24,14 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added scanner coverage for additional package artifacts, provider-token-like values, bearer token-like values, and Unix home path leakage.
 
 ### Changed
-- Clarified that the published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`; SARIF is available in current source and planned for the next alpha package.
+- Clarified that the published NuGet `0.1.0-alpha.2` package does not include `ackit sarif`; SARIF is available in current source and the `0.2.0-alpha.1` package candidate.
 - JSON finding objects now include additive `ruleId` metadata.
+- SARIF rule metadata now uses the centralized scanner rule catalog.
+- Scanner documentation and security model are updated for v0.2.0-alpha.
+
+### Security
+- Critical findings cannot be silently suppressed by config allowlist.
+- SARIF output avoids raw secret matches and absolute local paths.
 
 ## [0.1.0-alpha.2] - 2026-06-05
 ### Added

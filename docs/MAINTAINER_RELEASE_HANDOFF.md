@@ -80,19 +80,31 @@ Latest read-only GitHub CLI evidence:
 - Jobs `smoke (windows-2025)`, `smoke (ubuntu-latest)`, and `smoke (macos-latest)` completed successfully.
 
 ## Cross-Platform Source Smoke Test
-`.github/workflows/cross-platform-source-smoke.yml` is added for current-branch alpha.2 validation.
+`.github/workflows/cross-platform-source-smoke.yml` is used for current-branch package candidate validation.
 
 The workflow:
 - Runs on `windows-2025`, `ubuntu-latest`, and `macos-latest`.
 - Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - Runs restore, Release build, and Release tests.
 - Packs the current source into a temporary package directory.
-- Installs `AgentContextKit` version `0.1.0-alpha.2` from the temporary package source into a temporary tool path.
+- Installs `AgentContextKit` version `0.2.0-alpha.1` from the temporary package source into a temporary tool path.
 - Runs `ackit version`, `ackit --help`, clean DemoApp smoke commands, fake-secret `redact-check` expected failure, fake secret cleanup, and final `ackit scan --ci`.
 
 Latest read-only GitHub CLI evidence:
-- Workflow run `27015579018`, commit `8dac9237c27ba912d056344155f1c9f901557bf5`, branch `master`, conclusion `success`.
+- TASK-0064 pre-change observation: latest `cross-platform-source-smoke` run for commit `6d38f11` completed with conclusion `success`.
 - Jobs `source smoke (windows-2025)`, `source smoke (ubuntu-latest)`, and `source smoke (macos-latest)` completed successfully.
+
+## v0.2.0-alpha.1 Candidate Handoff
+Current source is prepared locally as the `0.2.0-alpha.1` package candidate. It includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
+
+Maintainer-only next release actions:
+- Push the release-prep commit.
+- Confirm hosted `ci` and `cross-platform-source-smoke` are green.
+- Create tag `v0.2.0-alpha.1`.
+- Create the GitHub Release page.
+- Publish NuGet package `AgentContextKit` version `0.2.0-alpha.1`.
+- Verify NuGet global tool install, `ackit version`, `ackit --help`, and `ackit sarif`.
+- Update published install commands and published-package smoke workflow after publication.
 
 ## GitHub Contributor Workflow
 The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.

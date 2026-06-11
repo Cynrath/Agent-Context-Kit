@@ -47,7 +47,7 @@ ackit webui --output docs/local-webui.html --json
 ```json
 {
   "schemaVersion": 2,
-  "toolVersion": "0.1.0-alpha.2",
+  "toolVersion": "0.2.0-alpha.1",
   "command": "webui",
   "webUi": {
     "path": ".ackit/webui/index.html",

@@ -1,8 +1,8 @@
 # SARIF Output
 
-AgentContextKit current source can write scanner findings as SARIF 2.1.0 for CI review and future GitHub Code Scanning workflows.
+AgentContextKit current source and the local `0.2.0-alpha.1` package candidate can write scanner findings as SARIF 2.1.0 for CI review and future GitHub Code Scanning workflows.
 
-Availability note: the published NuGet package `AgentContextKit` `0.1.0-alpha.2` does not include `ackit sarif`. Use source/current-branch execution today; the command is planned for the next alpha package.
+Availability note: the published NuGet package `AgentContextKit` `0.1.0-alpha.2` does not include `ackit sarif`. Use source/current-branch execution today; the command is prepared for the `0.2.0-alpha.1` package candidate and will be available from NuGet only after that package is published.
 
 ## What SARIF Is
 SARIF is a standard JSON format for static analysis results. Security platforms and CI systems can read it to show findings with rules, severity levels, messages, and file locations.
@@ -69,7 +69,7 @@ Use the output file path to read or upload the SARIF artifact.
 The example workflow is stored at `docs/examples/github-actions-sarif-upload.yml`.
 
 It shows two documentation-only approaches:
-- use the next published package after SARIF support is released; or
+- use the `0.2.0-alpha.1` package after SARIF support is released; or
 - build and install the current source package locally in CI.
 
 The example is not active. It is not copied into `.github/workflows`, and this task does not upload SARIF to GitHub Code Scanning.

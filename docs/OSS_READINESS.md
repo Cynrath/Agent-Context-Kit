@@ -1,7 +1,7 @@
 # OSS Readiness
 
 ## Current Target
-Maintain the completed `v0.1.0-alpha.2` public release and keep future release work local-only until maintainer approval.
+Maintain the completed `v0.1.0-alpha.2` public release and prepare `0.2.0-alpha.1` locally until maintainer approval.
 
 ## Required Signals
 - Clear README.
@@ -51,12 +51,12 @@ The first release should be small, working, documented, and honest about limitat
 - GitHub issue templates, pull request template, maintainer guide, contributor onboarding, support matrix, repository hygiene, and issue triage docs are present.
 - README badges are present for `ci`, published-package smoke, source-package smoke, NuGet version, NuGet downloads, license, and .NET 10.
 - GitHub label guidance and repository settings checklist are documented as maintainer-only manual actions.
-- Current source after `v0.1.0-alpha.2` includes `ackit sarif`; the published NuGet `0.1.0-alpha.2` package does not include that command.
-- The next alpha package is expected to include SARIF output.
+- Current source is prepared as the `0.2.0-alpha.1` package candidate and includes `ackit sarif`; the published NuGet `0.1.0-alpha.2` package does not include that command.
+- The `0.2.0-alpha.1` candidate includes SARIF output, scanner rule catalog hardening, additive JSON `ruleId`, config-driven non-Critical allowlists, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
 - GitHub Actions CI usage docs and documentation-only workflow examples are present for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
 - Sample gallery and demo scenario docs are present for safe onboarding without committing generated artifacts.
 - Sample repositories cover .NET console, ASP.NET Core Minimal API, Node/TypeScript/Tailwind, generic empty repository health gaps, and safe security fixture wording.
-- Current source includes scanner rule catalog hardening, additive JSON `ruleId` metadata, config-driven non-Critical allowlists, and expanded risk patterns for v0.2.0-alpha preparation.
+- Current source includes scanner rule catalog hardening, additive JSON `ruleId` metadata, config-driven non-Critical allowlists, and expanded risk patterns for `0.2.0-alpha.1` preparation.
 - Public visual asset rules are documented in `docs/VISUAL_ASSETS.md`.
 - Web UI public preview guidance is documented in `docs/WEB_UI_PREVIEW.md`.
 - README uses a sanitized diagram and a text-based preview; screenshots remain pending until sanitized assets are available.

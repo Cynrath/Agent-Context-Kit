@@ -41,10 +41,10 @@ See `docs/examples/github-actions-scan-ci.yml`.
 Use it after `scan --ci` so risk findings are handled first. A minimal demo app can fail `doctor` because it intentionally lacks full OSS metadata; that is expected health reporting, not necessarily a tool failure.
 
 ## SARIF Output
-`ackit sarif --output .ackit/reports/ackit.sarif` is available in current source after `v0.1.0-alpha.2`. The published NuGet package `0.1.0-alpha.2` does not include this command.
+`ackit sarif --output .ackit/reports/ackit.sarif` is available in current source and the `0.2.0-alpha.1` package candidate. The published NuGet package `0.1.0-alpha.2` does not include this command.
 
 Use one of these approaches:
-- Wait for the next alpha package that includes SARIF, then install that package in CI.
+- Wait for `0.2.0-alpha.1` to be published, then install that package in CI.
 - Pack the current branch locally and install from the temporary package source.
 
 SARIF output is local-only by default. It uses repository-relative artifact locations and does not write raw scanner match values into result messages.
@@ -63,7 +63,7 @@ Source package smoke validates the current branch before publication. Use it for
 
 ```powershell
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.2 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
 ```
 
 See:

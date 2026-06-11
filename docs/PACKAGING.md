@@ -8,7 +8,7 @@ Current package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.
 Important fields:
 - `PackageId`: `AgentContextKit`
 - `ToolCommandName`: `ackit`
-- `Version`: `0.1.0-alpha.2`
+- `Version`: `0.2.0-alpha.1`
 - `Authors`: `Cynrath`
 - `PackageLicenseExpression`: `MIT`
 - `PackageReadmeFile`: `README.md`
@@ -42,8 +42,9 @@ dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release -o $pk
 ```powershell
 $tools = Join-Path $env:TEMP "ackit-tools"
 New-Item -ItemType Directory -Force -Path $tools | Out-Null
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.1.0-alpha.2 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") --help
+& (Join-Path $tools "ackit.exe") sarif --output .ackit/reports/local-package.sarif
 ```
 
 ## Public NuGet Install
@@ -56,11 +57,16 @@ ackit --help
 ackit scan --ci
 ```
 
+## Candidate Package
+Current source is prepared as the `0.2.0-alpha.1` package candidate. Do not publish it until the release-prep commit is pushed, hosted Actions are green, the `v0.2.0-alpha.1` tag is created, and the maintainer explicitly approves NuGet publication.
+
 ## Manual NuGet Publish
-NuGet publish is not automated by this project. Version `0.1.0-alpha.2` has been published and install-verified. Future versions must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository:
+NuGet publish is not automated by this project. Version `0.1.0-alpha.2` has been published and install-verified. Future versions must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository.
+
+After `0.2.0-alpha.1` is approved and tagged, the package push command will be:
 
 ```powershell
-dotnet nuget push (Join-Path $pkg "AgentContextKit.0.1.0-alpha.2.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
+dotnet nuget push (Join-Path $pkg "AgentContextKit.0.2.0-alpha.1.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
 ```
 
 ## Release Blockers

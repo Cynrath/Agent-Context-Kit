@@ -12,7 +12,7 @@
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>ackit</ToolCommandName>
     <PackageId>AgentContextKit</PackageId>
-    <Version>0.1.0-alpha.2</Version>
+    <Version>0.2.0-alpha.1</Version>
     <Authors>Cynrath</Authors>
     <Company>Cynrath</Company>
     <Copyright>Copyright (c) 2026 Cynrath</Copyright>
@@ -20,7 +20,7 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>ai;coding-agent;context;security;cli;oss</PackageTags>
-    <PackageReleaseNotes>Scanner noise reduction, safe technical allowlist, Node 24-ready GitHub Actions, Turkish CLI output polish, and cross-platform validation improvements.</PackageReleaseNotes>
+    <PackageReleaseNotes>SARIF output command, scanner rule catalog, configurable allowlist, expanded scanner rules, additive JSON ruleId, sample gallery, and Web UI preview documentation.</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/Cynrath/agent-context-kit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Cynrath/agent-context-kit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

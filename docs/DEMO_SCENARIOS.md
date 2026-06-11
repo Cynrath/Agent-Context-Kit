@@ -26,7 +26,7 @@ dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/de
 Get-Content .ackit/reports/demo.sarif | ConvertFrom-Json
 ```
 
-`ackit sarif` is available in current source and planned for the next alpha package.
+`ackit sarif` is available in current source and the `0.2.0-alpha.1` package candidate.
 
 ## Sample Gallery Demo
 Run sample scans from each sample directory because the CLI currently scans the current working directory.

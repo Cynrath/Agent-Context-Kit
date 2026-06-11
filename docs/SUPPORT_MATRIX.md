@@ -6,6 +6,7 @@ This matrix documents the tested and intended support surface for AgentContextKi
 - Package: `AgentContextKit`
 - Command: `ackit`
 - Current release: `v0.1.0-alpha.2`
+- Current source/package candidate: `0.2.0-alpha.1`
 - Target framework: .NET 10
 
 ## Supported Operating Systems
@@ -46,3 +47,5 @@ This matrix documents the tested and intended support surface for AgentContextKi
 The current support claim is based on local validation plus GitHub Actions `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` success for Windows, Ubuntu, and macOS.
 
 TASK-0058 read-only GitHub CLI observation confirmed all three workflows are passing on latest `master`.
+
+TASK-0064 read-only GitHub CLI observation confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passed for commit `6d38f11`.

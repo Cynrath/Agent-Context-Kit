@@ -5,7 +5,7 @@ namespace AgentContextKit.Cli;
 
 public static class Program
 {
-    private const string Version = "0.1.0-alpha.2";
+    private const string Version = "0.2.0-alpha.1";
     private const int JsonSchemaVersion = 2;
     private const int ExitSuccess = 0;
     private const int ExitError = 1;
