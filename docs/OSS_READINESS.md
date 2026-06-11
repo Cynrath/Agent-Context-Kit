@@ -57,3 +57,6 @@ The first release should be small, working, documented, and honest about limitat
 - Sample gallery and demo scenario docs are present for safe onboarding without committing generated artifacts.
 - Sample repositories cover .NET console, ASP.NET Core Minimal API, Node/TypeScript/Tailwind, generic empty repository health gaps, and safe security fixture wording.
 - Current source includes scanner rule catalog hardening, additive JSON `ruleId` metadata, config-driven non-Critical allowlists, and expanded risk patterns for v0.2.0-alpha preparation.
+- Public visual asset rules are documented in `docs/VISUAL_ASSETS.md`.
+- Web UI public preview guidance is documented in `docs/WEB_UI_PREVIEW.md`.
+- README uses a sanitized diagram and a text-based preview; screenshots remain pending until sanitized assets are available.

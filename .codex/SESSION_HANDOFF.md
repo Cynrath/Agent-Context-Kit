@@ -3,6 +3,15 @@
 ## Project Purpose
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
+## Current Task
+- TASK-0063 README screenshots, Web UI preview assets, and visual documentation polish is committed locally.
+- The local branch was fast-forwarded to `origin/master` at `a856aac` before edits.
+- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful before local edits.
+- Added task tracking, visual asset policy, Web UI preview guidance, README preview links, and a safe generic flow diagram.
+- Local report/Web UI smoke passed, generated task-specific `.ackit` artifacts were removed after Test-Path validation, and full validation passed.
+- Post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote tag verification note remained.
+- Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
+
 ## Work Completed So Far
 - Read the pasted project brief and operating rules.
 - Inspected the configured repository workspace.

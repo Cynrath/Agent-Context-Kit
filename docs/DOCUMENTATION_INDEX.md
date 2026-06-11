@@ -23,6 +23,8 @@
 - `docs/SARIF_OUTPUT.md`: SARIF 2.1.0 scanner output for local CI and future GitHub Code Scanning workflows.
 - `docs/HTML_REPORTS.md`: offline static HTML report generation.
 - `docs/WEB_UI_PROTOTYPE.md`: offline static Web UI prototype generation.
+- `docs/WEB_UI_PREVIEW.md`: local Web UI preview, screenshot workflow, and public artifact boundaries.
+- `docs/VISUAL_ASSETS.md`: public screenshot and visual asset policy.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
 - `docs/SUPPORT_MATRIX.md`: supported OS, .NET, shell, and command coverage.
@@ -32,6 +34,7 @@
 - `docs/DEVELOPMENT_STANDARD.md`: engineering workflow.
 - `docs/SOURCE_HYGIENE.md`: source and package hygiene rules.
 - `docs/SOURCE_ARCHIVE.md`: local ZIP/RAR source archive hygiene.
+- `docs/assets/diagrams/ackit-flow.svg`: safe public flow diagram for README/docs.
 - `docs/LOCALIZATION.md`: English/Turkish support.
 - `docs/DECISIONS.md`: architecture decision records.
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`: optional future LLM provider architecture.

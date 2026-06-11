@@ -67,3 +67,5 @@ ackit webui --output docs/local-webui.html --json
 
 ## Review Notes
 The Web UI prototype is for local review. It does not approve public release, publish packages, push commits, create release tags, replace release blocker checks, or start a hosted application. Treat generated Web UI files as local-only artifacts, not public release artifacts.
+
+For public README preview guidance and screenshot sanitization rules, see `docs/WEB_UI_PREVIEW.md` and `docs/VISUAL_ASSETS.md`.

@@ -164,3 +164,5 @@ Pop-Location
 ```
 
 Do not commit generated `.ackit/` outputs. They can contain local paths and are not public release artifacts.
+
+Public screenshots from samples must follow [VISUAL_ASSETS.md](VISUAL_ASSETS.md) and [WEB_UI_PREVIEW.md](WEB_UI_PREVIEW.md). Prefer sanitized screenshots from safe sample repositories when README visuals are added.

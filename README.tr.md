@@ -18,6 +18,13 @@ Current release: `v0.1.0-alpha.2` GitHub ve NuGet uzerinde yayinlandi; global to
 
 Kaynak notu: mevcut `master` source, `v0.1.0-alpha.2` sonrasinda `ackit sarif` komutunu icerir. Yayinlanmis NuGet paketi `0.1.0-alpha.2` SARIF komutunu icermez; bu komut sonraki alpha pakete planlanmistir.
 
+## Preview
+Web UI dashboard; readiness score, stack signals, health checks, findings, generated context files ve task previews alanlarini gosterir.
+
+![AgentContextKit flow](docs/assets/diagrams/ackit-flow.svg)
+
+Screenshot dosyalari, sanitize edilmis public asset hazir olana kadar bilerek commitlenmez. Ayrinti icin [Web UI Preview](docs/WEB_UI_PREVIEW.md), [Visual Assets](docs/VISUAL_ASSETS.md), [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
+
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
 
@@ -188,6 +195,8 @@ Onemli dokumanlar:
 - [Examples](docs/EXAMPLES.md)
 - [Sample Gallery](docs/SAMPLE_GALLERY.md)
 - [Demo Scenarios](docs/DEMO_SCENARIOS.md)
+- [Web UI Preview](docs/WEB_UI_PREVIEW.md)
+- [Visual Assets](docs/VISUAL_ASSETS.md)
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Scanner Rules](docs/SCANNER_RULES.md)

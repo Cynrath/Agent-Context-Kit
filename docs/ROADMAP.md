@@ -84,9 +84,13 @@
   - Expand private key, environment config, database artifact, package/archive, local path, and provider-token-like detection.
 - TASK-0063 README screenshots/Web UI preview assets:
   - Plan safe public preview images for README and Web UI documentation without exposing local paths or private data.
-- TASK-0064 next alpha release decision for SARIF package:
+- TASK-0064 next alpha release decision for SARIF/scanner expansion package:
   - Decide the next alpha package version that includes source-only SARIF support.
   - Update package smoke workflows, README install commands, and release notes after publication.
+- TASK-0065 screenshot asset capture after sanitized preview:
+  - Capture and review public-safe Web UI/report screenshots only after path, username, machine, client, and raw finding data are removed.
+- TASK-0066 website/docs site planning:
+  - Decide whether a lightweight docs site is useful after README screenshots and visual asset policy are stable.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

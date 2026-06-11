@@ -65,6 +65,8 @@ dotnet run --project src/AgentContextKit.Cli -- webui --output .ackit/webui/demo
 
 The generated file is local-only, can include local repository paths, and should not be shared as a public release artifact.
 
+For public preview and screenshot rules, see [WEB_UI_PREVIEW.md](WEB_UI_PREVIEW.md) and [VISUAL_ASSETS.md](VISUAL_ASSETS.md).
+
 ## Report Demo
 Create a local-only HTML report:
 
@@ -73,6 +75,8 @@ dotnet run --project src/AgentContextKit.Cli -- report --output .ackit/reports/d
 ```
 
 Do not commit `.ackit/reports/` output.
+
+If a report screenshot is needed for docs, capture and sanitize the screenshot separately. Do not commit the generated HTML report.
 
 ## SARIF Demo
 Create SARIF from current source:

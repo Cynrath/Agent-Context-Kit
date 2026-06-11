@@ -39,6 +39,15 @@ README badge set:
 
 Keep badges compact so the public pitch remains visible near the top of the README.
 
+## Visual Assets
+README may link sanitized diagrams and screenshots, but generated `.ackit/` Web UI/report HTML is local-only and must not be committed as a public artifact.
+
+Use:
+- `docs/VISUAL_ASSETS.md` for screenshot and image policy.
+- `docs/WEB_UI_PREVIEW.md` for Web UI screenshot workflow.
+- `docs/assets/diagrams/` for safe diagrams.
+- `docs/assets/screenshots/` for future sanitized screenshots.
+
 ## Issue And PR Templates
 The repository includes:
 - Bug report template.
@@ -83,6 +92,12 @@ Latest read-only GitHub CLI observation for TASK-0060:
 - `cross-platform-smoke`: success on `master`.
 - `cross-platform-source-smoke`: success on `master`.
 - Latest checked commit: `aaaad5f`.
+
+Latest read-only GitHub CLI observation for TASK-0063:
+- `ci`: success on `master`.
+- `cross-platform-smoke`: success on `master`.
+- `cross-platform-source-smoke`: success on `master`.
+- Latest checked commit before local TASK-0063 edits: `a856aac`.
 
 ## Release Checklist
 Use these docs together:

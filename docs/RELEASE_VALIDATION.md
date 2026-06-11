@@ -49,6 +49,18 @@ powershell -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
 
 The script scans committed sample repositories from their own directories because the CLI scans the current working directory. It does not generate or commit `.ackit/` output.
 
+## Local Web UI And Report Smoke
+Generate local-only preview artifacts under ignored `.ackit/` paths:
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli -- report --output .ackit/reports/task-0063-report.html
+dotnet run --project src/AgentContextKit.Cli -- webui --output .ackit/webui/task-0063-webui.html
+Test-Path .ackit/reports/task-0063-report.html
+Test-Path .ackit/webui/task-0063-webui.html
+```
+
+Do not commit generated HTML. If a README screenshot is needed, sanitize a screenshot first using `docs/VISUAL_ASSETS.md` and `docs/WEB_UI_PREVIEW.md`.
+
 ## Scanner Rule Catalog Validation
 Scanner tests cover stable `ACKIT` rule ID mapping, additive JSON `ruleId` output, SARIF rule metadata, config-driven `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`, and the rule that Critical findings remain reportable.
 

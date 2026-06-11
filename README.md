@@ -21,6 +21,7 @@ Analyze a repository, generate clean agent context files, create task-first work
 
 <p>
   <a href="#-quick-start"><strong>Quick Start</strong></a> ·
+  <a href="#-preview"><strong>Preview</strong></a> ·
   <a href="#-what-it-does"><strong>Features</strong></a> ·
   <a href="#-cli-command-map"><strong>CLI</strong></a> ·
   <a href="#-safety-model"><strong>Safety</strong></a> ·
@@ -44,6 +45,16 @@ Analyze a repository, generate clean agent context files, create task-first work
 
 > [!IMPORTANT]
 > The published NuGet package `0.1.0-alpha.2` does **not** include `ackit sarif` yet. Use the source command shown below until the next alpha package is published.
+
+---
+
+## Preview
+
+The Web UI dashboard shows readiness score, stack signals, health checks, findings, generated context files, and task previews.
+
+![AgentContextKit flow](docs/assets/diagrams/ackit-flow.svg)
+
+Screenshots are intentionally not committed yet until sanitized assets are available. See [Web UI Preview](docs/WEB_UI_PREVIEW.md), [Visual Assets](docs/VISUAL_ASSETS.md), [Sample Gallery](docs/SAMPLE_GALLERY.md), and [Demo Scenarios](docs/DEMO_SCENARIOS.md).
 
 ---
 
@@ -245,8 +256,8 @@ Start with [Documentation Index](docs/DOCUMENTATION_INDEX.md).
 | Category | Links |
 | --- | --- |
 | Usage | [CLI Reference](docs/CLI_REFERENCE.md), [Examples](docs/EXAMPLES.md), [Example Workflows](docs/EXAMPLE_WORKFLOWS.md) |
-| Demo | [Sample Gallery](docs/SAMPLE_GALLERY.md), [Demo Scenarios](docs/DEMO_SCENARIOS.md) |
-| Reports | [HTML Reports](docs/HTML_REPORTS.md), [SARIF Output](docs/SARIF_OUTPUT.md), [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md) |
+| Demo | [Sample Gallery](docs/SAMPLE_GALLERY.md), [Demo Scenarios](docs/DEMO_SCENARIOS.md), [Web UI Preview](docs/WEB_UI_PREVIEW.md) |
+| Reports | [HTML Reports](docs/HTML_REPORTS.md), [SARIF Output](docs/SARIF_OUTPUT.md), [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md), [Visual Assets](docs/VISUAL_ASSETS.md) |
 | Operations | [Configuration](docs/CONFIGURATION.md), [JSON Output](docs/JSON_OUTPUT.md), [Troubleshooting](docs/TROUBLESHOOTING.md) |
 | Engineering | [Architecture](docs/ARCHITECTURE.md), [Source Hygiene](docs/SOURCE_HYGIENE.md), [Security Model](docs/SECURITY_MODEL.md) |
 | Packaging | [Packaging](docs/PACKAGING.md), [Release Validation](docs/RELEASE_VALIDATION.md), [Maintainer Release Handoff](docs/MAINTAINER_RELEASE_HANDOFF.md) |

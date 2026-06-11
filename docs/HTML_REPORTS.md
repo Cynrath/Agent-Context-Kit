@@ -57,3 +57,5 @@ ackit report --output .ackit/reports/current.html --json
 
 ## Review Notes
 HTML reports are local artifacts for review. They do not approve public release, publish packages, push commits, create release tags, or replace release blocker checks. Treat generated reports as local-only artifacts, not public release artifacts.
+
+If report screenshots are later used in README or docs, sanitize them first using `docs/VISUAL_ASSETS.md`. Do not commit generated report HTML.
