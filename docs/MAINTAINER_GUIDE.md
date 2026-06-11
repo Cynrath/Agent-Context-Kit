@@ -67,6 +67,8 @@ The published NuGet `0.2.0-alpha.1` package includes `ackit sarif`. Keep source 
 
 The repository does not enable GitHub Code Scanning upload by default. `docs/examples/github-actions-sarif-upload.yml` is a non-active example only. Before enabling it as a real workflow, maintainers should review the generated SARIF artifact, confirm `security-events: write` permission is acceptable, and decide whether Code Scanning alerts should become part of release validation.
 
+See `docs/CODE_SCANNING_DECISION.md` for the current decision: documentation-only by default, opt-in later after maintainer review.
+
 ## Scanner Rules And Allowlists
 Use `docs/SCANNER_RULES.md` as the source of truth for stable `ACKIT` rule IDs, default severity, SARIF level mapping, and remediation guidance.
 
@@ -84,6 +86,8 @@ Use `docs/GITHUB_SETTINGS_CHECKLIST.md` for maintainer-only repository settings:
 
 Use `docs/GITHUB_LABELS.md` for the recommended label set. Do not create, edit, or delete GitHub labels from an agent session unless the maintainer explicitly asks for that metadata write.
 
+Use `docs/ISSUE_BACKLOG.md` for the first copy-ready issue set. Issue creation is maintainer-only remote-write work.
+
 ## NuGet Publish Notes
 - Build and pack from a clean, validated working tree.
 - Use a maintainer-owned NuGet API key stored outside the repository.
@@ -99,6 +103,6 @@ Use `docs/GITHUB_LABELS.md` for the recommended label set. Do not create, edit, 
 ## Current Release
 `v0.2.0-alpha.1` is published on GitHub and NuGet as a pre-release. Global tool install, SARIF smoke, published-package smoke, source smoke, Web UI smoke, and hosted Actions validation are complete.
 
-Current source is published as the `0.2.0-alpha.1` package. TASK-0064 is local release preparation only; push, tag, GitHub Release, NuGet publish, and install verification remain maintainer-only follow-up actions.
+Current source is published as the `0.2.0-alpha.1` package. TASK-0065 synced active docs after publication.
 
-TASK-0064 read-only GitHub CLI observation confirms `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` are passing for latest `master` after `docs: add Web UI preview and visual asset guidance`.
+If the GitHub Release body still contains candidate-era wording, use `docs/RELEASE_BODY_V020_ALPHA1.md` as the manual replacement draft.

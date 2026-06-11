@@ -67,7 +67,7 @@ Use `docs/GITHUB_LABELS.md` as the source of truth for:
 - `priority:*` labels.
 - `area:*` labels.
 - `good first issue`.
-- `help wanted`.
+- `good first issue` for small contributor-friendly tasks.
 
 Label creation and edits are maintainer-only GitHub metadata actions. Optional `gh label create` examples are documentation only.
 

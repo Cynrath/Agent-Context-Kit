@@ -56,6 +56,7 @@ The output is local-only and ignored by git when written under `.ackit/reports/`
 `docs/examples/github-actions-sarif-upload.yml` shows a non-active GitHub Code Scanning upload example. Do not copy it into `.github/workflows/` until a maintainer has intentionally approved Code Scanning upload and repository permissions.
 
 See [GITHUB_ACTIONS_USAGE.md](GITHUB_ACTIONS_USAGE.md) for CI command ordering, published-tool versus source-package smoke guidance, and SARIF upload criteria.
+See [CODE_SCANNING_DECISION.md](CODE_SCANNING_DECISION.md) for the documentation-only default and opt-in criteria.
 
 ## Sample Smoke Validation
 Run sample smoke checks from the repository root:

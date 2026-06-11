@@ -6,21 +6,17 @@ This document keeps issue handling consistent and safe.
 - `type: bug`: reproducible incorrect behavior.
 - `type: feature`: new capability or workflow improvement.
 - `type: docs`: docs, examples, or wording.
-- `type: ci`: GitHub Actions or release validation.
-- `type: security-hardening`: hardening work that does not disclose a vulnerability.
-- `type: refactor`: internal cleanup without behavior change.
+- `type: security`: hardening work that does not disclose a vulnerability.
+- `type: maintenance`: tests, chores, refactors, dependency/process work.
 - `status: needs-triage`: missing maintainer classification.
 - `status: accepted`: accepted for implementation.
 - `status: blocked`: requires maintainer-only external action.
-- `status: duplicate`: duplicate of another issue.
-- `status: wontfix`: intentionally not planned.
 - `area: scanner`: stack/risk scanner behavior.
 - `area: cli`: CLI commands and UX.
+- `area: sarif`: SARIF output or Code Scanning integration.
 - `area: docs`: documentation surface.
-- `area: workflows`: GitHub Actions or release validation.
-- `area: templates`: generated or GitHub templates.
+- `area: ci`: GitHub Actions or release validation.
 - `good first issue`: small, low-risk contributor task.
-- `help wanted`: maintainer welcomes external help.
 
 See `docs/GITHUB_LABELS.md` for colors, descriptions, and optional maintainer-only label commands.
 
@@ -49,3 +45,6 @@ See `docs/GITHUB_LABELS.md` for colors, descriptions, and optional maintainer-on
 - Convert broad ideas into a focused backlog issue when the next action is clear.
 - Move open-ended design discussion out of the release path unless it blocks current support.
 - Link accepted backlog items from `docs/ROADMAP.md` when they affect version planning.
+
+## Bootstrap Backlog
+Use `docs/ISSUE_BACKLOG.md` for the first copy-ready issue set. Creating those issues is maintainer-only remote-write work.

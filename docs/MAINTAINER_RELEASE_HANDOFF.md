@@ -99,6 +99,7 @@ Current source is published as the `0.2.0-alpha.1` package. It includes `ackit s
 
 Maintainer-only next release actions:
 - Decide the next version, likely `v0.2.0-alpha.2`.
+- Optionally polish the existing `v0.2.0-alpha.1` GitHub Release body using `docs/RELEASE_BODY_V020_ALPHA1.md`.
 - Confirm hosted `ci`, published-package smoke, and source-package smoke are green after the next push.
 - Create any future tags and GitHub Releases only after reviewed release commits.
 - Publish future NuGet packages only from reviewed release commits.

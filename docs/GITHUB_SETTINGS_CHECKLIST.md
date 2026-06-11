@@ -55,6 +55,7 @@ Recommended:
 - Description matches the approved text.
 - Topics match the approved list.
 - Default branch is `master`.
+- Milestones are created only when a maintainer wants issue grouping for the next alpha.
 - `ci` is green.
 - `cross-platform-source-smoke` is green.
 - `cross-platform-smoke` is green for the published package.
@@ -64,7 +65,15 @@ Recommended:
 - Branch protection is configured intentionally for the current maintainer workflow.
 - Dependabot and secret scanning settings have been reviewed.
 - GitHub Release for the current alpha is marked as a pre-release.
+- GitHub Release body matches `docs/RELEASE_BODY_V020_ALPHA1.md` if maintainer chooses to polish the published release text.
 - NuGet package ownership and API key handling remain maintainer-controlled.
+
+## Maintainer-Only Manual Actions
+- Create or update labels from `docs/GITHUB_LABELS.md`.
+- Configure branch protection and required checks.
+- Review repository settings, topics, and security settings.
+- Create milestones if the issue tracker needs version grouping.
+- Edit the GitHub Release body if stale wording should be corrected.
 
 ## Optional Read-Only Checks
 These commands inspect state and do not mutate repository settings:

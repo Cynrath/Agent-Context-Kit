@@ -40,7 +40,7 @@ See `docs/examples/github-actions-scan-ci.yml`.
 
 Use it after `scan --ci` so risk findings are handled first. A minimal demo app can fail `doctor` because it intentionally lacks full OSS metadata; that is expected health reporting, not necessarily a tool failure.
 
-## SARIF Output
+## SARIF Output And Code Scanning Decision
 `ackit sarif --output .ackit/reports/ackit.sarif` is available in current source and the `0.2.0-alpha.1` package. The published NuGet package `0.2.0-alpha.1` includes this command.
 
 Use one of these approaches:
@@ -48,6 +48,8 @@ Use one of these approaches:
 - Pack the current branch locally and install from the temporary package source.
 
 SARIF output is local-only by default. It uses repository-relative artifact locations and does not write raw scanner match values into result messages.
+
+Code Scanning upload remains documentation-only by default. See `docs/CODE_SCANNING_DECISION.md` before copying any SARIF upload example into active workflows.
 
 ## Published Tool Vs Source Package Smoke
 Published tool smoke validates the package users install from NuGet. It should stay pinned to the current published version:

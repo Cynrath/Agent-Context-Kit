@@ -120,7 +120,9 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Sample gallery and demo scenario docs are added in TASK-0061, along with safe sample repositories and a local sample smoke helper.
 - Scanner rule catalog and configurable allowlist docs were added in TASK-0062.
 - README preview, Web UI preview guidance, visual asset policy, and a safe generic flow diagram were added in TASK-0063.
-- TASK-0065 post-publish sync updates README install commands, package smoke workflows, release docs, and agent instruction files for published `0.2.0-alpha.1`.
+- TASK-0065 post-publish sync updated README install commands, package smoke workflows, release docs, and agent instruction files for published `0.2.0-alpha.1`.
+- PROJECT-CONTROL-0001 adds the central queue docs: `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECUTION_QUEUE.md`.
+- TASK-0066 through TASK-0069 are safe local-only docs tasks for release body polish, labels/settings checklist, Code Scanning decision, and issue backlog.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

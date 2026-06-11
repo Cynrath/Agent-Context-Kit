@@ -46,6 +46,8 @@ Each task should record:
 - Tests.
 - Risks and rollback.
 
+Use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECUTION_QUEUE.md` to find the current local task order. Use `docs/ISSUE_BACKLOG.md` for copy-ready public issue ideas after maintainer review.
+
 ## Local Artifact Rules
 - `.ackit/` reports, Web UI output, prompt packs, and context exports are local-only.
 - Do not commit archives, packages, logs, `bin/`, `obj/`, test results, coverage, or generated junk.

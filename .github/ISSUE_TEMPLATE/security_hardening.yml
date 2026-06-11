@@ -2,7 +2,7 @@ name: Security hardening
 description: Suggest scanner, privacy, or safe-default hardening without disclosing a vulnerability.
 title: "security: "
 labels:
-  - "type: security-hardening"
+  - "type: security"
   - "status: needs-triage"
 body:
   - type: markdown

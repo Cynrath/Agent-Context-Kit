@@ -14,6 +14,7 @@
 - `docs/SAMPLE_GALLERY.md`: sample repository gallery with expected stacks, health gaps, commands, and risk behavior.
 - `docs/DEMO_SCENARIOS.md`: guided published package, source, sample, Web UI, report, and SARIF demos.
 - `docs/GITHUB_ACTIONS_USAGE.md`: GitHub Actions CI usage, SARIF, and smoke workflow guidance.
+- `docs/CODE_SCANNING_DECISION.md`: CodeQL and Code Scanning default/opt-in decision.
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
@@ -58,6 +59,7 @@
 - `docs/GITHUB_REPO_HYGIENE.md`: GitHub metadata, templates, branch protection, and Actions hygiene.
 - `docs/GITHUB_LABELS.md`: recommended GitHub labels and optional maintainer-only label commands.
 - `docs/GITHUB_SETTINGS_CHECKLIST.md`: repository metadata, branch protection, security, and release settings checklist.
+- `docs/ISSUE_BACKLOG.md`: copy-ready first issue backlog.
 - `docs/ISSUE_TRIAGE.md`: issue labels, routing, severity, and closure rules.
 - `docs/GOVERNANCE.md`: decision and release governance.
 - `docs/MAINTAINERS.md`: maintainer responsibilities.
@@ -86,6 +88,9 @@
 - `docs/RELEASE_VALIDATION.md`: local release validation.
 - `docs/RELEASE_BLOCKERS.md`: public-release blocker/follow-up state and guard script.
 - `docs/RELEASE_CHECKLIST.md`: release checklist.
+- `docs/RELEASE_BODY_V020_ALPHA1.md`: corrected GitHub Release body draft for the published `v0.2.0-alpha.1` pre-release.
+- `docs/NEXT_TASKS.md`: unified next task roadmap.
+- `docs/PROJECT_EXECUTION_QUEUE.md`: execution queue with validation and remote-write status.
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`: current RC report.
 - `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`: `0.2.0-alpha.1` publication verification and docs sync.
 - `CHANGELOG.md`: release notes.

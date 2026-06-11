@@ -74,6 +74,8 @@ It shows two documentation-only approaches:
 
 The example is not active. It is not copied into `.github/workflows`, and this task does not upload SARIF to GitHub Code Scanning.
 
+The current project decision is documented in [CODE_SCANNING_DECISION.md](CODE_SCANNING_DECISION.md): SARIF generation is local-only by default, and Code Scanning upload is opt-in after maintainer review.
+
 For a hands-on local source demo, see [DEMO_SCENARIOS.md](DEMO_SCENARIOS.md).
 
 ## GitHub Code Scanning Upload Note

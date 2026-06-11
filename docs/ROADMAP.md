@@ -94,16 +94,29 @@
   - Prepared `0.2.0-alpha.1` locally as the next alpha package for SARIF and scanner expansion.
 - TASK-0065 post-v020-alpha1 publish verification and docs sync:
   - Updated README published install commands, package smoke workflows, release docs, and agent instruction files after `0.2.0-alpha.1` publication.
-- TASK-0066 GitHub labels/manual repo settings application:
-  - Apply documented labels and manual repository settings after maintainer review.
-- TASK-0067 CodeQL/Code Scanning decision:
-  - Decide whether SARIF upload and Code Scanning should become active hosted workflows.
-- TASK-0068 v0.2.0-alpha.2 planning:
-  - Plan the next alpha after post-publish validation.
-- TASK-0069 screenshot asset capture after sanitized preview:
-  - Capture and review public-safe Web UI/report screenshots only after path, username, machine, client, and raw finding data are removed.
-- TASK-0070 website/docs site planning:
-  - Decide whether a lightweight docs site is useful after README screenshots and visual asset policy are stable.
+- PROJECT-CONTROL-0001 unified next-steps roadmap:
+  - Create `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECUTION_QUEUE.md`.
+  - Execute safe local-only tasks sequentially without per-task prompts.
+- TASK-0066 GitHub Release body polish documentation:
+  - Add a maintainer-ready replacement body for the published `v0.2.0-alpha.1` GitHub pre-release without editing GitHub.
+- TASK-0067 GitHub labels and manual repo settings checklist:
+  - Align label taxonomy, repo settings, branch protection, milestones, and release settings as maintainer-only checklist work.
+- TASK-0068 CodeQL / Code Scanning decision document:
+  - Keep Code Scanning upload documentation-only by default and define opt-in criteria.
+- TASK-0069 GitHub issue tracker bootstrap plan:
+  - Add a copy-ready first issue backlog without creating GitHub issues.
+- TASK-0070 scanner config examples and sample configs:
+  - Add safe `.ackit/config.yml` examples for minimal, strict, and CI use.
+- TASK-0071 SARIF GitHub Code Scanning opt-in workflow design:
+  - Design opt-in workflow activation without enabling upload by default.
+- TASK-0072 JSON schema stability and contract tests:
+  - Add focused contract tests for JSON output stability.
+- TASK-0073 CLI exit code contract hardening:
+  - Expand exit code tests and reference docs.
+- TASK-0074 scanner fixture coverage expansion:
+  - Add safe fixtures for scanner precision and expected severity.
+- TASK-0075 safe suppression audit log:
+  - Plan local auditability for non-Critical suppressions.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

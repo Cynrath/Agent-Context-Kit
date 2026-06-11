@@ -51,6 +51,8 @@ Config allowlists are local-only, explicit, reviewable, and documented. They can
 
 The scanner rule catalog, configurable allowlist foundation, and expanded scanner patterns are part of the published `0.2.0-alpha.1` package and current source.
 
+GitHub Code Scanning upload is not enabled by default. `ackit sarif` creates local SARIF output; upload requires maintainer opt-in, reviewed workflow permissions, and the decision process in `docs/CODE_SCANNING_DECISION.md`.
+
 ## SARIF Output Privacy
 `ackit sarif` is designed as a local report format, not an upload action. The generated SARIF file:
 
