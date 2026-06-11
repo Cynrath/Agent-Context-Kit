@@ -41,6 +41,8 @@ Behavior:
 - Critical findings cannot be silently ignored by `safeDomains`, `ignoredPaths`, or `ignoredFindingIds`.
 - Legacy `ignorePaths` excludes files from scanning and should be used sparingly.
 
+Safe example configs are available under `docs/examples/config/`. They show baseline, strict review, and CI-oriented settings without real secrets or Critical suppression examples.
+
 ## SARIF Mapping
 | AgentContextKit severity | SARIF level |
 | --- | --- |

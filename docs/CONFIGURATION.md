@@ -114,6 +114,15 @@ The scanner uses a conservative built-in safe technical allowlist for common pub
 
 See [SCANNER_RULES.md](SCANNER_RULES.md) for rule IDs, SARIF mapping, and suppression behavior.
 
+## Example Configs
+Copy-ready examples are available under `docs/examples/config/`:
+
+- `minimal-config.yml`: default-safe baseline with explicit local generated output ignores.
+- `strict-config.yml`: public-release review mode with extra risky extensions and placeholder brand/PII keywords.
+- `ci-config.yml`: CI-oriented non-Critical noise controls for safe documentation/fixture paths.
+
+These examples do not contain real secrets and do not demonstrate Critical suppression. `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` suppress only non-Critical findings; Critical findings remain reportable by design.
+
 ## Safety
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.
 

@@ -4,6 +4,8 @@ AgentContextKit sample gallery is a set of small, safe repositories under `sampl
 
 Samples are intentionally minimal. They are not production templates and should not contain generated outputs, real secrets, package artifacts, `bin/`, `obj/`, `node_modules`, archives, or local reports.
 
+For scanner configuration examples that are safe to copy into demo repositories, see `docs/examples/config/`.
+
 ## Which Sample Shows What?
 | Sample | Problem Shown |
 | --- | --- |

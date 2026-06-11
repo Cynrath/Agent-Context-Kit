@@ -123,6 +123,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0065 post-publish sync updated README install commands, package smoke workflows, release docs, and agent instruction files for published `0.2.0-alpha.1`.
 - PROJECT-CONTROL-0001 adds the central queue docs: `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECUTION_QUEUE.md`.
 - TASK-0066 through TASK-0069 are safe local-only docs tasks for release body polish, labels/settings checklist, Code Scanning decision, and issue backlog.
+- TASK-0070 adds safe scanner config examples for minimal, strict, and CI-oriented usage.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

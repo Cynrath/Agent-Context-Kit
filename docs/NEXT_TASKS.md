@@ -11,7 +11,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 4. TASK-0069 GitHub issue tracker bootstrap plan - completed locally.
 
 ## Product Hardening
-5. TASK-0070 scanner config examples and sample configs - queued.
+5. TASK-0070 scanner config examples and sample configs - completed locally.
 6. TASK-0071 SARIF GitHub Code Scanning opt-in workflow design - queued.
 7. TASK-0072 JSON schema stability and contract tests - queued.
 8. TASK-0073 CLI exit code contract hardening - queued.
