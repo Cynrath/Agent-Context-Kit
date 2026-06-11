@@ -49,7 +49,7 @@ Built-in allowlists are intentionally narrow and technical. They are for public 
 
 Config allowlists are local-only, explicit, reviewable, and documented. They cannot silently suppress Critical findings. Legacy `ignorePaths` excludes files from scanning and should be used sparingly because it hides files from reports.
 
-The scanner rule catalog, configurable allowlist foundation, and expanded scanner patterns are part of the current source and `0.2.0-alpha.1` package candidate. The published `0.1.0-alpha.2` global tool remains the current public install version until the new package is published.
+The scanner rule catalog, configurable allowlist foundation, and expanded scanner patterns are part of the published `0.2.0-alpha.1` package and current source.
 
 ## SARIF Output Privacy
 `ackit sarif` is designed as a local report format, not an upload action. The generated SARIF file:

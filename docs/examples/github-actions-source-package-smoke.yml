@@ -1,7 +1,7 @@
 # documentation example only
 # Copy into .github/workflows only after review.
 # Packs the current branch and installs AgentContextKit from the temporary local package source.
-# Use this pattern to test source features that are not yet in the published NuGet package, including ackit sarif.
+# Use this pattern to test current-branch source package behavior before future publication.
 
 name: ackit-source-package-smoke-example
 

@@ -22,4 +22,4 @@ No. It is pattern-based and can produce false positives or false negatives. Manu
 The project targets international OSS users and Turkish developers.
 
 ## Is it release-ready for NuGet?
-Local package validation passes, but public publish remains blocked until real repository URLs are set and the maintainer explicitly publishes.
+Yes. `v0.2.0-alpha.1` is published on GitHub and NuGet as a pre-release. Future releases still require explicit maintainer approval.

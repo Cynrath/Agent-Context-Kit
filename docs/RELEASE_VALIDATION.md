@@ -17,9 +17,9 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- doctor
 ```
 
-The `sarif` command is a current-source and `0.2.0-alpha.1` candidate validation step. It is not available in the published NuGet `0.1.0-alpha.2` global tool until the new package is published.
+The `sarif` command is available in current source and in the published NuGet `0.2.0-alpha.1` global tool.
 
-## v0.2.0-alpha.1 Candidate Package Validation
+## v0.2.0-alpha.1 Published Package Validation
 Use temporary directories outside the repository:
 
 ```powershell
@@ -276,9 +276,9 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 ```
 
 ## Published NuGet Smoke Test
-The `AgentContextKit` version `0.1.0-alpha.2` published global tool has been smoke-tested from NuGet:
+The `AgentContextKit` version `0.2.0-alpha.1` published global tool has been smoke-tested from NuGet:
 
-- `ackit version` returned `AgentContextKit 0.1.0-alpha.2`.
+- `ackit version` returned `AgentContextKit 0.2.0-alpha.1`.
 - `ackit --help` worked.
 - `ackit webui` created `.ackit/webui/index.html`.
 - `ackit init --lang tr` created `.ackit/config.yml`.
@@ -292,7 +292,7 @@ The `AgentContextKit` version `0.1.0-alpha.2` published global tool has been smo
 - `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
 - `context-export` created a local manifest and did not call a remote LLM provider.
 
-The published `0.1.0-alpha.2` smoke test does not include `ackit sarif`; SARIF is part of current source and the `0.2.0-alpha.1` package candidate.
+The published `0.2.0-alpha.1` smoke test includes `ackit sarif`.
 
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
@@ -301,7 +301,7 @@ The published `0.1.0-alpha.2` smoke test does not include `ackit sarif`; SARIF i
 
 The workflow:
 - Installs .NET 10 with `actions/setup-dotnet`.
-- Installs `AgentContextKit` version `0.1.0-alpha.2` as a NuGet global tool.
+- Installs `AgentContextKit` version `0.2.0-alpha.1` as a NuGet global tool.
 - Adds the global tool path using `%USERPROFILE%\.dotnet\tools` on Windows and `~/.dotnet/tools` on Linux/macOS.
 - Creates a clean console app, initializes git, and runs the installed-tool smoke commands.
 - Verifies fake secret detection returns exit code `2`, deletes the fake secret, and confirms the final `ackit scan --ci` has no risk findings.
@@ -315,7 +315,7 @@ Latest recorded hosted result:
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
-The workflow installs the current published package `0.1.0-alpha.2`. It does not exercise `ackit sarif` because that command is part of current source and the `0.2.0-alpha.1` package candidate.
+The workflow installs the current published package `0.2.0-alpha.1` and exercises `ackit sarif`.
 
 ## Cross-Platform Source Smoke Workflow
 `.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
@@ -335,7 +335,7 @@ Hosted validation status:
 - Status: Success.
 - Windows, Ubuntu, and macOS jobs succeeded.
 - Source restore/build/test, local pack/install, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` completed successfully.
-- Source/package smoke is the correct workflow class for testing candidate commands such as `ackit sarif` before `0.2.0-alpha.1` is published.
+- Source/package smoke is the correct workflow class for testing next-version commands before future publication.
 
 ## CI Workflow
 Latest recorded hosted result:
@@ -371,7 +371,7 @@ Hosted workflow validation is complete for the latest TASK-0056 push. Future wor
 - Confirm no permanent global tool install is required for validation.
 - Confirm GitHub Actions latest `master` run is green.
 - Confirm GitHub Release page exists for the current release tag.
-- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.1.0-alpha.2`.
+- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.2.0-alpha.1`.
 - Confirm the published NuGet global tool smoke test remains documented and reproducible.
 - Confirm Codex for OSS form submission remains recorded; keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 

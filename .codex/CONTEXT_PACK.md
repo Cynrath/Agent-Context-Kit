@@ -33,13 +33,13 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
-- Current release tag `v0.1.0-alpha.2` is pushed.
+- Current release tag `v0.2.0-alpha.1` is pushed.
 - GitHub Actions latest `master` run is green.
 - Read-only GitHub CLI validation on 2026-06-06 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `docs: add sample gallery and demo scenarios`.
 - Repository description and topics are set.
-- GitHub Release page for `v0.1.0-alpha.2` is completed.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
-- NuGet global tool install verification is completed for `0.1.0-alpha.2`.
+- GitHub Release page for `v0.2.0-alpha.1` is completed as a pre-release.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
+- NuGet global tool install verification is completed for `0.2.0-alpha.1`.
 - NuGet global tool smoke test is completed, including `ackit --help` and Web UI generation.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
@@ -53,8 +53,9 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - TASK-0061 is committed locally for sample repository gallery, demo scenarios, onboarding examples, safe sample repositories, and a local sample smoke helper.
 - TASK-0062 is committed locally for scanner rule catalog hardening, config-driven non-Critical allowlists, expanded scanner risk patterns, additive JSON `ruleId`, SARIF catalog metadata, and scanner docs.
 - TASK-0063 is committed for README preview guidance, Web UI preview docs, visual asset policy, and safe public diagram assets.
-- TASK-0064 is committed locally to prepare source/package metadata as the `0.2.0-alpha.1` candidate.
-- Published NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source is being prepared as `0.2.0-alpha.1` and includes it.
+- TASK-0064 prepared source/package metadata as the `0.2.0-alpha.1` candidate.
+- TASK-0065 is in progress to sync active docs after `0.2.0-alpha.1` GitHub Release, NuGet publish, and global install verification.
+- Published NuGet `0.2.0-alpha.1` includes `ackit sarif`.
 - Read-only GitHub CLI validation for TASK-0063 confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded on `master` before local edits.
 - Latest self-scan main stacks: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 
@@ -99,7 +100,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Current local `origin` is `https://github.com/Cynrath/agent-context-kit.git`.
 - GitHub repository public: yes.
 - `master` pushed: yes.
-- `v0.1.0-alpha.2` pushed: yes.
+- `v0.2.0-alpha.1` pushed: yes.
 - GitHub Actions latest `master` run: success.
 - Latest read-only Actions check: `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded on commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description: set.
@@ -110,7 +111,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - NuGet smoke test: completed.
 - Cross-platform smoke workflow: completed successfully on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
-- Current release publication: TASK-0056 records `v0.1.0-alpha.2` tag push, GitHub Release, NuGet publish, global tool install verification, and Web UI smoke evidence.
+- Current release publication: TASK-0065 records `v0.2.0-alpha.1` tag push, GitHub pre-release, NuGet publish, global tool install verification, and `ackit sarif` evidence.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md` contains the current published release state and future release guidance.
 - GitHub contributor workflow docs were added in TASK-0057: `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
 - Public repository presentation docs were added in TASK-0058: `docs/GITHUB_LABELS.md` and `docs/GITHUB_SETTINGS_CHECKLIST.md`.
@@ -119,7 +120,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Sample gallery and demo scenario docs are added in TASK-0061, along with safe sample repositories and a local sample smoke helper.
 - Scanner rule catalog and configurable allowlist docs were added in TASK-0062.
 - README preview, Web UI preview guidance, visual asset policy, and a safe generic flow diagram were added in TASK-0063.
-- TASK-0064 release decision: prepare `0.2.0-alpha.1` locally for SARIF, scanner rule catalog, config allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery, Web UI preview, and visual asset guidance.
+- TASK-0065 post-publish sync updates README install commands, package smoke workflows, release docs, and agent instruction files for published `0.2.0-alpha.1`.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

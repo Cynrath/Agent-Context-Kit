@@ -28,10 +28,10 @@
 - Final local readiness consolidation.
 
 ## v0.2.0-alpha.1
-- Local package candidate prepared in TASK-0064.
-- Includes `ackit sarif` as a package candidate command.
+- Published on GitHub and NuGet in TASK-0065.
+- Includes `ackit sarif` as a published package command.
 - Includes SARIF 2.1.0 output, scanner rule catalog metadata, additive JSON `ruleId`, configurable non-Critical allowlists, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance.
-- Published install command remains `0.1.0-alpha.2` until `0.2.0-alpha.1` is pushed, tagged, released, published to NuGet, and install-verified by a maintainer.
+- Published install command is `dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1`.
 
 ## v0.1.0-alpha.2
 - Published on GitHub and NuGet.
@@ -76,7 +76,7 @@
   - Keep SARIF locations repository-relative and omit raw scanner match values.
   - Add documentation and a non-active GitHub Actions upload example without enabling upload by default.
 - TASK-0060 GitHub Actions usage examples:
-  - Clarify that NuGet `0.1.0-alpha.2` does not include `ackit sarif`; current source includes it and `0.2.0-alpha.1` is the package candidate that will include it after publication.
+  - Added documented guidance for SARIF usage before the `0.2.0-alpha.1` package was published.
   - Add documented workflow snippets for scan CI, SARIF upload, published-tool smoke, and source-package smoke.
   - Add GitHub Actions usage guidance for CI command order, privacy notes, failure interpretation, and SARIF upload decisions.
 - TASK-0061 sample repository gallery:
@@ -91,12 +91,18 @@
 - TASK-0063 README screenshots/Web UI preview assets:
   - Plan safe public preview images for README and Web UI documentation without exposing local paths or private data.
 - TASK-0064 next alpha release decision for SARIF/scanner expansion package:
-  - Prepare `0.2.0-alpha.1` locally as the next alpha package candidate for SARIF and scanner expansion.
-  - Keep README published install commands pinned to `0.1.0-alpha.2` until publication.
-  - Update package smoke workflows, README install commands, and release notes after publication.
-- TASK-0065 screenshot asset capture after sanitized preview:
+  - Prepared `0.2.0-alpha.1` locally as the next alpha package for SARIF and scanner expansion.
+- TASK-0065 post-v020-alpha1 publish verification and docs sync:
+  - Updated README published install commands, package smoke workflows, release docs, and agent instruction files after `0.2.0-alpha.1` publication.
+- TASK-0066 GitHub labels/manual repo settings application:
+  - Apply documented labels and manual repository settings after maintainer review.
+- TASK-0067 CodeQL/Code Scanning decision:
+  - Decide whether SARIF upload and Code Scanning should become active hosted workflows.
+- TASK-0068 v0.2.0-alpha.2 planning:
+  - Plan the next alpha after post-publish validation.
+- TASK-0069 screenshot asset capture after sanitized preview:
   - Capture and review public-safe Web UI/report screenshots only after path, username, machine, client, and raw finding data are removed.
-- TASK-0066 website/docs site planning:
+- TASK-0070 website/docs site planning:
   - Decide whether a lightweight docs site is useful after README screenshots and visual asset policy are stable.
 
 ## v0.3.0-beta

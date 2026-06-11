@@ -1,21 +1,21 @@
 # Maintainer Release Handoff
 
-This handoff records the completed `v0.1.0-alpha.2` GitHub and NuGet release state.
+This handoff records the completed `v0.2.0-alpha.1` GitHub and NuGet pre-release state.
 
 Codex must not push commits, create GitHub releases, publish NuGet packages, or handle API keys unless the maintainer explicitly asks for each public action.
 
 ## Current Published State
 - GitHub repository public: yes, `https://github.com/Cynrath/agent-context-kit`.
 - `master` pushed: yes.
-- `v0.1.0-alpha.2` tag pushed: yes.
+- `v0.2.0-alpha.1` tag pushed: yes.
 - GitHub Actions latest `master` run is green per maintainer-provided release status.
 - Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description is set.
 - Repository topics are set.
-- GitHub Release page for `v0.1.0-alpha.2`: completed.
-- NuGet publish for `AgentContextKit` `0.1.0-alpha.2`: completed.
-- NuGet global tool install verification for `0.1.0-alpha.2`: completed.
-- NuGet global tool smoke test for `0.1.0-alpha.2`: completed.
+- GitHub Release page for `v0.2.0-alpha.1`: completed as a pre-release.
+- NuGet publish for `AgentContextKit` `0.2.0-alpha.1`: completed.
+- NuGet global tool install verification for `0.2.0-alpha.1`: completed.
+- NuGet global tool smoke test for `0.2.0-alpha.1`: completed.
 - Cross-platform CI smoke validation: completed on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Current published-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
 - Current source-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
@@ -30,7 +30,7 @@ Codex must not push commits, create GitHub releases, publish NuGet packages, or 
 Maintainer verification evidence:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 ackit version
 ackit --help
 ```
@@ -38,13 +38,13 @@ ackit --help
 Expected version output:
 
 ```text
-AgentContextKit 0.1.0-alpha.2
+AgentContextKit 0.2.0-alpha.1
 ```
 
 If the tool is already installed, use:
 
 ```powershell
-dotnet tool update --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool update --global AgentContextKit --version 0.2.0-alpha.1
 ```
 
 ## Verified NuGet Smoke Test
@@ -71,7 +71,7 @@ Completed smoke test evidence:
 - `ubuntu-latest`
 - `macos-latest`
 
-The workflow installs .NET 10, installs `AgentContextKit` version `0.1.0-alpha.2` globally, adds the platform-specific `.dotnet/tools` path, creates a clean demo app, runs the installed-tool smoke flow, verifies fake secret detection returns exit code `2`, deletes the fake secret, and finishes with `ackit scan --ci`.
+The workflow installs .NET 10, installs `AgentContextKit` version `0.2.0-alpha.1` globally, adds the platform-specific `.dotnet/tools` path, creates a clean demo app, runs the installed-tool smoke flow, verifies fake secret detection returns exit code `2`, deletes the fake secret, runs `ackit sarif`, and finishes with `ackit scan --ci`.
 
 This workflow remains the published-package smoke baseline for the current release. It does not create tags, publish NuGet packages, or mutate release metadata.
 
@@ -80,7 +80,7 @@ Latest read-only GitHub CLI evidence:
 - Jobs `smoke (windows-2025)`, `smoke (ubuntu-latest)`, and `smoke (macos-latest)` completed successfully.
 
 ## Cross-Platform Source Smoke Test
-`.github/workflows/cross-platform-source-smoke.yml` is used for current-branch package candidate validation.
+`.github/workflows/cross-platform-source-smoke.yml` is used for current-branch source package validation before future publication.
 
 The workflow:
 - Runs on `windows-2025`, `ubuntu-latest`, and `macos-latest`.
@@ -94,17 +94,15 @@ Latest read-only GitHub CLI evidence:
 - TASK-0064 pre-change observation: latest `cross-platform-source-smoke` run for commit `6d38f11` completed with conclusion `success`.
 - Jobs `source smoke (windows-2025)`, `source smoke (ubuntu-latest)`, and `source smoke (macos-latest)` completed successfully.
 
-## v0.2.0-alpha.1 Candidate Handoff
-Current source is prepared locally as the `0.2.0-alpha.1` package candidate. It includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
+## v0.2.0-alpha.1 Published Handoff
+Current source is published as the `0.2.0-alpha.1` package. It includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
 
 Maintainer-only next release actions:
-- Push the release-prep commit.
-- Confirm hosted `ci` and `cross-platform-source-smoke` are green.
-- Create tag `v0.2.0-alpha.1`.
-- Create the GitHub Release page.
-- Publish NuGet package `AgentContextKit` version `0.2.0-alpha.1`.
-- Verify NuGet global tool install, `ackit version`, `ackit --help`, and `ackit sarif`.
-- Update published install commands and published-package smoke workflow after publication.
+- Decide the next version, likely `v0.2.0-alpha.2`.
+- Confirm hosted `ci`, published-package smoke, and source-package smoke are green after the next push.
+- Create any future tags and GitHub Releases only after reviewed release commits.
+- Publish future NuGet packages only from reviewed release commits.
+- Decide whether CodeQL or GitHub Code Scanning/SARIF upload should be enabled.
 
 ## GitHub Contributor Workflow
 The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
@@ -123,7 +121,7 @@ Implemented locally:
 
 Not performed:
 - Push.
-- Future tag, GitHub Release, or NuGet publish actions beyond `v0.1.0-alpha.2`.
+- Future tag, GitHub Release, or NuGet publish actions beyond `v0.2.0-alpha.1`.
 
 ## GitHub Actions Node 24 Readiness
 The local workflow files have been prepared for Node 24-compatible official actions:

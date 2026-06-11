@@ -27,9 +27,9 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailO
 `-FailOnIssues` fails only for missing v0.2 readiness assets. It reports public-release blockers separately because those require maintainer-only decisions.
 
 ## Current Public Release State
-`v0.1.0-alpha.2` is published on GitHub and NuGet. Current v0.2 readiness work prepares the local `0.2.0-alpha.1` package candidate and does not push, tag, publish NuGet packages, create GitHub Releases, or upload SARIF.
+`v0.2.0-alpha.1` is published on GitHub and NuGet as a pre-release. This repository does not automate future pushes, tags, NuGet publishes, GitHub Releases, or SARIF uploads.
 
-`0.2.0-alpha.1` candidate content includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery and demo scenario docs, Web UI preview docs, and visual asset guidance.
+`0.2.0-alpha.1` published content includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery and demo scenario docs, Web UI preview docs, and visual asset guidance.
 
 ## Required Validation
 Use these commands before treating v0.2 local readiness as reviewed:

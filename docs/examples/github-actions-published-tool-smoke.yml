@@ -1,7 +1,7 @@
 # documentation example only
 # Copy into .github/workflows only after review.
-# Uses the published NuGet package AgentContextKit 0.1.0-alpha.2.
-# This package does not include ackit sarif.
+# Uses the published NuGet package AgentContextKit 0.2.0-alpha.1.
+# This package includes ackit sarif.
 
 name: ackit-published-tool-smoke-example
 
@@ -28,7 +28,7 @@ jobs:
 
       - name: Install AgentContextKit
         shell: pwsh
-        run: dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+        run: dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 
       - name: Add .NET tools to PATH
         shell: pwsh
@@ -56,6 +56,8 @@ jobs:
           ackit task "Published tool smoke test" --lang en
           ackit report --output .ackit/reports/smoke.html
           ackit webui --output .ackit/webui/index.html
+          ackit sarif --output .ackit/reports/smoke.sarif
+          Get-Content .ackit/reports/smoke.sarif | ConvertFrom-Json | Out-Null
 
       - name: Verify generated files
         shell: pwsh
@@ -65,6 +67,7 @@ jobs:
             ".ackit/config.yml",
             "AGENTS.md",
             ".ackit/reports/smoke.html",
+            ".ackit/reports/smoke.sarif",
             ".ackit/webui/index.html"
           )
           foreach ($path in $required) {

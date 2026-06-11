@@ -48,7 +48,7 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 `RiskRuleCatalog` is the central source of stable scanner rule IDs, default severity context, descriptions, and recommendations. SARIF rule metadata and JSON finding `ruleId` values use this catalog. Configurable `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` can suppress only non-Critical scanner noise; Critical findings remain reportable.
 
-These SARIF, rule catalog, and config allowlist capabilities are part of current source and the local `0.2.0-alpha.1` package candidate. The published NuGet `0.1.0-alpha.2` package remains the current public install version until the candidate is published.
+These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.
 

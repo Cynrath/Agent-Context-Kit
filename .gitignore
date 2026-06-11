@@ -65,6 +65,7 @@ DataProtection-Keys/
 
 # Generated package output
 nupkg/
+artifacts/
 *.nupkg
 *.snupkg
 

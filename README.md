@@ -36,16 +36,13 @@ Analyze a repository, generate clean agent context files, create task-first work
 
 | Area | Status |
 | --- | --- |
-| Current release | `v0.1.0-alpha.2` published on GitHub and NuGet |
+| Current release | `v0.2.0-alpha.1` published on GitHub and NuGet as a pre-release |
 | Package | `AgentContextKit` global tool install verified |
-| Next package candidate | `0.2.0-alpha.1` prepared locally; not pushed, tagged, released, or published yet |
+| Previous release | `v0.1.0-alpha.2` |
 | Runtime | .NET 10 |
 | Platforms | Windows, Ubuntu, macOS via GitHub Actions smoke flows |
 | Privacy model | Offline-first; no repository upload and no remote AI API calls in the MVP |
-| Source note | Current `master` is prepared as `0.2.0-alpha.1` and includes `ackit sarif` |
-
-> [!IMPORTANT]
-> The published NuGet package `0.1.0-alpha.2` does **not** include `ackit sarif` yet. Current source is prepared as the `0.2.0-alpha.1` package candidate. Use the source command shown below until `0.2.0-alpha.1` is published.
+| SARIF | `ackit sarif` is included in the published `0.2.0-alpha.1` package |
 
 ---
 
@@ -83,7 +80,7 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 | Initialize config | `ackit init` | `.ackit/config.yml` |
 | Scan repository | `ackit scan` | Stack, docs, tests, CI, Docker, agent files, risky paths |
 | Fail CI on risk | `ackit scan --ci` | Non-zero exit on high or critical findings |
-| Generate SARIF | `ackit sarif` | Privacy-first SARIF 2.1.0 report from current source and the `0.2.0-alpha.1` candidate |
+| Generate SARIF | `ackit sarif` | Privacy-first SARIF 2.1.0 report from the published package or current source |
 | Build HTML report | `ackit report` | Offline static scan report |
 | Build Web UI prototype | `ackit webui` | Offline static review UI |
 | Prepare prompt pack | `ackit prompt-pack` | Local dry-run prompt pack; no remote call |
@@ -100,7 +97,7 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 ### Install from NuGet
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 ackit --help
 ackit version
 ackit scan --ci
@@ -178,11 +175,6 @@ ackit doctor [--lang en|tr] [--json]
 ackit version
 ackit --help
 ```
-
-> [!NOTE]
-> `ackit sarif` is part of the current source command surface and the `0.2.0-alpha.1` package candidate; it is not in the published `0.1.0-alpha.2` NuGet global tool.
-
----
 
 ## Generated Files
 
@@ -278,10 +270,10 @@ Public release blockers are tracked in [Release Blockers](docs/RELEASE_BLOCKERS.
 
 ## Packaging
 
-Local package validation is documented in [Packaging](docs/PACKAGING.md) and [Release Validation](docs/RELEASE_VALIDATION.md). The `0.1.0-alpha.2` package is published as a NuGet global tool. Current source is prepared as the `0.2.0-alpha.1` package candidate.
+Local package validation is documented in [Packaging](docs/PACKAGING.md) and [Release Validation](docs/RELEASE_VALIDATION.md). The `0.2.0-alpha.1` package is published as a NuGet global tool.
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 ackit version
 ```
 

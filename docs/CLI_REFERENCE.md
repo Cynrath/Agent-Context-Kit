@@ -7,7 +7,7 @@ During development, run commands through:
 dotnet run --project src/AgentContextKit.Cli -- <command>
 ```
 
-Availability note: the published NuGet package `AgentContextKit` `0.1.0-alpha.2` does not include `ackit sarif`. The SARIF command is available in current source and the local `0.2.0-alpha.1` package candidate.
+Availability note: the published NuGet package `AgentContextKit` `0.2.0-alpha.1` includes `ackit sarif`.
 
 See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
 
@@ -62,8 +62,8 @@ Required output path:
 - `--output <repo-relative.sarif>`
 
 Published package note:
-- `ackit sarif` is not available in NuGet `0.1.0-alpha.2`.
-- Use source/current-branch execution until `0.2.0-alpha.1` is published.
+- `ackit sarif` is available in NuGet `0.2.0-alpha.1`.
+- Use the published package or source/current-branch execution.
 
 Safety behavior:
 - Output paths must be repository-relative.

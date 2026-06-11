@@ -27,18 +27,18 @@
 ## Completed Public Release State
 - Public repository exists: `https://github.com/Cynrath/agent-context-kit`.
 - `master` is pushed.
-- `v0.1.0-alpha.2` is pushed.
+- `v0.2.0-alpha.1` is pushed.
 - GitHub Actions latest `master` run is green.
 - Repository description is set.
 - Repository topics are set.
-- GitHub Release page for `v0.1.0-alpha.2` is created.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.2` is published.
-- NuGet global tool install is verified for `0.1.0-alpha.2`.
+- GitHub Release page for `v0.2.0-alpha.1` is created as a pre-release.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
+- NuGet global tool install is verified for `0.2.0-alpha.1`.
 - NuGet global tool smoke test is verified in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
 
-## Alpha.2 Published State
+## Alpha.2 Historical Published State
 - Scanner fixture/domain-like noise reduction is implemented locally.
 - GitHub Actions Node 24 readiness is implemented locally.
 - Turkish human CLI output polish is implemented locally.
@@ -47,11 +47,11 @@
 - `v0.1.0-alpha.2` tag, GitHub Release, NuGet publish, and install verification are complete.
 - Hosted `ci`, published-package smoke, and source smoke validation remain maintainer checks after future pushes.
 
-## v0.2.0-alpha.1 Candidate State
-- Source/package metadata and CLI runtime version are prepared as `0.2.0-alpha.1`.
-- `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog, configurable allowlist fields, additive JSON `ruleId`, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance are candidate release content.
-- Published install commands remain pinned to `0.1.0-alpha.2` until `0.2.0-alpha.1` is published.
-- Before publication, maintainers must push the release-prep commit, confirm hosted CI/source smoke, create the `v0.2.0-alpha.1` tag, create the GitHub Release, publish NuGet, and verify install.
+## v0.2.0-alpha.1 Published State
+- Source/package metadata and CLI runtime version are `0.2.0-alpha.1`.
+- `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog, configurable allowlist fields, additive JSON `ruleId`, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance are published release content.
+- Published install commands are pinned to `0.2.0-alpha.1`.
+- `v0.2.0-alpha.1` tag push, GitHub pre-release, NuGet publish, global install verification, and `ackit sarif` help verification are complete.
 
 ## Remaining Manual Actions
 - Review all generated files before future publishing.

@@ -6,17 +6,17 @@ These scenarios show safe, local ways to try AgentContextKit. They do not push, 
 Use the published NuGet package for stable commands:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 ackit version
 ackit --help
 ackit scan --ci
 ackit doctor
 ```
 
-Published package note: NuGet `0.1.0-alpha.2` does not include `ackit sarif`.
+Published package note: NuGet `0.2.0-alpha.1` includes `ackit sarif`.
 
 ## Source Demo
-Use current source for commands added after `v0.1.0-alpha.2`, including SARIF:
+Use the published package or current source for SARIF:
 
 ```powershell
 dotnet restore AgentContextKit.sln
@@ -26,7 +26,7 @@ dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/de
 Get-Content .ackit/reports/demo.sarif | ConvertFrom-Json
 ```
 
-`ackit sarif` is available in current source and the `0.2.0-alpha.1` package candidate.
+`ackit sarif` is available in current source and the `0.2.0-alpha.1` package.
 
 ## Sample Gallery Demo
 Run sample scans from each sample directory because the CLI currently scans the current working directory.

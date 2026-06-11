@@ -14,9 +14,9 @@ AgentContextKit, Codex, Claude Code, Cursor, GitHub Copilot, Gemini CLI ve benze
 
 Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
-Current release: `v0.1.0-alpha.2` GitHub ve NuGet uzerinde yayinlandi; global tool kurulumu dogrulandi.
+Current release: `v0.2.0-alpha.1` GitHub ve NuGet uzerinde pre-release olarak yayinlandi; global tool kurulumu dogrulandi.
 
-Kaynak notu: mevcut `master` source, `0.2.0-alpha.1` paket adayi olarak hazirlanir ve `ackit sarif` komutunu icerir. Yayinlanmis NuGet paketi `0.1.0-alpha.2` SARIF komutunu icermez.
+Kaynak notu: yayinlanmis `0.2.0-alpha.1` NuGet paketi `ackit sarif` komutunu icerir. `0.1.0-alpha.2` onceki release olarak kalir.
 
 ## Preview
 Web UI dashboard; readiness score, stack signals, health checks, findings, generated context files ve task previews alanlarini gosterir.
@@ -52,7 +52,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
 - Stabil scanner rule ID'leri ve safe technical domain, bilinen non-Critical path ve kabul edilen non-Critical rule ID'leri icin dar config allowlist destegi.
-- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Mevcut source ve `0.2.0-alpha.1` paket adayi icinde vardir.
+- `ackit sarif`: CI/security incelemesi icin privacy-first SARIF 2.1.0 tarama raporu uretir. Yayinlanmis `0.2.0-alpha.1` paketi ve mevcut source icinde vardir.
 - `ackit report`: offline statik HTML tarama raporu uretir.
 - `ackit webui`: tarama incelemesi icin offline statik Web UI prototipi uretir.
 - `ackit prompt-pack`: remote cagri yapmadan gelecekteki LLM context incelemesi icin lokal dry-run prompt paketi uretir.
@@ -85,13 +85,13 @@ dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" 
 NuGet ile kurulum:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 ackit --help
 ackit version
 ackit scan --ci
 ```
 
-Yayinlanmis `0.1.0-alpha.2` paketi `ackit sarif` komutunu icermez. `0.2.0-alpha.1` yayinlanana kadar yukaridaki source komutunu kullanin.
+Yayinlanmis `0.2.0-alpha.1` paketi `ackit sarif` komutunu icerir.
 
 Kurulu tool icin hizli dogrulama:
 
@@ -116,7 +116,7 @@ Pop-Location
 
 Minimal demo app icinde `ackit doctor`, README, LICENSE, SECURITY, test, CI, `.gitignore` veya package metadata eksiklerini raporlayabilir. Bu beklenen repository-health ciktisidir, tool hatasi degildir.
 
-Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.1.0-alpha.2` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
+Cross-platform yayinlanmis-paket smoke kapsami `.github/workflows/cross-platform-smoke.yml` ile takip edilir. Workflow, Windows, Ubuntu ve macOS uzerinde `AgentContextKit` `0.2.0-alpha.1` paketini global tool olarak kurar ve temiz demo app uzerinde kurulu-tool smoke akisini calistirir.
 Mevcut kaynak smoke kapsami `.github/workflows/cross-platform-source-smoke.yml` ile takip edilir. Bu workflow mevcut branch'i lokalde paketler ve paketi yayin yapmadan gecici package source uzerinden kurar.
 Tested on Windows, Ubuntu, and macOS via GitHub Actions.
 
@@ -130,7 +130,7 @@ Pop-Location
 Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
 
 ## CLI Komutlari
-`ackit sarif`, mevcut source ve `0.2.0-alpha.1` paket adayinin parcasidir; yayinlanmis `0.1.0-alpha.2` NuGet global tool icinde yoktur.
+`ackit sarif`, yayinlanmis `0.2.0-alpha.1` NuGet global tool ve mevcut source icinde vardir.
 
 ```text
 ackit init [--lang en|tr] [--json]
@@ -226,7 +226,7 @@ Onemli dokumanlar:
 Bkz. [docs/ROADMAP.md](docs/ROADMAP.md).
 
 ## Paketleme
-Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.1.0-alpha.2` paketi NuGet global tool olarak yayinlandi; mevcut source `0.2.0-alpha.1` paket adayi olarak hazirlanir.
+Lokal paket dogrulama adimlari [docs/PACKAGING.md](docs/PACKAGING.md) ve [docs/RELEASE_VALIDATION.md](docs/RELEASE_VALIDATION.md) dosyalarinda yer alir. `0.2.0-alpha.1` paketi NuGet global tool olarak yayinlandi ve dogrulandi.
 
 Public release blocker listesi [docs/RELEASE_BLOCKERS.md](docs/RELEASE_BLOCKERS.md) dosyasinda takip edilir.
 

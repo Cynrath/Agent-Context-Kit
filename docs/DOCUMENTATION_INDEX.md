@@ -87,7 +87,7 @@
 - `docs/RELEASE_BLOCKERS.md`: public-release blocker/follow-up state and guard script.
 - `docs/RELEASE_CHECKLIST.md`: release checklist.
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`: current RC report.
-- `docs/tasks/TASK-0064-v020-alpha1-release-preparation.md`: local `0.2.0-alpha.1` package candidate preparation.
+- `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`: `0.2.0-alpha.1` publication verification and docs sync.
 - `CHANGELOG.md`: release notes.
 
 ## Task Tracking

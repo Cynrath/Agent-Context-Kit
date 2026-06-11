@@ -35,7 +35,7 @@ jobs:
           $ErrorActionPreference = "Stop"
           $PSNativeCommandUseErrorActionPreference = $true
 
-          dotnet tool install --global AgentContextKit --version 0.1.0-alpha.2
+          dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 
           if ($IsWindows) {
             $toolPath = Join-Path $env:USERPROFILE ".dotnet\tools"
@@ -75,6 +75,11 @@ jobs:
               ackit task "Cross platform smoke test" --lang en
               ackit report --output .ackit/reports/smoke.html
               ackit webui --output .ackit/webui/index.html
+              ackit sarif --output .ackit/reports/smoke.sarif
+              if (-not (Test-Path ".ackit/reports/smoke.sarif")) {
+                throw "Expected SARIF output was not created."
+              }
+              Get-Content ".ackit/reports/smoke.sarif" | ConvertFrom-Json | Out-Null
               ackit prompt-pack --output .ackit/prompt-packs/smoke.md --lang en
               ackit context-export --prompt-pack .ackit/prompt-packs/smoke.md --approve --output .ackit/context-exports/smoke.json
 
