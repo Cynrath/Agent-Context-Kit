@@ -26,7 +26,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 15. TASK-0080 tutorial: prepare a repo for AI coding agents - completed locally.
 
 ## Next Package Planning
-16. TASK-0081 v0.2.0-alpha.2 scope planning - queued.
+16. TASK-0081 v0.2.0-alpha.2 scope planning - completed locally; version bump remains separate.
 17. TASK-0082 v0.3 roadmap decision - queued.
 18. TASK-0083 1.0 readiness gap analysis - queued.
 

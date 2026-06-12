@@ -53,6 +53,14 @@
 - Published install commands are pinned to `0.2.0-alpha.1`.
 - `v0.2.0-alpha.1` tag push, GitHub pre-release, NuGet publish, global install verification, and `ackit sarif` help verification are complete.
 
+## Planned v0.2.0-alpha.2 Scope Gate
+- Scope is defined in `docs/V020_ALPHA2_SCOPE.md`.
+- Release is limited to scanner precision, fixture hardening, sanitized suppression audit, contract validation, and repository documentation polish.
+- CLI commands, exit codes, JSON schema `2`, config schema `1`, SARIF visible-findings-only behavior, package ID, and tool command remain compatible.
+- Source/package/CLI version is not changed until a dedicated release-preparation task.
+- Published-package smoke stays pinned to `0.2.0-alpha.1` until alpha.2 is available on NuGet.
+- Code Scanning, Pages, screenshot assets, remote LLM integration, and breaking schema changes are out of scope.
+
 ## Remaining Manual Actions
 - Review all generated files before future publishing.
 - For the next release, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.

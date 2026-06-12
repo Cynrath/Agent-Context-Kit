@@ -1,7 +1,7 @@
 # OSS Readiness
 
 ## Current Target
-Maintain the completed `v0.2.0-alpha.1` public pre-release and keep future release work local-only until maintainer approval.
+Maintain the completed `v0.2.0-alpha.1` public pre-release while preparing the compatibility-preserving `v0.2.0-alpha.2` hardening scope locally. Version changes and publication remain separate maintainer-reviewed work.
 
 ## Required Signals
 - Clear README.
@@ -60,3 +60,4 @@ The first release should be small, working, documented, and honest about limitat
 - Public visual asset rules are documented in `docs/VISUAL_ASSETS.md`.
 - Web UI public preview guidance is documented in `docs/WEB_UI_PREVIEW.md`.
 - README uses a sanitized diagram and a text-based preview; screenshots remain pending until sanitized assets are available.
+- `docs/V020_ALPHA2_SCOPE.md` defines the next package as scanner precision plus sanitized suppression audit hardening without command/schema breaks; version metadata remains `0.2.0-alpha.1`.

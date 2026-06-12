@@ -134,6 +134,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0078 keeps repository Markdown canonical, defers GitHub Pages, and documents future activation triggers and privacy/quality gates without adding site tooling.
 - TASK-0079 adds a verified published-package first-five-minutes tutorial using a timestamped synthetic repository and local-only outputs.
 - TASK-0080 adds a security-first existing-repository adoption tutorial for baseline review, config, agent instructions, tasks, CI checks, and rollback.
+- TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

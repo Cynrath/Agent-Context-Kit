@@ -83,6 +83,7 @@
 - `docs/examples/github-actions-source-package-smoke.yml`: non-active current source package smoke example.
 - `docs/NUGET_METADATA.md`: NuGet package metadata review workflow.
 - `docs/V020_READINESS.md`: v0.2 local readiness review.
+- `docs/V020_ALPHA2_SCOPE.md`: compatibility-preserving alpha.2 package scope, exclusions, and release gates.
 - `docs/V030_READINESS.md`: v0.3 local readiness review.
 - `docs/V040_READINESS.md`: v0.4 local readiness review.
 - `docs/V050_READINESS.md`: v0.5 local readiness review.

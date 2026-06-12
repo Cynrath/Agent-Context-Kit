@@ -164,6 +164,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/THIRD_PARTY_NOTICES.md`
 - `docs/TROUBLESHOOTING.md`
 - `docs/V020_READINESS.md`
+- `docs/V020_ALPHA2_SCOPE.md`
 - `docs/V030_READINESS.md`
 - `docs/V040_READINESS.md`
 - `docs/V050_READINESS.md`

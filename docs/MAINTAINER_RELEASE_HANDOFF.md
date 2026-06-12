@@ -105,6 +105,11 @@ Maintainer-only next release actions:
 - Publish future NuGet packages only from reviewed release commits.
 - Decide whether CodeQL or GitHub Code Scanning/SARIF upload should be enabled.
 
+## Planned v0.2.0-alpha.2 Handoff
+`docs/V020_ALPHA2_SCOPE.md` freezes alpha.2 as a small hardening package: culture-invariant scanner matching, expanded scanner fixtures, and sanitized human/JSON suppression audit output. CLI commands, exit codes, JSON schema `2`, config schema `1`, and visible-findings-only SARIF stay compatible.
+
+This task does not bump versions. A separate release-preparation task must update csproj/CLI/source-smoke versions, run local package install smoke, and obtain hosted source-smoke validation. Published-package smoke must remain on `0.2.0-alpha.1` until NuGet `0.2.0-alpha.2` exists.
+
 ## GitHub Contributor Workflow
 The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
 

@@ -127,6 +127,8 @@
   - Completed locally with a published-package, disposable-repository walkthrough for init, scan, generation, task creation, CI check, and optional local previews.
 - TASK-0080 tutorial: prepare a repo for AI coding agents:
   - Completed locally with a security-first existing-repository workflow for baseline review, config, agent instructions, tasks, CI gates, local artifacts, maintenance, and rollback.
+- TASK-0081 v0.2.0-alpha.2 scope planning:
+  - Completed locally with a compatibility-preserving scanner precision/suppression-audit scope, explicit exclusions, and separate release-preparation/publication gates.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.
