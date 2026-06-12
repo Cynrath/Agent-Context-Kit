@@ -72,6 +72,8 @@
 - Vulnerability and deprecation reviews are dated and reviewed.
 - Private GitHub vulnerability reporting is enabled and tested by the maintainer.
 - Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
+- [x] Standard `ci`, published-package smoke, and source-package smoke are green for commit `37d5220`; see `docs/HOSTED_VALIDATION_STATUS.md`.
+- [ ] The dedicated manual `release-candidate-evidence` workflow has a green Windows, Ubuntu, and macOS run for the selected candidate commit.
 - `scripts/check-release-candidate-workflow.ps1 -FailOnIssues` passes and the manual `release-candidate-evidence` workflow is green on all three OS runners.
 - [x] The `xunit` Legacy warning is resolved through the TASK-0091 xUnit v3 migration; 169/169 tests and clean dependency reviews are recorded.
 - [x] The conditional local contract freeze and NO-GO decision package are recorded in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`.

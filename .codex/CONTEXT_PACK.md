@@ -150,6 +150,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0094 full validation passes with 178/178 tests, clean Turkish CLI smoke, all local gates, and clean hygiene.
 - TASK-0095 is complete locally with `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`, `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`, and `scripts/check-security-supply-chain-evidence.ps1`. Dependency reviews, 178/178 tests, local package verification, all integrated gates, clean hygiene, and a 3.368-second benchmark pass. All remote security settings and signing/SBOM/provenance/recovery actions remain explicitly pending maintainer evidence.
 - TASK-0096 is complete locally. `docs/RC_LOCAL_READINESS.md` and `scripts/check-rc-local-readiness.ps1` consolidate the final local evidence under `LOCAL READY / REMOTE NO-GO`; 178/178 tests, dependency review, package verification, hygiene, all local gates, and a 3.495-second benchmark pass. Hosted and maintainer-only gaps remain open.
+- Remote `master` includes `37d5220`. TASK-0097 records that standard `ci`, published-package smoke, and source-package smoke passed for that exact commit while the dedicated manual RC evidence workflow has zero runs. Full local validation remains green at 178/178 tests with a 3.716-second benchmark.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

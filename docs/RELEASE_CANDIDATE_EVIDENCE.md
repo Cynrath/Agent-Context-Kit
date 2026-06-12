@@ -41,6 +41,7 @@ Local evidence recorded on 2026-06-12:
 - TASK-0093 added machine-readable schemas/golden fixtures and TASK-0094 added English/Turkish human/error/exit/JSON semantic parity tests plus a local release gate.
 - TASK-0095 added the security/supply-chain evidence register, maintainer procedure, explicit pending/verified vocabulary, and a local evidence-structure gate. Remote/security credential actions remain pending.
 - TASK-0096 adds `docs/RC_LOCAL_READINESS.md` and a read-only orchestration gate that reports `LOCAL READY / REMOTE NO-GO`; it does not close hosted, security-setting, supply-chain, version, or approval blockers.
+- TASK-0097 records successful standard `ci`, published-package smoke, and source-package smoke for commit `37d5220`. The dedicated manual RC workflow still has zero runs, so predecessor/config/baseline/performance hosted blockers remain open.
 
 The former xUnit test-tooling warning is resolved locally. Remaining supply-chain decisions are signing, SBOM, provenance, recovery policy, and release-date revalidation.
 

@@ -39,6 +39,8 @@ Security reporting and supply-chain maintainer evidence fields are defined in [S
 
 The consolidated local RC decision is defined in [RC_LOCAL_READINESS.md](RC_LOCAL_READINESS.md). `scripts/check-rc-local-readiness.ps1` orchestrates the existing local evidence gates and intentionally reports `LOCAL READY / REMOTE NO-GO` while hosted and maintainer-only evidence remains open.
 
+Hosted standard workflow evidence is recorded in [HOSTED_VALIDATION_STATUS.md](HOSTED_VALIDATION_STATUS.md). It proves current CI and source/published package smoke on commit `37d5220`; it does not substitute for the unrun manual RC evidence workflow.
+
 Release-candidate dependency review:
 
 ```powershell

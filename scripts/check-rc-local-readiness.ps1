@@ -79,6 +79,7 @@ $requiredPaths = @(
     @{ Path = "docs\SECURITY_SUPPLY_CHAIN_EVIDENCE.md"; Description = "Security/supply-chain evidence register" },
     @{ Path = "docs\MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md"; Description = "Maintainer security/supply-chain handoff" },
     @{ Path = "docs\RC_HOSTED_EVIDENCE.md"; Description = "Hosted RC evidence guide" },
+    @{ Path = "docs\HOSTED_VALIDATION_STATUS.md"; Description = "Hosted validation status" },
     @{ Path = "docs\tasks\TASK-0096-final-rc-local-readiness-consolidation.md"; Description = "TASK-0096" }
 )
 
@@ -92,6 +93,8 @@ Require-Text -RelativePath "docs\RC_LOCAL_READINESS.md" -Needle "PENDING MAINTAI
 Require-Text -RelativePath "docs\RC_LOCAL_READINESS.md" -Needle "docs/V100_GAP_ANALYSIS.md" -Description "Open gap source of truth"
 Require-Text -RelativePath "docs\MAINTAINER_RC_DECISION.md" -Needle "NO-GO for release-candidate publication" -Description "Maintainer NO-GO decision"
 Require-Text -RelativePath "docs\V100_GAP_ANALYSIS.md" -Needle "AgentContextKit is **not ready for 1.0 general availability**" -Description "1.0 GA blocker statement"
+Require-Text -RelativePath "docs\HOSTED_VALIDATION_STATUS.md" -Needle "37d52200fead0ce5c53571205d324b9b7ff6c75b" -Description "Hosted evidence commit"
+Require-Text -RelativePath "docs\HOSTED_VALIDATION_STATUS.md" -Needle "zero runs" -Description "Manual RC workflow missing-run boundary"
 
 Push-Location $repoRoot
 try {

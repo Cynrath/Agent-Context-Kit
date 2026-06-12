@@ -116,6 +116,7 @@ $requiredPaths = @(
     @{ Path = "docs\SECURITY_SUPPLY_CHAIN_EVIDENCE.md"; Description = "security/supply-chain evidence register" },
     @{ Path = "docs\MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md"; Description = "maintainer security/supply-chain handoff" },
     @{ Path = "docs\RC_LOCAL_READINESS.md"; Description = "final RC local-readiness consolidation" },
+    @{ Path = "docs\HOSTED_VALIDATION_STATUS.md"; Description = "hosted validation status" },
     @{ Path = "docs\schemas\README.md"; Description = "machine-readable contract schema catalog" },
     @{ Path = "docs\schemas\ackit-command-output-v2.schema.json"; Description = "command output schema" },
     @{ Path = "docs\schemas\ackit-baseline-v1.schema.json"; Description = "baseline schema asset" },
@@ -197,6 +198,7 @@ $releaseValidationNeedles = @(
     "SECURITY_SUPPLY_CHAIN_EVIDENCE.md",
     "MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md",
     "RC_LOCAL_READINESS.md",
+    "HOSTED_VALIDATION_STATUS.md",
     "docs/schemas/README.md",
     "LOCALIZATION.md",
     "RC_HOSTED_EVIDENCE.md"
@@ -224,6 +226,7 @@ $documentationIndexNeedles = @(
     "SECURITY_SUPPLY_CHAIN_EVIDENCE.md",
     "MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md",
     "RC_LOCAL_READINESS.md",
+    "HOSTED_VALIDATION_STATUS.md",
     "docs/schemas/README.md",
     "RC_HOSTED_EVIDENCE.md"
 )
@@ -297,6 +300,7 @@ $projectMapNeedles = @(
     "scripts/check-localization-parity.ps1",
     "scripts/check-security-supply-chain-evidence.ps1",
     "scripts/check-rc-local-readiness.ps1",
+    "docs/HOSTED_VALIDATION_STATUS.md",
     "docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md",
     "scripts/check-v100-readiness.ps1"
 )

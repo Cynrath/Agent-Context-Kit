@@ -5,6 +5,8 @@
 
 The current source tree has complete local release-candidate evidence for its documented contract, localization, security regression, dependency, package, and repository-hygiene checks. This is not a release approval. Hosted evidence, remote security settings, supply-chain decisions, candidate version selection, and maintainer sign-off remain incomplete.
 
+Standard hosted `ci`, published-package smoke, and source-package smoke are green for commit `37d52200fead0ce5c53571205d324b9b7ff6c75b`. The dedicated manual RC evidence workflow remains unrun, so the remote decision stays NO-GO. See `docs/HOSTED_VALIDATION_STATUS.md`.
+
 ## Locally Verified Evidence
 | Area | Evidence | Local Status |
 | --- | --- | --- |
@@ -22,7 +24,7 @@ The current source tree has complete local release-candidate evidence for its do
 ## Remaining Maintainer Evidence
 | Area | Required Evidence | Status |
 | --- | --- | --- |
-| Hosted RC workflow | Green Windows, Ubuntu, and macOS run for the exact candidate commit | PENDING MAINTAINER |
+| Hosted RC workflow | Standard CI/source/published smoke are green for `37d5220`; dedicated predecessor/config/baseline/performance workflow is still required | PENDING MAINTAINER |
 | Private vulnerability reporting | Enabled setting, verified entry point, date, owner, and non-sensitive reference | PENDING MAINTAINER |
 | Security notification ownership | Primary and backup owner confirmation | PENDING MAINTAINER |
 | Final contract acceptance | Candidate-specific CLI/config/JSON/baseline/SARIF/localization review | PENDING MAINTAINER |

@@ -88,6 +88,7 @@ $criticalDocs = @(
     "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "docs\MAINTAINER_RC_DECISION.md",
     "docs\RC_LOCAL_READINESS.md",
+    "docs\HOSTED_VALIDATION_STATUS.md",
     "docs\RELEASE_VALIDATION.md",
     "docs\RELEASE_BLOCKERS.md",
     "docs\PUBLIC_RELEASE_AUDIT.md",

@@ -10,7 +10,7 @@ The local contract freeze, machine-readable schema assets, localization parity g
 | --- | --- | --- | --- |
 | Local contract freeze | Complete locally | Review `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` with no unresolved breaking change | Maintainer review |
 | Local tests and gates | Complete locally: 178/178 tests and clean gates | Rerun on final candidate commit | Local/CI validation |
-| Hosted RC workflow | Workflow designed; hosted result pending | Green Windows, Ubuntu, and macOS manual run for final candidate commit | Maintainer push/dispatch |
+| Hosted RC workflow | Standard `ci`, published smoke, and source smoke are green at `37d5220`; dedicated RC workflow has zero runs | Green Windows, Ubuntu, and macOS manual RC run for final candidate commit | Maintainer dispatch |
 | Upgrade/config evidence | Local fixtures pass | Hosted predecessor install, config hash, `config-check`, baseline, SARIF, and final scan pass | Hosted workflow |
 | JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
 | Security reporting | TASK-0095 evidence register/handoff ready; remote status PENDING MAINTAINER | Enable and verify private vulnerability reporting; record date/owner/non-sensitive reference | Maintainer GitHub settings |

@@ -21,4 +21,6 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 17. TASK-0095 is complete locally. The evidence register, maintainer handoff, dependency review, and local evidence gate pass with 178/178 tests and a 3.368-second synthetic benchmark.
 18. Private vulnerability reporting, NuGet signing, SBOM, provenance, bad-package recovery acceptance, hosted RC evidence, and final RC approval remain explicit maintainer-only actions.
 19. TASK-0096 is complete locally. `docs/RC_LOCAL_READINESS.md` and `scripts/check-rc-local-readiness.ps1` pass with 178/178 tests, clean dependency review, local package verification, and a 3.495-second benchmark.
-20. No additional unblocked local RC task is documented. Hosted workflow evidence, private reporting, security ownership, supply-chain decisions, candidate selection, and final approval require maintainer action before a release-preparation task starts.
+20. Before TASK-0097 edits, local and remote were aligned at `37d5220`; standard `ci`, published smoke, and source smoke are green for that commit.
+21. TASK-0097 is complete locally. It records exact public run URLs and preserves the zero-run manual RC workflow blocker; full local validation passes with 178/178 tests and a 3.716-second benchmark.
+22. Remaining RC progress requires maintainer action: dispatch the manual RC workflow, verify private reporting/security ownership, decide signing/SBOM/provenance/recovery, select a candidate, and approve release preparation.

@@ -3,6 +3,11 @@
 ## Purpose
 `.github/workflows/release-candidate-evidence.yml` is a manual-only Windows, Ubuntu, and macOS evidence workflow for a future release-candidate decision. It does not publish or approve a release.
 
+## Current Hosted Status
+Standard hosted validation for commit `37d52200fead0ce5c53571205d324b9b7ff6c75b` is green: `ci`, published-package smoke, and source-package smoke succeeded. See `docs/HOSTED_VALIDATION_STATUS.md` for run URLs and exact OS scope.
+
+The dedicated `release-candidate-evidence` workflow still has zero runs. Standard smoke results do not replace its predecessor-config, baseline, SARIF, and performance evidence.
+
 ## What It Verifies
 - restore, Release build, and the full test suite on each runner;
 - published predecessor `AgentContextKit` `0.2.0-alpha.1` install in an isolated tool path;
@@ -42,6 +47,14 @@ After the commit is pushed, open GitHub Actions and manually dispatch `release-c
 - predecessor and candidate package versions;
 - benchmark elapsed time from each job;
 - any accepted runner-specific warning or failure.
+
+Equivalent maintainer command:
+
+```powershell
+gh workflow run release-candidate-evidence.yml --repo Cynrath/agent-context-kit --ref master
+```
+
+This command is intentionally documented but was not executed by TASK-0097.
 
 Do not treat a local pass as hosted evidence. Do not tag, publish, or call the project RC-ready until all required jobs are green and remaining P0/P1 decisions are resolved or explicitly accepted.
 
