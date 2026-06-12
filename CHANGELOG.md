@@ -11,6 +11,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added current-source sanitized suppression audit metadata for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` in human/JSON scan output.
 - Added safe screenshot and docs-site planning plus first-five-minutes and existing-repository adoption tutorials.
 - Added a versioned, sanitized baseline identity model with deterministic SHA-256 finding fingerprints and focused cross-platform normalization tests.
+- Added report-only Core configuration validation with stable diagnostic codes for unknown, obsolete, duplicate, malformed, and unsafe settings.
 
 ### Changed
 - Polished README installed-tool and source command examples.

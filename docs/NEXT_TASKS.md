@@ -32,8 +32,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 
 ## Next Product Sequence
 19. TASK-0084 baseline model and fingerprint design - completed locally; Core model/tests added without CLI integration.
-20. TASK-0085 config validation and diagnostics design - next.
-21. TASK-0086 baseline-aware scan and CI policy - queued.
+20. TASK-0085 config validation and diagnostics design - completed locally; report-only Core validator added.
+21. TASK-0086 baseline-aware scan and CI policy - next.
 22. TASK-0087 JSON/SARIF/report baseline integration - queued.
 23. TASK-0088 upgrade, performance, security, and release-candidate evidence - queued.
 

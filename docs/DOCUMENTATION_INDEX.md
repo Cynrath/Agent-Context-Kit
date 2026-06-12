@@ -20,6 +20,7 @@
 - `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md`: manual, job-scoped Code Scanning upload design.
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
+- `docs/CONFIGURATION_DIAGNOSTICS.md`: stable config diagnostic codes, severities, safety checks, and compatibility boundary.
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
 - `docs/SCANNER_RULES.md`: scanner rule catalog, SARIF mapping, and config allowlist behavior.
 - `docs/SCANNER_FIXTURES.md`: scanner regression matrix and safe synthetic fixture conventions.

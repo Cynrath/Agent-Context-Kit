@@ -124,6 +124,11 @@ public interface IAckitConfigReader
     AckitConfig Read(string repositoryPath);
 }
 
+public interface IAckitConfigValidator
+{
+    ConfigValidationResult Validate(string content);
+}
+
 public interface IAckitConfigWriter
 {
     GeneratedFileResult WriteDefaultIfMissing(string repositoryPath, LanguageCode language);

@@ -76,5 +76,8 @@ The TASK-0084 baseline foundation computes SHA-256 finding identities from a sta
 
 The model does not suppress findings or change exit codes. Future baseline application must keep Critical findings visible and require explicit, reviewable baseline updates. See `docs/BASELINE_MODEL.md`.
 
+## Configuration Diagnostic Safety
+The report-only Core config validator detects unsafe paths/domains, unknown finding IDs, and Critical suppression attempts. Diagnostics include codes, line numbers, and keys but do not echo raw values or full config lines. Current runtime behavior remains unchanged until a later CLI integration task.
+
 ## Limitations
 Pattern-based scanners cannot guarantee full detection. Public release still requires manual review.

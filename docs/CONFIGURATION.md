@@ -17,6 +17,8 @@ ignorePaths:
 
 Unknown fields are ignored. Invalid or unknown language values fall back to English.
 
+Current source also includes a report-only Core validator with stable `ACKITCFG` diagnostics for unknown, obsolete, duplicate, malformed, and unsafe settings. It is not connected to CLI exit behavior yet. See [CONFIGURATION_DIAGNOSTICS.md](CONFIGURATION_DIAGNOSTICS.md).
+
 ## Default Config
 ```yaml
 schemaVersion: 1
@@ -127,6 +129,8 @@ These examples do not contain real secrets and do not demonstrate Critical suppr
 
 ## Safety
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.
+
+The validator reports attempts to suppress Critical rule `ACKIT001` as an error even though the runtime scanner already refuses to suppress Critical findings.
 
 ## Generated File Conventions
 See [CONFIG_GENERATED_CONVENTIONS.md](CONFIG_GENERATED_CONVENTIONS.md) for the v1.0 target conventions around default config, ignored generated artifact paths, repository-relative output paths, and skip-existing behavior.

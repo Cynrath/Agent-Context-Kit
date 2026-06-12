@@ -36,6 +36,7 @@ tests/
 - `IFileSystem`
 - `IClock`
 - `IAckitConfigReader`
+- `IAckitConfigValidator`
 - `IAckitConfigWriter`
 
 ## Design Notes
@@ -52,6 +53,8 @@ The CLI must not contain business logic. Core services are designed to be testab
 `RiskScanResult` carries visible findings plus sanitized config suppression records. `ScanResult.Suppressions` is additive and defaults to an empty list so existing positional construction remains compatible. Audit-capable interface methods have default implementations that return existing findings with an empty audit, allowing custom implementations to opt in without an immediate source break. The CLI exposes this audit only through local human/JSON scan output; SARIF continues to contain visible findings only.
 
 `BaselineSchema`, `BaselineEntry`, `BaselineManifest`, and `BaselineFingerprint` define the future baseline identity boundary. Fingerprints use only normalized rule IDs, repository-relative paths, and optional numeric location metadata. They exclude messages, raw matches, absolute roots, and machine identity. This Core foundation is not connected to current CLI scanning or exit behavior yet.
+
+`AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior or current CLI exit codes. Diagnostic messages are invariant and omit raw config values.
 
 These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.
 

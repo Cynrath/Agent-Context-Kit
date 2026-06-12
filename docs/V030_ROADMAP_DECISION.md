@@ -40,7 +40,7 @@ Repositories need a safe way to adopt scanning incrementally. A clean repository
 
 ## Candidate Delivery Sequence
 1. Baseline model, schema, path normalization, and fingerprint design. Completed locally by TASK-0084; scanner/CLI integration remains separate.
-2. Config validation and deterministic diagnostics.
+2. Config validation and deterministic diagnostics. Core report-only validator completed locally by TASK-0085; CLI integration remains separate.
 3. Baseline creation/review commands and explicit update workflow.
 4. Baseline-aware scan and CI exit policy.
 5. Additive JSON, SARIF, HTML report, and Web UI integration.

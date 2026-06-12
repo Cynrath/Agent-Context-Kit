@@ -21,8 +21,8 @@
 | 17 | Done locally | TASK-0082 v0.3 roadmap decision | Medium | None | roadmap/product decision docs | Docs review/hygiene/gates | No | Baseline-aware CI policy and config diagnostics are selected with compatibility and security boundaries. |
 | 18 | Done locally | TASK-0083 1.0 readiness gap analysis | Medium | None | readiness docs/scripts | Full local gates | No | 1.0 gaps are listed with owners, evidence, validation, and blocking status. |
 | 19 | Done locally | TASK-0084 baseline model and fingerprint design | High | None | baseline Core model/tests/docs | Full local gates | No | A sanitized, deterministic, versioned baseline model is specified and tested without changing scan behavior. |
-| 20 | Next | TASK-0085 config validation and diagnostics design | High | Depends on config compatibility decision | config docs/core/tests | Full local gates | No | Invalid and obsolete config behavior is deterministic and documented. |
-| 21 | Queued | TASK-0086 baseline-aware scan and CI policy | High | Depends on TASK-0084/0085 | scanner/CLI/tests/docs | Full local gates | No | New findings are distinguished from baseline entries with safe CI exits. |
+| 20 | Done locally | TASK-0085 config validation and diagnostics design | High | CLI integration remains separate | config Core/tests/docs | Full local gates | No | Invalid, unknown, obsolete, duplicate, and unsafe config diagnostics are deterministic and documented. |
+| 21 | Next | TASK-0086 baseline-aware scan and CI policy | High | Depends on TASK-0084/0085 | scanner/CLI/tests/docs | Full local gates | No | New findings are distinguished from baseline entries with safe CI exits. |
 | 22 | Queued | TASK-0087 JSON/SARIF/report baseline integration | High | Depends on TASK-0086 | output contracts/tests/docs | Full local gates | No | Additive baseline metadata is consistent across machine/local reports. |
 | 23 | Queued | TASK-0088 upgrade, performance, security, and release-candidate evidence | High | Depends on product contract freeze | tests/release/security/support docs | Full local and hosted gates | Possibly | P0/P1 evidence is ready for a 1.0 release-candidate decision. |
 
