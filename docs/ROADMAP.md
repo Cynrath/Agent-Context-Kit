@@ -134,7 +134,7 @@
 - Decision: baseline-aware CI policy and configuration diagnostics.
 - Add sanitized deterministic finding fingerprints and a versioned local baseline manifest.
 - Distinguish reviewed existing findings from new findings without hiding Critical risk.
-- TASK-0086 completed the explicit local baseline create/update/load workflow and opt-in new-finding CI policy; TASK-0087 owns SARIF/report/Web UI parity.
+- TASK-0086 completed the explicit local baseline create/update/load workflow and opt-in new-finding CI policy; TASK-0087 completed additive JSON/SARIF/report/Web UI parity.
 - Add deterministic config validation for unknown, invalid, unsafe, and obsolete settings.
 - Extend JSON, SARIF, reports, and Web UI through additive compatible metadata.
 - Preserve offline-first behavior and cross-platform determinism.

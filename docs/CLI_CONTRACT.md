@@ -24,9 +24,9 @@ The v1.0 target command surface is:
 ackit init [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
-ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
-ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
-ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit report [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit webui [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
 ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
 ackit context-export --prompt-pack <repo-relative.md> --approve [--output <repo-relative.json>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]
@@ -51,7 +51,7 @@ ackit help
 - `--lang en|tr`: selects English or Turkish output/templates where supported. Unknown language values fall back to English.
 - `--json`: emits machine-readable JSON where supported.
 - `--ci`: applies only to `scan`; default mode evaluates every finding, while explicit baseline mode evaluates only new High/Critical findings.
-- `--baseline <repo-relative.json>`: opts `scan` into baseline classification and new-finding CI policy.
+- `--baseline <repo-relative.json>`: opts `scan` into baseline classification/new-finding CI policy and adds the same classification metadata to `sarif`, `report`, or `webui` output.
 - `--update`: permits explicit replacement only for `ackit baseline`.
 
 ## Output Paths

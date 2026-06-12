@@ -20,6 +20,7 @@ Custom repository-relative output:
 ```powershell
 ackit webui --output .ackit/webui/current.html
 ackit webui --output docs/local-webui.html --json
+ackit webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json
 ```
 
 ## Included Views
@@ -40,6 +41,7 @@ ackit webui --output docs/local-webui.html --json
 - Output paths must stay inside the repository.
 - `.ackit/webui/` is ignored by git and by the default scan config.
 - Generated Web UI files can include local repository paths and local audit context. Keep them local; do not attach them to public GitHub Releases or NuGet packages.
+- Baseline mode adds existing/new dashboard metrics and a Baseline column in the finding browser; all findings remain visible.
 
 ## JSON Output
 `ackit webui --json` returns generated file metadata and a risk summary:
@@ -64,6 +66,8 @@ ackit webui --output docs/local-webui.html --json
   }
 }
 ```
+
+When `--baseline` is supplied, JSON also includes the shared sanitize-only baseline summary and classified finding identities documented in [JSON_OUTPUT.md](JSON_OUTPUT.md).
 
 ## Review Notes
 The Web UI prototype is for local review. It does not approve public release, publish packages, push commits, create release tags, replace release blocker checks, or start a hosted application. Treat generated Web UI files as local-only artifacts, not public release artifacts.

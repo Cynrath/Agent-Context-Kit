@@ -179,7 +179,12 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         _clock = clock;
     }
 
-    public GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult)
+    public GeneratedFileResult Generate(
+        string repositoryPath,
+        string? relativeOutputPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline = null)
     {
         var outputPath = NormalizeOutputPath(repositoryPath, relativeOutputPath);
         var fullPath = Path.Combine(repositoryPath, outputPath.Replace('/', Path.DirectorySeparatorChar));
@@ -189,7 +194,7 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
             return new GeneratedFileResult(outputPath, GeneratedFileStatus.SkippedExisting, "Existing report was not overwritten.");
         }
 
-        var content = BuildHtml(repositoryPath, language, scanResult);
+        var content = BuildHtml(repositoryPath, language, scanResult, baseline);
         _fileSystem.WriteAllText(fullPath, content);
         return new GeneratedFileResult(outputPath, GeneratedFileStatus.Created, "HTML report created.");
     }
@@ -229,8 +234,13 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         return outputPath;
     }
 
-    private string BuildHtml(string repositoryPath, LanguageCode language, ScanResult scanResult)
+    private string BuildHtml(
+        string repositoryPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline)
     {
+        ValidateBaselineAlignment(scanResult, baseline);
         var generatedAt = _clock.UtcNow.ToString("u", CultureInfo.InvariantCulture);
         var projectName = new DirectoryInfo(repositoryPath).Name;
         var builder = new StringBuilder();
@@ -252,7 +262,7 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         builder.AppendLine("    .metric strong{display:block;font-size:22px;color:var(--ink);} .metric span{color:var(--muted);font-size:13px;}");
         builder.AppendLine("    table{border-collapse:collapse;width:100%;font-size:14px;} th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;} th{background:var(--panel);}");
         builder.AppendLine("    ul{padding-left:20px;} code{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:1px 4px;}");
-        builder.AppendLine("    .severity-Critical{color:var(--critical);font-weight:700;} .severity-High{color:var(--warn);font-weight:700;} .ok{color:var(--ok);font-weight:700;}");
+        builder.AppendLine("    .severity-Critical{color:var(--critical);font-weight:700;} .severity-High{color:var(--warn);font-weight:700;} .ok,.baseline-existing{color:var(--ok);font-weight:700;} .baseline-new{color:var(--critical);font-weight:700;}");
         builder.AppendLine("  </style>");
         builder.AppendLine("</head>");
         builder.AppendLine("<body><main>");
@@ -262,23 +272,46 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         builder.AppendLine("  <p>" + E(scanResult.RepositoryPath) + "</p>");
         builder.AppendLine("</header>");
 
-        AppendMetrics(builder, language, scanResult);
+        AppendMetrics(builder, language, scanResult, baseline);
+        AppendBaselineSummary(builder, language, baseline);
         AppendHealth(builder, language, scanResult);
         AppendStacks(builder, language, scanResult);
-        AppendFindings(builder, language, scanResult);
+        AppendFindings(builder, language, scanResult, baseline);
         AppendFiles(builder, language, scanResult);
 
         builder.AppendLine("</main></body></html>");
         return builder.ToString();
     }
 
-    private static void AppendMetrics(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    private static void AppendMetrics(
+        StringBuilder builder,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline)
     {
         builder.AppendLine("<section class=\"grid\" aria-label=\"" + E(Label(language, "Summary", "Ozet")) + "\">");
         AppendMetric(builder, Label(language, "Files", "Dosyalar"), scanResult.Files.Count.ToString(CultureInfo.InvariantCulture));
         AppendMetric(builder, Label(language, "Stacks", "Stackler"), scanResult.Stacks.Count.ToString(CultureInfo.InvariantCulture));
         AppendMetric(builder, Label(language, "Findings", "Bulgular"), scanResult.Findings.Count.ToString(CultureInfo.InvariantCulture));
         AppendMetric(builder, Label(language, "Critical", "Kritik"), scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Critical).ToString(CultureInfo.InvariantCulture));
+        if (baseline is not null)
+        {
+            AppendMetric(builder, Label(language, "Existing", "Mevcut"), baseline.Existing.Count.ToString(CultureInfo.InvariantCulture));
+            AppendMetric(builder, Label(language, "New", "Yeni"), baseline.New.Count.ToString(CultureInfo.InvariantCulture));
+        }
+        builder.AppendLine("</section>");
+    }
+
+    private static void AppendBaselineSummary(StringBuilder builder, LanguageCode language, BaselineEvaluation? baseline)
+    {
+        if (baseline is null)
+        {
+            return;
+        }
+
+        builder.AppendLine("<section>");
+        builder.AppendLine("<h2>" + E(Label(language, "Baseline Classification", "Baseline Siniflandirmasi")) + "</h2>");
+        builder.AppendLine("<p>" + E(Label(language, "Baseline status records prior review; it does not suppress findings.", "Baseline durumu onceki incelemeyi kaydeder; bulgulari gizlemez.")) + "</p>");
         builder.AppendLine("</section>");
     }
 
@@ -329,7 +362,11 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         builder.AppendLine("</section>");
     }
 
-    private static void AppendFindings(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    private static void AppendFindings(
+        StringBuilder builder,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline)
     {
         builder.AppendLine("<section>");
         builder.AppendLine("<h2>" + E(Label(language, "Risk Findings", "Risk Bulgulari")) + "</h2>");
@@ -339,16 +376,26 @@ public sealed class HtmlReportGenerator : IHtmlReportGenerator
         }
         else
         {
-            builder.AppendLine("<table><thead><tr><th>Severity</th><th>Category</th><th>Path</th><th>Message</th></tr></thead><tbody>");
-            foreach (var finding in scanResult.Findings.Take(100))
+            var baselineHeader = baseline is null ? "" : "<th>Baseline</th>";
+            builder.AppendLine("<table><thead><tr><th>Severity</th><th>Category</th><th>Path</th><th>Message</th>" + baselineHeader + "</tr></thead><tbody>");
+            for (var index = 0; index < Math.Min(scanResult.Findings.Count, 100); index++)
             {
-                builder.AppendLine("<tr><td class=\"severity-" + E(finding.Severity.ToString()) + "\">" + E(finding.Severity.ToString()) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td></tr>");
+                var finding = scanResult.Findings[index];
+                var baselineCell = baseline is null
+                    ? ""
+                    : "<td class=\"baseline-" + E(baseline.Findings[index].Status.ToString().ToLowerInvariant()) + "\">" + E(baseline.Findings[index].Status.ToString()) + "</td>";
+                builder.AppendLine("<tr><td class=\"severity-" + E(finding.Severity.ToString()) + "\">" + E(finding.Severity.ToString()) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td>" + baselineCell + "</tr>");
             }
 
             builder.AppendLine("</tbody></table>");
         }
 
         builder.AppendLine("</section>");
+    }
+
+    private static void ValidateBaselineAlignment(ScanResult scanResult, BaselineEvaluation? baseline)
+    {
+        baseline?.ValidateAgainst(scanResult.Findings);
     }
 
     private static void AppendFiles(StringBuilder builder, LanguageCode language, ScanResult scanResult)
@@ -407,7 +454,12 @@ public sealed class WebUiGenerator : IWebUiGenerator
         _clock = clock;
     }
 
-    public GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult)
+    public GeneratedFileResult Generate(
+        string repositoryPath,
+        string? relativeOutputPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline = null)
     {
         var outputPath = NormalizeOutputPath(repositoryPath, relativeOutputPath);
         var fullPath = Path.Combine(repositoryPath, outputPath.Replace('/', Path.DirectorySeparatorChar));
@@ -417,7 +469,7 @@ public sealed class WebUiGenerator : IWebUiGenerator
             return new GeneratedFileResult(outputPath, GeneratedFileStatus.SkippedExisting, "Existing Web UI was not overwritten.");
         }
 
-        var content = BuildHtml(repositoryPath, language, scanResult);
+        var content = BuildHtml(repositoryPath, language, scanResult, baseline);
         _fileSystem.WriteAllText(fullPath, content);
         return new GeneratedFileResult(outputPath, GeneratedFileStatus.Created, "Web UI prototype created.");
     }
@@ -457,8 +509,13 @@ public sealed class WebUiGenerator : IWebUiGenerator
         return outputPath;
     }
 
-    private string BuildHtml(string repositoryPath, LanguageCode language, ScanResult scanResult)
+    private string BuildHtml(
+        string repositoryPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline)
     {
+        ValidateBaselineAlignment(scanResult, baseline);
         var generatedAt = _clock.UtcNow.ToString("u", CultureInfo.InvariantCulture);
         var projectName = new DirectoryInfo(repositoryPath).Name;
         var taskFiles = scanResult.Files
@@ -488,7 +545,7 @@ public sealed class WebUiGenerator : IWebUiGenerator
         builder.AppendLine("    .band{border-top:1px solid var(--line);padding-top:18px;} .split{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;} .tile{border:1px solid var(--line);border-radius:8px;background:var(--panel);padding:12px;}");
         builder.AppendLine("    table{border-collapse:collapse;width:100%;font-size:14px;} th,td{border:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;} th{background:var(--panel2);} .tablewrap{overflow:auto;border:1px solid var(--line);border-radius:8px;} .tablewrap table{border:0;} .tablewrap th:first-child,.tablewrap td:first-child{border-left:0;} .tablewrap th:last-child,.tablewrap td:last-child{border-right:0;}");
         builder.AppendLine("    details{border:1px solid var(--line);border-radius:8px;background:#fff;margin:8px 0;} summary{cursor:pointer;padding:10px 12px;font-weight:600;} pre{white-space:pre-wrap;overflow:auto;margin:0;border-top:1px solid var(--line);background:#fbfcfe;padding:12px;font-size:13px;max-height:280px;}");
-        builder.AppendLine("    .status{font-weight:700;} .ok{color:var(--ok);} .fail{color:var(--bad);} .severity-Critical{color:var(--bad);font-weight:700;} .severity-High{color:var(--warn);font-weight:700;} .severity-Medium{color:var(--info);font-weight:700;} .muted{color:var(--muted);} @media(max-width:700px){h1{font-size:24px;} main{padding:18px 14px 40px;} header{padding:20px 14px;} nav a{flex:1 1 150px;text-align:center;}}");
+        builder.AppendLine("    .status{font-weight:700;} .ok,.baseline-existing{color:var(--ok);} .fail,.baseline-new{color:var(--bad);} .severity-Critical{color:var(--bad);font-weight:700;} .severity-High{color:var(--warn);font-weight:700;} .severity-Medium{color:var(--info);font-weight:700;} .baseline-existing,.baseline-new{font-weight:700;} .muted{color:var(--muted);} @media(max-width:700px){h1{font-size:24px;} main{padding:18px 14px 40px;} header{padding:20px 14px;} nav a{flex:1 1 150px;text-align:center;}}");
         builder.AppendLine("  </style>");
         builder.AppendLine("</head>");
         builder.AppendLine("<body>");
@@ -500,9 +557,9 @@ public sealed class WebUiGenerator : IWebUiGenerator
         builder.AppendLine("</div></header>");
         builder.AppendLine("<main>");
 
-        AppendDashboard(builder, language, scanResult, taskFiles.Length, existingContextFileCount);
+        AppendDashboard(builder, language, scanResult, taskFiles.Length, existingContextFileCount, baseline);
         AppendHealthAndStacks(builder, language, scanResult);
-        AppendFindings(builder, language, scanResult);
+        AppendFindings(builder, language, scanResult, baseline);
         AppendGeneratedPreviewSection(builder, repositoryPath, language, scanResult, contextFiles);
         AppendTaskPreviewSection(builder, repositoryPath, language, taskFiles);
 
@@ -511,7 +568,13 @@ public sealed class WebUiGenerator : IWebUiGenerator
         return builder.ToString();
     }
 
-    private static void AppendDashboard(StringBuilder builder, LanguageCode language, ScanResult scanResult, int taskCount, int contextCount)
+    private static void AppendDashboard(
+        StringBuilder builder,
+        LanguageCode language,
+        ScanResult scanResult,
+        int taskCount,
+        int contextCount,
+        BaselineEvaluation? baseline)
     {
         var readinessScore = CalculateReadinessScore(scanResult);
         var reviewStatus = GetReviewStatus(language, scanResult);
@@ -527,6 +590,11 @@ public sealed class WebUiGenerator : IWebUiGenerator
         AppendMetric(builder, Label(language, "Critical", "Kritik"), scanResult.Findings.Count(finding => finding.Severity == RiskSeverity.Critical));
         AppendMetric(builder, Label(language, "Task files", "Task dosyalari"), taskCount);
         AppendMetric(builder, Label(language, "Context files", "Context dosyalari"), contextCount);
+        if (baseline is not null)
+        {
+            AppendMetric(builder, Label(language, "Existing findings", "Mevcut bulgular"), baseline.Existing.Count);
+            AppendMetric(builder, Label(language, "New findings", "Yeni bulgular"), baseline.New.Count);
+        }
         builder.AppendLine("</div>");
         builder.AppendLine("<div class=\"split\">");
         AppendSeverityBreakdown(builder, language, scanResult);
@@ -679,7 +747,11 @@ public sealed class WebUiGenerator : IWebUiGenerator
         builder.AppendLine("<tr><th>" + E(name) + "</th><td class=\"status " + className + "\">" + E(value ? "yes" : "no") + "</td></tr>");
     }
 
-    private static void AppendFindings(StringBuilder builder, LanguageCode language, ScanResult scanResult)
+    private static void AppendFindings(
+        StringBuilder builder,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline)
     {
         builder.AppendLine("<section id=\"findings\" class=\"band\">");
         builder.AppendLine("<h2>" + E(Label(language, "Risk Finding Browser", "Risk Bulgusu Tarayici")) + "</h2>");
@@ -690,16 +762,27 @@ public sealed class WebUiGenerator : IWebUiGenerator
         }
         else
         {
-            var findings = SortFindings(scanResult.Findings).Take(150).ToArray();
+            var classifiedFindings = baseline?.Findings
+                .OrderByDescending(finding => finding.Finding.Severity)
+                .ThenBy(finding => finding.Finding.Category.ToString(), StringComparer.OrdinalIgnoreCase)
+                .ThenBy(finding => finding.Finding.Path, StringComparer.OrdinalIgnoreCase)
+                .Take(150)
+                .ToArray();
+            var findings = classifiedFindings?.Select(finding => finding.Finding).ToArray()
+                ?? SortFindings(scanResult.Findings).Take(150).ToArray();
             builder.AppendLine("<p class=\"muted\">" + E(Label(language, "Review Queue: highest severity findings are listed first.", "Inceleme Kuyrugu: en yuksek seviye bulgular once listelenir.")) + "</p>");
-            builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Finding ID</th><th>Severity</th><th>Category</th><th>Path</th><th>Message</th><th>Match</th><th>Recommended Action</th></tr></thead><tbody>");
+            var baselineHeader = baseline is null ? "" : "<th>Baseline</th>";
+            builder.AppendLine("<div class=\"tablewrap\"><table><thead><tr><th>Finding ID</th><th>Severity</th><th>Category</th><th>Path</th><th>Message</th><th>Match</th>" + baselineHeader + "<th>Recommended Action</th></tr></thead><tbody>");
             for (var index = 0; index < findings.Length; index++)
             {
                 var finding = findings[index];
                 var severity = finding.Severity.ToString();
                 var findingId = "RF-" + (index + 1).ToString("000", CultureInfo.InvariantCulture);
                 var match = string.IsNullOrWhiteSpace(finding.Match) ? "-" : finding.Match;
-                builder.AppendLine("<tr><td><code>" + E(findingId) + "</code></td><td class=\"severity-" + E(severity) + "\">" + E(severity) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td><td><code>" + E(match) + "</code></td><td>" + E(GetRecommendedAction(language, finding.Severity)) + "</td></tr>");
+                var baselineCell = classifiedFindings is null
+                    ? ""
+                    : "<td class=\"baseline-" + E(classifiedFindings[index].Status.ToString().ToLowerInvariant()) + "\">" + E(classifiedFindings[index].Status.ToString()) + "</td>";
+                builder.AppendLine("<tr><td><code>" + E(findingId) + "</code></td><td class=\"severity-" + E(severity) + "\">" + E(severity) + "</td><td>" + E(finding.Category.ToString()) + "</td><td><code>" + E(finding.Path) + "</code></td><td>" + E(finding.Message) + "</td><td><code>" + E(match) + "</code></td>" + baselineCell + "<td>" + E(GetRecommendedAction(language, finding.Severity)) + "</td></tr>");
             }
 
             builder.AppendLine("</tbody></table></div>");
@@ -710,6 +793,11 @@ public sealed class WebUiGenerator : IWebUiGenerator
         }
 
         builder.AppendLine("</section>");
+    }
+
+    private static void ValidateBaselineAlignment(ScanResult scanResult, BaselineEvaluation? baseline)
+    {
+        baseline?.ValidateAgainst(scanResult.Findings);
     }
 
     private static IReadOnlyList<RiskFinding> SortFindings(IReadOnlyList<RiskFinding> findings)

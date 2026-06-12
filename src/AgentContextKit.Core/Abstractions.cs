@@ -67,12 +67,22 @@ public interface IAgentInstructionGenerator
 
 public interface IHtmlReportGenerator
 {
-    GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
+    GeneratedFileResult Generate(
+        string repositoryPath,
+        string? relativeOutputPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline = null);
 }
 
 public interface IWebUiGenerator
 {
-    GeneratedFileResult Generate(string repositoryPath, string? relativeOutputPath, LanguageCode language, ScanResult scanResult);
+    GeneratedFileResult Generate(
+        string repositoryPath,
+        string? relativeOutputPath,
+        LanguageCode language,
+        ScanResult scanResult,
+        BaselineEvaluation? baseline = null);
 }
 
 public interface IPromptPackGenerator
@@ -87,7 +97,12 @@ public interface IContextExportManifestGenerator
 
 public interface ISarifReportWriter
 {
-    GeneratedFileResult Generate(string repositoryPath, string relativeOutputPath, ScanResult scanResult, string toolVersion);
+    GeneratedFileResult Generate(
+        string repositoryPath,
+        string relativeOutputPath,
+        ScanResult scanResult,
+        string toolVersion,
+        BaselineEvaluation? baseline = null);
 }
 
 public interface ILLMProvider

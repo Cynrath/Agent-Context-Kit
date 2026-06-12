@@ -30,6 +30,23 @@ public sealed record BaselineEvaluation(int BaselineEntryCount, IReadOnlyList<Ba
 
     public IReadOnlyList<BaselineFindingEvaluation> New =>
         Findings.Where(finding => finding.Status == BaselineFindingStatus.New).ToArray();
+
+    public void ValidateAgainst(IReadOnlyList<RiskFinding> findings)
+    {
+        ArgumentNullException.ThrowIfNull(findings);
+        if (Findings.Count != findings.Count)
+        {
+            throw new InvalidOperationException("Baseline classification does not match the scan findings.");
+        }
+
+        for (var index = 0; index < findings.Count; index++)
+        {
+            if (!Equals(Findings[index].Finding, findings[index]))
+            {
+                throw new InvalidOperationException("Baseline classification does not match the scan findings.");
+            }
+        }
+    }
 }
 
 public sealed class BaselineException : Exception

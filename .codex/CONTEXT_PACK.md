@@ -138,6 +138,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0082 local validation passed with 127/127 tests and all source, sample, hygiene, contract, readiness, and release checks; only the expected pre-commit dirty-tree public gate remained for post-commit rerun.
 - TASK-0083 establishes `docs/V100_GAP_ANALYSIS.md` as the actual 1.0 readiness source of truth; current verdict is not ready for 1.0 GA, with baseline/config/schema/security/performance/support/release gaps tracked explicitly.
 - TASK-0084 adds the local-only baseline model foundation. TASK-0086 adds sanitized occurrence metadata, explicit create/update/load, integrity validation, existing/new classification, additive JSON metadata, and opt-in new-finding CI policy while preserving default scan behavior.
+- TASK-0087 passes the same validated classification to SARIF, HTML report, and Web UI. SARIF uses sanitize-only result properties; local HTML outputs add existing/new counts and finding status without suppression.
 - TASK-0085 adds deterministic report-only config diagnostics for the existing small YAML-like grammar; current config reader fallback and CLI exit behavior remain unchanged.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 

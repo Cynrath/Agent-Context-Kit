@@ -23,8 +23,8 @@
 | 19 | Done locally | TASK-0084 baseline model and fingerprint design | High | None | baseline Core model/tests/docs | Full local gates | No | A sanitized, deterministic, versioned baseline model is specified and tested without changing scan behavior. |
 | 20 | Done locally | TASK-0085 config validation and diagnostics design | High | CLI integration remains separate | config Core/tests/docs | Full local gates | No | Invalid, unknown, obsolete, duplicate, and unsafe config diagnostics are deterministic and documented. |
 | 21 | Done locally | TASK-0086 baseline-aware scan and CI policy | High | Hosted/package evidence remains separate | scanner/CLI/tests/docs | Full local gates | No | New findings are distinguished from baseline entries with safe CI exits. |
-| 22 | Next | TASK-0087 JSON/SARIF/report baseline integration | High | Depends on TASK-0086 | output contracts/tests/docs | Full local gates | No | Additive baseline metadata is consistent across machine/local reports. |
-| 23 | Queued | TASK-0088 upgrade, performance, security, and release-candidate evidence | High | Depends on product contract freeze | tests/release/security/support docs | Full local and hosted gates | Possibly | P0/P1 evidence is ready for a 1.0 release-candidate decision. |
+| 22 | Done locally | TASK-0087 JSON/SARIF/report baseline integration | High | Hosted/package evidence remains separate | output contracts/tests/docs | Full local gates | No | Additive baseline metadata is consistent across machine/local reports. |
+| 23 | Next | TASK-0088 upgrade, performance, security, and release-candidate evidence | High | Depends on product contract freeze | tests/release/security/support docs | Full local and hosted gates | Possibly | P0/P1 evidence is ready for a 1.0 release-candidate decision. |
 
 ## Remote-Write Guardrail
 The following actions are not performed from an agent session without explicit maintainer approval:

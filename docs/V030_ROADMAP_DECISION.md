@@ -43,7 +43,7 @@ Repositories need a safe way to adopt scanning incrementally. A clean repository
 2. Config validation and deterministic diagnostics. Core report-only validator completed locally by TASK-0085; CLI integration remains separate.
 3. Baseline creation/review commands and explicit update workflow. Completed locally by TASK-0086.
 4. Baseline-aware scan and CI exit policy. Completed locally by TASK-0086; hosted/package evidence remains pending.
-5. Additive JSON, SARIF, HTML report, and Web UI integration.
+5. Additive JSON, SARIF, HTML report, and Web UI integration. Completed locally by TASK-0087.
 6. Cross-platform tests, migration guidance, and package readiness review.
 
 Each implementation step requires its own task file, focused tests, and a compatibility review. Version metadata changes remain a separate release-preparation task.

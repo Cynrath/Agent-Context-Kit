@@ -56,6 +56,8 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 `BaselineSchema`, `BaselineEntry`, `BaselineManifest`, and `BaselineFingerprint` define the baseline identity boundary. `BaselineStore` validates repository-relative JSON paths, schema/algorithm compatibility, and fingerprint integrity; it refuses replacement unless the caller explicitly requests update. `BaselineClassifier` assigns deterministic same-rule/file occurrence numbers and classifies every visible finding as existing or new. The CLI exposes this through `ackit baseline` and opt-in `scan --baseline`; default scan behavior is unchanged.
 
+The same `BaselineEvaluation` instance can be passed to SARIF, HTML report, and Web UI generators. Generators validate finding-count alignment and render additive metadata only when baseline mode is explicit. SARIF uses sanitize-only result properties; local HTML outputs add counts/status labels while retaining every finding.
+
 `AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior or current CLI exit codes. Diagnostic messages are invariant and omit raw config values.
 
 These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.

@@ -385,6 +385,9 @@ TASK-0086 adds a current-source-only baseline workflow; it is not in published N
 dotnet run --project src/AgentContextKit.Cli -- baseline --output .ackit-baseline.json
 dotnet run --project src/AgentContextKit.Cli -- scan --baseline .ackit-baseline.json --ci
 dotnet run --project src/AgentContextKit.Cli -- baseline --output .ackit-baseline.json --update --json
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json --json
+dotnet run --project src/AgentContextKit.Cli -- report --output .ackit/reports/baseline.html --baseline .ackit-baseline.json --json
+dotnet run --project src/AgentContextKit.Cli -- webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json --json
 ```
 
-Validate that the first command refuses an existing file without `--update`, baseline JSON contains no raw matches/messages/absolute paths, existing Critical findings remain visible, and only new High/Critical findings affect baseline-aware CI exits. Use a disposable repository for secret-pattern smoke tests and remove its generated baseline after validation.
+Validate that the first command refuses an existing file without `--update`, baseline JSON contains no raw matches/messages/absolute paths, existing Critical findings remain visible, and only new High/Critical findings affect baseline-aware CI exits. Parse SARIF, confirm result properties contain no raw match, and confirm report/Web UI include existing/new status. Use a disposable repository for secret-pattern smoke tests and remove generated artifacts after validation.

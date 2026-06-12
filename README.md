@@ -118,6 +118,9 @@ Current source also supports an explicit baseline workflow. It is not part of th
 ```powershell
 ackit baseline
 ackit scan --baseline .ackit-baseline.json --ci
+ackit sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
+ackit report --output .ackit/reports/baseline.html --baseline .ackit-baseline.json
+ackit webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json
 ```
 
 Baseline mode keeps existing findings visible but fails CI only for new High or Critical findings. Baseline replacement requires `ackit baseline --update`.
@@ -206,9 +209,9 @@ Pop-Location
 ackit init [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
-ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
-ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
-ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit report [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit webui [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
 ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
 ackit context-export --prompt-pack <repo-relative.md> --approve [--output <repo-relative.json>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]

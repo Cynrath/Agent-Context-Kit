@@ -59,9 +59,9 @@ public static class Program
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]");
         Console.WriteLine("  ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]");
-        Console.WriteLine("  ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]");
-        Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
-        Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit report [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit context-export --prompt-pack <repo-relative.md> --approve [--output <repo-relative.json>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]");
@@ -122,19 +122,15 @@ public static class Program
     private static int RunScan(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
-        var baselinePath = GetOption(args, "--baseline");
-        BaselineEvaluation? baseline = null;
-        if (!string.IsNullOrWhiteSpace(baselinePath))
+        string? baselinePath;
+        BaselineEvaluation? baseline;
+        try
         {
-            try
-            {
-                var manifest = services.BaselineStore.Load(repositoryPath, baselinePath);
-                baseline = services.BaselineClassifier.Classify(scan.Findings, manifest);
-            }
-            catch (BaselineException ex)
-            {
-                return WriteBaselineError("scan", ex, json, services.Clock.UtcNow);
-            }
+            (baselinePath, baseline) = LoadBaseline(args, repositoryPath, scan, services);
+        }
+        catch (BaselineException ex)
+        {
+            return WriteBaselineError("scan", ex, json, services.Clock.UtcNow);
         }
 
         var exitCode = baseline is null
@@ -212,28 +208,45 @@ public static class Program
         }
 
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
-        var result = services.SarifReportWriter.Generate(repositoryPath, outputPath, scan, Version);
+        string? baselinePath;
+        BaselineEvaluation? baseline;
+        try
+        {
+            (baselinePath, baseline) = LoadBaseline(args, repositoryPath, scan, services);
+        }
+        catch (BaselineException ex)
+        {
+            return WriteBaselineError("sarif", ex, json, services.Clock.UtcNow);
+        }
+
+        var result = services.SarifReportWriter.Generate(repositoryPath, outputPath, scan, Version, baseline);
         var criticalHighCount = scan.Findings.Count(finding => finding.Severity is RiskSeverity.Critical or RiskSeverity.High);
 
         if (json)
         {
-            WriteJson(new
+            var response = new Dictionary<string, object?>
             {
-                schemaVersion = JsonSchemaVersion,
-                toolVersion = Version,
-                generatedAtUtc = services.Clock.UtcNow,
-                command = "sarif",
-                repositoryName = GetRepositoryName(repositoryPath),
-                riskSummary = ToRiskSummary(scan.Findings),
-                criticalHighCount,
-                sarif = ToGeneratedFileDto(result)
-            });
+                ["schemaVersion"] = JsonSchemaVersion,
+                ["toolVersion"] = Version,
+                ["generatedAtUtc"] = services.Clock.UtcNow,
+                ["command"] = "sarif",
+                ["repositoryName"] = GetRepositoryName(repositoryPath),
+                ["riskSummary"] = ToRiskSummary(scan.Findings),
+                ["criticalHighCount"] = criticalHighCount,
+                ["sarif"] = ToGeneratedFileDto(result)
+            };
+            AddBaselineDto(response, baselinePath, baseline);
+            WriteJson(response);
             return ExitSuccess;
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
         Console.WriteLine($"SARIF findings: {scan.Findings.Count}");
         Console.WriteLine($"Critical/high findings: {criticalHighCount}");
+        if (baseline is not null)
+        {
+            PrintBaselineClassification(baselinePath!, baseline);
+        }
         return ExitSuccess;
     }
 
@@ -241,26 +254,43 @@ public static class Program
     {
         var outputPath = GetOption(args, "--output");
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
-        var result = services.HtmlReportGenerator.Generate(repositoryPath, outputPath, language, scan);
+        string? baselinePath;
+        BaselineEvaluation? baseline;
+        try
+        {
+            (baselinePath, baseline) = LoadBaseline(args, repositoryPath, scan, services);
+        }
+        catch (BaselineException ex)
+        {
+            return WriteBaselineError("report", ex, json, services.Clock.UtcNow);
+        }
+
+        var result = services.HtmlReportGenerator.Generate(repositoryPath, outputPath, language, scan, baseline);
 
         if (json)
         {
-            WriteJson(new
+            var response = new Dictionary<string, object?>
             {
-                schemaVersion = JsonSchemaVersion,
-                toolVersion = Version,
-                generatedAtUtc = services.Clock.UtcNow,
-                command = "report",
-                repositoryPath,
-                repositoryName = GetRepositoryName(repositoryPath),
-                riskSummary = ToRiskSummary(scan.Findings),
-                report = ToGeneratedFileDto(result)
-            });
+                ["schemaVersion"] = JsonSchemaVersion,
+                ["toolVersion"] = Version,
+                ["generatedAtUtc"] = services.Clock.UtcNow,
+                ["command"] = "report",
+                ["repositoryPath"] = repositoryPath,
+                ["repositoryName"] = GetRepositoryName(repositoryPath),
+                ["riskSummary"] = ToRiskSummary(scan.Findings),
+                ["report"] = ToGeneratedFileDto(result)
+            };
+            AddBaselineDto(response, baselinePath, baseline);
+            WriteJson(response);
             return ExitSuccess;
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
         Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        if (baseline is not null)
+        {
+            PrintBaselineClassification(baselinePath!, baseline);
+        }
         return ExitSuccess;
     }
 
@@ -268,26 +298,43 @@ public static class Program
     {
         var outputPath = GetOption(args, "--output");
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
-        var result = services.WebUiGenerator.Generate(repositoryPath, outputPath, language, scan);
+        string? baselinePath;
+        BaselineEvaluation? baseline;
+        try
+        {
+            (baselinePath, baseline) = LoadBaseline(args, repositoryPath, scan, services);
+        }
+        catch (BaselineException ex)
+        {
+            return WriteBaselineError("webui", ex, json, services.Clock.UtcNow);
+        }
+
+        var result = services.WebUiGenerator.Generate(repositoryPath, outputPath, language, scan, baseline);
 
         if (json)
         {
-            WriteJson(new
+            var response = new Dictionary<string, object?>
             {
-                schemaVersion = JsonSchemaVersion,
-                toolVersion = Version,
-                generatedAtUtc = services.Clock.UtcNow,
-                command = "webui",
-                repositoryPath,
-                repositoryName = GetRepositoryName(repositoryPath),
-                riskSummary = ToRiskSummary(scan.Findings),
-                webUi = ToGeneratedFileDto(result)
-            });
+                ["schemaVersion"] = JsonSchemaVersion,
+                ["toolVersion"] = Version,
+                ["generatedAtUtc"] = services.Clock.UtcNow,
+                ["command"] = "webui",
+                ["repositoryPath"] = repositoryPath,
+                ["repositoryName"] = GetRepositoryName(repositoryPath),
+                ["riskSummary"] = ToRiskSummary(scan.Findings),
+                ["webUi"] = ToGeneratedFileDto(result)
+            };
+            AddBaselineDto(response, baselinePath, baseline);
+            WriteJson(response);
             return ExitSuccess;
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
         Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        if (baseline is not null)
+        {
+            PrintBaselineClassification(baselinePath!, baseline);
+        }
         return ExitSuccess;
     }
 
@@ -674,29 +721,39 @@ public static class Program
             }).ToArray()
         };
 
-        if (baseline is not null)
-        {
-            result["baseline"] = new
-            {
-                path = baselinePath,
-                schemaVersion = BaselineSchema.CurrentVersion,
-                fingerprintAlgorithm = BaselineSchema.FingerprintAlgorithm,
-                entryCount = baseline.BaselineEntryCount,
-                existing = baseline.Existing.Count,
-                @new = baseline.New.Count,
-                classifiedFindings = baseline.Findings.Select(finding => new
-                {
-                    ruleId = RiskRuleCatalog.GetRuleId(finding.Finding),
-                    severity = finding.Finding.Severity.ToString(),
-                    path = finding.Finding.Path,
-                    fingerprint = finding.Fingerprint,
-                    status = finding.Status.ToString().ToLowerInvariant(),
-                    occurrence = finding.Occurrence
-                }).ToArray()
-            };
-        }
+        AddBaselineDto(result, baselinePath, baseline);
 
         return result;
+    }
+
+    private static void AddBaselineDto(
+        IDictionary<string, object?> result,
+        string? baselinePath,
+        BaselineEvaluation? baseline)
+    {
+        if (baseline is null)
+        {
+            return;
+        }
+
+        result["baseline"] = new
+        {
+            path = baselinePath,
+            schemaVersion = BaselineSchema.CurrentVersion,
+            fingerprintAlgorithm = BaselineSchema.FingerprintAlgorithm,
+            entryCount = baseline.BaselineEntryCount,
+            existing = baseline.Existing.Count,
+            @new = baseline.New.Count,
+            classifiedFindings = baseline.Findings.Select(finding => new
+            {
+                ruleId = RiskRuleCatalog.GetRuleId(finding.Finding),
+                severity = finding.Finding.Severity.ToString(),
+                path = finding.Finding.Path,
+                fingerprint = finding.Fingerprint,
+                status = finding.Status.ToString().ToLowerInvariant(),
+                occurrence = finding.Occurrence
+            }).ToArray()
+        };
     }
 
     private static string ToSuppressionReason(RiskSuppressionReason reason)
@@ -852,6 +909,23 @@ public static class Program
 
         Console.Error.WriteLine($"{exception.Code}: {exception.Message}");
         return ExitError;
+    }
+
+    private static (string? Path, BaselineEvaluation? Evaluation) LoadBaseline(
+        string[] args,
+        string repositoryPath,
+        ScanResult scan,
+        Services services)
+    {
+        var requestedPath = GetOption(args, "--baseline");
+        if (string.IsNullOrWhiteSpace(requestedPath))
+        {
+            return (null, null);
+        }
+
+        var manifest = services.BaselineStore.Load(repositoryPath, requestedPath);
+        var normalizedPath = BaselineFingerprint.NormalizeRelativePath(requestedPath);
+        return (normalizedPath, services.BaselineClassifier.Classify(scan.Findings, manifest));
     }
 
     private static AgentTarget ParseTarget(string? value)

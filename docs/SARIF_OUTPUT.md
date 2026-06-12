@@ -23,6 +23,19 @@ The SARIF file includes:
 - Stable AgentContextKit rules from the central scanner rule catalog
 - Scanner findings as SARIF results
 
+Current source can also apply an explicit baseline:
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
+```
+
+Each result then includes sanitize-only properties:
+- `baselineStatus`: `existing` or `new`;
+- `baselineFingerprint`: lowercase SHA-256 identity;
+- `baselineOccurrence`: positive deterministic occurrence.
+
+These properties do not contain raw matches, messages, absolute paths, or secret values. Baseline status does not suppress the SARIF result.
+
 `--output` is required in the first SARIF MVP so users explicitly choose where the generated report is written. Recommended local path: `.ackit/reports/ackit.sarif`.
 
 ## Privacy-First Path Behavior

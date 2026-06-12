@@ -20,6 +20,7 @@ Custom repository-relative output:
 ```powershell
 ackit report --output docs/local-scan-report.html
 ackit report --output .ackit/reports/current.html --json
+ackit report --output .ackit/reports/baseline.html --baseline .ackit-baseline.json
 ```
 
 ## Safety Behavior
@@ -30,6 +31,7 @@ ackit report --output .ackit/reports/current.html --json
 - Output paths must stay inside the repository.
 - `.ackit/reports/` is ignored by git.
 - Generated reports can include local repository paths and local audit context. Keep them local; do not attach them to public GitHub Releases or NuGet packages.
+- Baseline mode adds existing/new metrics and a per-finding status column; it does not hide existing findings.
 
 ## JSON Output
 `ackit report --json` returns generated file metadata and a risk summary:
@@ -54,6 +56,8 @@ ackit report --output .ackit/reports/current.html --json
   }
 }
 ```
+
+When `--baseline` is supplied, JSON also includes the shared sanitize-only baseline summary and classified finding identities documented in [JSON_OUTPUT.md](JSON_OUTPUT.md).
 
 ## Review Notes
 HTML reports are local artifacts for review. They do not approve public release, publish packages, push commits, create release tags, or replace release blocker checks. Treat generated reports as local-only artifacts, not public release artifacts.

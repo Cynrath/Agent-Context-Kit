@@ -104,4 +104,21 @@ public sealed class BaselinePolicyTests
         Assert.Contains(result.Existing, finding => finding.Finding.Severity == RiskSeverity.Critical);
         Assert.Equal("other.txt", result.New[0].Finding.Path);
     }
+
+    [Fact]
+    public void EvaluationRejectsDifferentScanFindings()
+    {
+        var classifier = new BaselineClassifier();
+        RiskFinding[] original =
+        [
+            new(RiskSeverity.High, RiskCategory.Secret, "settings.txt", "Credential assignment detected.")
+        ];
+        var evaluation = classifier.Classify(original, classifier.CreateManifest(original));
+        RiskFinding[] different =
+        [
+            new(RiskSeverity.High, RiskCategory.Secret, "other.txt", "Credential assignment detected.")
+        ];
+
+        Assert.Throws<InvalidOperationException>(() => evaluation.ValidateAgainst(different));
+    }
 }

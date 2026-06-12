@@ -83,7 +83,7 @@ The default root path is shareable because `.ackit/` is reserved for ignored gen
 ## Security Boundary
 A baseline records prior review state; it does not declare a finding safe. Critical findings are not suppressed by this model. Future integration must keep Critical findings visible, require explicit baseline updates, and produce reviewable diffs.
 
-## Future Integration
-TASK-0087 will extend baseline metadata to SARIF, HTML reports, and Web UI while preserving the current additive JSON shape. Migration and cross-platform package validation remain separate release-readiness work.
+## Output Integration
+TASK-0087 extends the same validated classification to SARIF, HTML reports, and Web UI. SARIF result properties contain only status, fingerprint, and occurrence. Local HTML outputs add counts and status labels while keeping every finding visible. Migration and cross-platform package validation remain separate release-readiness work.
 
 Changing canonicalization or fingerprint inputs requires a new fingerprint algorithm ID and migration guidance. Existing fingerprints must never change silently.

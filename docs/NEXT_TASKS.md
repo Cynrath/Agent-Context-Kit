@@ -34,8 +34,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 19. TASK-0084 baseline model and fingerprint design - completed locally; Core model/tests added without CLI integration.
 20. TASK-0085 config validation and diagnostics design - completed locally; report-only Core validator added.
 21. TASK-0086 baseline-aware scan and CI policy - completed locally; explicit baseline create/update/load and new-finding CI policy added.
-22. TASK-0087 JSON/SARIF/report baseline integration - next; JSON scan metadata foundation exists, SARIF/report/Web UI parity remains.
-23. TASK-0088 upgrade, performance, security, and release-candidate evidence - queued.
+22. TASK-0087 JSON/SARIF/report baseline integration - completed locally; shared sanitize-only output metadata added.
+23. TASK-0088 upgrade, performance, security, and release-candidate evidence - next.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.

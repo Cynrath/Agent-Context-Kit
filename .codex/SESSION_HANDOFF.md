@@ -462,6 +462,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0085 post-commit public release gate passed with no blocking items; continue with TASK-0086.
 - TASK-0086 adds explicit sanitized baseline create/update/load, deterministic occurrence classification, integrity validation, additive JSON metadata, and opt-in new-finding CI exits while preserving default scan behavior.
 - TASK-0086 passed full pre-commit validation with 154/154 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, hygiene, contract/readiness gates, and local package verification. A disposable CLI smoke confirmed existing Critical/High findings remain visible with baseline CI exit 0, a new Critical produces exit 2, and the baseline file contains no raw token. The public gate failed only on the expected dirty working tree and must be rerun after commit.
+- TASK-0086 committed as `6435f6d feat: add baseline-aware scan policy`; post-commit public release gate passed.
+- TASK-0087 adds shared baseline metadata to SARIF, HTML report, Web UI, and their JSON command summaries. Full pre-commit validation passed with 162/162 tests, clean scan, doctor PASS, disposable output smoke, sample smoke, hygiene, contract/readiness gates, and local package verification. The public gate failed only on the expected dirty working tree and must be rerun after commit.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

@@ -13,7 +13,12 @@ public sealed class SarifReportWriter : ISarifReportWriter
         _fileSystem = fileSystem;
     }
 
-    public GeneratedFileResult Generate(string repositoryPath, string relativeOutputPath, ScanResult scanResult, string toolVersion)
+    public GeneratedFileResult Generate(
+        string repositoryPath,
+        string relativeOutputPath,
+        ScanResult scanResult,
+        string toolVersion,
+        BaselineEvaluation? baseline = null)
     {
         var outputPath = NormalizeOutputPath(repositoryPath, relativeOutputPath);
         var fullPath = Path.Combine(repositoryPath, outputPath.Replace('/', Path.DirectorySeparatorChar));
@@ -23,7 +28,7 @@ public sealed class SarifReportWriter : ISarifReportWriter
             return new GeneratedFileResult(outputPath, GeneratedFileStatus.SkippedExisting, "Existing SARIF report was not overwritten.");
         }
 
-        var report = BuildReport(repositoryPath, scanResult, toolVersion);
+        var report = BuildReport(repositoryPath, scanResult, toolVersion, baseline);
         var content = JsonSerializer.Serialize(report, new JsonSerializerOptions
         {
             WriteIndented = true,
@@ -34,8 +39,13 @@ public sealed class SarifReportWriter : ISarifReportWriter
         return new GeneratedFileResult(outputPath, GeneratedFileStatus.Created, "SARIF report created.");
     }
 
-    public SarifReport BuildReport(string repositoryPath, ScanResult scanResult, string toolVersion)
+    public SarifReport BuildReport(
+        string repositoryPath,
+        ScanResult scanResult,
+        string toolVersion,
+        BaselineEvaluation? baseline = null)
     {
+        ValidateBaselineAlignment(scanResult, baseline);
         return new SarifReport
         {
             Schema = SchemaUri,
@@ -55,14 +65,17 @@ public sealed class SarifReportWriter : ISarifReportWriter
                         }
                     },
                     Results = scanResult.Findings
-                        .Select(finding => ToResult(repositoryPath, finding))
+                        .Select((finding, index) => ToResult(repositoryPath, finding, baseline?.Findings[index]))
                         .ToArray()
                 }
             ]
         };
     }
 
-    private static SarifResult ToResult(string repositoryPath, RiskFinding finding)
+    private static SarifResult ToResult(
+        string repositoryPath,
+        RiskFinding finding,
+        BaselineFindingEvaluation? baselineFinding)
     {
         var rule = RiskRuleCatalog.GetRule(finding);
         return new SarifResult
@@ -85,8 +98,21 @@ public sealed class SarifReportWriter : ISarifReportWriter
                         }
                     }
                 }
-            ]
+            ],
+            Properties = baselineFinding is null
+                ? null
+                : new SarifResultProperties
+                {
+                    BaselineStatus = baselineFinding.Status.ToString().ToLowerInvariant(),
+                    BaselineFingerprint = baselineFinding.Fingerprint,
+                    BaselineOccurrence = baselineFinding.Occurrence
+                }
         };
+    }
+
+    private static void ValidateBaselineAlignment(ScanResult scanResult, BaselineEvaluation? baseline)
+    {
+        baseline?.ValidateAgainst(scanResult.Findings);
     }
 
     private static string NormalizeOutputPath(string repositoryPath, string relativeOutputPath)
@@ -284,6 +310,21 @@ public sealed class SarifResult
 
     [JsonPropertyName("locations")]
     public IReadOnlyList<SarifLocation> Locations { get; init; } = Array.Empty<SarifLocation>();
+
+    [JsonPropertyName("properties")]
+    public SarifResultProperties? Properties { get; init; }
+}
+
+public sealed class SarifResultProperties
+{
+    [JsonPropertyName("baselineStatus")]
+    public string BaselineStatus { get; init; } = "";
+
+    [JsonPropertyName("baselineFingerprint")]
+    public string BaselineFingerprint { get; init; } = "";
+
+    [JsonPropertyName("baselineOccurrence")]
+    public int BaselineOccurrence { get; init; }
 }
 
 public sealed class SarifMessage

@@ -176,6 +176,8 @@ Opt-in `ackit scan --baseline .ackit-baseline.json --json` keeps the existing `f
 
 Classified entries omit `match` and `message`. Baseline errors use exit code `1` and an `error` object with a stable `ACKITBASE` code and sanitized message.
 
+The same additive `baseline` object is returned by `sarif`, `report`, and `webui` when `--baseline <path>` is supplied. Without that option, those command payloads retain their previous fields and omit `baseline`.
+
 ## Summary Shapes
 `riskSummary`:
 ```json

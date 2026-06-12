@@ -76,6 +76,8 @@ The baseline workflow computes SHA-256 finding identities from a stable rule ID,
 
 `ackit baseline` refuses to overwrite an existing file unless `--update` is explicit. Loading validates the baseline schema, fingerprint algorithm, duplicate identities, and each stored fingerprint. Baseline-aware scan keeps every finding visible, including existing Critical findings. Only the opt-in CI decision changes: `scan --baseline <path> --ci` fails on new High/Critical findings. See `docs/BASELINE_MODEL.md`.
 
+SARIF baseline properties omit raw match/message data. HTML report and Web UI remain local-only artifacts and may show the normal local finding details, but baseline status itself contains only existing/new classification and sanitized identity metadata.
+
 ## Configuration Diagnostic Safety
 The report-only Core config validator detects unsafe paths/domains, unknown finding IDs, and Critical suppression attempts. Diagnostics include codes, line numbers, and keys but do not echo raw values or full config lines. Current runtime behavior remains unchanged until a later CLI integration task.
 

@@ -89,6 +89,9 @@ Mevcut source ayrica explicit baseline workflow destekler. Bu ozellik yayinlanmi
 ```powershell
 ackit baseline
 ackit scan --baseline .ackit-baseline.json --ci
+ackit sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
+ackit report --output .ackit/reports/baseline.html --baseline .ackit-baseline.json
+ackit webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json
 ```
 
 Baseline modu mevcut bulgulari gorunur tutar, yalniz yeni High veya Critical bulgularda CI'i basarisiz yapar. Baseline degistirmek icin `ackit baseline --update` gerekir.
@@ -172,9 +175,9 @@ Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo
 ackit init [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
-ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
-ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
-ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
+ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit report [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
+ackit webui [--output <repo-relative.html>] [--baseline <repo-relative.json>] [--lang en|tr] [--json]
 ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]
 ackit context-export --prompt-pack <repo-relative.md> --approve [--output <repo-relative.json>] [--lang en|tr] [--json]
 ackit generate [--target codex|claude|cursor|copilot|all] [--lang en|tr] [--json]

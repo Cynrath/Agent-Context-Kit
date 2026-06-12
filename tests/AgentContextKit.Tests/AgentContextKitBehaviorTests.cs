@@ -870,6 +870,28 @@ public sealed class SarifReportWriterTests
         Assert.Equal("note", json?["runs"]?[0]?["results"]?[1]?["level"]?.GetValue<string>());
     }
 
+    [Fact]
+    public void SarifIncludesSanitizedBaselineProperties()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var classifier = new BaselineClassifier();
+        var existing = new RiskFinding(RiskSeverity.Critical, RiskCategory.Secret, "settings.txt", "Secret-like value detected.", TestData.OpenAiProjectKey());
+        var added = new RiskFinding(RiskSeverity.Medium, RiskCategory.BuildArtifact, "artifacts/tool.nupkg", "Package artifact detected.");
+        var scan = CreateScan(repo.Path, [existing, added]);
+        var baseline = classifier.Classify(scan.Findings, classifier.CreateManifest([existing]));
+
+        writer.Generate(repo.Path, ".ackit/reports/baseline.sarif", scan, "0.3.0-test", baseline);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "baseline.sarif"));
+        var json = JsonNode.Parse(content);
+
+        Assert.Equal("existing", json?["runs"]?[0]?["results"]?[0]?["properties"]?["baselineStatus"]?.GetValue<string>());
+        Assert.Equal("new", json?["runs"]?[0]?["results"]?[1]?["properties"]?["baselineStatus"]?.GetValue<string>());
+        Assert.Matches("^[0-9a-f]{64}$", json?["runs"]?[0]?["results"]?[0]?["properties"]?["baselineFingerprint"]?.GetValue<string>() ?? "");
+        Assert.True(json?["runs"]?[0]?["results"]?[0]?["properties"]?["baselineOccurrence"]?.GetValue<int>() > 0);
+        Assert.DoesNotContain(TestData.OpenAiProjectKey(), content, StringComparison.Ordinal);
+    }
+
     private static ScanResult CreateScan(string repositoryPath, IReadOnlyList<RiskFinding> findings)
     {
         return new ScanResult(
@@ -1021,6 +1043,26 @@ public sealed class TemplateAndGenerationTests
     }
 
     [Fact]
+    public void HtmlReportGeneratorShowsBaselineClassification()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new HtmlReportGenerator(new PhysicalFileSystem(), new FixedClock());
+        var classifier = new BaselineClassifier();
+        var existing = new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "settings.txt", "Credential assignment detected.");
+        var added = new RiskFinding(RiskSeverity.Medium, RiskCategory.BuildArtifact, "artifact.zip", "Archive detected.");
+        var scan = new ScanResult(repo.Path, ["settings.txt", "artifact.zip"], [], [existing, added], false, false, false, false, false, false, false, false, false, false);
+        var baseline = classifier.Classify(scan.Findings, classifier.CreateManifest([existing]));
+
+        generator.Generate(repo.Path, "reports/baseline.html", LanguageCode.English, scan, baseline);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, "reports", "baseline.html"));
+
+        Assert.Contains("Baseline Classification", content);
+        Assert.Contains("Existing", content);
+        Assert.Contains("New", content);
+        Assert.Contains("Baseline status records prior review", content);
+    }
+
+    [Fact]
     public void WebUiGeneratorCreatesEncodedPrototype()
     {
         using var repo = TempRepository.Create();
@@ -1114,6 +1156,27 @@ public sealed class TemplateAndGenerationTests
         var scan = new ScanResult(repo.Path, [], [], [], false, false, false, false, false, false, false, false, false, false);
 
         Assert.Throws<InvalidOperationException>(() => generator.Generate(repo.Path, "../index.html", LanguageCode.English, scan));
+    }
+
+    [Fact]
+    public void WebUiGeneratorShowsBaselineMetricsAndFindingStatus()
+    {
+        using var repo = TempRepository.Create();
+        var generator = new WebUiGenerator(new PhysicalFileSystem(), new FixedClock());
+        var classifier = new BaselineClassifier();
+        var existing = new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "settings.txt", "Credential assignment detected.");
+        var added = new RiskFinding(RiskSeverity.Medium, RiskCategory.BuildArtifact, "artifact.zip", "Archive detected.");
+        var scan = new ScanResult(repo.Path, ["settings.txt", "artifact.zip"], [], [existing, added], false, false, false, false, false, false, false, false, false, false);
+        var baseline = classifier.Classify(scan.Findings, classifier.CreateManifest([existing]));
+
+        generator.Generate(repo.Path, ".ackit/webui/baseline.html", LanguageCode.English, scan, baseline);
+        var content = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "webui", "baseline.html"));
+
+        Assert.Contains("Existing findings", content);
+        Assert.Contains("New findings", content);
+        Assert.Contains("<th>Baseline</th>", content);
+        Assert.Contains("baseline-existing", content);
+        Assert.Contains("baseline-new", content);
     }
 
     [Fact]
@@ -1735,6 +1798,50 @@ public sealed class CliJsonAndMetadataTests
         Assert.True(File.Exists(webUiPath));
         Assert.Contains("AgentContextKit Web UI", content);
         Assert.Contains("docs/tasks/TASK-0001-demo.md", content);
+    }
+
+    [Fact]
+    public void BaselineMetadataIsConsistentAcrossSarifReportAndWebUi()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+        Assert.Equal(0, RunCli(repo.Path, ["baseline"]).ExitCode);
+
+        var sarifResult = RunCli(repo.Path, ["sarif", "--output", ".ackit/reports/baseline.sarif", "--baseline", ".ackit-baseline.json", "--json"]);
+        var reportResult = RunCli(repo.Path, ["report", "--output", ".ackit/reports/baseline.html", "--baseline", ".ackit-baseline.json", "--json"]);
+        var webUiResult = RunCli(repo.Path, ["webui", "--output", ".ackit/webui/baseline.html", "--baseline", ".ackit-baseline.json", "--json"]);
+        var sarifJson = JsonNode.Parse(sarifResult.Output);
+        var reportJson = JsonNode.Parse(reportResult.Output);
+        var webUiJson = JsonNode.Parse(webUiResult.Output);
+        var sarif = JsonNode.Parse(File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "baseline.sarif")));
+        var report = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "reports", "baseline.html"));
+        var webUi = File.ReadAllText(System.IO.Path.Combine(repo.Path, ".ackit", "webui", "baseline.html"));
+
+        Assert.Equal(0, sarifResult.ExitCode);
+        Assert.Equal(0, reportResult.ExitCode);
+        Assert.Equal(0, webUiResult.ExitCode);
+        Assert.True(sarifJson?["baseline"]?["existing"]?.GetValue<int>() > 0);
+        Assert.Equal(sarifJson?["baseline"]?["existing"]?.GetValue<int>(), reportJson?["baseline"]?["existing"]?.GetValue<int>());
+        Assert.Equal(sarifJson?["baseline"]?["existing"]?.GetValue<int>(), webUiJson?["baseline"]?["existing"]?.GetValue<int>());
+        Assert.Equal("existing", sarif?["runs"]?[0]?["results"]?[0]?["properties"]?["baselineStatus"]?.GetValue<string>());
+        Assert.Contains("Baseline Classification", report);
+        Assert.Contains("Existing findings", webUi);
+    }
+
+    [Theory]
+    [InlineData("sarif", ".ackit/reports/missing.sarif")]
+    [InlineData("report", ".ackit/reports/missing.html")]
+    [InlineData("webui", ".ackit/webui/missing.html")]
+    public void BaselineOutputCommandsUseStructuredMissingFileError(string command, string output)
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, [command, "--output", output, "--baseline", "missing.json", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.Equal("ACKITBASE002", json?["error"]?["code"]?.GetValue<string>());
+        Assert.False(File.Exists(System.IO.Path.Combine(repo.Path, output.Replace('/', System.IO.Path.DirectorySeparatorChar))));
     }
 
     [Fact]

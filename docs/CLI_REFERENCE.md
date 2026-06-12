@@ -78,6 +78,7 @@ Generates a privacy-first SARIF 2.1.0 report from scanner findings. Existing SAR
 ```powershell
 dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
 dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif --json
+dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
 ```
 
 Required output path:
@@ -93,6 +94,7 @@ Safety behavior:
 - SARIF artifact locations are repository-relative and use `/` separators.
 - Raw scanner match values are not written to SARIF.
 - GitHub Code Scanning upload is not performed by this command.
+- With `--baseline`, each SARIF result receives sanitized `baselineStatus`, `baselineFingerprint`, and `baselineOccurrence` properties.
 
 ### `ackit report`
 Generates an offline static HTML scan report. Existing report files are skipped.
@@ -101,6 +103,7 @@ Generates an offline static HTML scan report. Existing report files are skipped.
 ackit report
 ackit report --output .ackit/reports/current.html
 ackit report --output docs/local-scan-report.html --json
+ackit report --output .ackit/reports/baseline.html --baseline .ackit-baseline.json
 ```
 
 Default output path:
@@ -110,6 +113,7 @@ Safety behavior:
 - Output paths must be repository-relative.
 - Existing files are not overwritten.
 - Reports are self-contained and use no remote assets.
+- With `--baseline`, the report adds existing/new metrics and a per-finding Baseline column.
 
 ### `ackit webui`
 Generates an offline static Web UI prototype for local scan review. Existing Web UI files are skipped.
@@ -118,6 +122,7 @@ Generates an offline static Web UI prototype for local scan review. Existing Web
 ackit webui
 ackit webui --output .ackit/webui/current.html
 ackit webui --output docs/local-webui.html --json
+ackit webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json
 ```
 
 Default output path:
@@ -128,6 +133,7 @@ Safety behavior:
 - Existing files are not overwritten.
 - The prototype is self-contained and uses no remote assets.
 - Repository-controlled text is HTML-encoded.
+- With `--baseline`, the dashboard and review queue show existing/new classification without hiding findings.
 
 ### `ackit prompt-pack`
 Generates a local dry-run Markdown prompt pack for future LLM context review. Existing prompt-pack files are skipped.
