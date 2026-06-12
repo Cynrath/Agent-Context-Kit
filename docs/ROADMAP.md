@@ -108,7 +108,7 @@
 - TASK-0070 scanner config examples and sample configs:
   - Add safe `.ackit/config.yml` examples for minimal, strict, and CI use.
 - TASK-0071 SARIF GitHub Code Scanning opt-in workflow design:
-  - Design opt-in workflow activation without enabling upload by default.
+  - Document a manual, job-scoped, published-package SARIF upload workflow without enabling upload by default.
 - TASK-0072 JSON schema stability and contract tests:
   - Add focused contract tests for JSON output stability.
 - TASK-0073 CLI exit code contract hardening:

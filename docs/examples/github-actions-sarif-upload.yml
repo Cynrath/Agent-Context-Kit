@@ -1,22 +1,21 @@
 # documentation example only
 # Copy into .github/workflows only after review.
-# GitHub Code Scanning upload requires maintainer approval and security-events: write.
+# GitHub Code Scanning upload requires maintainer approval.
 # The published AgentContextKit 0.2.0-alpha.1 package includes ackit sarif.
-# Current source matches the AgentContextKit 0.2.0-alpha.1 package release line.
+# Recommended first opt-in: manual trigger, published package, one upload job.
 
 name: ackit-sarif-upload-example
 
 on:
   workflow_dispatch:
 
-permissions:
-  contents: read
-  security-events: write
-
 jobs:
-  sarif-from-next-package:
-    name: SARIF from next published package
+  upload-sarif:
+    name: Generate and upload AgentContextKit SARIF
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
 
     steps:
       - name: Checkout
@@ -27,10 +26,8 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
-      - name: Install AgentContextKit with SARIF support
-        run: |
-          # Published package includes ackit sarif starting with 0.2.0-alpha.1.
-          dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+      - name: Install published AgentContextKit
+        run: dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 
       - name: Add .NET tools to PATH
         run: echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
@@ -38,45 +35,13 @@ jobs:
       - name: Generate SARIF
         run: ackit sarif --output .ackit/reports/ackit.sarif
 
-      - name: Upload SARIF
-        uses: github/codeql-action/upload-sarif@v4
-        with:
-          sarif_file: .ackit/reports/ackit.sarif
-
-  sarif-from-source-package:
-    name: SARIF from current source package
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v5
-        with:
-          dotnet-version: 10.0.x
-
-      - name: Restore, build, test, and pack current source
+      - name: Validate SARIF JSON
         shell: pwsh
         run: |
-          dotnet restore AgentContextKit.sln
-          dotnet build AgentContextKit.sln -c Release --no-restore
-          dotnet test AgentContextKit.sln -c Release --no-build
-          $pkg = Join-Path $env:RUNNER_TEMP "ackit-packages"
-          New-Item -ItemType Directory -Force -Path $pkg | Out-Null
-          dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-          "ACKIT_PACKAGE_SOURCE=$pkg" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      - name: Install current source package
-        shell: pwsh
-        run: |
-          $tools = Join-Path $env:RUNNER_TEMP "ackit-tools"
-          New-Item -ItemType Directory -Force -Path $tools | Out-Null
-          dotnet tool install AgentContextKit --tool-path $tools --add-source "$env:ACKIT_PACKAGE_SOURCE" --version 0.2.0-alpha.1 --ignore-failed-sources
-          $tools | Out-File -FilePath $env:GITHUB_PATH -Append
-
-      - name: Generate SARIF
-        run: ackit sarif --output .ackit/reports/ackit.sarif
+          if (-not (Test-Path ".ackit/reports/ackit.sarif")) {
+            throw "Expected SARIF output was not created."
+          }
+          Get-Content ".ackit/reports/ackit.sarif" | ConvertFrom-Json | Out-Null
 
       - name: Upload SARIF
         uses: github/codeql-action/upload-sarif@v4

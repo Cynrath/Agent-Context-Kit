@@ -8,10 +8,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `v0.2.0-alpha.1` is published on GitHub and NuGet; published package includes `ackit sarif`.
 - Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
 - Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
-- TASK-0066 through TASK-0070 are being completed as local-only docs tasks without remote writes.
+- TASK-0066 through TASK-0071 are completed as local-only docs tasks without remote writes.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 post-commit public release gate passed with the expected post-tag HEAD warning.
+- TASK-0071 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
+- TASK-0071 post-commit public release gate passed with the expected post-tag HEAD warning.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

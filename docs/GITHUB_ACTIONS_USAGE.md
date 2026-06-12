@@ -51,6 +51,8 @@ SARIF output is local-only by default. It uses repository-relative artifact loca
 
 Code Scanning upload remains documentation-only by default. See `docs/CODE_SCANNING_DECISION.md` before copying any SARIF upload example into active workflows.
 
+The recommended first opt-in is a manual `workflow_dispatch` job using the pinned published package, job-level `security-events: write`, SARIF JSON validation, and upload of only the SARIF file. See `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md`.
+
 ## Published Tool Vs Source Package Smoke
 Published tool smoke validates the package users install from NuGet. It should stay pinned to the current published version:
 

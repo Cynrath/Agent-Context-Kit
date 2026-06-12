@@ -53,6 +53,8 @@ The scanner rule catalog, configurable allowlist foundation, and expanded scanne
 
 GitHub Code Scanning upload is not enabled by default. `ackit sarif` creates local SARIF output; upload requires maintainer opt-in, reviewed workflow permissions, and the decision process in `docs/CODE_SCANNING_DECISION.md`.
 
+The opt-in design scopes `security-events: write` to one manual upload job and uploads only the validated SARIF file. See `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md`.
+
 ## SARIF Output Privacy
 `ackit sarif` is designed as a local report format, not an upload action. The generated SARIF file:
 

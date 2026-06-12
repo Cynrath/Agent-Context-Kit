@@ -23,6 +23,7 @@ The published `0.2.0-alpha.1` NuGet package includes this command.
 - `docs/examples/github-actions-sarif-upload.yml` is documentation-only.
 - CodeQL is not enabled as a required hosted workflow.
 - `ackit sarif` output is local-only by default and ignored when written under `.ackit/`.
+- The recommended first opt-in workflow design is documented in `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md`.
 
 ## Future Opt-In Criteria
 Enable Code Scanning only after a maintainer decides:
@@ -42,7 +43,7 @@ Enable Code Scanning only after a maintainer decides:
 1. Generate SARIF locally.
 2. Review that paths are repository-relative.
 3. Confirm no raw secrets, local paths, private usernames, or customer data appear.
-4. Copy the example workflow into `.github/workflows/` only after maintainer approval.
+4. Review `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md` and copy the example workflow into `.github/workflows/` only after maintainer approval.
 5. Add `security-events: write` intentionally.
 6. Watch the first run and triage alerts.
 

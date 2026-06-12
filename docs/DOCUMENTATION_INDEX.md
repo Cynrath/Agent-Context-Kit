@@ -15,6 +15,7 @@
 - `docs/DEMO_SCENARIOS.md`: guided published package, source, sample, Web UI, report, and SARIF demos.
 - `docs/GITHUB_ACTIONS_USAGE.md`: GitHub Actions CI usage, SARIF, and smoke workflow guidance.
 - `docs/CODE_SCANNING_DECISION.md`: CodeQL and Code Scanning default/opt-in decision.
+- `docs/SARIF_UPLOAD_WORKFLOW_DESIGN.md`: manual, job-scoped Code Scanning upload design.
 - `docs/SAMPLES.md`: safe sample repositories.
 - `docs/CONFIGURATION.md`: `.ackit/config.yml`.
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.

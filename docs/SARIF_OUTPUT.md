@@ -76,6 +76,8 @@ The example is not active. It is not copied into `.github/workflows`, and this t
 
 The current project decision is documented in [CODE_SCANNING_DECISION.md](CODE_SCANNING_DECISION.md): SARIF generation is local-only by default, and Code Scanning upload is opt-in after maintainer review.
 
+The first opt-in workflow shape is documented in [SARIF_UPLOAD_WORKFLOW_DESIGN.md](SARIF_UPLOAD_WORKFLOW_DESIGN.md). It uses a manual trigger, the pinned published package, job-level upload permission, and a parse check before upload.
+
 For a hands-on local source demo, see [DEMO_SCENARIOS.md](DEMO_SCENARIOS.md).
 
 ## GitHub Code Scanning Upload Note
