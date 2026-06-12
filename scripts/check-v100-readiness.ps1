@@ -137,12 +137,14 @@ $requiredPaths = @(
     @{ Path = "scripts\check-release-candidate-evidence.ps1"; Description = "release-candidate evidence check script" },
     @{ Path = "scripts\check-release-candidate-workflow.ps1"; Description = "release-candidate workflow check script" },
     @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "machine-readable contract asset check script" },
+    @{ Path = "scripts\check-localization-parity.ps1"; Description = "localization parity check script" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "scan performance measurement script" },
     @{ Path = ".github\workflows\release-candidate-evidence.yml"; Description = "manual hosted release-candidate workflow" },
     @{ Path = "scripts\check-v050-readiness.ps1"; Description = "v0.5 readiness check script" },
     @{ Path = "scripts\verify-release.ps1"; Description = "Local release verification script" },
     @{ Path = "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"; Description = "CLI package project" },
     @{ Path = "tests\AgentContextKit.Tests\ReleaseCandidateEvidenceTests.cs"; Description = "release-candidate evidence tests" },
+    @{ Path = "tests\AgentContextKit.Tests\LocalizationParityTests.cs"; Description = "localization parity tests" },
     @{ Path = "tests\fixtures\upgrade\v0.2.0-alpha.1-config.yml"; Description = "published config compatibility fixture" },
     @{ Path = "tests\fixtures\upgrade\baseline-schema-v1.json"; Description = "baseline schema compatibility fixture" }
 )
@@ -180,11 +182,13 @@ $releaseValidationNeedles = @(
     "scripts/check-release-candidate-evidence.ps1",
     "scripts/check-release-candidate-workflow.ps1",
     "scripts/check-json-contract-assets.ps1",
+    "scripts/check-localization-parity.ps1",
     "scripts/measure-scan-performance.ps1",
     "RELEASE_CANDIDATE_EVIDENCE.md",
     "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "MAINTAINER_RC_DECISION.md",
     "docs/schemas/README.md",
+    "LOCALIZATION.md",
     "RC_HOSTED_EVIDENCE.md"
 )
 
@@ -277,6 +281,7 @@ $projectMapNeedles = @(
     "docs/MAINTAINER_RC_DECISION.md",
     "docs/schemas/README.md",
     "scripts/check-json-contract-assets.ps1",
+    "scripts/check-localization-parity.ps1",
     "docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md",
     "scripts/check-v100-readiness.ps1"
 )

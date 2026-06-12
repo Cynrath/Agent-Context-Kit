@@ -1,5 +1,16 @@
 # Troubleshooting
 
+## Turkish Characters Or Mixed-Language Output
+Use `--lang tr` for Turkish human-readable output and a UTF-8-capable terminal profile. Command names, option names, severity names, rule IDs, diagnostic codes, paths, and JSON values intentionally remain stable technical English tokens. This is not a fallback failure.
+
+Verify the local contract with:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
+```
+
+If Turkish characters render as replacement glyphs, first change the terminal encoding/font. Do not rewrite JSON field names or scanner IDs as a display workaround.
+
 ## `dotnet --info` prints an exception
 The local environment may still build and test successfully. Prefer the release validation script:
 

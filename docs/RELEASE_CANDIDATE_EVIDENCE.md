@@ -1,7 +1,7 @@
 # Release Candidate Evidence
 
 ## Status
-Local evidence preparation includes TASK-0084 through TASK-0092 baseline/config hardening, dependency cleanup, the manual hosted evidence workflow design, and a conditional local contract freeze. This document does not approve a release candidate or 1.0 GA.
+Local evidence preparation includes TASK-0084 through TASK-0094 baseline/config hardening, dependency cleanup, the manual hosted evidence workflow design, machine-readable contract assets, localization parity gates, and a conditional local contract freeze. This document does not approve a release candidate or 1.0 GA.
 
 ## Local Evidence Matrix
 | Area | Local Evidence | Status | Remaining Blocker |
@@ -13,7 +13,7 @@ Local evidence preparation includes TASK-0084 through TASK-0092 baseline/config 
 | Security response | policy, Critical regression tests, privacy boundaries, clean dated dependency review | Partial | private GitHub reporting channel |
 | Runtime support | .NET 10, three-OS workflow policy, and manual RC workflow | Documented | fresh hosted RC run and final support window |
 | Supply chain | metadata/artifact/package install gates | Partial | signing/SBOM/provenance/recovery decisions |
-| Migration/localization | upgrade/rollback guide, fixtures, read-only config diagnostics, and explicit no-auto-migration policy | Partial | complete EN/TR parity gate and hosted evidence |
+| Migration/localization | upgrade/rollback guide, fixtures, read-only config diagnostics, explicit no-auto-migration policy, 13-command EN/TR human/error/JSON parity matrix | Ready locally | hosted evidence and final candidate sign-off |
 
 ## Local Commands
 ```powershell
@@ -24,6 +24,7 @@ powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -F
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
 ```
 
 ## Dated Local Result
@@ -35,6 +36,7 @@ Local evidence recorded on 2026-06-12:
 - Disposable migration smoke and the repository suite both passed 169/169 tests; the post-migration vulnerability and deprecation reviews reported no findings.
 - Local Windows reproduction of the manual RC workflow steps passed isolated predecessor/source installs, config immutability, `config-check`, baseline, SARIF parse, and final scan.
 - TASK-0092 reconciled the CLI, exit-code, config schema `1`, JSON schema `2`, baseline schema `1`, SARIF `2.1.0`, generated-file, privacy, and upgrade contracts into a conditional local freeze.
+- TASK-0093 added machine-readable schemas/golden fixtures and TASK-0094 added English/Turkish human/error/exit/JSON semantic parity tests plus a local release gate.
 
 The former xUnit test-tooling warning is resolved locally. Remaining supply-chain decisions are signing, SBOM, provenance, recovery policy, and release-date revalidation.
 

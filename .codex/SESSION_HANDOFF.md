@@ -27,6 +27,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0093 is complete locally. It adds Draft 2020-12 command/baseline/SARIF profile schemas, sanitized golden fixtures, four live-output asset tests, and `scripts/check-json-contract-assets.ps1`; the full suite passes 173/173.
 - The standard `json-schema.org` schema URI is now an exact built-in safe technical domain, with focused scanner coverage and no broad suffix exemption.
 - Full TASK-0093 validation passed, including clean scan/doctor, JSON/SARIF parse, sample smoke, dependency reviews, contract/readiness/RC/release gates, and a 3.72-second 2,000-file benchmark. Commit and post-commit public gate are next, followed by TASK-0094.
+- TASK-0093 committed as `b74b847 test: add machine-readable contract assets`; post-commit public release gate passed.
+- TASK-0094 is complete locally. It release-gates English/Turkish human output, invalid invocation and exit parity, baseline/suppression labels, and language-independent JSON semantics without translating stable technical identifiers.
+- Full TASK-0094 validation passed: zero-warning build, 178/178 tests, clean Turkish scan/doctor/SARIF smoke, JSON/SARIF parse, sample smoke, clean dependency reviews, all contract/readiness/RC/release gates, clean hygiene, and a 3.171-second 2,000-file benchmark. Commit and post-commit public gate are next, followed by TASK-0095.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
@@ -485,6 +488,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0091 resolves the Legacy xUnit warning through migration rather than risk acceptance. The official executable-project requirement is applied, no test source changed, and 169/169 tests remain green.
 - TASK-0092 conditionally freezes local contracts without selecting a version or approving release. Hosted evidence, private vulnerability reporting, and signing/SBOM/provenance decisions remain open.
 - TASK-0093 adds versioned machine-readable schemas and sanitized golden contract assets, validates all 13 JSON-capable commands, and closes the local asset portion of V100-04 while final candidate acceptance remains open.
+- TASK-0094 centralizes shared English/Turkish CLI labels and known argument errors, adds a full language parity matrix, and integrates `scripts/check-localization-parity.ps1` into RC/readiness/release evidence.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

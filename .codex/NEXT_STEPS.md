@@ -17,4 +17,5 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 13. `check-public-release-gates.ps1 -FailOnIssues` must be rerun after commit because it correctly fails on dirty working trees before commit.
 14. Local branch is ahead of origin; do not push from the agent session. Report `local ahead, maintainer push required`.
 15. TASK-0093 is complete locally: machine-readable assets are indexed in `docs/schemas/README.md`; focused scanner/contract tests pass 5/5 and the full suite passes 173/173.
-16. Continue with TASK-0094 English/Turkish localization parity release gate. Do not change human-language output without preserving JSON invariance.
+16. TASK-0094 is complete locally. Five focused tests cover help, all 13 language-aware JSON commands, known argument errors, exit parity, baseline/suppression labels, and JSON semantic invariance; the full suite passes 178/178.
+17. Continue with TASK-0095 security reporting and supply-chain maintainer evidence handoff. Keep GitHub settings, signing, SBOM/provenance publication, push, tag, and release actions maintainer-only.

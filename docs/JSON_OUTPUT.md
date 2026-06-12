@@ -39,6 +39,8 @@ The machine-readable Draft 2020-12 contract is `docs/schemas/ackit-command-outpu
 - New optional fields may be added without changing the schema version.
 - Breaking field removal, rename, type change, or semantic change requires a schema version increment and migration notes.
 - JSON field names remain English and language-independent even when `--lang tr` is used.
+- JSON command names, status tokens, rule IDs, diagnostic codes, schema versions, and exit codes remain language-independent; localized aliases are not emitted.
+- The English/Turkish semantic parity matrix is enforced by `tests/AgentContextKit.Tests/LocalizationParityTests.cs` and `scripts/check-localization-parity.ps1`.
 - Consumers should ignore unknown additive fields.
 
 Contract tests require stable fields but intentionally do not reject additional properties.

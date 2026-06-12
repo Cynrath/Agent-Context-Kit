@@ -29,13 +29,14 @@ Current source/package metadata remains `0.2.0-alpha.1` until a dedicated releas
 - SARIF stays at `2.1.0`; additive sanitized properties are allowed, while raw matches and absolute local paths remain prohibited.
 - Critical findings remain visible and cannot be silently suppressed by config.
 - Existing generated files remain protected by skip-by-default behavior unless an explicit command option documents replacement.
+- English/Turkish human-readable labels may differ, but command/option names, JSON fields and status tokens, rule/diagnostic IDs, paths, and exit decisions remain language-independent.
 
 Any breaking change after this freeze requires a new task that reopens the contract, records versioning and migration impact, updates tests/docs, and reruns all release-candidate evidence.
 
 ## Local Evidence
 - Release build completed with zero warnings and zero errors.
-- 169/169 tests passed after the xUnit v3 migration.
-- CLI/config contract gates passed.
+- 178/178 tests passed after the xUnit v3 migration and localization parity expansion.
+- CLI/config/localization contract gates passed.
 - JSON and SARIF outputs parsed successfully.
 - Config/baseline upgrade fixtures passed.
 - Self-scan, doctor, sample smoke, dependency vulnerability/deprecation review, hygiene, package verification, and RC evidence gates passed.

@@ -112,6 +112,7 @@ $gateScripts = @(
     "scripts\check-v100-documentation-release-gates.ps1",
     "scripts\check-v100-readiness.ps1",
     "scripts\check-json-contract-assets.ps1",
+    "scripts\check-localization-parity.ps1",
     "scripts\check-package-metadata.ps1",
     "scripts\audit-public-release.ps1",
     "scripts\check-release-blockers.ps1",

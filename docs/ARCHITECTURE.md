@@ -60,6 +60,8 @@ The same `BaselineEvaluation` instance can be passed to SARIF, HTML report, and 
 
 `AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior. The CLI exposes it through `ackit config-check`: warnings remain non-blocking, errors return `1`, missing config reports the valid default state, and diagnostic messages omit raw config values.
 
+`ITextProvider` owns shared English/Turkish human-readable CLI chrome such as headings, labels, summaries, generated-file statuses, and known argument errors. The CLI may compose these labels with stable technical values from Core. Command/option names, severity names, rule IDs, diagnostic codes, paths, JSON fields/status tokens, and exit decisions remain language-independent. `scripts/check-localization-parity.ps1` and `LocalizationParityTests` enforce that boundary across every language-aware command.
+
 These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.
 
 `StackDetector` uses repository file paths plus limited local reads of project/source files through `IFileSystem`. This keeps stack detection offline and testable while allowing project SDK signals such as `Microsoft.NET.Sdk.Web`, `Microsoft.NET.Sdk.Razor`, `Microsoft.NET.Sdk.BlazorWebAssembly`, and `Microsoft.NET.Sdk.Worker`.

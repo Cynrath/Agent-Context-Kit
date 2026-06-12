@@ -76,4 +76,5 @@
 - [x] The `xunit` Legacy warning is resolved through the TASK-0091 xUnit v3 migration; 169/169 tests and clean dependency reviews are recorded.
 - [x] The conditional local contract freeze and NO-GO decision package are recorded in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`.
 - [x] Machine-readable JSON schema `2`, baseline schema `1`, SARIF profile assets, sanitized golden fixtures, and `scripts/check-json-contract-assets.ps1 -FailOnIssues` are present and passing.
+- [x] English/Turkish human output, known argument-error parity, exit-code parity, and language-independent JSON semantics are covered by `scripts/check-localization-parity.ps1 -FailOnIssues`.
 - Signing, SBOM, provenance, and package recovery decisions are recorded.

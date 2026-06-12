@@ -9,6 +9,11 @@ public sealed class TextProvider : ITextProvider
             ["en"] = "AgentContextKit CLI",
             ["tr"] = "AgentContextKit CLI"
         },
+        ["usage"] = new()
+        {
+            ["en"] = "Usage:",
+            ["tr"] = "Kullanım:"
+        },
         ["created"] = new()
         {
             ["en"] = "created",
@@ -33,6 +38,191 @@ public sealed class TextProvider : ITextProvider
         {
             ["en"] = "No risk findings.",
             ["tr"] = "Risk bulgusu yok."
+        },
+        ["detectedAgentInstructionFiles"] = new()
+        {
+            ["en"] = "Detected agent instruction files:",
+            ["tr"] = "Algılanan agent yönerge dosyaları:"
+        },
+        ["found"] = new()
+        {
+            ["en"] = "found",
+            ["tr"] = "bulundu"
+        },
+        ["missing"] = new()
+        {
+            ["en"] = "missing",
+            ["tr"] = "eksik"
+        },
+        ["repository"] = new()
+        {
+            ["en"] = "Repository",
+            ["tr"] = "Repository"
+        },
+        ["files"] = new()
+        {
+            ["en"] = "Files",
+            ["tr"] = "Dosyalar"
+        },
+        ["stacks"] = new()
+        {
+            ["en"] = "Stacks:",
+            ["tr"] = "Teknoloji yığınları:"
+        },
+        ["unknown"] = new()
+        {
+            ["en"] = "Unknown",
+            ["tr"] = "Bilinmiyor"
+        },
+        ["repositoryHealth"] = new()
+        {
+            ["en"] = "Repository health:",
+            ["tr"] = "Repository sağlığı:"
+        },
+        ["tests"] = new()
+        {
+            ["en"] = "Tests",
+            ["tr"] = "Testler"
+        },
+        ["agentInstructions"] = new()
+        {
+            ["en"] = "Agent instructions",
+            ["tr"] = "Agent yönergeleri"
+        },
+        ["yes"] = new()
+        {
+            ["en"] = "yes",
+            ["tr"] = "evet"
+        },
+        ["no"] = new()
+        {
+            ["en"] = "no",
+            ["tr"] = "hayır"
+        },
+        ["baselineCreated"] = new()
+        {
+            ["en"] = "Baseline created",
+            ["tr"] = "Baseline oluşturuldu"
+        },
+        ["baselineUpdated"] = new()
+        {
+            ["en"] = "Baseline updated",
+            ["tr"] = "Baseline güncellendi"
+        },
+        ["entries"] = new()
+        {
+            ["en"] = "Entries",
+            ["tr"] = "Kayıtlar"
+        },
+        ["baselineReview"] = new()
+        {
+            ["en"] = "Review and commit the baseline only if it contains no private repository metadata.",
+            ["tr"] = "Baseline dosyasını yalnızca özel repository metadata içermediğini doğruladıktan sonra inceleyip commit edin."
+        },
+        ["sarifFindings"] = new()
+        {
+            ["en"] = "SARIF findings",
+            ["tr"] = "SARIF bulguları"
+        },
+        ["criticalHighFindings"] = new()
+        {
+            ["en"] = "Critical/high findings",
+            ["tr"] = "Critical/high bulguları"
+        },
+        ["riskFindings"] = new()
+        {
+            ["en"] = "Risk findings",
+            ["tr"] = "Risk bulguları"
+        },
+        ["noRemoteCall"] = new()
+        {
+            ["en"] = "No remote LLM provider call was made.",
+            ["tr"] = "Uzak LLM provider çağrısı yapılmadı."
+        },
+        ["approvalRecorded"] = new()
+        {
+            ["en"] = "Approval recorded locally only.",
+            ["tr"] = "Onay yalnızca local olarak kaydedildi."
+        },
+        ["sarifRequiresOutput"] = new()
+        {
+            ["en"] = "ackit sarif requires --output <repo-relative.sarif>.",
+            ["tr"] = "ackit sarif, --output <repo-relative.sarif> gerektirir."
+        },
+        ["contextExportRequiresApproval"] = new()
+        {
+            ["en"] = "ackit context-export requires explicit --approve.",
+            ["tr"] = "ackit context-export açık bir --approve onayı gerektirir."
+        },
+        ["contextExportRequiresPromptPack"] = new()
+        {
+            ["en"] = "ackit context-export requires --prompt-pack <repo-relative.md>.",
+            ["tr"] = "ackit context-export, --prompt-pack <repo-relative.md> gerektirir."
+        },
+        ["taskRequiresTitle"] = new()
+        {
+            ["en"] = "ackit task requires a title.",
+            ["tr"] = "ackit task bir başlık gerektirir."
+        },
+        ["taskExample"] = new()
+        {
+            ["en"] = "Example: ackit task \"Add role based permission management\" --lang en",
+            ["tr"] = "Örnek: ackit task \"Rol tabanlı yetki yönetimi ekle\" --lang tr"
+        },
+        ["unknownCommand"] = new()
+        {
+            ["en"] = "Unknown command",
+            ["tr"] = "Bilinmeyen komut"
+        },
+        ["baselineClassification"] = new()
+        {
+            ["en"] = "Baseline classification:",
+            ["tr"] = "Baseline sınıflandırması:"
+        },
+        ["file"] = new()
+        {
+            ["en"] = "File",
+            ["tr"] = "Dosya"
+        },
+        ["existingFindings"] = new()
+        {
+            ["en"] = "Existing findings",
+            ["tr"] = "Mevcut bulgular"
+        },
+        ["newFindings"] = new()
+        {
+            ["en"] = "New findings",
+            ["tr"] = "Yeni bulgular"
+        },
+        ["occurrence"] = new()
+        {
+            ["en"] = "occurrence",
+            ["tr"] = "oluşum"
+        },
+        ["more"] = new()
+        {
+            ["en"] = "more",
+            ["tr"] = "daha"
+        },
+        ["suppressedFindings"] = new()
+        {
+            ["en"] = "Suppressed findings",
+            ["tr"] = "Bastırılan bulgular"
+        },
+        ["via"] = new()
+        {
+            ["en"] = "via",
+            ["tr"] = "aracılığıyla"
+        },
+        ["ackitError"] = new()
+        {
+            ["en"] = "ackit error",
+            ["tr"] = "ackit hatası"
+        },
+        ["suggestedAction"] = new()
+        {
+            ["en"] = "Suggested action: check repository permissions and run `ackit --help`.",
+            ["tr"] = "Önerilen işlem: repository izinlerini kontrol edin ve `ackit --help` çalıştırın."
         }
     };
 

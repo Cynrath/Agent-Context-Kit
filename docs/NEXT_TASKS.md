@@ -41,8 +41,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 26. TASK-0091 xUnit v3 migration or explicit RC risk acceptance - completed locally through migration.
 27. TASK-0092 release-candidate contract freeze and maintainer decision - completed locally; RC publication remains NO-GO.
 28. TASK-0093 machine-readable JSON schema and golden contract assets - completed locally.
-29. TASK-0094 English/Turkish localization parity release gate - next.
-30. TASK-0095 security reporting and supply-chain maintainer evidence handoff - queued; remote actions remain maintainer-only.
+29. TASK-0094 English/Turkish localization parity release gate - completed locally.
+30. TASK-0095 security reporting and supply-chain maintainer evidence handoff - next; remote actions remain maintainer-only.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.

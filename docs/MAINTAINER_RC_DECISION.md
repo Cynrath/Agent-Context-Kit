@@ -3,20 +3,20 @@
 ## Current Decision
 **NO-GO for release-candidate publication.**
 
-The local contract freeze and machine-readable schema assets are prepared and validated, but hosted evidence, remote security settings, supply-chain publication decisions, and final version/release approval remain incomplete.
+The local contract freeze, machine-readable schema assets, and localization parity gate are prepared and validated, but hosted evidence, remote security settings, supply-chain publication decisions, and final version/release approval remain incomplete.
 
 ## Decision Inputs
 | Area | Current State | Required For GO | Owner / Action |
 | --- | --- | --- | --- |
 | Local contract freeze | Complete locally | Review `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` with no unresolved breaking change | Maintainer review |
-| Local tests and gates | Complete locally: 169/169 tests and clean gates | Rerun on final candidate commit | Local/CI validation |
+| Local tests and gates | Complete locally: 178/178 tests and clean gates | Rerun on final candidate commit | Local/CI validation |
 | Hosted RC workflow | Workflow designed; hosted result pending | Green Windows, Ubuntu, and macOS manual run for final candidate commit | Maintainer push/dispatch |
 | Upgrade/config evidence | Local fixtures pass | Hosted predecessor install, config hash, `config-check`, baseline, SARIF, and final scan pass | Hosted workflow |
 | JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
 | Security reporting | Local policy exists | Enable and verify private vulnerability reporting | Maintainer GitHub settings |
 | Dependency review | Clean on 2026-06-12 | Rerun on final candidate date | Maintainer/release validation |
 | Signing/SBOM/provenance | Decision pending | Record explicit use/defer decisions and publication locations | Maintainer supply-chain decision |
-| Localization parity | Partial | Complete English/Turkish help/error/JSON invariance review | Local task |
+| Localization parity | TASK-0094 human/error/exit/JSON parity matrix and local gate complete | Rerun on final candidate and review intended stable technical tokens | Maintainer review |
 | Version and release | Not selected | Select version, update metadata, review package diff, approve release plan | Dedicated release task |
 
 ## GO Conditions

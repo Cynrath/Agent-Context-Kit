@@ -14,12 +14,13 @@ public static class Program
 
     public static int Main(string[] args)
     {
+        var language = LanguageCode.English;
         try
         {
             var services = CreateServices();
             var repositoryPath = Directory.GetCurrentDirectory();
             var config = services.ConfigReader.Read(repositoryPath);
-            var language = LanguageCode.From(GetOption(args, "--lang") ?? config.DefaultLanguage.Value);
+            language = LanguageCode.From(GetOption(args, "--lang") ?? config.DefaultLanguage.Value);
             var command = args.Length == 0 ? "help" : args[0].Trim().ToLowerInvariant();
             var json = HasFlag(args, "--json");
             var ci = HasFlag(args, "--ci");
@@ -46,8 +47,9 @@ public static class Program
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine($"ackit error: {ex.Message}");
-            Console.Error.WriteLine("Suggested action: check repository permissions and run `ackit --help`.");
+            var textProvider = new TextProvider();
+            Console.Error.WriteLine($"{textProvider.Get("ackitError", language)}: {ex.Message}");
+            Console.Error.WriteLine(textProvider.Get("suggestedAction", language));
             return ExitError;
         }
     }
@@ -56,7 +58,7 @@ public static class Program
     {
         Console.WriteLine(textProvider.Get("help", language));
         Console.WriteLine();
-        Console.WriteLine("Usage:");
+        Console.WriteLine(textProvider.Get("usage", language));
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
         Console.WriteLine("  ackit config-check [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]");
@@ -112,10 +114,11 @@ public static class Program
         PrintGeneratedResult(result, services.TextProvider, language);
 
         Console.WriteLine();
-        Console.WriteLine("Detected agent instruction files:");
+        Console.WriteLine(services.TextProvider.Get("detectedAgentInstructionFiles", language));
         foreach (var file in agentFiles)
         {
-            Console.WriteLine($"- {file.path}: {(file.exists ? "found" : "missing")}");
+            var status = services.TextProvider.Get(file.exists ? "found" : "missing", language);
+            Console.WriteLine($"- {file.path}: {status}");
         }
 
         return ExitSuccess;
@@ -275,7 +278,7 @@ public static class Program
         PrintScan(scan, language, services);
         if (baseline is not null)
         {
-            PrintBaselineClassification(baselinePath!, baseline);
+            PrintBaselineClassification(baselinePath!, baseline, language, services.TextProvider);
         }
 
         return exitCode;
@@ -316,10 +319,10 @@ public static class Program
                 return ExitSuccess;
             }
 
-            var verb = result.Status == BaselineFileStatus.Created ? "created" : "updated";
-            Console.WriteLine($"Baseline {verb}: {result.Path}");
-            Console.WriteLine($"Entries: {result.EntryCount}");
-            Console.WriteLine("Review and commit the baseline only if it contains no private repository metadata.");
+            var statusKey = result.Status == BaselineFileStatus.Created ? "baselineCreated" : "baselineUpdated";
+            Console.WriteLine($"{services.TextProvider.Get(statusKey, language)}: {result.Path}");
+            Console.WriteLine($"{services.TextProvider.Get("entries", language)}: {result.EntryCount}");
+            Console.WriteLine(services.TextProvider.Get("baselineReview", language));
             return ExitSuccess;
         }
         catch (BaselineException ex)
@@ -333,7 +336,7 @@ public static class Program
         var outputPath = GetOption(args, "--output");
         if (string.IsNullOrWhiteSpace(outputPath))
         {
-            Console.Error.WriteLine("ackit sarif requires --output <repo-relative.sarif>.");
+            Console.Error.WriteLine(services.TextProvider.Get("sarifRequiresOutput", language));
             return ExitError;
         }
 
@@ -371,11 +374,11 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        Console.WriteLine($"SARIF findings: {scan.Findings.Count}");
-        Console.WriteLine($"Critical/high findings: {criticalHighCount}");
+        Console.WriteLine($"{services.TextProvider.Get("sarifFindings", language)}: {scan.Findings.Count}");
+        Console.WriteLine($"{services.TextProvider.Get("criticalHighFindings", language)}: {criticalHighCount}");
         if (baseline is not null)
         {
-            PrintBaselineClassification(baselinePath!, baseline);
+            PrintBaselineClassification(baselinePath!, baseline, language, services.TextProvider);
         }
         return ExitSuccess;
     }
@@ -416,10 +419,10 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        Console.WriteLine($"{services.TextProvider.Get("riskFindings", language)}: {scan.Findings.Count}");
         if (baseline is not null)
         {
-            PrintBaselineClassification(baselinePath!, baseline);
+            PrintBaselineClassification(baselinePath!, baseline, language, services.TextProvider);
         }
         return ExitSuccess;
     }
@@ -460,10 +463,10 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        Console.WriteLine($"{services.TextProvider.Get("riskFindings", language)}: {scan.Findings.Count}");
         if (baseline is not null)
         {
-            PrintBaselineClassification(baselinePath!, baseline);
+            PrintBaselineClassification(baselinePath!, baseline, language, services.TextProvider);
         }
         return ExitSuccess;
     }
@@ -491,8 +494,8 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        Console.WriteLine("No remote LLM provider call was made.");
-        Console.WriteLine($"Risk findings: {scan.Findings.Count}");
+        Console.WriteLine(services.TextProvider.Get("noRemoteCall", language));
+        Console.WriteLine($"{services.TextProvider.Get("riskFindings", language)}: {scan.Findings.Count}");
         return ExitSuccess;
     }
 
@@ -500,14 +503,14 @@ public static class Program
     {
         if (!HasFlag(args, "--approve"))
         {
-            Console.Error.WriteLine("ackit context-export requires explicit --approve.");
+            Console.Error.WriteLine(services.TextProvider.Get("contextExportRequiresApproval", language));
             return ExitError;
         }
 
         var promptPackPath = GetOption(args, "--prompt-pack");
         if (string.IsNullOrWhiteSpace(promptPackPath))
         {
-            Console.Error.WriteLine("ackit context-export requires --prompt-pack <repo-relative.md>.");
+            Console.Error.WriteLine(services.TextProvider.Get("contextExportRequiresPromptPack", language));
             return ExitError;
         }
 
@@ -535,8 +538,8 @@ public static class Program
         }
 
         PrintGeneratedResult(result, services.TextProvider, language);
-        Console.WriteLine("No remote LLM provider call was made.");
-        Console.WriteLine("Approval recorded locally only.");
+        Console.WriteLine(services.TextProvider.Get("noRemoteCall", language));
+        Console.WriteLine(services.TextProvider.Get("approvalRecorded", language));
         return ExitSuccess;
     }
 
@@ -574,8 +577,8 @@ public static class Program
         var title = GetTaskTitle(args);
         if (string.IsNullOrWhiteSpace(title))
         {
-            Console.Error.WriteLine("ackit task requires a title.");
-            Console.Error.WriteLine("Example: ackit task \"Add role based permission management\" --lang en");
+            Console.Error.WriteLine(services.TextProvider.Get("taskRequiresTitle", language));
+            Console.Error.WriteLine(services.TextProvider.Get("taskExample", language));
             return ExitError;
         }
 
@@ -668,7 +671,7 @@ public static class Program
 
     private static int RunUnknown(string command, LanguageCode language, ITextProvider textProvider)
     {
-        Console.Error.WriteLine($"Unknown command: {command}");
+        Console.Error.WriteLine($"{textProvider.Get("unknownCommand", language)}: {command}");
         RunHelp(language, textProvider);
         return ExitError;
     }
@@ -676,14 +679,14 @@ public static class Program
     private static void PrintScan(ScanResult scan, LanguageCode language, Services services)
     {
         Console.WriteLine(services.TextProvider.Get("scanSummary", language));
-        Console.WriteLine($"Repository: {scan.RepositoryPath}");
-        Console.WriteLine($"Files: {scan.Files.Count}");
+        Console.WriteLine($"{services.TextProvider.Get("repository", language)}: {scan.RepositoryPath}");
+        Console.WriteLine($"{services.TextProvider.Get("files", language)}: {scan.Files.Count}");
 
         Console.WriteLine();
-        Console.WriteLine("Stacks:");
+        Console.WriteLine(services.TextProvider.Get("stacks", language));
         if (scan.Stacks.Count == 0)
         {
-            Console.WriteLine("- Unknown");
+            Console.WriteLine($"- {services.TextProvider.Get("unknown", language)}");
         }
         else
         {
@@ -694,39 +697,46 @@ public static class Program
         }
 
         Console.WriteLine();
-        Console.WriteLine("Repository health:");
-        Console.WriteLine($"- README: {YesNo(scan.HasReadme)}");
-        Console.WriteLine($"- LICENSE: {YesNo(scan.HasLicense)}");
-        Console.WriteLine($"- SECURITY: {YesNo(scan.HasSecurityPolicy)}");
-        Console.WriteLine($"- Tests: {YesNo(scan.HasTests)}");
-        Console.WriteLine($"- CI: {YesNo(scan.HasCi)}");
-        Console.WriteLine($"- Docker: {YesNo(scan.HasDocker)}");
-        Console.WriteLine($"- Agent instructions: {YesNo(scan.HasAgentInstructions)}");
+        Console.WriteLine(services.TextProvider.Get("repositoryHealth", language));
+        Console.WriteLine($"- README: {YesNo(scan.HasReadme, language, services.TextProvider)}");
+        Console.WriteLine($"- LICENSE: {YesNo(scan.HasLicense, language, services.TextProvider)}");
+        Console.WriteLine($"- SECURITY: {YesNo(scan.HasSecurityPolicy, language, services.TextProvider)}");
+        Console.WriteLine($"- {services.TextProvider.Get("tests", language)}: {YesNo(scan.HasTests, language, services.TextProvider)}");
+        Console.WriteLine($"- CI: {YesNo(scan.HasCi, language, services.TextProvider)}");
+        Console.WriteLine($"- Docker: {YesNo(scan.HasDocker, language, services.TextProvider)}");
+        Console.WriteLine($"- {services.TextProvider.Get("agentInstructions", language)}: {YesNo(scan.HasAgentInstructions, language, services.TextProvider)}");
 
         Console.WriteLine();
         PrintFindings(scan.Findings, language, services);
-        PrintSuppressions(scan.Suppressions);
+        PrintSuppressions(scan.Suppressions, language, services.TextProvider);
     }
 
-    private static void PrintBaselineClassification(string baselinePath, BaselineEvaluation baseline)
+    private static void PrintBaselineClassification(
+        string baselinePath,
+        BaselineEvaluation baseline,
+        LanguageCode language,
+        ITextProvider textProvider)
     {
         Console.WriteLine();
-        Console.WriteLine("Baseline classification:");
-        Console.WriteLine($"- File: {baselinePath}");
-        Console.WriteLine($"- Existing findings: {baseline.Existing.Count}");
-        Console.WriteLine($"- New findings: {baseline.New.Count}");
+        Console.WriteLine(textProvider.Get("baselineClassification", language));
+        Console.WriteLine($"- {textProvider.Get("file", language)}: {baselinePath}");
+        Console.WriteLine($"- {textProvider.Get("existingFindings", language)}: {baseline.Existing.Count}");
+        Console.WriteLine($"- {textProvider.Get("newFindings", language)}: {baseline.New.Count}");
         foreach (var finding in baseline.Findings.Take(25))
         {
-            Console.WriteLine($"- {finding.Status}: {finding.Finding.Path} {RiskRuleCatalog.GetRuleId(finding.Finding)} [{finding.Finding.Severity}] occurrence {finding.Occurrence}");
+            Console.WriteLine($"- {finding.Status}: {finding.Finding.Path} {RiskRuleCatalog.GetRuleId(finding.Finding)} [{finding.Finding.Severity}] {textProvider.Get("occurrence", language)} {finding.Occurrence}");
         }
 
         if (baseline.Findings.Count > 25)
         {
-            Console.WriteLine($"- ... {baseline.Findings.Count - 25} more");
+            Console.WriteLine($"- ... {baseline.Findings.Count - 25} {textProvider.Get("more", language)}");
         }
     }
 
-    private static void PrintSuppressions(IReadOnlyList<RiskSuppression> suppressions)
+    private static void PrintSuppressions(
+        IReadOnlyList<RiskSuppression> suppressions,
+        LanguageCode language,
+        ITextProvider textProvider)
     {
         if (suppressions.Count == 0)
         {
@@ -734,15 +744,15 @@ public static class Program
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Suppressed findings: {suppressions.Count}");
+        Console.WriteLine($"{textProvider.Get("suppressedFindings", language)}: {suppressions.Count}");
         foreach (var suppression in suppressions.Take(25))
         {
-            Console.WriteLine($"- {suppression.Path}: {suppression.RuleId} [{suppression.Severity}/{suppression.Category}] via {ToSuppressionReason(suppression.Reason)}");
+            Console.WriteLine($"- {suppression.Path}: {suppression.RuleId} [{suppression.Severity}/{suppression.Category}] {textProvider.Get("via", language)} {ToSuppressionReason(suppression.Reason)}");
         }
 
         if (suppressions.Count > 25)
         {
-            Console.WriteLine($"- ... {suppressions.Count - 25} more");
+            Console.WriteLine($"- ... {suppressions.Count - 25} {textProvider.Get("more", language)}");
         }
     }
 
@@ -984,9 +994,9 @@ public static class Program
         return Path.GetFileName(trimmed);
     }
 
-    private static string YesNo(bool value)
+    private static string YesNo(bool value, LanguageCode language, ITextProvider textProvider)
     {
-        return value ? "yes" : "no";
+        return textProvider.Get(value ? "yes" : "no", language);
     }
 
     private static int GetScanExitCode(ScanResult scan, bool ci)

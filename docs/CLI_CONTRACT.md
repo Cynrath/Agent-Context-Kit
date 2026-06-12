@@ -54,6 +54,8 @@ ackit help
 
 ## Global Options
 - `--lang en|tr`: selects English or Turkish output/templates where supported. Unknown language values fall back to English.
+- Human-readable headings, labels, summaries, and known argument errors are localized; command names, option names, rule/diagnostic IDs, paths, and exit decisions remain stable.
+- `scripts/check-localization-parity.ps1` release-gates all language-aware commands, invalid-invocation parity, and JSON invariance.
 - `--json`: emits machine-readable JSON where supported.
 - `--ci`: applies only to `scan`; default mode evaluates every finding, while explicit baseline mode evaluates only new High/Critical findings.
 - `--baseline <repo-relative.json>`: opts `scan` into baseline classification/new-finding CI policy and adds the same classification metadata to `sarif`, `report`, or `webui` output.

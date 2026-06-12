@@ -39,6 +39,7 @@ AgentContextKit uses small, automation-friendly exit codes.
 - `ackit config-check` warnings are review signals, not blockers. Error diagnostics fail with `1`; no config migration or rewrite is automatic.
 - JSON output uses the same process exit code as human-readable output.
 - Exit codes are language-independent and must not change when `--lang` changes.
+- The localization parity gate runs equivalent English/Turkish success and invalid-invocation cases to enforce this rule.
 - Automation should branch on the numeric process exit code, not localized output text.
 - New non-blocking output fields or messages must not change an existing command's exit decision.
 - Public release approval is not implied by exit code `0`; release blockers remain documented separately.

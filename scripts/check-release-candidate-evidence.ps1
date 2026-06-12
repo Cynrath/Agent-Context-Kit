@@ -65,8 +65,10 @@ $requiredPaths = @(
     @{ Path = "tests\fixtures\upgrade\baseline-schema-v1.json"; Description = "Baseline schema fixture" },
     @{ Path = "tests\AgentContextKit.Tests\ReleaseCandidateEvidenceTests.cs"; Description = "Compatibility tests" },
     @{ Path = "tests\AgentContextKit.Tests\JsonContractAssetTests.cs"; Description = "Machine-readable contract asset tests" },
+    @{ Path = "tests\AgentContextKit.Tests\LocalizationParityTests.cs"; Description = "Localization parity tests" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "Synthetic scan benchmark" },
-    @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "Machine-readable contract asset gate" }
+    @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "Machine-readable contract asset gate" },
+    @{ Path = "scripts\check-localization-parity.ps1"; Description = "Localization parity gate" }
 )
 
 foreach ($entry in $requiredPaths) {
@@ -116,6 +118,14 @@ try {
     }
     else {
         Add-Issue "Machine-readable contract asset gate failed."
+    }
+
+    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-localization-parity.ps1") -FailOnIssues
+    if ($LASTEXITCODE -eq 0) {
+        Add-Note "Localization parity gate passed."
+    }
+    else {
+        Add-Issue "Localization parity gate failed."
     }
 
     if (Get-Command git -ErrorAction SilentlyContinue) {

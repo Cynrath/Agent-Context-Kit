@@ -31,3 +31,25 @@ Examples:
 JSON output keeps stable English field names and schema values regardless of `--lang`.
 
 On Windows, use a UTF-8-capable terminal profile if Turkish characters render incorrectly. The CLI should not downgrade Turkish text to ASCII fallback wording.
+
+## Parity Contract
+Every command that advertises `--lang en|tr` is covered by the localization parity matrix. Equivalent English and Turkish invocations must preserve:
+
+- the same exit code;
+- the same command signature and option names;
+- the same security visibility and Critical/High decisions;
+- the same generated repository-relative paths and overwrite behavior;
+- the same JSON schema and machine-readable semantics.
+
+Human-readable headings, labels, summaries, yes/no values, generated-file statuses, and known argument errors may be localized. Stack names, severity enum names, scanner rule IDs, configuration diagnostic codes, file paths, and Core diagnostic/finding messages remain stable technical values.
+
+JSON field names, command names, status tokens, rule IDs, diagnostic codes, and exit codes remain language-independent. JSON and SARIF must not gain translated aliases or language-specific values.
+
+## Release Gate
+Run:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
+```
+
+The gate verifies all 13 JSON-capable commands are represented, runs focused English/Turkish human/error/JSON tests, smokes Turkish help, and parses Turkish-mode JSON. Generated templates remain a separate content surface; this gate does not require a resource framework or rewrite every template.
