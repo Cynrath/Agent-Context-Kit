@@ -117,6 +117,8 @@
   - Completed locally with table-driven detection, stable rule mapping, and known-noise precision fixtures.
 - TASK-0075 safe suppression audit log:
   - Completed locally with sanitized human/JSON config suppression records and Critical safety boundaries.
+- TASK-0076 README command examples and copy-paste polish:
+  - Completed locally with repository-root context, explicit source build commands, and grouped installed-tool workflows.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

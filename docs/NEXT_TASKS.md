@@ -19,7 +19,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 10. TASK-0075 safe suppression audit log - completed locally.
 
 ## Documentation / Presentation
-11. TASK-0076 README command examples and copy-paste polish - queued.
+11. TASK-0076 README command examples and copy-paste polish - completed locally.
 12. TASK-0077 sanitized screenshot capture plan - queued.
 13. TASK-0078 docs site / GitHub Pages planning - queued.
 14. TASK-0079 tutorial: first 5 minutes with ackit - queued.

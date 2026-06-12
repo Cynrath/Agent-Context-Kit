@@ -9,7 +9,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
 - Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
 - TASK-0066 through TASK-0073 are completed locally without remote writes.
-- TASK-0074 is completed and TASK-0075 safe suppression audit log is in progress.
+- TASK-0075 and TASK-0076 are completed locally; TASK-0076 is ready to commit after full validation.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 post-commit public release gate passed with the expected post-tag HEAD warning.
@@ -435,6 +435,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0074 post-commit public release gate passed. Latest pushed predecessor `3ecf005` has successful CI, published smoke, and source smoke runs; TASK-0074 hosted validation remains pending maintainer push.
 - TASK-0075 added sanitized config suppression audit records to current-source human/JSON scan output while keeping Critical findings visible and SARIF limited to visible findings. Full tests passed 127/127; scan, doctor, SARIF parse, sample smoke, hygiene, CLI/config/v0.2/v1.0 gates, and release verification passed. The pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0075 post-commit public release gate passed with no blocking items; continue with TASK-0076 README command examples and copy-paste polish.
+- TASK-0076 aligned README command examples for installed-tool and source workflows. Restore/build passed with 0 warnings/errors, tests passed 127/127, scan/doctor/JSON/SARIF/sample smoke and hygiene/gates passed; the pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0076 post-commit public release gate passed with no blocking items; continue with TASK-0077 sanitized screenshot capture planning.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

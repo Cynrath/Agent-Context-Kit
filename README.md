@@ -98,27 +98,55 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
-ackit --help
 ackit version
-ackit scan --ci
+ackit --help
 ```
+
+Run scans from the root of the repository you want to inspect:
+
+```powershell
+ackit scan
+ackit scan --ci
+ackit doctor
+```
+
+`scan --ci` returns a non-zero exit code for High or Critical findings. Start with `ackit scan` when you want report-only behavior.
+
+### Common installed-tool workflows
+
+Create local review artifacts:
+
+```powershell
+ackit sarif --output .ackit/reports/ackit.sarif
+ackit report --output .ackit/reports/scan-report.html
+ackit webui --output .ackit/webui/index.html
+```
+
+Initialize and generate agent context:
+
+```powershell
+ackit init --lang en
+ackit generate --target all --lang en
+ackit task "Add permission checks" --lang en
+```
+
+Generated `.ackit/` reports and Web UI files are local-only artifacts and should be reviewed before sharing.
 
 ### Run from source
 
+Run these commands from the AgentContextKit repository root:
+
 ```powershell
-dotnet restore
-dotnet build -c Release
-dotnet run --project src/AgentContextKit.Cli -- --help
-dotnet run --project src/AgentContextKit.Cli -- scan
-dotnet run --project src/AgentContextKit.Cli -- scan --ci
-dotnet run --project src/AgentContextKit.Cli -- scan --json
-dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
-dotnet run --project src/AgentContextKit.Cli -- report --json
-dotnet run --project src/AgentContextKit.Cli -- webui --json
-dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
-dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/prompt-pack.md --approve --json
-dotnet run --project src/AgentContextKit.Cli -- task "Add permission checks" --lang en
+dotnet restore AgentContextKit.sln
+dotnet build AgentContextKit.sln -c Release --no-restore
+dotnet test AgentContextKit.sln -c Release --no-build
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- --help
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --json
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- sarif --output .ackit/reports/ackit.sarif
 ```
+
+Current source adds sanitized suppression audit fields to human/JSON scan output. The published `0.2.0-alpha.1` package predates that additive audit surface.
 
 ### Try it on a sample
 
@@ -237,6 +265,7 @@ ackit task "Yetki kontrollerini ekle" --lang tr
 | Machine-readable output | [JSON Output](docs/JSON_OUTPUT.md) |
 | CI usage | [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md) |
 | Scanner behavior | [Scanner Rules](docs/SCANNER_RULES.md) |
+| Suppression audit | [Suppression Audit](docs/SUPPRESSION_AUDIT.md) |
 | Exit behavior | [Exit Codes](docs/EXIT_CODES.md) |
 | SARIF report | [SARIF Output](docs/SARIF_OUTPUT.md) |
 
@@ -251,7 +280,7 @@ Start with [Documentation Index](docs/DOCUMENTATION_INDEX.md).
 | Usage | [CLI Reference](docs/CLI_REFERENCE.md), [Examples](docs/EXAMPLES.md), [Example Workflows](docs/EXAMPLE_WORKFLOWS.md) |
 | Demo | [Sample Gallery](docs/SAMPLE_GALLERY.md), [Demo Scenarios](docs/DEMO_SCENARIOS.md), [Web UI Preview](docs/WEB_UI_PREVIEW.md) |
 | Reports | [HTML Reports](docs/HTML_REPORTS.md), [SARIF Output](docs/SARIF_OUTPUT.md), [Web UI Prototype](docs/WEB_UI_PROTOTYPE.md), [Visual Assets](docs/VISUAL_ASSETS.md) |
-| Operations | [Configuration](docs/CONFIGURATION.md), [JSON Output](docs/JSON_OUTPUT.md), [Troubleshooting](docs/TROUBLESHOOTING.md) |
+| Operations | [Configuration](docs/CONFIGURATION.md), [JSON Output](docs/JSON_OUTPUT.md), [Suppression Audit](docs/SUPPRESSION_AUDIT.md), [Troubleshooting](docs/TROUBLESHOOTING.md) |
 | Engineering | [Architecture](docs/ARCHITECTURE.md), [Source Hygiene](docs/SOURCE_HYGIENE.md), [Security Model](docs/SECURITY_MODEL.md) |
 | Packaging | [Packaging](docs/PACKAGING.md), [Release Validation](docs/RELEASE_VALIDATION.md), [Maintainer Release Handoff](docs/MAINTAINER_RELEASE_HANDOFF.md) |
 | Maintainers | [Contributor Onboarding](docs/CONTRIBUTOR_ONBOARDING.md), [Support Matrix](docs/SUPPORT_MATRIX.md), [Maintainer Guide](docs/MAINTAINER_GUIDE.md) |

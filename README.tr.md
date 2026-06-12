@@ -65,33 +65,55 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 - English ve Turkish output/template temeli.
 
 ## Hizli Baslangic
-Kaynak koddan:
-
-```powershell
-dotnet restore
-dotnet build -c Release
-dotnet run --project src/AgentContextKit.Cli -- --help
-dotnet run --project src/AgentContextKit.Cli -- scan
-dotnet run --project src/AgentContextKit.Cli -- scan --ci
-dotnet run --project src/AgentContextKit.Cli -- scan --json
-dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/ackit.sarif
-dotnet run --project src/AgentContextKit.Cli -- report --json
-dotnet run --project src/AgentContextKit.Cli -- webui --json
-dotnet run --project src/AgentContextKit.Cli -- prompt-pack --json
-dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/prompt-pack.md --approve --json
-dotnet run --project src/AgentContextKit.Cli -- task "Yetki kontrollerini ekle" --lang tr
-```
-
-NuGet ile kurulum:
+NuGet global tool kurulumu:
 
 ```powershell
 dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
-ackit --help
 ackit version
-ackit scan --ci
+ackit --help
 ```
 
-Yayinlanmis `0.2.0-alpha.1` paketi `ackit sarif` komutunu icerir.
+Taramayi incelemek istediginiz repository root klasorunde calistirin:
+
+```powershell
+ackit scan
+ackit scan --ci
+ackit doctor
+```
+
+`scan --ci`, High veya Critical bulguda non-zero exit code dondurur. Sadece rapor almak icin once `ackit scan` kullanin.
+
+Lokal inceleme ciktisi uretmek icin:
+
+```powershell
+ackit sarif --output .ackit/reports/ackit.sarif
+ackit report --output .ackit/reports/scan-report.html
+ackit webui --output .ackit/webui/index.html
+```
+
+Agent context dosyalarini baslatmak ve uretmek icin:
+
+```powershell
+ackit init --lang tr
+ackit generate --target all --lang tr
+ackit task "Yetki kontrollerini ekle" --lang tr
+```
+
+Generated `.ackit/` rapor ve Web UI dosyalari local-only artifact'tir; paylasmadan once incelenmelidir.
+
+Kaynak koddan calistirma:
+
+```powershell
+dotnet restore AgentContextKit.sln
+dotnet build AgentContextKit.sln -c Release --no-restore
+dotnet test AgentContextKit.sln -c Release --no-build
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- --help
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --json
+dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- sarif --output .ackit/reports/ackit.sarif
+```
+
+Mevcut source, human/JSON scan ciktisina sanitized suppression audit alanlari ekler. Yayinlanmis `0.2.0-alpha.1` paketi bu additive audit yuzeyinden once yayinlanmistir.
 
 Kurulu tool icin hizli dogrulama:
 
@@ -200,6 +222,7 @@ Onemli dokumanlar:
 - [GitHub Actions Usage](docs/GITHUB_ACTIONS_USAGE.md)
 - [Configuration](docs/CONFIGURATION.md)
 - [Scanner Rules](docs/SCANNER_RULES.md)
+- [Suppression Audit](docs/SUPPRESSION_AUDIT.md)
 - [JSON Output](docs/JSON_OUTPUT.md)
 - [Exit Codes](docs/EXIT_CODES.md)
 - [HTML Reports](docs/HTML_REPORTS.md)
