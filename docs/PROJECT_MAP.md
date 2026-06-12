@@ -51,6 +51,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/SCREENSHOT_CAPTURE_PLAN.md`
 - `docs/EXAMPLES.md`
 - `docs/EXAMPLE_WORKFLOWS.md`
+- `docs/FIRST_FIVE_MINUTES.md`
 - `docs/assets/diagrams/ackit-flow.svg`
 - `docs/examples/github-actions-published-tool-smoke.yml`
 - `docs/examples/github-actions-sarif-upload.yml`

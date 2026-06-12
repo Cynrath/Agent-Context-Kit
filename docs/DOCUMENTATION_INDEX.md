@@ -3,6 +3,7 @@
 ## Start Here
 - `README.md`: project overview and quick start.
 - `README.tr.md`: Turkish overview and quick start.
+- `docs/FIRST_FIVE_MINUTES.md`: published-tool tutorial from install to scan, generated context, and first task.
 - `docs/PRODUCT_SPEC.md`: product scope and MVP goals.
 - `docs/ROADMAP.md`: version roadmap.
 

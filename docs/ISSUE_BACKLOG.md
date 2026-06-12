@@ -35,7 +35,8 @@ Apply labels from `docs/GITHUB_LABELS.md` manually after issue creation.
 ### 6. Add quickstart tutorial
 - Labels: `type: docs`, `area: docs`, `priority: low`, `good first issue`
 - Goal: Create a first-five-minutes tutorial for `ackit`.
-- Done when: Tutorial uses the published `0.2.0-alpha.1` install command and a safe demo repository.
+- Status: Completed locally in `docs/FIRST_FIVE_MINUTES.md`.
+- Done when: Tutorial uses the published `0.2.0-alpha.1` install command, a timestamped synthetic demo repository, and verified core commands.
 
 ### 7. Add docs site plan
 - Labels: `type: docs`, `area: docs`, `priority: low`

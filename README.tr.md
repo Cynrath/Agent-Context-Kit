@@ -149,6 +149,8 @@ dotnet run --project ../../src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c
 Pop-Location
 ```
 
+Araci ilk kez kullaniyorsaniz, yayinlanmis paketle disposable bir demo repository olusturan [First Five Minutes With Ackit](docs/FIRST_FIVE_MINUTES.md) rehberini izleyin. Turkce generated cikti icin desteklenen komutlarda `--lang tr` kullanabilirsiniz.
+
 Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
 
 ## CLI Komutlari

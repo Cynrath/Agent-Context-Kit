@@ -158,6 +158,8 @@ Pop-Location
 
 See [Sample Gallery](docs/SAMPLE_GALLERY.md) and [Demo Scenarios](docs/DEMO_SCENARIOS.md) for guided examples.
 
+New to the tool? Follow [First Five Minutes With Ackit](docs/FIRST_FIVE_MINUTES.md) for a disposable, copy-paste-ready walkthrough using the published package.
+
 <details>
 <summary><strong>Installed-tool smoke test</strong></summary>
 

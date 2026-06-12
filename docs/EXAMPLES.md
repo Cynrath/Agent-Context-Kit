@@ -1,5 +1,7 @@
 # Examples
 
+For a complete beginner flow from install to generated context, start with [First Five Minutes With Ackit](FIRST_FIVE_MINUTES.md).
+
 ## Start In A Repository
 ```powershell
 ackit init --lang en
