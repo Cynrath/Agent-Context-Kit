@@ -160,6 +160,8 @@ See [Sample Gallery](docs/SAMPLE_GALLERY.md) and [Demo Scenarios](docs/DEMO_SCEN
 
 New to the tool? Follow [First Five Minutes With Ackit](docs/FIRST_FIVE_MINUTES.md) for a disposable, copy-paste-ready walkthrough using the published package.
 
+Adopting it in a real project? Use [Prepare A Repository For AI Coding Agents](docs/PREPARE_REPOSITORY_FOR_AI_AGENTS.md) for the security, config, generation, task-first, and CI-readiness workflow.
+
 <details>
 <summary><strong>Installed-tool smoke test</strong></summary>
 

@@ -2,6 +2,8 @@
 
 For a complete beginner flow from install to generated context, start with [First Five Minutes With Ackit](FIRST_FIVE_MINUTES.md).
 
+For an existing-repository adoption workflow, use [Prepare A Repository For AI Coding Agents](PREPARE_REPOSITORY_FOR_AI_AGENTS.md).
+
 ## Start In A Repository
 ```powershell
 ackit init --lang en

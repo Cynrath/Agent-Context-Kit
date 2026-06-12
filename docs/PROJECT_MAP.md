@@ -77,6 +77,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/PACKAGING.md`
 - `docs/PRIVACY.md`
 - `docs/PRODUCT_SPEC.md`
+- `docs/PREPARE_REPOSITORY_FOR_AI_AGENTS.md`
 - `docs/PROJECT_MAP.md`
 - `docs/PUBLIC_RELEASE_AUDIT.md`
 - `docs/PUBLIC_RELEASE_GATES.md`

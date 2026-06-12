@@ -443,6 +443,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0078 post-commit public release gate passed. Latest pushed TASK-0077 commit has successful `ci`, published-package smoke, and source-package smoke runs; continue with TASK-0079 first-five-minutes tutorial.
 - TASK-0079 added and smoke-tested the published-package first-five-minutes tutorial. Temp-repo core flow passed, minimal-demo doctor returned the expected health-gap exit `1`, repository tests passed 127/127, and scan/doctor/JSON/SARIF/sample smoke and hygiene/gates passed; the pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0079 post-commit public release gate passed with no blocking items; continue with TASK-0080 repository preparation tutorial.
+- TASK-0080 added the security-first existing-repository adoption tutorial. Tests passed 127/127, scan/doctor/JSON/SARIF/sample smoke and hygiene/gates passed, and static checks found no destructive/token examples; the pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0080 post-commit public release gate passed with no blocking items; continue with TASK-0081 `v0.2.0-alpha.2` scope planning.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

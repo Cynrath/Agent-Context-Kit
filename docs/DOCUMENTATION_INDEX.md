@@ -4,6 +4,7 @@
 - `README.md`: project overview and quick start.
 - `README.tr.md`: Turkish overview and quick start.
 - `docs/FIRST_FIVE_MINUTES.md`: published-tool tutorial from install to scan, generated context, and first task.
+- `docs/PREPARE_REPOSITORY_FOR_AI_AGENTS.md`: existing-repository security, config, agent instruction, task-first, and CI-readiness workflow.
 - `docs/PRODUCT_SPEC.md`: product scope and MVP goals.
 - `docs/ROADMAP.md`: version roadmap.
 

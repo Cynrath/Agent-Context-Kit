@@ -7,7 +7,7 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 3. Read-only GitHub CLI validation confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs on `master` succeeded for commit `e0a0fa9`.
 4. GitHub Release `v0.2.0-alpha.1` exists as a pre-release; its body has candidate-era wording, so `docs/RELEASE_BODY_V020_ALPHA1.md` is the maintainer-ready replacement draft.
 5. Published NuGet `0.2.0-alpha.1` includes `ackit sarif`.
-6. TASK-0066 through TASK-0079 are completed locally; continue with TASK-0080 after TASK-0079 validation and commit.
+6. TASK-0066 through TASK-0080 are completed locally; continue with TASK-0081 after TASK-0080 validation and commit.
 7. Remote writes remain maintainer-only: push, tag, GitHub Release edits, label creation, repo settings, branch protection, Code Scanning upload, issue creation, and NuGet publish.
 8. Generated `.ackit/`, SARIF, local reports, Web UI, packages, archives, `bin/`, `obj/`, `TestResults`, and coverage artifacts must not be committed.
 9. PROJECT-CONTROL-0001 pre-commit validation passed: restore, build, 83/83 tests, scan, doctor, JSON scan, SARIF parse, sample smoke, hygiene scans, diff checks, config/v0.2/v1.0 gates, and `verify-release.ps1`.

@@ -1,5 +1,7 @@
 # AI Workflow
 
+For repository adoption before the first agent task, use [Prepare A Repository For AI Coding Agents](PREPARE_REPOSITORY_FOR_AI_AGENTS.md).
+
 1. Read README, architecture, security, and the active task.
 2. Create or update a task before implementation.
 3. Inspect git status and preserve user changes.

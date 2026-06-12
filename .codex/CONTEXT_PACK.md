@@ -133,6 +133,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0077 defines a disposable-demo screenshot capture and sanitization plan without creating or committing an image.
 - TASK-0078 keeps repository Markdown canonical, defers GitHub Pages, and documents future activation triggers and privacy/quality gates without adding site tooling.
 - TASK-0079 adds a verified published-package first-five-minutes tutorial using a timestamped synthetic repository and local-only outputs.
+- TASK-0080 adds a security-first existing-repository adoption tutorial for baseline review, config, agent instructions, tasks, CI checks, and rollback.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

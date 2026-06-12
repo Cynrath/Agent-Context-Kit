@@ -101,3 +101,4 @@ Running `ackit doctor` in this intentionally small console repository can return
 - Use [Configuration](CONFIGURATION.md) before changing scanner allowlists.
 - Use [Sample Gallery](SAMPLE_GALLERY.md) for .NET, Minimal API, Node/TypeScript, and security fixture examples.
 - Use [Example Workflows](EXAMPLE_WORKFLOWS.md) for CI, reports, Web UI, release preflight, and source-development flows.
+- Use [Prepare A Repository For AI Coding Agents](PREPARE_REPOSITORY_FOR_AI_AGENTS.md) before adopting the tool in an existing project.
