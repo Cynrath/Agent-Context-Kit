@@ -27,7 +27,7 @@ The generous ceiling is intended to catch accidental pathological behavior acros
 - No cancellation token or explicit memory budget is currently exposed by the CLI.
 
 ## Release-Candidate Evidence Still Required
-- Hosted benchmark evidence on Windows, Ubuntu, and macOS.
+- A successful manual `.github/workflows/release-candidate-evidence.yml` run on Windows, Ubuntu, and macOS. The workflow design is present locally; no hosted run has been claimed.
 - A representative larger corpus with mixed file sizes/extensions.
 - Peak memory observation and a documented regression threshold.
 - Cancellation/interruption and unreadable-file behavior review.

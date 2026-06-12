@@ -72,5 +72,6 @@
 - Vulnerability and deprecation reviews are dated and reviewed.
 - Private GitHub vulnerability reporting is enabled and tested by the maintainer.
 - Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
+- `scripts/check-release-candidate-workflow.ps1 -FailOnIssues` passes and the manual `release-candidate-evidence` workflow is green on all three OS runners.
 - The `xunit` Legacy warning is resolved by migration or explicit dated risk acceptance.
 - Signing, SBOM, provenance, and package recovery decisions are recorded.

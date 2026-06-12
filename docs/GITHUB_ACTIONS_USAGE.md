@@ -80,6 +80,9 @@ Use Windows, Ubuntu, and macOS smoke runs for tool behavior that may depend on p
 The active repository workflows are:
 - `.github/workflows/cross-platform-smoke.yml`: published package smoke.
 - `.github/workflows/cross-platform-source-smoke.yml`: current branch/source package smoke.
+- `.github/workflows/release-candidate-evidence.yml`: manual-only predecessor upgrade, current-source config/baseline/SARIF, and performance evidence. It does not upload artifacts or SARIF.
+
+See [RC_HOSTED_EVIDENCE.md](RC_HOSTED_EVIDENCE.md) before manually dispatching the RC workflow.
 
 ## Privacy Notes
 - The MVP does not upload repository content.

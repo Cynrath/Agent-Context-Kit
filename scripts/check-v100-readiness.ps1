@@ -111,6 +111,7 @@ $requiredPaths = @(
     @{ Path = "docs\SUPPORT_LIFECYCLE.md"; Description = "support lifecycle" },
     @{ Path = "docs\SUPPLY_CHAIN_POLICY.md"; Description = "supply-chain policy" },
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "release-candidate evidence" },
+    @{ Path = "docs\RC_HOSTED_EVIDENCE.md"; Description = "hosted release-candidate evidence guide" },
     @{ Path = "docs\RELEASE_VALIDATION.md"; Description = "Release validation docs" },
     @{ Path = "docs\DOCUMENTATION_INDEX.md"; Description = "Documentation index" },
     @{ Path = "docs\ROADMAP.md"; Description = "Roadmap" },
@@ -128,7 +129,9 @@ $requiredPaths = @(
     @{ Path = "scripts\check-v100-documentation-release-gates.ps1"; Description = "Documentation/release gate check script" },
     @{ Path = "scripts\check-v100-readiness.ps1"; Description = "v1.0 final readiness check script" },
     @{ Path = "scripts\check-release-candidate-evidence.ps1"; Description = "release-candidate evidence check script" },
+    @{ Path = "scripts\check-release-candidate-workflow.ps1"; Description = "release-candidate workflow check script" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "scan performance measurement script" },
+    @{ Path = ".github\workflows\release-candidate-evidence.yml"; Description = "manual hosted release-candidate workflow" },
     @{ Path = "scripts\check-v050-readiness.ps1"; Description = "v0.5 readiness check script" },
     @{ Path = "scripts\verify-release.ps1"; Description = "Local release verification script" },
     @{ Path = "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"; Description = "CLI package project" },
@@ -166,8 +169,10 @@ $releaseValidationNeedles = @(
     "CONFIG_GENERATED_CONVENTIONS.md",
     "V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md",
     "scripts/check-release-candidate-evidence.ps1",
+    "scripts/check-release-candidate-workflow.ps1",
     "scripts/measure-scan-performance.ps1",
-    "RELEASE_CANDIDATE_EVIDENCE.md"
+    "RELEASE_CANDIDATE_EVIDENCE.md",
+    "RC_HOSTED_EVIDENCE.md"
 )
 
 foreach ($needle in $releaseValidationNeedles) {
@@ -186,7 +191,8 @@ $documentationIndexNeedles = @(
     "SECURITY_RESPONSE_READINESS.md",
     "SUPPORT_LIFECYCLE.md",
     "SUPPLY_CHAIN_POLICY.md",
-    "RELEASE_CANDIDATE_EVIDENCE.md"
+    "RELEASE_CANDIDATE_EVIDENCE.md",
+    "RC_HOSTED_EVIDENCE.md"
 )
 
 foreach ($needle in $documentationIndexNeedles) {

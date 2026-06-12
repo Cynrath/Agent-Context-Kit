@@ -142,6 +142,7 @@
 - TASK-0088 completed local release-candidate evidence preparation: upgrade fixtures, a disposable performance benchmark, and security/support/supply-chain policy docs.
 - Remaining RC work is hosted three-OS upgrade/performance/config evidence, dependency warning resolution, private vulnerability reporting, and final contract freeze.
 - TASK-0089 completes local config diagnostics CLI integration and the no-auto-migration contract; hosted predecessor-config evidence remains part of RC validation.
+- TASK-0090 adds a manual-only three-OS RC evidence workflow for isolated predecessor/current-source package checks, config immutability, baseline/SARIF behavior, and the synthetic performance tripwire. Hosted results remain maintainer-only evidence after push/dispatch.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 

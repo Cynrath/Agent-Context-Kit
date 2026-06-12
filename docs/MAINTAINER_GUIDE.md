@@ -31,7 +31,10 @@ Release-candidate evidence is tracked in `docs/RELEASE_CANDIDATE_EVIDENCE.md`. R
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 ```
+
+For hosted RC evidence, push the reviewed commit and manually dispatch `release-candidate-evidence`. Follow `docs/RC_HOSTED_EVIDENCE.md`; the workflow intentionally has no automatic push/PR trigger and no upload permissions.
 
 ## Version Bump Notes
 - Keep `PackageId` as `AgentContextKit`.

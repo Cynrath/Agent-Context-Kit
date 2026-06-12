@@ -18,7 +18,10 @@ dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ac
 dotnet run --project src/AgentContextKit.Cli -- doctor
 powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 ```
+
+Hosted RC evidence is manual-only. After a maintainer push, dispatch `.github/workflows/release-candidate-evidence.yml` and record the three OS results as described in `docs/RC_HOSTED_EVIDENCE.md`.
 
 Release-candidate dependency review:
 

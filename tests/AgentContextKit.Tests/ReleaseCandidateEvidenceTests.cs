@@ -26,6 +26,7 @@ public sealed class ReleaseCandidateEvidenceTests
         Assert.Contains("generated/", config.IgnorePaths);
         Assert.Contains("learn.microsoft.com", config.SafeDomains);
         Assert.Contains("docs/generated/", config.IgnoredPaths);
+        Assert.Contains(".ackit/config.yml", config.IgnoredPaths);
         Assert.Contains("ACKIT003", config.IgnoredFindingIds);
         Assert.False(diagnostics.HasErrors);
     }

@@ -15,5 +15,6 @@ safeDomains:
   - learn.microsoft.com
 ignoredPaths:
   - docs/generated/
+  - .ackit/config.yml
 ignoredFindingIds:
   - ACKIT003

@@ -1,0 +1,146 @@
+name: release-candidate-evidence
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  PREDECESSOR_VERSION: 0.2.0-alpha.1
+
+jobs:
+  evidence:
+    name: evidence (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - windows-2025
+          - ubuntu-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Restore, build, and test
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+
+          dotnet restore AgentContextKit.sln
+          dotnet build AgentContextKit.sln -c Release --no-restore
+          dotnet test AgentContextKit.sln -c Release --no-build
+
+      - name: Install predecessor and source candidate
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+
+          $packageRoot = Join-Path $env:RUNNER_TEMP "ackit-rc-packages"
+          $predecessorRoot = Join-Path $env:RUNNER_TEMP "ackit-predecessor-tool"
+          $candidateRoot = Join-Path $env:RUNNER_TEMP "ackit-candidate-tool"
+          New-Item -ItemType Directory -Force -Path $packageRoot, $predecessorRoot, $candidateRoot | Out-Null
+
+          [xml]$project = Get-Content -Raw "src/AgentContextKit.Cli/AgentContextKit.Cli.csproj"
+          $sourceVersion = (Select-Xml -Xml $project -XPath "/Project/PropertyGroup/Version" | Select-Object -First 1).Node.InnerText
+          if ([string]::IsNullOrWhiteSpace($sourceVersion)) {
+            throw "Source package version could not be read."
+          }
+
+          $candidatePackageVersion = "${sourceVersion}.ci.$($env:GITHUB_RUN_ID)"
+          dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $packageRoot -p:PackageVersion=$candidatePackageVersion -p:Version=$candidatePackageVersion
+          dotnet tool install AgentContextKit --tool-path $predecessorRoot --version $env:PREDECESSOR_VERSION
+          dotnet tool install AgentContextKit --tool-path $candidateRoot --add-source $packageRoot --version $candidatePackageVersion --ignore-failed-sources
+
+          $toolName = if ($IsWindows) { "ackit.exe" } else { "ackit" }
+          "PREDECESSOR_ACKIT=$(Join-Path $predecessorRoot $toolName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "CANDIDATE_ACKIT=$(Join-Path $candidateRoot $toolName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          "CANDIDATE_PACKAGE_VERSION=$candidatePackageVersion" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Verify predecessor upgrade and baseline policy
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+
+          $demoRoot = Join-Path $env:RUNNER_TEMP "ackit-rc-upgrade"
+          New-Item -ItemType Directory -Force -Path (Join-Path $demoRoot ".ackit") | Out-Null
+          Copy-Item "tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml" (Join-Path $demoRoot ".ackit/config.yml")
+          Set-Content -Path (Join-Path $demoRoot "README.md") -Value "# Release candidate fixture"
+          Set-Content -Path (Join-Path $demoRoot "LICENSE") -Value "MIT"
+          Set-Content -Path (Join-Path $demoRoot "SECURITY.md") -Value "# Security"
+          Set-Content -Path (Join-Path $demoRoot ".gitignore") -Value "bin/`nobj/`n.ackit/reports/"
+
+          Push-Location $demoRoot
+          try {
+            git init
+            $configHashBefore = (Get-FileHash ".ackit/config.yml" -Algorithm SHA256).Hash
+
+            & $env:PREDECESSOR_ACKIT version
+            $predecessorScan = & $env:PREDECESSOR_ACKIT scan --json | ConvertFrom-Json
+            if ($predecessorScan.command -ne "scan") {
+              throw "Published predecessor scan JSON was not valid."
+            }
+
+            & $env:CANDIDATE_ACKIT version
+            $candidateHelp = & $env:CANDIDATE_ACKIT --help | Out-String
+            if ($candidateHelp -notmatch "config-check" -or $candidateHelp -notmatch "baseline") {
+              throw "Source candidate help is missing expected commands."
+            }
+
+            $configCheck = & $env:CANDIDATE_ACKIT config-check --json | ConvertFrom-Json
+            if ($configCheck.exitCode -ne 0 -or $configCheck.config.status -ne "valid") {
+              throw "Source candidate config compatibility check failed."
+            }
+
+            & $env:CANDIDATE_ACKIT scan --ci
+            & $env:CANDIDATE_ACKIT baseline --output .ackit-baseline.json
+            $baselineScan = & $env:CANDIDATE_ACKIT scan --baseline .ackit-baseline.json --ci --json | ConvertFrom-Json
+            if ($baselineScan.exitCode -ne 0 -or $null -eq $baselineScan.baseline) {
+              throw "Baseline-aware source candidate scan failed."
+            }
+
+            & $env:CANDIDATE_ACKIT sarif --output .ackit/reports/rc-evidence.sarif --baseline .ackit-baseline.json
+            Get-Content -Raw ".ackit/reports/rc-evidence.sarif" | ConvertFrom-Json | Out-Null
+
+            $configHashAfter = (Get-FileHash ".ackit/config.yml" -Algorithm SHA256).Hash
+            if ($configHashBefore -ne $configHashAfter) {
+              throw "Config content changed during upgrade evidence checks."
+            }
+
+            & $env:CANDIDATE_ACKIT scan --ci
+          }
+          finally {
+            Pop-Location
+          }
+
+      - name: Run synthetic performance tripwire
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+
+          & (Join-Path $env:GITHUB_WORKSPACE "scripts/measure-scan-performance.ps1") -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
+
+      - name: Write evidence summary
+        if: always()
+        shell: pwsh
+        run: |
+          @"
+          ## Release-candidate evidence
+          - OS: ${{ matrix.os }}
+          - Predecessor package: AgentContextKit $env:PREDECESSOR_VERSION
+          - Source candidate package: $env:CANDIDATE_PACKAGE_VERSION
+          - Artifact upload: disabled
+          - SARIF upload: disabled
+          "@ | Out-File -FilePath $env:GITHUB_STEP_SUMMARY -Encoding utf8 -Append

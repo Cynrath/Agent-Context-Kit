@@ -19,6 +19,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0088 completed upgrade fixtures, compatibility tests, performance/evidence scripts, and security/support/supply-chain/upgrade evidence docs. Focused tests passed 2/2, the final 2,000-file benchmark rerun completed in 2.936 seconds, vulnerability review was clean, and `xunit` `2.9.3` was flagged Legacy.
 - TASK-0088 committed as `b560214 test: add release candidate evidence gates`; post-commit public release gate passed.
 - TASK-0089 adds read-only `ackit config-check`, sanitized JSON/human diagnostics, warning/error exit behavior, manual obsolete-key migration guidance, and five focused tests. Full validation passed with 169/169 tests; commit and post-commit public gate are next.
+- TASK-0089 committed as `1284646 feat: add config diagnostics command`; post-commit public release gate passed.
+- TASK-0090 adds a manual-only three-OS RC evidence workflow, static workflow gate, hosted evidence guide, and fixture self-noise correction. Local Windows predecessor/source/config/baseline/SARIF smoke and full validation passed with 169/169 tests; commit and post-commit public gate are next.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
@@ -472,6 +474,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0088 adds upgrade compatibility fixtures/tests, a disposable performance benchmark, an evidence gate, and RC security/support/supply-chain policies. Full validation passed with 164/164 tests; the pre-commit public gate failed only on the expected dirty working tree. Commit, rerun the public gate, then continue with TASK-0089.
 - TASK-0088 committed as `b560214 test: add release candidate evidence gates`; post-commit public release gate passed.
 - TASK-0089 implements the current-source config diagnostics CLI contract. Full validation passed with 169/169 tests; the pre-commit public gate failed only on the expected dirty tree. Commit, rerun the public gate, then continue with TASK-0090.
+- TASK-0089 committed as `1284646 feat: add config diagnostics command`; post-commit public release gate passed.
+- TASK-0090 designs the hosted RC evidence workflow and passes local Windows reproduction/full validation. No local YAML parser was available; hosted three-OS dispatch remains maintainer-only. Commit, rerun the public gate, then continue with TASK-0091.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

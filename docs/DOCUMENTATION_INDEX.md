@@ -84,6 +84,7 @@
 - `docs/PERFORMANCE_POLICY.md`: local benchmark scope, tripwire, and non-guarantees.
 - `docs/SUPPLY_CHAIN_POLICY.md`: dependency, artifact, signing, SBOM, provenance, and recovery policy.
 - `docs/RELEASE_CANDIDATE_EVIDENCE.md`: dated local evidence and remaining hosted/maintainer blockers.
+- `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

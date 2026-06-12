@@ -14,6 +14,8 @@ The first release-candidate upgrade target is the published NuGet package `Agent
 ## Config Evidence
 `tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml` represents the published predecessor config surface. `ReleaseCandidateEvidenceTests` verifies that the current reader preserves its language, keywords, ignore paths, extensions, safe domains, ignored paths, and ignored finding IDs without validation errors.
 
+The synthetic fixture suppresses non-Critical keyword matches from its own `.ackit/config.yml` path so hosted `scan --ci` measures upgrade behavior instead of fixture self-noise. Critical findings remain unsuppressible.
+
 Current source exposes unknown, obsolete, duplicate, malformed, and unsafe config diagnostics through read-only `ackit config-check`. Warnings remain non-blocking, errors return `1`, and obsolete keys require a reviewed manual edit; no auto-migration rewrites the file.
 
 ## Baseline Evidence
@@ -40,6 +42,6 @@ dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
 Restore reviewed config/baseline files if a future migration task changed them. Current commands do not rewrite config or baseline implicitly.
 
 ## Remaining Evidence
-- Hosted Windows/Ubuntu/macOS upgrade smoke from `0.2.0-alpha.1` to the selected release candidate.
-- Hosted predecessor-config smoke for `ackit config-check`.
+- Successful manual `.github/workflows/release-candidate-evidence.yml` Windows/Ubuntu/macOS upgrade smoke from `0.2.0-alpha.1` to the selected source candidate.
+- Hosted predecessor-config `config-check`, baseline, and SARIF evidence from that workflow.
 - English/Turkish upgrade and error-output parity.

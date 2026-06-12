@@ -1,19 +1,19 @@
 # Release Candidate Evidence
 
 ## Status
-Local evidence preparation is in progress after TASK-0084 through TASK-0087 baseline/config hardening. This document does not approve a release candidate or 1.0 GA.
+Local evidence preparation includes TASK-0084 through TASK-0090 baseline/config hardening and the manual hosted evidence workflow design. This document does not approve a release candidate or 1.0 GA.
 
 ## Local Evidence Matrix
 | Area | Local Evidence | Status | Remaining Blocker |
 | --- | --- | --- | --- |
-| Baseline policy | schema/fingerprint fixtures, explicit update, integrity checks, new/existing CI tests, JSON/SARIF/report/Web UI parity | Ready locally | hosted/package upgrade smoke |
+| Baseline policy | schema/fingerprint fixtures, explicit update, integrity checks, new/existing CI tests, JSON/SARIF/report/Web UI parity, manual three-OS workflow design | Ready locally | successful hosted workflow run |
 | Config compatibility | published `0.2.0-alpha.1` config fixture plus read-only `config-check` human/JSON/exit/privacy contract tests | Ready locally | hosted predecessor-config smoke and RC sign-off |
 | CLI/JSON/SARIF | contract tests, additive schema rules, exit-code parity | Ready locally | RC freeze/sign-off and machine-readable schema decision |
-| Performance | disposable 2,000-file benchmark with 30-second tripwire | Initial local evidence | hosted three-OS, memory, cancellation, mixed corpus |
+| Performance | disposable 2,000-file benchmark with 30-second tripwire plus manual three-OS workflow design | Initial local evidence | successful hosted run, memory, cancellation, mixed corpus |
 | Security response | policy, Critical regression tests, privacy boundaries | Partial | private GitHub reporting channel and dated dependency review |
-| Runtime support | .NET 10 and current three-OS workflow policy | Documented | fresh hosted RC evidence and final support window |
+| Runtime support | .NET 10, three-OS workflow policy, and manual RC workflow | Documented | fresh hosted RC run and final support window |
 | Supply chain | metadata/artifact/package install gates | Partial | signing/SBOM/provenance/recovery decisions |
-| Migration/localization | upgrade/rollback guide and fixtures | Partial | CLI config migration and EN/TR parity gate |
+| Migration/localization | upgrade/rollback guide, fixtures, read-only config diagnostics, and explicit no-auto-migration policy | Partial | complete EN/TR parity gate and hosted evidence |
 
 ## Local Commands
 ```powershell
@@ -22,6 +22,7 @@ dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
 powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 ```
 
 ## Dated Local Result
@@ -30,6 +31,7 @@ Local evidence recorded on 2026-06-12:
 - The final disposable 2,000-file scan benchmark rerun completed in 2.936 seconds against a 30-second tripwire.
 - NuGet vulnerability review reported no vulnerable direct or transitive packages.
 - NuGet deprecation review reported `xunit` `2.9.3` as Legacy and identified `xunit.v3` as the alternative.
+- Local Windows reproduction of the manual RC workflow steps passed isolated predecessor/source installs, config immutability, `config-check`, baseline, SARIF parse, and final scan.
 
 The xUnit finding affects test tooling rather than the shipped runtime package, but it still requires a migration or explicit dated maintainer risk acceptance before a 1.0 release candidate.
 

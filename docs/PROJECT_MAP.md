@@ -27,6 +27,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `.github/workflows/ci.yml`
 - `.github/workflows/cross-platform-source-smoke.yml`
 - `.github/workflows/cross-platform-smoke.yml`
+- `.github/workflows/release-candidate-evidence.yml`
 - `.gitignore`
 - `AgentContextKit.sln`
 - `AgentContextKit.slnx`
@@ -181,6 +182,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/SUPPORT_LIFECYCLE.md`
 - `docs/SUPPLY_CHAIN_POLICY.md`
 - `docs/RELEASE_CANDIDATE_EVIDENCE.md`
+- `docs/RC_HOSTED_EVIDENCE.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `docs/WEB_UI_PREVIEW.md`
 - `docs/VISUAL_ASSETS.md`
@@ -210,6 +212,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-package-metadata.ps1`
 - `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-candidate-evidence.ps1`
+- `scripts/check-release-candidate-workflow.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/check-v020-readiness.ps1`
 - `scripts/check-v030-readiness.ps1`
