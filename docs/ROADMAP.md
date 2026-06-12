@@ -112,7 +112,7 @@
 - TASK-0072 JSON schema stability and contract tests:
   - Require the common schema v2 envelope and scanner finding fields without rejecting additive properties.
 - TASK-0073 CLI exit code contract hardening:
-  - Expand exit code tests and reference docs.
+  - Completed locally with success-alias, invalid-invocation, and human/JSON exit parity coverage.
 - TASK-0074 scanner fixture coverage expansion:
   - Add safe fixtures for scanner precision and expected severity.
 - TASK-0075 safe suppression audit log:

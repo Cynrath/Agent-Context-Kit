@@ -9,7 +9,7 @@
 | 5 | Done locally | TASK-0070 scanner config examples and sample configs | Medium | None for docs-only examples | `docs/examples/config/*.yml`, config/scanner docs | Build/test/scan/doctor/hygiene/gates | No | Safe config examples exist without critical suppression or secrets. |
 | 6 | Done locally | TASK-0071 SARIF GitHub Code Scanning opt-in workflow design | Medium | Activation is maintainer-only | docs example workflow/design docs | Build/test/scan/doctor/hygiene/gates | Yes, to activate workflow/upload | Opt-in workflow design is documented, not active. |
 | 7 | Done locally | TASK-0072 JSON schema stability and contract tests | Medium | None | JSON docs/tests | Build/test/scan/doctor/hygiene/gates | No | Schema behavior is covered by tests. |
-| 8 | Queued | TASK-0073 CLI exit code contract hardening | Medium | None | exit code docs/tests | Build/test/scan/doctor/hygiene/gates | No | Exit code behavior is documented and tested. |
+| 8 | Done locally | TASK-0073 CLI exit code contract hardening | Medium | None | exit code docs/tests | Build/test/scan/doctor/hygiene/gates | No | Exit code behavior is documented and tested. |
 | 9 | Queued | TASK-0074 scanner fixture coverage expansion | Medium | None | scanner fixtures/tests/docs | Build/test/scan/doctor/hygiene/gates | No | Fixture coverage increases without false-negative risk. |
 | 10 | Queued | TASK-0075 safe suppression audit log | Medium | Product decision may be needed | config/scanner docs/code/tests | Build/test/scan/doctor/hygiene/gates | No | Suppression behavior has auditable local output. |
 | 11 | Queued | TASK-0076 README command examples and copy-paste polish | Low | None | README files | Build/test/scan/doctor/hygiene/gates | No | README examples are concise and current. |

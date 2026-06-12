@@ -72,6 +72,8 @@ Stable expectations:
 
 `scan` remains report-only by default. Use `scan --ci` for automation that should fail on high or critical findings.
 
+Exit decisions are language- and output-format-independent. When a JSON payload includes `exitCode`, it must equal the process exit code returned for the equivalent human-readable invocation.
+
 ## JSON Contract
 JSON output is documented in `docs/JSON_OUTPUT.md`.
 

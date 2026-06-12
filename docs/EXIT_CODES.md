@@ -32,4 +32,12 @@ AgentContextKit uses small, automation-friendly exit codes.
 - `ackit scan` is report-only by default so existing local workflows are not broken by findings.
 - Use `ackit scan --ci` in automated checks when high or critical findings should fail the job.
 - JSON output uses the same process exit code as human-readable output.
+- Exit codes are language-independent and must not change when `--lang` changes.
+- Automation should branch on the numeric process exit code, not localized output text.
+- New non-blocking output fields or messages must not change an existing command's exit decision.
 - Public release approval is not implied by exit code `0`; release blockers remain documented separately.
+
+## Compatibility
+- Existing meanings of `0`, `1`, and `2` are stable within the current command contract.
+- A command-specific exit-code change requires tests, documentation, changelog notes, and an explicit compatibility review.
+- JSON payloads that expose an `exitCode` field must match the actual process exit code.

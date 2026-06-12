@@ -8,8 +8,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `v0.2.0-alpha.1` is published on GitHub and NuGet; published package includes `ackit sarif`.
 - Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
 - Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
-- TASK-0066 through TASK-0071 are completed as local-only docs tasks without remote writes.
-- TASK-0072 JSON schema contract test implementation is in progress.
+- TASK-0066 through TASK-0072 are completed locally without remote writes.
+- TASK-0073 CLI exit-code contract hardening is in progress.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 post-commit public release gate passed with the expected post-tag HEAD warning.
@@ -429,6 +429,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0071 completed the documentation-only, manual-dispatch SARIF upload workflow design and was committed as `4615f65 docs: design opt-in SARIF upload workflow`.
 - TASK-0072 added schema v2 JSON envelope and scanner finding contract tests without changing runtime output; focused tests passed 23/23 and full tests passed 85/85. Scan, doctor, SARIF parse, sample smoke, hygiene checks, config/v0.2/v1.0 gates, and release verification passed; the pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0072 post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote-tag verification note remain.
+- TASK-0073 hardened the CLI exit-code contract without runtime changes. Focused tests passed 34/34 and full tests passed 96/96; scan, doctor, SARIF parse, sample smoke, hygiene, CLI/config/v0.2/v1.0 gates, and release verification passed. The pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0073 post-commit public release gate passed with no blocking items; continue with TASK-0074 scanner fixture coverage expansion.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

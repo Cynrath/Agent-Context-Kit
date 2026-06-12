@@ -1155,6 +1155,55 @@ public sealed class ConfigAndDoctorTests
 
 public sealed class CliJsonAndMetadataTests
 {
+    [Theory]
+    [InlineData("")]
+    [InlineData("help")]
+    [InlineData("--help")]
+    [InlineData("-h")]
+    [InlineData("version")]
+    [InlineData("--version")]
+    public void HelpAndVersionAliasesReturnSuccess(string argument)
+    {
+        using var repo = TempRepository.Create();
+        var args = string.IsNullOrEmpty(argument) ? Array.Empty<string>() : [argument];
+
+        var result = RunCli(repo.Path, args);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.True(result.Output.Contains("Usage:", StringComparison.Ordinal) ||
+                    result.Output.Contains("AgentContextKit 0.2.0-alpha.1", StringComparison.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("sarif")]
+    [InlineData("task")]
+    [InlineData("context-export --approve")]
+    [InlineData("context-export --prompt-pack missing.md")]
+    public void InvalidInvocationsReturnError(string commandLine)
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, commandLine.Split(' ', StringSplitOptions.RemoveEmptyEntries));
+
+        Assert.Equal(1, result.ExitCode);
+        Assert.False(string.IsNullOrWhiteSpace(result.Error));
+    }
+
+    [Fact]
+    public void HumanAndJsonModesShareRiskAndHealthExitDecisions()
+    {
+        using var highRepo = TempRepository.Create();
+        highRepo.Write("settings.txt", "password" + "=not-for-public");
+        AssertSameExitCode(highRepo.Path, ["scan", "--ci"], 1);
+
+        using var productionConfigRepo = TempRepository.Create();
+        productionConfigRepo.Write("appsettings.Production.json", "{}");
+        AssertSameExitCode(productionConfigRepo.Path, ["redact-check", "--profile", "public-release"], 1);
+
+        using var incompleteRepo = TempRepository.Create();
+        AssertSameExitCode(incompleteRepo.Path, ["doctor"], 1);
+    }
+
     [Fact]
     public void SuccessfulJsonCommandsExposeSchemaVersionTwoEnvelope()
     {
@@ -1600,6 +1649,17 @@ public sealed class CliJsonAndMetadataTests
             Assert.True(summary.AsObject().ContainsKey(field));
             Assert.True(summary[field]?.GetValue<int>() >= 0);
         }
+    }
+
+    private static void AssertSameExitCode(string repositoryPath, string[] args, int expectedExitCode)
+    {
+        var humanResult = RunCli(repositoryPath, args);
+        var jsonResult = RunCli(repositoryPath, [.. args, "--json"]);
+        var json = JsonNode.Parse(jsonResult.Output);
+
+        Assert.Equal(expectedExitCode, humanResult.ExitCode);
+        Assert.Equal(expectedExitCode, jsonResult.ExitCode);
+        Assert.Equal(expectedExitCode, json?["exitCode"]?.GetValue<int>());
     }
 
     private static string LocateRepositoryRoot()
