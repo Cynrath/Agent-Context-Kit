@@ -53,6 +53,7 @@
 
 ## Security And Privacy
 - `SECURITY.md`: security policy.
+- `docs/SECURITY_RESPONSE_READINESS.md`: disclosure channel, response expectations, and RC security evidence.
 - `docs/SECURITY_MODEL.md`: scanner and trust boundary model.
 - `docs/SCANNER_RULES.md`: stable `ACKIT` rule IDs and Critical suppression boundaries.
 - `docs/SECURITY_NOTES.md`: generated security notes.
@@ -64,6 +65,7 @@
 - `CODE_OF_CONDUCT.md`: conduct expectations.
 - `docs/SUPPORT.md`: support scope.
 - `docs/SUPPORT_MATRIX.md`: supported platforms, .NET version, shells, and tested command classes.
+- `docs/SUPPORT_LIFECYCLE.md`: support window, predecessor, runner, and end-of-life policy.
 - `docs/MAINTAINER_GUIDE.md`: maintainer change, release, NuGet, and rollback workflow.
 - `docs/GITHUB_REPO_HYGIENE.md`: GitHub metadata, templates, branch protection, and Actions hygiene.
 - `docs/GITHUB_LABELS.md`: recommended GitHub labels and optional maintainer-only label commands.
@@ -78,6 +80,10 @@
 
 ## Packaging And Release
 - `docs/PACKAGING.md`: NuGet tool packaging.
+- `docs/UPGRADE_COMPATIBILITY.md`: supported predecessor, upgrade fixtures, compatibility, and rollback notes.
+- `docs/PERFORMANCE_POLICY.md`: local benchmark scope, tripwire, and non-guarantees.
+- `docs/SUPPLY_CHAIN_POLICY.md`: dependency, artifact, signing, SBOM, provenance, and recovery policy.
+- `docs/RELEASE_CANDIDATE_EVIDENCE.md`: dated local evidence and remaining hosted/maintainer blockers.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

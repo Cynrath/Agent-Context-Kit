@@ -24,7 +24,11 @@
 | 20 | Done locally | TASK-0085 config validation and diagnostics design | High | CLI integration remains separate | config Core/tests/docs | Full local gates | No | Invalid, unknown, obsolete, duplicate, and unsafe config diagnostics are deterministic and documented. |
 | 21 | Done locally | TASK-0086 baseline-aware scan and CI policy | High | Hosted/package evidence remains separate | scanner/CLI/tests/docs | Full local gates | No | New findings are distinguished from baseline entries with safe CI exits. |
 | 22 | Done locally | TASK-0087 JSON/SARIF/report baseline integration | High | Hosted/package evidence remains separate | output contracts/tests/docs | Full local gates | No | Additive baseline metadata is consistent across machine/local reports. |
-| 23 | Next | TASK-0088 upgrade, performance, security, and release-candidate evidence | High | Depends on product contract freeze | tests/release/security/support docs | Full local and hosted gates | Possibly | P0/P1 evidence is ready for a 1.0 release-candidate decision. |
+| 23 | Done locally | TASK-0088 upgrade, performance, security, and release-candidate evidence | High | Hosted/manual RC evidence remains | tests/release/security/support docs | Full local and hosted gates | Possibly | Local fixtures, benchmark, policies, dependency review, and evidence gate are complete. |
+| 24 | Next | TASK-0089 config diagnostics CLI integration and migration contract | High | None | CLI/Core/tests/config docs | Full local gates | No | Config diagnostics have stable CLI/JSON/exit behavior and compatibility rules. |
+| 25 | Queued | TASK-0090 hosted baseline upgrade and performance workflow design | High | Hosted execution requires maintainer push | workflow/docs/scripts | Local syntax/gates plus hosted run | Yes, to push/run hosted workflows | Cross-platform RC evidence is designed without automatic remote writes. |
+| 26 | Queued | TASK-0091 xUnit v3 migration or explicit RC risk acceptance | High | Test dependency is marked Legacy | test project/tests/docs | Full tests and dependency review | Possibly | Warning is resolved or accepted with a dated rationale. |
+| 27 | Queued | TASK-0092 release-candidate contract freeze and maintainer decision | High | Depends on remaining P0/P1 evidence | contract/release/readiness docs | Full local and hosted gates | Yes, for release actions | RC contract and residual risks are explicitly approved. |
 
 ## Remote-Write Guardrail
 The following actions are not performed from an agent session without explicit maintainer approval:

@@ -15,7 +15,18 @@ dotnet run --project src/AgentContextKit.Cli -- webui --json
 dotnet run --project src/AgentContextKit.Cli -- prompt-pack --output .ackit/prompt-packs/release-validation.md --json
 dotnet run --project src/AgentContextKit.Cli -- context-export --prompt-pack .ackit/prompt-packs/release-validation.md --approve --output .ackit/context-exports/release-validation.json --json
 dotnet run --project src/AgentContextKit.Cli -- doctor
+powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
 ```
+
+Release-candidate dependency review:
+
+```powershell
+dotnet list AgentContextKit.sln package --vulnerable --include-transitive
+dotnet list AgentContextKit.sln package --deprecated
+```
+
+The 2026-06-12 local review found no vulnerable packages. It reported test dependency `xunit` `2.9.3` as Legacy; see `docs/RELEASE_CANDIDATE_EVIDENCE.md` and `docs/SUPPLY_CHAIN_POLICY.md`.
 
 The `sarif` command is available in current source and in the published NuGet `0.2.0-alpha.1` global tool.
 

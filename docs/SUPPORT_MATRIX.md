@@ -49,3 +49,5 @@ The current support claim is based on local validation plus GitHub Actions `ci`,
 TASK-0058 read-only GitHub CLI observation confirmed all three workflows are passing on latest `master`.
 
 TASK-0064 read-only GitHub CLI observation confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` passed for commit `6d38f11`.
+
+Support duration, predecessor policy, runner expectations, and end-of-life handling are defined in [SUPPORT_LIFECYCLE.md](SUPPORT_LIFECYCLE.md).

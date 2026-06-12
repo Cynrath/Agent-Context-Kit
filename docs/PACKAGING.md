@@ -75,3 +75,5 @@ dotnet nuget push (Join-Path $pkg "AgentContextKit.<next-version>.nupkg") --sour
 - For future releases, do not publish until restore/build/test/pack/tool-path validation passes.
 - For future releases, do not publish while `ackit scan` reports unaccepted high or critical findings.
 - For future releases, do not publish until GitHub Actions are green, the GitHub Release page is ready, and maintainer approval is explicit.
+
+Supply-chain review, package recovery, signing, SBOM, and provenance decisions are tracked in [SUPPLY_CHAIN_POLICY.md](SUPPLY_CHAIN_POLICY.md).

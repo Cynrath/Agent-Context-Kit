@@ -64,3 +64,13 @@
 ## Remaining Manual Actions
 - Review all generated files before future publishing.
 - For the next release, approve push, hosted CI/source smoke validation, tag, GitHub Release, NuGet publish, and NuGet install verification in a dedicated release task.
+
+## Release Candidate Evidence Gate
+- `scripts/check-release-candidate-evidence.ps1 -FailOnIssues` passes.
+- Published-config and baseline-schema compatibility fixtures pass.
+- The synthetic scan benchmark passes its documented tripwire.
+- Vulnerability and deprecation reviews are dated and reviewed.
+- Private GitHub vulnerability reporting is enabled and tested by the maintainer.
+- Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
+- The `xunit` Legacy warning is resolved by migration or explicit dated risk acceptance.
+- Signing, SBOM, provenance, and package recovery decisions are recorded.

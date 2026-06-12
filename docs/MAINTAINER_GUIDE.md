@@ -27,6 +27,12 @@ Before a future release:
 9. Verify install or update from NuGet.
 10. Update published-package smoke workflow and public docs to the new version.
 
+Release-candidate evidence is tracked in `docs/RELEASE_CANDIDATE_EVIDENCE.md`. Run the local evidence gate before requesting hosted release-candidate validation:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
+```
+
 ## Version Bump Notes
 - Keep `PackageId` as `AgentContextKit`.
 - Keep `ToolCommandName` as `ackit`.

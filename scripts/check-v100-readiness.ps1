@@ -105,6 +105,12 @@ $requiredPaths = @(
     @{ Path = "docs\V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md"; Description = "v1.0 documentation/release gate freeze" },
     @{ Path = "docs\V100_READINESS.md"; Description = "v1.0 final readiness docs" },
     @{ Path = "docs\V100_GAP_ANALYSIS.md"; Description = "current v1.0 gap analysis" },
+    @{ Path = "docs\UPGRADE_COMPATIBILITY.md"; Description = "upgrade compatibility policy" },
+    @{ Path = "docs\PERFORMANCE_POLICY.md"; Description = "performance policy" },
+    @{ Path = "docs\SECURITY_RESPONSE_READINESS.md"; Description = "security response readiness" },
+    @{ Path = "docs\SUPPORT_LIFECYCLE.md"; Description = "support lifecycle" },
+    @{ Path = "docs\SUPPLY_CHAIN_POLICY.md"; Description = "supply-chain policy" },
+    @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "release-candidate evidence" },
     @{ Path = "docs\RELEASE_VALIDATION.md"; Description = "Release validation docs" },
     @{ Path = "docs\DOCUMENTATION_INDEX.md"; Description = "Documentation index" },
     @{ Path = "docs\ROADMAP.md"; Description = "Roadmap" },
@@ -121,9 +127,14 @@ $requiredPaths = @(
     @{ Path = "scripts\check-config-generated-conventions.ps1"; Description = "Config/generated convention check script" },
     @{ Path = "scripts\check-v100-documentation-release-gates.ps1"; Description = "Documentation/release gate check script" },
     @{ Path = "scripts\check-v100-readiness.ps1"; Description = "v1.0 final readiness check script" },
+    @{ Path = "scripts\check-release-candidate-evidence.ps1"; Description = "release-candidate evidence check script" },
+    @{ Path = "scripts\measure-scan-performance.ps1"; Description = "scan performance measurement script" },
     @{ Path = "scripts\check-v050-readiness.ps1"; Description = "v0.5 readiness check script" },
     @{ Path = "scripts\verify-release.ps1"; Description = "Local release verification script" },
-    @{ Path = "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"; Description = "CLI package project" }
+    @{ Path = "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"; Description = "CLI package project" },
+    @{ Path = "tests\AgentContextKit.Tests\ReleaseCandidateEvidenceTests.cs"; Description = "release-candidate evidence tests" },
+    @{ Path = "tests\fixtures\upgrade\v0.2.0-alpha.1-config.yml"; Description = "published config compatibility fixture" },
+    @{ Path = "tests\fixtures\upgrade\baseline-schema-v1.json"; Description = "baseline schema compatibility fixture" }
 )
 
 foreach ($entry in $requiredPaths) {
@@ -153,7 +164,10 @@ $releaseValidationNeedles = @(
     "V100_READINESS.md",
     "CLI_CONTRACT.md",
     "CONFIG_GENERATED_CONVENTIONS.md",
-    "V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md"
+    "V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md",
+    "scripts/check-release-candidate-evidence.ps1",
+    "scripts/measure-scan-performance.ps1",
+    "RELEASE_CANDIDATE_EVIDENCE.md"
 )
 
 foreach ($needle in $releaseValidationNeedles) {
@@ -166,7 +180,13 @@ $documentationIndexNeedles = @(
     "V100_READINESS.md",
     "V100_GAP_ANALYSIS.md",
     "RELEASE_VALIDATION.md",
-    "MAINTAINER_RELEASE_HANDOFF.md"
+    "MAINTAINER_RELEASE_HANDOFF.md",
+    "UPGRADE_COMPATIBILITY.md",
+    "PERFORMANCE_POLICY.md",
+    "SECURITY_RESPONSE_READINESS.md",
+    "SUPPORT_LIFECYCLE.md",
+    "SUPPLY_CHAIN_POLICY.md",
+    "RELEASE_CANDIDATE_EVIDENCE.md"
 )
 
 foreach ($needle in $documentationIndexNeedles) {

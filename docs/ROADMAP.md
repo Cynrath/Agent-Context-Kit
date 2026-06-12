@@ -139,6 +139,8 @@
 - Extend JSON, SARIF, reports, and Web UI through additive compatible metadata.
 - Preserve offline-first behavior and cross-platform determinism.
 - Detailed decision: `docs/V030_ROADMAP_DECISION.md`.
+- TASK-0088 completed local release-candidate evidence preparation: upgrade fixtures, a disposable performance benchmark, and security/support/supply-chain policy docs.
+- Remaining RC work is hosted three-OS upgrade/performance evidence, config diagnostics CLI integration, dependency warning resolution, private vulnerability reporting, and final contract freeze.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 

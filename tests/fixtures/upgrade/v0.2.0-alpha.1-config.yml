@@ -1,0 +1,19 @@
+schemaVersion: 1
+defaultLanguage: tr
+brandKeywords:
+  - ExampleProduct
+piiKeywords:
+  - ExamplePerson
+ignorePaths:
+  - .ackit/cache/
+  - .ackit/reports/
+  - generated/
+riskExtensions:
+  - .bak
+  - .tmp
+safeDomains:
+  - learn.microsoft.com
+ignoredPaths:
+  - docs/generated/
+ignoredFindingIds:
+  - ACKIT003

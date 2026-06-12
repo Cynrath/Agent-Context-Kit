@@ -14,6 +14,9 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added report-only Core configuration validation with stable diagnostic codes for unknown, obsolete, duplicate, malformed, and unsafe settings.
 - Added explicit sanitized baseline creation/update, integrity-checked loading, finding classification, and opt-in new-finding CI policy.
 - Added additive baseline metadata to SARIF, HTML reports, Web UI, and their JSON command summaries.
+- Added published-config and baseline-schema upgrade compatibility fixtures with focused tests.
+- Added a disposable synthetic scan benchmark and release-candidate evidence gate.
+- Added security response, support lifecycle, upgrade compatibility, performance, and supply-chain policy documents.
 
 ### Changed
 - Polished README installed-tool and source command examples.
