@@ -71,5 +71,10 @@ The opt-in design scopes `security-events: write` to one manual upload job and u
 
 If maintainers later upload SARIF to GitHub Code Scanning, they should review the artifact first and enable upload from a dedicated workflow with `security-events: write` permission.
 
+## Baseline Identity Privacy
+The TASK-0084 baseline foundation computes SHA-256 finding identities from a stable rule ID, normalized repository-relative path, and optional numeric line/column only. It rejects absolute and traversal paths and does not accept raw match, message, secret, username, machine name, repository root, or timestamp input.
+
+The model does not suppress findings or change exit codes. Future baseline application must keep Critical findings visible and require explicit, reviewable baseline updates. See `docs/BASELINE_MODEL.md`.
+
 ## Limitations
 Pattern-based scanners cannot guarantee full detection. Public release still requires manual review.

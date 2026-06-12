@@ -23,6 +23,7 @@ tests/
 - `ISecretScanner`
 - `IBrandPiiScanner`
 - `RiskRuleCatalog`
+- `BaselineFingerprint`
 - `IRiskReporter`
 - `ITemplateRenderer`
 - `ITextProvider`
@@ -49,6 +50,8 @@ The CLI must not contain business logic. Core services are designed to be testab
 `RiskRuleCatalog` is the central source of stable scanner rule IDs, default severity context, descriptions, and recommendations. SARIF rule metadata and JSON finding `ruleId` values use this catalog. Configurable `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` can suppress only non-Critical scanner noise; Critical findings remain reportable.
 
 `RiskScanResult` carries visible findings plus sanitized config suppression records. `ScanResult.Suppressions` is additive and defaults to an empty list so existing positional construction remains compatible. Audit-capable interface methods have default implementations that return existing findings with an empty audit, allowing custom implementations to opt in without an immediate source break. The CLI exposes this audit only through local human/JSON scan output; SARIF continues to contain visible findings only.
+
+`BaselineSchema`, `BaselineEntry`, `BaselineManifest`, and `BaselineFingerprint` define the future baseline identity boundary. Fingerprints use only normalized rule IDs, repository-relative paths, and optional numeric location metadata. They exclude messages, raw matches, absolute roots, and machine identity. This Core foundation is not connected to current CLI scanning or exit behavior yet.
 
 These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.
 

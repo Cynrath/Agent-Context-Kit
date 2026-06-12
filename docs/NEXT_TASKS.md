@@ -31,8 +31,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 18. TASK-0083 1.0 readiness gap analysis - completed locally; 1.0 remains blocked by documented P0/P1 gaps.
 
 ## Next Product Sequence
-19. TASK-0084 baseline model and fingerprint design - next.
-20. TASK-0085 config validation and diagnostics design - queued.
+19. TASK-0084 baseline model and fingerprint design - completed locally; Core model/tests added without CLI integration.
+20. TASK-0085 config validation and diagnostics design - next.
 21. TASK-0086 baseline-aware scan and CI policy - queued.
 22. TASK-0087 JSON/SARIF/report baseline integration - queued.
 23. TASK-0088 upgrade, performance, security, and release-candidate evidence - queued.

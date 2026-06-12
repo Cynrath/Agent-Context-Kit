@@ -23,6 +23,7 @@
 - `docs/CONFIG_GENERATED_CONVENTIONS.md`: stable config and generated-file conventions.
 - `docs/SCANNER_RULES.md`: scanner rule catalog, SARIF mapping, and config allowlist behavior.
 - `docs/SCANNER_FIXTURES.md`: scanner regression matrix and safe synthetic fixture conventions.
+- `docs/BASELINE_MODEL.md`: versioned baseline identity model, deterministic fingerprints, path rules, and privacy boundary.
 - `docs/SUPPRESSION_AUDIT.md`: sanitized local audit output for configured non-Critical suppressions.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.

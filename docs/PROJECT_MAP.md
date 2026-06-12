@@ -36,6 +36,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `CODE_OF_CONDUCT.md`
 - `CONTRIBUTING.md`
 - `docs/AI_WORKFLOW.md`
+- `docs/BASELINE_MODEL.md`
 - `docs/ARCHITECTURE.md`
 - `docs/CLI_CONTRACT.md`
 - `docs/CLI_REFERENCE.md`
@@ -215,6 +216,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `src/AgentContextKit.Cli/Program.cs`
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/AgentContextKit.Core.csproj`
+- `src/AgentContextKit.Core/Baseline.cs`
 - `src/AgentContextKit.Core/Configuration.cs`
 - `src/AgentContextKit.Core/Doctor.cs`
 - `src/AgentContextKit.Core/FileSystem.cs`

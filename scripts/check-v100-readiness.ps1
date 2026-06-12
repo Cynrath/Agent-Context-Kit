@@ -236,8 +236,7 @@ foreach ($needle in $freezeScriptNeedles) {
 }
 
 $codexNeedles = @(
-    "V100_GAP_ANALYSIS.md",
-    "TASK-0083"
+    "V100_GAP_ANALYSIS.md"
 )
 
 foreach ($needle in $codexNeedles) {

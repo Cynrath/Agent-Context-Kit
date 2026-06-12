@@ -454,6 +454,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `docs/V100_GAP_ANALYSIS.md` is now the current 1.0 source of truth; TASK-0084 is the next local product task.
 - TASK-0083 pre-commit validation passed with 127/127 tests and all source, sample, hygiene, contract, readiness, and release checks; the public gate failed only on the expected dirty working tree.
 - TASK-0083 post-commit public release gate passed with no blocking items; continue with TASK-0084.
+- TASK-0084 adds the independent baseline schema, sanitized entry/manifest models, deterministic SHA-256 fingerprinting, repository-relative path validation, focused tests, and privacy/architecture docs without changing CLI scan behavior.
+- TASK-0084 pre-commit validation passed with 136/136 tests and all source, sample, hygiene, contract, readiness, and release checks; the public gate failed only on the expected dirty working tree.
+- TASK-0084 post-commit public release gate passed with no blocking items; continue with TASK-0085.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

@@ -39,7 +39,7 @@ Repositories need a safe way to adopt scanning incrementally. A clean repository
 - A large Web UI redesign unrelated to baseline review.
 
 ## Candidate Delivery Sequence
-1. Baseline model, schema, path normalization, and fingerprint design.
+1. Baseline model, schema, path normalization, and fingerprint design. Completed locally by TASK-0084; scanner/CLI integration remains separate.
 2. Config validation and deterministic diagnostics.
 3. Baseline creation/review commands and explicit update workflow.
 4. Baseline-aware scan and CI exit policy.
