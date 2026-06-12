@@ -21,11 +21,12 @@ Generated Web UI HTML can include local repository paths and local audit context
 
 ## Safe Screenshot Workflow
 1. Generate the local Web UI under `.ackit/webui/`.
-2. Open it locally.
-3. Capture only the UI region needed for documentation.
+2. Use a disposable synthetic demo repository; do not use a private or customer repository.
+3. Open it locally and capture only the UI region needed for documentation.
 4. Remove or crop any local path, private username, machine name, customer/client data, and raw finding match.
-5. Save only a sanitized, small PNG or WebP under `docs/assets/screenshots/`.
-6. Review the image using the checklist in `docs/VISUAL_ASSETS.md`.
+5. Exclude browser chrome and local file URLs, strip image metadata, and reopen the export for inspection.
+6. Save only a sanitized, small PNG or WebP under `docs/assets/screenshots/`.
+7. Review the image using `docs/SCREENSHOT_CAPTURE_PLAN.md` and `docs/VISUAL_ASSETS.md`.
 
 ## Screenshot Checklist
 - No absolute path.
@@ -37,7 +38,7 @@ Generated Web UI HTML can include local repository paths and local audit context
 - No generated `.ackit` HTML committed.
 
 ## Future Plan
-- Add sanitized screenshot assets.
+- Capture the first sanitized asset using `docs/SCREENSHOT_CAPTURE_PLAN.md`.
 - Add a Web UI preview image to README.
 - Add a GitHub README image once the asset passes the visual asset checklist.
 - Consider an optional short GIF demo later if it stays small and sanitized.

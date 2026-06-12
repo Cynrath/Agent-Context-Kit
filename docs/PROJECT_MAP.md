@@ -47,6 +47,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT_STANDARD.md`
 - `docs/DOCUMENTATION_INDEX.md`
+- `docs/SCREENSHOT_CAPTURE_PLAN.md`
 - `docs/EXAMPLES.md`
 - `docs/EXAMPLE_WORKFLOWS.md`
 - `docs/assets/diagrams/ackit-flow.svg`
@@ -169,6 +170,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/WEB_UI_PROTOTYPE.md`
 - `docs/WEB_UI_PREVIEW.md`
 - `docs/VISUAL_ASSETS.md`
+- `docs/assets/screenshots/README.md`
 - `global.json`
 - `LICENSE`
 - `README.md`

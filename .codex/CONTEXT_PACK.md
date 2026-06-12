@@ -130,6 +130,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0074 expands scanner regression fixtures across detection, rule mapping, and known-noise boundaries without changing runtime behavior.
 - TASK-0075 adds current-source sanitized config suppression audit records to local human/JSON scan output; SARIF remains visible-findings-only.
 - TASK-0076 aligns English/Turkish README command examples with explicit repository-root, Release build, installed-tool, and local-artifact workflows.
+- TASK-0077 defines a disposable-demo screenshot capture and sanitization plan without creating or committing an image.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

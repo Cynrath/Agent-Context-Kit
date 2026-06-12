@@ -45,8 +45,9 @@ README may link sanitized diagrams and screenshots, but generated `.ackit/` Web 
 Use:
 - `docs/VISUAL_ASSETS.md` for screenshot and image policy.
 - `docs/WEB_UI_PREVIEW.md` for Web UI screenshot workflow.
+- `docs/SCREENSHOT_CAPTURE_PLAN.md` for the approved disposable-demo capture and review process.
 - `docs/assets/diagrams/` for safe diagrams.
-- `docs/assets/screenshots/` for future sanitized screenshots.
+- `docs/assets/screenshots/` for future sanitized screenshots; its README is policy guidance, not an approved screenshot.
 
 ## Issue And PR Templates
 The repository includes:

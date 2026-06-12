@@ -38,6 +38,8 @@ Before committing any screenshot, confirm:
 - No raw finding match is visible.
 - The image is cropped to the useful UI area.
 - The file size is small enough for repository docs.
+- Browser chrome, local file URLs, shell prompts, and unrelated desktop content are absent.
+- Image metadata has been stripped and the exported file was reopened for a final inspection.
 
 ## Formats
 - Use SVG for diagrams.
@@ -55,3 +57,5 @@ ackit webui --output .ackit/webui/demo.html
 Then manually sanitize any screenshot before committing it under `docs/assets/screenshots/`.
 
 Generated HTML should remain ignored and local-only. Do not attach generated Web UI or report HTML files to public releases.
+
+For the approved source scenario, candidate filenames, dimensions, metadata review, and commit checklist, use `docs/SCREENSHOT_CAPTURE_PLAN.md`.

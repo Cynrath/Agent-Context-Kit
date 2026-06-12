@@ -437,6 +437,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0075 post-commit public release gate passed with no blocking items; continue with TASK-0076 README command examples and copy-paste polish.
 - TASK-0076 aligned README command examples for installed-tool and source workflows. Restore/build passed with 0 warnings/errors, tests passed 127/127, scan/doctor/JSON/SARIF/sample smoke and hygiene/gates passed; the pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0076 post-commit public release gate passed with no blocking items; continue with TASK-0077 sanitized screenshot capture planning.
+- TASK-0077 added disposable-demo screenshot capture, sanitization, metadata, naming, and commit-review guidance without generating an image. Restore/build passed with 0 warnings/errors, tests passed 127/127, scan/doctor/JSON/SARIF/sample smoke and hygiene/gates passed; the pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0077 post-commit public release gate passed with no blocking items; continue with TASK-0078 docs site and GitHub Pages planning.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

@@ -119,6 +119,8 @@
   - Completed locally with sanitized human/JSON config suppression records and Critical safety boundaries.
 - TASK-0076 README command examples and copy-paste polish:
   - Completed locally with repository-root context, explicit source build commands, and grouped installed-tool workflows.
+- TASK-0077 sanitized screenshot capture plan:
+  - Completed locally with disposable-demo capture steps, candidate assets, metadata stripping, privacy review, and commit checks; manual screenshot capture remains future work.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

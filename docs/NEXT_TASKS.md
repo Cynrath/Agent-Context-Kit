@@ -20,7 +20,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 
 ## Documentation / Presentation
 11. TASK-0076 README command examples and copy-paste polish - completed locally.
-12. TASK-0077 sanitized screenshot capture plan - queued.
+12. TASK-0077 sanitized screenshot capture plan - completed locally; manual capture remains open.
 13. TASK-0078 docs site / GitHub Pages planning - queued.
 14. TASK-0079 tutorial: first 5 minutes with ackit - queued.
 15. TASK-0080 tutorial: prepare a repo for AI coding agents - queued.

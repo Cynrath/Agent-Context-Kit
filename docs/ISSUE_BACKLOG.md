@@ -29,7 +29,8 @@ Apply labels from `docs/GITHUB_LABELS.md` manually after issue creation.
 ### 5. Add screenshot assets after sanitization
 - Labels: `type: docs`, `area: docs`, `priority: low`
 - Goal: Add public-safe README/Web UI preview images.
-- Done when: Assets contain no local paths, usernames, machine names, secrets, or private data.
+- Plan: Follow `docs/SCREENSHOT_CAPTURE_PLAN.md`; the capture plan is complete, but manual image capture and review remain open.
+- Done when: Assets contain no local paths, usernames, machine names, secrets, private data, browser chrome, or retained metadata and are linked from both README files.
 
 ### 6. Add quickstart tutorial
 - Labels: `type: docs`, `area: docs`, `priority: low`, `good first issue`
