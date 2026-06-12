@@ -46,6 +46,11 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0098 local validation passed with 178/178 tests, zero scan/SARIF findings, clean hygiene, release verification, and a 2.62-second synthetic benchmark.
 - TASK-0099 is complete locally. It records the exact published supply-chain state and adds an integrated local evidence gate without authorizing ownership changes, signing, SBOM/provenance publication, recovery actions, or release edits.
 - TASK-0099 validation passed with 178/178 tests, zero scan/SARIF findings, clean dependency reviews, local package verification, all gates, and a 3.282-second synthetic benchmark.
+- TASK-0100 is complete locally. It resets the queue into completed local execution, maintainer-gated release/security actions, and local-only ecosystem/product intelligence.
+- Initial ecosystem research uses official repositories/docs only. Graphify, Repomix, Gitingest, Code2Prompt, Aider, Joern, Zoekt, local scanners, AGENTS.md conventions, and docs tools are documented without dependencies or copied code.
+- Maintainer-gated RC/security decisions remain open and are not release-blocked by local ecosystem research; no release-ready or 1.0-ready claim is made.
+- TASK-0100 validation passed with a zero-warning Release build, 178/178 tests, clean source scan and doctor, parsed JSON and global-tool SARIF, sample smoke, clean hygiene, readiness/security/supply-chain gates, and local package verification. The pre-commit public release gate failed only on the expected dirty working tree and must be rerun after commit.
+- The next local-only queue item is TASK-0101 related tools comparison matrix.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

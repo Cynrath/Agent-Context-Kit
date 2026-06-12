@@ -7,6 +7,11 @@
 - `docs/PREPARE_REPOSITORY_FOR_AI_AGENTS.md`: existing-repository security, config, agent instruction, task-first, and CI-readiness workflow.
 - `docs/PRODUCT_SPEC.md`: product scope and MVP goals.
 - `docs/ROADMAP.md`: version roadmap.
+- `docs/RELATED_PROJECTS.md`: initial related-tool license, offline, overlap, complement, privacy, and decision matrix.
+- `docs/OFFLINE_OSS_ECOSYSTEM.md`: offline-first evaluation criteria and ecosystem category model.
+- `docs/EXTERNAL_TOOL_WORKFLOWS.md`: docs-only opt-in local workflow sketches for external tools.
+- `docs/ECOSYSTEM_POSITIONING.md`: product boundary versus packers, graphs, scanners, and docs tools.
+- `docs/INTEROPERABILITY_BACKLOG.md`: non-approved future external-tool command and adapter ideas.
 
 ## Usage
 - `docs/CLI_CONTRACT.md`: stable CLI command contract review.

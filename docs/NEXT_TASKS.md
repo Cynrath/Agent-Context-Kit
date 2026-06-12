@@ -1,66 +1,42 @@
 # Next Tasks
 
-This file is the unified local execution queue for AgentContextKit after the `v0.2.0-alpha.1` publication. It prevents one-off task prompts by keeping the next safe local tasks in order.
+This is the unified execution queue after the TASK-0066 through TASK-0099 local-only sequence. Maintainer-gated release/security work and local-only product intelligence are separate tracks.
 
-Remote-write work such as GitHub Release edits, label creation, branch protection, repository settings, Code Scanning upload activation, tags, pushes, and NuGet publishing remains maintainer-only.
+## Completed Local Execution
+- TASK-0066 through TASK-0099 are completed locally.
+- The current published release remains `v0.2.0-alpha.1`.
+- Standard `ci`, published-package smoke, and source-package smoke are green for current remote `master`.
+- The release-candidate evidence boundary remains `LOCAL READY / REMOTE NO-GO` where applicable.
+- Completed local documentation, tests, and gates do not claim 1.0 readiness or close remote P0/P1 decisions.
 
-## Immediate Polish
-1. TASK-0066 GitHub Release body polish documentation - completed locally.
-2. TASK-0067 GitHub labels and manual repo settings checklist - completed locally.
-3. TASK-0068 CodeQL / Code Scanning decision document - completed locally.
-4. TASK-0069 GitHub issue tracker bootstrap plan - completed locally.
+## Maintainer-Gated Release/Security Track
+These actions require explicit maintainer control and do not block safe local-only product/documentation work:
 
-## Product Hardening
-5. TASK-0070 scanner config examples and sample configs - completed locally.
-6. TASK-0071 SARIF GitHub Code Scanning opt-in workflow design - completed locally.
-7. TASK-0072 JSON schema stability and contract tests - completed locally.
-8. TASK-0073 CLI exit code contract hardening - completed locally.
-9. TASK-0074 scanner fixture coverage expansion - completed locally.
-10. TASK-0075 safe suppression audit log - completed locally.
+1. Run the manual hosted RC evidence workflow on the exact reviewed commit.
+2. Enable and verify private vulnerability reporting and record primary/backup security notification ownership.
+3. Decide NuGet owner profile alignment: `Cyranth` versus public persona/package author `Cynrath`.
+4. Decide author signing or record dated accepted risk.
+5. Decide SBOM publication or record dated accepted risk.
+6. Decide GitHub provenance/attestation or record dated accepted risk.
+7. Accept package recovery ownership, thresholds, communication, and review date.
+8. Select the next candidate version only after the required P0/P1 decisions and hosted evidence.
 
-## Documentation / Presentation
-11. TASK-0076 README command examples and copy-paste polish - completed locally.
-12. TASK-0077 sanitized screenshot capture plan - completed locally; manual capture remains open.
-13. TASK-0078 docs site / GitHub Pages planning - completed locally; Pages remains deferred.
-14. TASK-0079 tutorial: first 5 minutes with ackit - completed locally.
-15. TASK-0080 tutorial: prepare a repo for AI coding agents - completed locally.
-
-## Next Package Planning
-16. TASK-0081 v0.2.0-alpha.2 scope planning - completed locally; version bump remains separate.
-17. TASK-0082 v0.3 roadmap decision - completed locally; baseline-aware CI policy and config diagnostics selected.
-18. TASK-0083 1.0 readiness gap analysis - completed locally; 1.0 remains blocked by documented P0/P1 gaps.
-
-## Next Product Sequence
-19. TASK-0084 baseline model and fingerprint design - completed locally; Core model/tests added without CLI integration.
-20. TASK-0085 config validation and diagnostics design - completed locally; report-only Core validator added.
-21. TASK-0086 baseline-aware scan and CI policy - completed locally; explicit baseline create/update/load and new-finding CI policy added.
-22. TASK-0087 JSON/SARIF/report baseline integration - completed locally; shared sanitize-only output metadata added.
-23. TASK-0088 upgrade, performance, security, and release-candidate evidence - completed locally; hosted/manual RC blockers remain.
-24. TASK-0089 config diagnostics CLI integration and migration contract - completed locally.
-25. TASK-0090 hosted baseline upgrade and performance workflow design - completed locally; hosted dispatch remains maintainer-only.
-26. TASK-0091 xUnit v3 migration or explicit RC risk acceptance - completed locally through migration.
-27. TASK-0092 release-candidate contract freeze and maintainer decision - completed locally; RC publication remains NO-GO.
-28. TASK-0093 machine-readable JSON schema and golden contract assets - completed locally.
-29. TASK-0094 English/Turkish localization parity release gate - completed locally.
-30. TASK-0095 security reporting and supply-chain maintainer evidence handoff - completed locally; private reporting, signing, SBOM, provenance, and recovery acceptance remain maintainer-only.
-31. TASK-0096 final RC local readiness consolidation - completed locally; consolidated evidence reports `LOCAL READY / REMOTE NO-GO`.
-32. TASK-0097 hosted validation status sync - completed locally; standard workflows are recorded green, manual RC evidence remains unrun.
-33. TASK-0098 private vulnerability reporting status - completed locally; read-only API verified disabled, maintainer activation remains required.
-34. TASK-0099 published supply-chain status audit - completed locally; maintainer ownership/signing/SBOM/provenance/recovery decisions remain open.
-
-## Maintainer-Gated Next Work
-- Run the manual hosted RC evidence workflow on the exact reviewed commit and record all three OS results.
-- Enable and verify private vulnerability reporting and security notification ownership.
-- Record signing, SBOM, provenance, and package-recovery decisions with dated evidence or accepted risk.
-- Align or explicitly accept the NuGet owner profile `Cyranth` versus public persona/package author `Cynrath`.
-- Select a candidate version and open a dedicated release-preparation task only after the P0/P1 decision inputs are complete.
+## Local-Only Ecosystem/Product Intelligence Track
+1. TASK-0100 offline OSS ecosystem catalog and roadmap reset - completed locally.
+2. TASK-0101 related tools comparison matrix - queued.
+3. TASK-0102 offline workflow examples with external tools - queued.
+4. TASK-0103 optional interoperability design, no dependency - queued.
+5. TASK-0104 agent context pipeline taxonomy - queued.
+6. TASK-0105 README ecosystem positioning section - queued.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.
 - GitHub Release: published pre-release.
 - NuGet package: `AgentContextKit` `0.2.0-alpha.1`.
 - Published global tool includes `ackit sarif`.
-- Latest checked hosted workflows on `master`: `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded.
+- Local and remote `master` were aligned at TASK-0100 start.
+- Latest checked `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs succeeded for `1d898c6`.
+- TASK-0100 local validation passed with 178/178 tests, clean source scan/doctor, parsed JSON/SARIF, sample smoke, hygiene checks, and all local readiness/release evidence gates. The pre-commit public release gate reported only the expected dirty working tree blocker.
 
 ## Execution Rule
-Work through local-only queued tasks in order. Do not ask for per-task continuation. Stop only for genuine blockers, failed validation that requires a product decision, or maintainer-only remote writes.
+Continue local-only queued work in order without per-task prompts. Do not perform remote writes, auto-install external tools, add dependencies, upload repository content, or claim release readiness from documentation alone.

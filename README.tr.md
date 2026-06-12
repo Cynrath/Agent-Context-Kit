@@ -25,6 +25,12 @@ Web UI dashboard; readiness score, stack signals, health checks, findings, gener
 
 Screenshot dosyalari, sanitize edilmis public asset hazir olana kadar bilerek commitlenmez. Ayrinti icin [Web UI Preview](docs/WEB_UI_PREVIEW.md), [Visual Assets](docs/VISUAL_ASSETS.md), [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
 
+## Ilgili ekosistem
+
+AgentContextKit; lokal repo hazirligi, agent handoff dosyalari, scanner guvenligi, SARIF/JSON ciktilari ve release gate'lerine odaklanir. Graphify, Repomix, Gitingest, Code2Prompt ve lokal scanner araclari; proje grafigi, repo-to-context paketleme veya daha derin analiz icin tamamlayici olabilir.
+
+Detaylar: [Ilgili Projeler](docs/RELATED_PROJECTS.md).
+
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.
 

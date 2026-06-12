@@ -56,6 +56,14 @@ Screenshots are intentionally not committed yet until sanitized assets are avail
 
 ---
 
+## Related ecosystem
+
+AgentContextKit focuses on local repo readiness, agent handoff files, scanner safety, SARIF/JSON output, and release gates. Tools such as Graphify, Repomix, Gitingest, Code2Prompt, and local scanners can complement it for project graphs, repo-to-context packing, or deeper analysis.
+
+See [Related Projects](docs/RELATED_PROJECTS.md).
+
+---
+
 ## Why AgentContextKit
 
 AI coding agents are powerful, but they often receive incomplete, stale, or unsafe project context. That can lead to wrong edits, weak task planning, inconsistent agent instructions, missed test expectations, and accidental exposure when a private repository becomes public.

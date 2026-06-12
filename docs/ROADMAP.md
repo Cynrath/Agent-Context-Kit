@@ -153,6 +153,15 @@
 - TASK-0098 records the private vulnerability reporting setting as read-only verified disabled and keeps activation plus response ownership as a P0 maintainer blocker.
 - TASK-0099 audits the exact published package/release supply-chain state and records NuGet ownership alignment, author signing, SBOM, provenance, and recovery as explicit maintainer decisions.
 
+## Ecosystem And Interoperability Intelligence
+- TASK-0100 resets the queue into completed local work, maintainer-gated release/security work, and a local-only ecosystem/product intelligence track.
+- TASK-0101 will deepen the related-tools comparison matrix and evidence review.
+- TASK-0102 will validate offline workflow examples in disposable repositories without adding dependencies or auto-install behavior.
+- TASK-0103 will design optional interoperability boundaries without implementation.
+- TASK-0104 will define an agent context pipeline taxonomy.
+- TASK-0105 will finalize concise public ecosystem positioning after the research sequence.
+- Maintainer-gated RC/security decisions do not block this local-only research, but the research does not close release blockers or imply 1.0 readiness.
+
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 
 ## v0.4.0-beta

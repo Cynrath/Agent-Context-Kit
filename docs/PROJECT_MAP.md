@@ -40,6 +40,11 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/BASELINE_MODEL.md`
 - `docs/CONFIGURATION_DIAGNOSTICS.md`
 - `docs/ARCHITECTURE.md`
+- `docs/ECOSYSTEM_POSITIONING.md`
+- `docs/EXTERNAL_TOOL_WORKFLOWS.md`
+- `docs/INTEROPERABILITY_BACKLOG.md`
+- `docs/OFFLINE_OSS_ECOSYSTEM.md`
+- `docs/RELATED_PROJECTS.md`
 - `docs/CLI_CONTRACT.md`
 - `docs/CLI_REFERENCE.md`
 - `docs/CODEX_FOR_OSS_APPLICATION.md`
@@ -273,6 +278,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - Hosted validation status sync: `docs/tasks/TASK-0097-hosted-validation-status-sync.md` and `docs/HOSTED_VALIDATION_STATUS.md`; standard workflows are green while manual RC evidence remains pending.
 - Private vulnerability reporting status: `docs/tasks/TASK-0098-private-vulnerability-reporting-status.md` and `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`; read-only API evidence confirms the setting is disabled.
 - Published supply-chain status audit: `docs/tasks/TASK-0099-published-supply-chain-status-audit.md`, `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`, and `scripts/check-published-supply-chain-status.ps1`; read-only evidence distinguishes NuGet repository signing from author signing and records missing SBOM/provenance plus the NuGet owner-profile mismatch.
+- Offline OSS ecosystem catalog and roadmap reset: `docs/tasks/TASK-0100-offline-oss-ecosystem-catalog.md`, `docs/RELATED_PROJECTS.md`, `docs/OFFLINE_OSS_ECOSYSTEM.md`, `docs/EXTERNAL_TOOL_WORKFLOWS.md`, `docs/ECOSYSTEM_POSITIONING.md`, and `docs/INTEROPERABILITY_BACKLOG.md`; no external dependency or integration is added.
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
 - Final public release preparation and alpha.2/v0.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 and v0.2.0-alpha.1 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, sample smoke helper, scanner rule catalog hardening, config allowlist foundation, expanded scanner risk patterns, README preview guidance, Web UI screenshot policy, safe visual asset docs, and published `0.2.0-alpha.1` package verification.
