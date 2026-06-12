@@ -12,7 +12,7 @@ Local evidence preparation includes TASK-0084 through TASK-0096 baseline/config 
 | Performance | disposable 2,000-file benchmark with 30-second tripwire plus manual three-OS workflow design | Initial local evidence | successful hosted run, memory, cancellation, mixed corpus |
 | Security response | policy, Critical regression tests, privacy boundaries, clean dated dependency review, metadata-only maintainer evidence register/handoff | Ready locally | enable and verify private GitHub reporting; record maintainer evidence |
 | Runtime support | .NET 10, three-OS workflow policy, and manual RC workflow | Documented | fresh hosted RC run and final support window |
-| Supply chain | metadata/artifact/package install gates plus explicit sign/defer, SBOM, provenance, and recovery evidence fields | Ready locally | dated maintainer decisions and any approved remote publication |
+| Supply chain | exact published package/release audit plus explicit owner alignment, sign/defer, SBOM, provenance, and recovery evidence fields | Published state verified | dated maintainer decisions and any approved remote publication |
 | Migration/localization | upgrade/rollback guide, fixtures, read-only config diagnostics, explicit no-auto-migration policy, 13-command EN/TR human/error/JSON parity matrix | Ready locally | hosted evidence and final candidate sign-off |
 
 ## Local Commands
@@ -26,6 +26,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflo
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues
 ```
 
@@ -42,6 +43,7 @@ Local evidence recorded on 2026-06-12:
 - TASK-0095 added the security/supply-chain evidence register, maintainer procedure, explicit pending/verified vocabulary, and a local evidence-structure gate. Remote/security credential actions remain pending.
 - TASK-0096 adds `docs/RC_LOCAL_READINESS.md` and a read-only orchestration gate that reports `LOCAL READY / REMOTE NO-GO`; it does not close hosted, security-setting, supply-chain, version, or approval blockers.
 - TASK-0097 records successful standard `ci`, published-package smoke, and source-package smoke for commit `37d5220`. The dedicated manual RC workflow still has zero runs, so predecessor/config/baseline/performance hosted blockers remain open.
+- TASK-0099 records the exact published package/release state: valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a NuGet owner profile differing from the project persona.
 
 The former xUnit test-tooling warning is resolved locally. Remaining supply-chain decisions are signing, SBOM, provenance, recovery policy, and release-date revalidation.
 

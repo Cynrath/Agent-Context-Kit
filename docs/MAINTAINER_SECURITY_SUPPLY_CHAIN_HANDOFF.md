@@ -5,6 +5,8 @@ This is a manual maintainer procedure. It does not authorize an agent to change 
 
 Use `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` as the single evidence register. Keep records metadata-only.
 
+The published `0.2.0-alpha.1` starting state is recorded in `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`: valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a public owner-profile mismatch (`Cyranth` versus `Cynrath`).
+
 ## 1. Private Vulnerability Reporting
 Current read-only status on 2026-06-13: `enabled: false`. See `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`.
 
@@ -35,6 +37,8 @@ dotnet list AgentContextKit.sln package --deprecated --include-transitive
 Record the candidate commit, date, reachable package sources, and result. A network/source failure is incomplete evidence, not a clean result.
 
 ## 3. NuGet Signing Decision
+Before choosing sign/defer, resolve or explicitly accept the NuGet owner-profile identity mismatch. Package metadata and the project persona use `Cynrath`; the current public NuGet owner profile is `Cyranth`.
+
 Choose one path:
 
 ### Sign
@@ -86,6 +90,7 @@ Run locally:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
 ```
 
 The local gate proves the evidence structure and pending/verified distinctions exist. It cannot prove GitHub settings, certificate custody, signing, SBOM publication, or provenance attestations. Those require maintainer evidence in the register.

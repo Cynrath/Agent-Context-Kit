@@ -28,9 +28,10 @@ Standard hosted `ci`, published-package smoke, and source-package smoke are gree
 | Private vulnerability reporting | Read-only API verified disabled on 2026-06-13; enable it, verify `enabled: true` and the entry point, then record date/owner/reference | VERIFIED REMOTE BLOCKER |
 | Security notification ownership | Primary and backup owner confirmation | PENDING MAINTAINER |
 | Final contract acceptance | Candidate-specific CLI/config/JSON/baseline/SARIF/localization review | PENDING MAINTAINER |
-| Signing | Sign or defer decision with lifecycle/recovery evidence or accepted risk | PENDING MAINTAINER |
-| SBOM | Publish or defer decision tied to the exact candidate commit | PENDING MAINTAINER |
-| Provenance | Attest or defer decision tied to the exact package digest | PENDING MAINTAINER |
+| NuGet ownership | Public owner profile `Cyranth` versus package author/project persona `Cynrath`; align or accept explicitly | VERIFIED REMOTE BLOCKER |
+| Signing | Published package is NuGet.org repository-signed with no observed author signature; sign or defer with accepted risk | VERIFIED PUBLISHED STATE / PENDING DECISION |
+| SBOM | No package/release SBOM observed; publish or defer tied to the exact candidate commit | VERIFIED PUBLISHED STATE / PENDING DECISION |
+| Provenance | No accessible GitHub attestation for the published package digest; attest or defer | VERIFIED PUBLISHED STATE / PENDING DECISION |
 | Package recovery | Accepted unlist/deprecate/successor ownership and communication procedure | PENDING MAINTAINER |
 | Version and release plan | Candidate version, metadata, package diff, notes, rollback, and post-publish smoke approval | PENDING MAINTAINER |
 

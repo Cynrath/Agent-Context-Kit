@@ -43,6 +43,12 @@ Hosted standard workflow evidence is recorded in [HOSTED_VALIDATION_STATUS.md](H
 
 Private vulnerability reporting status is recorded in [PRIVATE_VULNERABILITY_REPORTING_STATUS.md](PRIVATE_VULNERABILITY_REPORTING_STATUS.md). The read-only GitHub endpoint returned disabled on 2026-06-13; enablement and notification ownership remain P0 maintainer actions.
 
+Published package/release supply-chain status is recorded in [PUBLISHED_SUPPLY_CHAIN_STATUS.md](PUBLISHED_SUPPLY_CHAIN_STATUS.md). The exact `0.2.0-alpha.1` package has a valid NuGet.org repository signature but no observed author signature, package/release SBOM, or accessible GitHub package attestation. The NuGet owner profile also differs from the project persona and requires maintainer disposition.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
+```
+
 Release-candidate dependency review:
 
 ```powershell

@@ -47,6 +47,8 @@ Current release follow-ups are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBL
 
 It does not prove API/CLI stability, migration safety, performance, security response readiness, support lifetime, or release supply-chain completeness.
 
+TASK-0099 narrows the published-state uncertainty: `0.2.0-alpha.1` has a valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a NuGet owner profile that differs from the project persona. These remain maintainer decisions rather than completed controls.
+
 ## Actual 1.0 Readiness
 `docs/V100_GAP_ANALYSIS.md` is the source of truth. A 1.0 release candidate requires zero open P0 gaps and an explicit disposition for every P1 gap.
 
@@ -61,6 +63,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-cli-contract.ps1 -FailOnI
 powershell -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-v050-readiness.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- scan --ci

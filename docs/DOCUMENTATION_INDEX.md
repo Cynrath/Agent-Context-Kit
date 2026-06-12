@@ -97,6 +97,8 @@
 - `scripts/check-rc-local-readiness.ps1`: read-only orchestration gate for final local RC evidence.
 - `docs/HOSTED_VALIDATION_STATUS.md`: exact standard Actions run evidence and the remaining manual RC workflow gap.
 - `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`: read-only GitHub setting evidence, disabled-state blocker, and maintainer enablement verification steps.
+- `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`: exact published package signature, owner identity, SBOM, release asset, and provenance-attestation audit.
+- `scripts/check-published-supply-chain-status.ps1`: local structure gate for the published supply-chain truth boundary.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

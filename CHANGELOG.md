@@ -32,6 +32,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added a consolidated final RC local-readiness decision and read-only orchestration gate with an explicit remote NO-GO boundary.
 - Added exact hosted CI/source/published smoke evidence for commit `37d5220` while preserving the unrun manual RC workflow blocker.
 - Added read-only GitHub evidence that private vulnerability reporting is disabled, with explicit P0 enablement and notification-owner completion criteria.
+- Added a read-only published package/release supply-chain audit covering NuGet repository signing, author-signature absence, owner-profile alignment, SBOM, provenance, and recovery evidence.
 
 ### Fixed
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.

@@ -1,11 +1,12 @@
 # Security And Supply-Chain Evidence Register
 
 ## Status
-Local evidence register prepared on 2026-06-12 and remote private-reporting state checked on 2026-06-13. Private vulnerability reporting is **VERIFIED REMOTE STATE: DISABLED**. Signing, SBOM publication, provenance attestations, response ownership, and final release decisions remain **PENDING MAINTAINER**. This document is not release approval.
+Local evidence register prepared on 2026-06-12. Remote private-reporting and published package/release state were checked on 2026-06-13. Private vulnerability reporting is **VERIFIED REMOTE STATE: DISABLED**. The published package is NuGet.org repository-signed but no author signature, SBOM release artifact, or accessible GitHub package attestation was found. Maintainer decisions remain open. This document is not release approval.
 
 ## Status Vocabulary
 - `VERIFIED LOCAL`: reproduced from local source, tests, package inspection, or documented policy.
 - `VERIFIED REMOTE STATE`: reproduced through a read-only remote query; this can confirm a blocker is present and is not equivalent to completion.
+- `VERIFIED PUBLISHED STATE`: reproduced from the exact public package/release/digest; this describes what exists and is not a maintainer acceptance decision.
 - `PROPOSED`: recommended decision that the maintainer has not accepted.
 - `PENDING MAINTAINER`: requires a dated maintainer decision or remote evidence.
 - `ACCEPTED RISK`: explicit dated owner acceptance with scope and review date.
@@ -17,9 +18,10 @@ Local evidence register prepared on 2026-06-12 and remote private-reporting stat
 | Private vulnerability reporting | VERIFIED REMOTE STATE: DISABLED on 2026-06-13 | GitHub GET endpoint returned `enabled: false`; `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md` records the public endpoint and safe query | Enable the repository setting; verify `enabled: true`, record date/maintainer/reference, and confirm the private report entry point is visible | P0 blocker |
 | Security notification ownership | PENDING MAINTAINER | Incident fields and response targets are documented | Record who receives repository security notifications and the backup owner; do not record reporter data | P0 blocker |
 | Dependency vulnerability/deprecation review | VERIFIED LOCAL on 2026-06-12 | Direct/transitive vulnerability and deprecation reviews were clean after xUnit v3 migration; full suite passes 178/178 | Rerun on final candidate date and record commands, date, commit, sources reached, and result | Required fresh evidence |
-| NuGet author signing | PENDING MAINTAINER | Package metadata/content/install gates exist; current package is not claimed as author-signed | Choose sign or defer. If signing, record certificate lifecycle owner, timestamp policy, verification command/result, and recovery plan without private certificate data. If deferred, record ACCEPTED RISK and review date | P1 decision |
-| SBOM | PENDING MAINTAINER | Dependency manifests and local dependency review exist | Choose GitHub SPDX export, release-workflow SBOM, or defer. Record format, candidate commit, generation method, hash, publication location, privacy review, and owner | P1 decision |
-| Build/package provenance | PENDING MAINTAINER | Source/package smoke and package verification are local; no attestation is claimed | Choose GitHub artifact attestation or defer. Record workflow/run, subject digest, verification command/result, permissions review, publication location, and owner | P1 decision |
+| NuGet owner identity | VERIFIED REMOTE STATE: MISMATCH on 2026-06-13 | NuGet Gallery owner profile is `Cyranth`; package author/project persona is `Cynrath` | Align the owner profile/package ownership or record a dated intentional exception and account-recovery owner | P1 blocker before RC |
+| NuGet package signature | VERIFIED PUBLISHED STATE: Repository signature; no author signature observed | Exact package SHA-256 and successful `dotnet nuget verify` result are recorded in `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md` | Choose author signing or defer with ACCEPTED RISK, lifecycle owner, and review date | P1 decision |
+| SBOM | VERIFIED PUBLISHED STATE: Not present in package or GitHub Release assets | Exact package entries and empty manually uploaded release asset list inspected on 2026-06-13 | Publish an exact-candidate SBOM or defer with owner, reason, compensating review, and review date | P1 decision |
+| Build/package provenance | VERIFIED PUBLISHED STATE: No accessible GitHub attestation for package digest | `gh attestation verify` queried exact SHA-256 and repository; no accessible SLSA provenance record was returned | Attest an exact-candidate artifact or defer with owner, reason, package hash review, and review date | P1 decision |
 | Bad-package recovery | PROPOSED | Successor/unlist/deprecate policy is documented; immutable package replacement is prohibited | Accept the owner, decision threshold, communication path, unlist/deprecate authority, successor version process, and post-incident review date | Required decision |
 
 ## Recommended Defaults

@@ -46,11 +46,13 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 31. TASK-0096 final RC local readiness consolidation - completed locally; consolidated evidence reports `LOCAL READY / REMOTE NO-GO`.
 32. TASK-0097 hosted validation status sync - completed locally; standard workflows are recorded green, manual RC evidence remains unrun.
 33. TASK-0098 private vulnerability reporting status - completed locally; read-only API verified disabled, maintainer activation remains required.
+34. TASK-0099 published supply-chain status audit - completed locally; maintainer ownership/signing/SBOM/provenance/recovery decisions remain open.
 
 ## Maintainer-Gated Next Work
 - Run the manual hosted RC evidence workflow on the exact reviewed commit and record all three OS results.
 - Enable and verify private vulnerability reporting and security notification ownership.
 - Record signing, SBOM, provenance, and package-recovery decisions with dated evidence or accepted risk.
+- Align or explicitly accept the NuGet owner profile `Cyranth` versus public persona/package author `Cynrath`.
 - Select a candidate version and open a dedicated release-preparation task only after the P0/P1 decision inputs are complete.
 
 ## Current Remote State

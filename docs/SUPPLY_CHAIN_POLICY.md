@@ -26,15 +26,18 @@ Local review on 2026-06-12 found no vulnerable direct or transitive packages. TA
 - Verify package ID, version, README, license expression, repository URLs, and tool command before publish.
 
 ## Signing, SBOM, And Provenance Decision
-The current pre-release package is not documented as signed and no SBOM/provenance artifact is published. Before 1.0 RC, the maintainer must make and record explicit decisions for:
+The published `0.2.0-alpha.1` package is repository-signed by NuGet.org. Read-only verification found no author signature, no SBOM in the package or GitHub Release assets, and no accessible GitHub provenance attestation for the exact package digest. See `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`.
+
+NuGet.org repository signing must not be described as author-signed. Before 1.0 RC, the maintainer must make and record explicit decisions for:
 - NuGet package signing;
 - source/package provenance or attestations;
 - SBOM generation and publication;
 - recovery/deprecation procedure for a bad package.
+- alignment of the public NuGet owner profile `Cyranth` with the project persona and package author `Cynrath`.
 
 These decisions may require remote credentials/services and remain maintainer-only blockers. This task does not sign, publish, or upload anything.
 
-TASK-0095 consolidates the status/evidence vocabulary, recommended options, and maintainer decision fields in `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` and `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`. Private reporting, author signing, SBOM publication, and provenance remain `PENDING MAINTAINER`; no active control is claimed.
+TASK-0095 consolidates the decision fields. TASK-0099 records the exact published package/release state. Private reporting activation, owner identity alignment, author signing, SBOM publication, provenance, and recovery acceptance remain maintainer actions; no unverified control is claimed.
 
 ## Recovery
 If a bad package is published, stop recommending the version, document impact, publish a fixed successor rather than replacing immutable package content, and update release/install guidance. NuGet unlisting/deprecation is a maintainer remote action.

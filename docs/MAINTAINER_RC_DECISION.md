@@ -15,7 +15,8 @@ The local contract freeze, machine-readable schema assets, localization parity g
 | JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
 | Security reporting | Read-only GitHub API verified private reporting disabled on 2026-06-13; response handoff is ready | Enable and verify private reporting, record notification owners and non-sensitive evidence | Maintainer GitHub settings |
 | Dependency review | Clean on 2026-06-12 | Rerun on final candidate date | Maintainer/release validation |
-| Signing/SBOM/provenance | TASK-0095 decision fields/options ready; status PENDING MAINTAINER | Record explicit sign/publish/attest or defer decisions, evidence, owner, and review date | Maintainer supply-chain decision |
+| NuGet ownership/signing | Published package has a valid NuGet.org repository signature, no observed author signature, and owner profile `Cyranth` versus project persona `Cynrath` | Align/accept owner identity and record explicit author sign/defer decision, evidence, owner, and review date | Maintainer NuGet/supply-chain decision |
+| SBOM/provenance | No package/release SBOM and no accessible GitHub attestation for the exact published digest | Record explicit publish/attest or defer decisions, evidence, owner, and review date | Maintainer supply-chain decision |
 | Localization parity | TASK-0094 human/error/exit/JSON parity matrix and local gate complete | Rerun on final candidate and review intended stable technical tokens | Maintainer review |
 | Version and release | Not selected | Select version, update metadata, review package diff, approve release plan | Dedicated release task |
 

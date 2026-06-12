@@ -152,6 +152,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0096 is complete locally. `docs/RC_LOCAL_READINESS.md` and `scripts/check-rc-local-readiness.ps1` consolidate the final local evidence under `LOCAL READY / REMOTE NO-GO`; 178/178 tests, dependency review, package verification, hygiene, all local gates, and a 3.495-second benchmark pass. Hosted and maintainer-only gaps remain open.
 - Remote `master` includes `37d5220`. TASK-0097 records that standard `ci`, published-package smoke, and source-package smoke passed for that exact commit while the dedicated manual RC evidence workflow has zero runs. Full local validation remains green at 178/178 tests with a 3.716-second benchmark.
 - TASK-0098 is complete locally from read-only GitHub REST evidence that private vulnerability reporting is disabled on 2026-06-13. Activation and notification ownership remain P0 maintainer actions.
+- TASK-0099 is complete locally. The published `0.2.0-alpha.1` package/release is NuGet.org repository-signed with no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and public NuGet owner profile `Cyranth` versus project persona `Cynrath`; remediation remains maintainer-only.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene
