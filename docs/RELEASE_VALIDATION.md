@@ -41,6 +41,8 @@ The consolidated local RC decision is defined in [RC_LOCAL_READINESS.md](RC_LOCA
 
 Hosted standard workflow evidence is recorded in [HOSTED_VALIDATION_STATUS.md](HOSTED_VALIDATION_STATUS.md). It proves current CI and source/published package smoke on commit `37d5220`; it does not substitute for the unrun manual RC evidence workflow.
 
+Private vulnerability reporting status is recorded in [PRIVATE_VULNERABILITY_REPORTING_STATUS.md](PRIVATE_VULNERABILITY_REPORTING_STATUS.md). The read-only GitHub endpoint returned disabled on 2026-06-13; enablement and notification ownership remain P0 maintainer actions.
+
 Release-candidate dependency review:
 
 ```powershell

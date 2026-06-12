@@ -8,7 +8,7 @@ Do not open a public issue with secrets, private source code, production configu
 
 Until a private security contact is published, report only non-sensitive reproduction steps publicly and mark the issue as a security concern. For sensitive details, wait for a maintainer-provided private channel.
 
-Private GitHub vulnerability reporting must be enabled and verified by the maintainer before a 1.0 release candidate. See `docs/SECURITY_RESPONSE_READINESS.md`, `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`, and `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md` for response targets, evidence fields, and the maintainer-only activation boundary.
+Private GitHub vulnerability reporting was verified as disabled on 2026-06-13 and must be enabled and verified by the maintainer before a 1.0 release candidate. See `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`, `docs/SECURITY_RESPONSE_READINESS.md`, `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`, and `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md` for the read-only evidence, response targets, and maintainer-only activation boundary.
 
 ## Security Model
 - The MVP is offline-first.

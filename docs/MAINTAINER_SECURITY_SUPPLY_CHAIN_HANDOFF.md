@@ -6,12 +6,22 @@ This is a manual maintainer procedure. It does not authorize an agent to change 
 Use `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` as the single evidence register. Keep records metadata-only.
 
 ## 1. Private Vulnerability Reporting
+Current read-only status on 2026-06-13: `enabled: false`. See `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`.
+
 1. Review GitHub's current private vulnerability reporting instructions: <https://docs.github.com/code-security/security-advisories/working-with-repository-security-advisories/configuring-private-vulnerability-reporting-for-a-repository>.
 2. Enable private vulnerability reporting for `Cynrath/agent-context-kit` using a maintainer account.
 3. Confirm the public repository security surface offers a private report path. Do not submit a fake secret or real sensitive report merely to test the UI.
 4. Confirm the primary and backup maintainer receive repository security notifications.
 5. Record date, maintainer, repository/settings reference, and non-sensitive verification result in the evidence register.
 6. Update `SECURITY.md` only after the private path is verified. Do not publish a private email address unless intentionally selected and protected.
+
+Read-only verification:
+
+```powershell
+gh api -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2026-03-10" repos/Cynrath/agent-context-kit/private-vulnerability-reporting
+```
+
+Do not treat `enabled: true` as complete operational readiness until primary and backup notification owners are recorded.
 
 ## 2. Final-Candidate Dependency Review
 Run on the exact candidate commit:

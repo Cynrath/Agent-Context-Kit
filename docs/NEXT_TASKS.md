@@ -45,6 +45,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 30. TASK-0095 security reporting and supply-chain maintainer evidence handoff - completed locally; private reporting, signing, SBOM, provenance, and recovery acceptance remain maintainer-only.
 31. TASK-0096 final RC local readiness consolidation - completed locally; consolidated evidence reports `LOCAL READY / REMOTE NO-GO`.
 32. TASK-0097 hosted validation status sync - completed locally; standard workflows are recorded green, manual RC evidence remains unrun.
+33. TASK-0098 private vulnerability reporting status - completed locally; read-only API verified disabled, maintainer activation remains required.
 
 ## Maintainer-Gated Next Work
 - Run the manual hosted RC evidence workflow on the exact reviewed commit and record all three OS results.

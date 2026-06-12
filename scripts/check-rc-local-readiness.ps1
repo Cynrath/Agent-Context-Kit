@@ -80,6 +80,7 @@ $requiredPaths = @(
     @{ Path = "docs\MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md"; Description = "Maintainer security/supply-chain handoff" },
     @{ Path = "docs\RC_HOSTED_EVIDENCE.md"; Description = "Hosted RC evidence guide" },
     @{ Path = "docs\HOSTED_VALIDATION_STATUS.md"; Description = "Hosted validation status" },
+    @{ Path = "docs\PRIVATE_VULNERABILITY_REPORTING_STATUS.md"; Description = "Private vulnerability reporting status" },
     @{ Path = "docs\tasks\TASK-0096-final-rc-local-readiness-consolidation.md"; Description = "TASK-0096" }
 )
 
@@ -95,6 +96,7 @@ Require-Text -RelativePath "docs\MAINTAINER_RC_DECISION.md" -Needle "NO-GO for r
 Require-Text -RelativePath "docs\V100_GAP_ANALYSIS.md" -Needle "AgentContextKit is **not ready for 1.0 general availability**" -Description "1.0 GA blocker statement"
 Require-Text -RelativePath "docs\HOSTED_VALIDATION_STATUS.md" -Needle "37d52200fead0ce5c53571205d324b9b7ff6c75b" -Description "Hosted evidence commit"
 Require-Text -RelativePath "docs\HOSTED_VALIDATION_STATUS.md" -Needle "zero runs" -Description "Manual RC workflow missing-run boundary"
+Require-Text -RelativePath "docs\PRIVATE_VULNERABILITY_REPORTING_STATUS.md" -Needle "enabled: false" -Description "Verified disabled private-reporting state"
 
 Push-Location $repoRoot
 try {

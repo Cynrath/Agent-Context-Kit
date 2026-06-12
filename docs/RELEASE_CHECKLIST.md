@@ -71,6 +71,8 @@
 - The synthetic scan benchmark passes its documented tripwire.
 - Vulnerability and deprecation reviews are dated and reviewed.
 - Private GitHub vulnerability reporting is enabled and tested by the maintainer.
+- [x] Read-only GitHub API status was checked on 2026-06-13 and returned disabled.
+- [ ] Enable private vulnerability reporting, verify `enabled: true`, and record primary/backup notification ownership.
 - Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
 - [x] Standard `ci`, published-package smoke, and source-package smoke are green for commit `37d5220`; see `docs/HOSTED_VALIDATION_STATUS.md`.
 - [ ] The dedicated manual `release-candidate-evidence` workflow has a green Windows, Ubuntu, and macOS run for the selected candidate commit.

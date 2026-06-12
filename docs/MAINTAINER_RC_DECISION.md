@@ -13,7 +13,7 @@ The local contract freeze, machine-readable schema assets, localization parity g
 | Hosted RC workflow | Standard `ci`, published smoke, and source smoke are green at `37d5220`; dedicated RC workflow has zero runs | Green Windows, Ubuntu, and macOS manual RC run for final candidate commit | Maintainer dispatch |
 | Upgrade/config evidence | Local fixtures pass | Hosted predecessor install, config hash, `config-check`, baseline, SARIF, and final scan pass | Hosted workflow |
 | JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
-| Security reporting | TASK-0095 evidence register/handoff ready; remote status PENDING MAINTAINER | Enable and verify private vulnerability reporting; record date/owner/non-sensitive reference | Maintainer GitHub settings |
+| Security reporting | Read-only GitHub API verified private reporting disabled on 2026-06-13; response handoff is ready | Enable and verify private reporting, record notification owners and non-sensitive evidence | Maintainer GitHub settings |
 | Dependency review | Clean on 2026-06-12 | Rerun on final candidate date | Maintainer/release validation |
 | Signing/SBOM/provenance | TASK-0095 decision fields/options ready; status PENDING MAINTAINER | Record explicit sign/publish/attest or defer decisions, evidence, owner, and review date | Maintainer supply-chain decision |
 | Localization parity | TASK-0094 human/error/exit/JSON parity matrix and local gate complete | Rerun on final candidate and review intended stable technical tokens | Maintainer review |

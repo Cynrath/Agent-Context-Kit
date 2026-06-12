@@ -49,13 +49,16 @@ $responseReadiness = Read-RequiredFile "docs\SECURITY_RESPONSE_READINESS.md" "Se
 $supplyChain = Read-RequiredFile "docs\SUPPLY_CHAIN_POLICY.md" "Supply-chain policy"
 $maintainerDecision = Read-RequiredFile "docs\MAINTAINER_RC_DECISION.md" "Maintainer RC decision"
 $task = Read-RequiredFile "docs\tasks\TASK-0095-security-supply-chain-maintainer-evidence.md" "TASK-0095"
+$privateReportingStatus = Read-RequiredFile "docs\PRIVATE_VULNERABILITY_REPORTING_STATUS.md" "Private vulnerability reporting status"
+$privateReportingTask = Read-RequiredFile "docs\tasks\TASK-0098-private-vulnerability-reporting-status.md" "TASK-0098"
 
 foreach ($marker in @(
     "Local evidence register prepared on 2026-06-12",
     "PENDING MAINTAINER",
     "VERIFIED LOCAL",
     "ACCEPTED RISK",
-    "Private vulnerability reporting | PENDING MAINTAINER",
+    "VERIFIED REMOTE STATE",
+    "Private vulnerability reporting | VERIFIED REMOTE STATE: DISABLED on 2026-06-13",
     "NuGet author signing | PENDING MAINTAINER",
     "SBOM | PENDING MAINTAINER",
     "Build/package provenance | PENDING MAINTAINER",
@@ -79,12 +82,16 @@ foreach ($marker in @(
     Require-Text $handoff $marker "Maintainer handoff section $marker"
 }
 
-Require-Text $securityPolicy "Private GitHub vulnerability reporting must be enabled and verified" "Public security policy private-reporting blocker"
+Require-Text $securityPolicy "must be enabled and verified by the maintainer" "Public security policy private-reporting blocker"
 Require-Text $responseReadiness "private vulnerability reporting channel must be enabled and verified" "Security response maintainer blocker"
 Require-Text $supplyChain "current pre-release package is not documented as signed" "Unsigned-package truth boundary"
 Require-Text $supplyChain "no SBOM/provenance artifact is published" "Unpublished SBOM/provenance truth boundary"
 Require-Text $maintainerDecision "NO-GO for release-candidate publication" "Maintainer NO-GO decision"
 Require-Text $task "does not approve an RC" "Task non-approval boundary"
+Require-Text $privateReportingStatus 'Result: `enabled: false`' "Verified disabled private-reporting state"
+Require-Text $privateReportingStatus "P0 blocker remains open" "Private-reporting P0 blocker"
+Require-Text $privateReportingStatus "repos/Cynrath/agent-context-kit/private-vulnerability-reporting" "Private-reporting read-only endpoint"
+Require-Text $privateReportingTask "No GitHub setting change" "Private-reporting task remote-write boundary"
 
 if ($RunDependencyReview) {
     Push-Location $repoRoot

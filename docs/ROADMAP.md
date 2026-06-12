@@ -150,6 +150,7 @@
 - TASK-0095 consolidates maintainer-only private reporting, dependency review, signing, SBOM, provenance, and recovery evidence fields without claiming remote completion.
 - TASK-0096 completes final local RC evidence consolidation under a `LOCAL READY / REMOTE NO-GO` decision and read-only orchestration gate.
 - TASK-0097 records green standard hosted workflows for `37d5220` and keeps the unrun manual RC evidence workflow as a maintainer blocker.
+- TASK-0098 records the private vulnerability reporting setting as read-only verified disabled and keeps activation plus response ownership as a P0 maintainer blocker.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 

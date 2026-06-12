@@ -89,6 +89,7 @@ $criticalDocs = @(
     "docs\MAINTAINER_RC_DECISION.md",
     "docs\RC_LOCAL_READINESS.md",
     "docs\HOSTED_VALIDATION_STATUS.md",
+    "docs\PRIVATE_VULNERABILITY_REPORTING_STATUS.md",
     "docs\RELEASE_VALIDATION.md",
     "docs\RELEASE_BLOCKERS.md",
     "docs\PUBLIC_RELEASE_AUDIT.md",

@@ -42,6 +42,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0097 is complete locally. It records successful standard hosted evidence without closing the dedicated RC workflow blocker.
 - Full TASK-0097 validation passed: zero-warning build, 178/178 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, clean dependency reviews, readiness gates, clean hygiene, local package verification, and a 3.716-second benchmark.
 - Manual `release-candidate-evidence` dispatch, private reporting/security ownership, supply-chain decisions, candidate selection, and final approval remain maintainer-only.
+- Read-only GitHub API verification on 2026-06-13 returned `enabled: false` for private vulnerability reporting. TASK-0098 is complete locally; activation and notification ownership remain P0 maintainer actions.
+- TASK-0098 local validation passed with 178/178 tests, zero scan/SARIF findings, clean hygiene, release verification, and a 2.62-second synthetic benchmark.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

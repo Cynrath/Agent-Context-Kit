@@ -56,7 +56,7 @@ Revert the TASK-0097 commit. No workflow, repository setting, release, package, 
 
 ## Completion Notes
 - Task created after confirming local `master` equals `origin/master` at commit `37d5220`.
-- Read-only GitHub CLI queries confirmed `ci` run `27444536856`, published-package smoke run `27444536899`, and source-package smoke run `27444536894` succeeded for full commit `37d52200fead0ce5c53571205d324b9b7ff6c75b`.
+- Read-only GitHub CLI queries confirmed the public `ci`, published-package smoke, and source-package smoke URLs recorded in `docs/HOSTED_VALIDATION_STATUS.md` succeeded for full commit `37d52200fead0ce5c53571205d324b9b7ff6c75b`.
 - Published and source smoke jobs passed on Windows, Ubuntu, and macOS; `ci` passed on Windows and Ubuntu.
 - The active `release-candidate-evidence` workflow reported zero runs. No dispatch was performed.
 - Added `docs/HOSTED_VALIDATION_STATUS.md` with public run URLs, evidence scope, missing RC checks, and a maintainer-only dispatch packet.

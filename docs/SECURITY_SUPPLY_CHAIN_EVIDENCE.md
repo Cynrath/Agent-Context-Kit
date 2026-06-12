@@ -1,10 +1,11 @@
 # Security And Supply-Chain Evidence Register
 
 ## Status
-Local evidence register prepared on 2026-06-12. Remote security settings, signing, SBOM publication, provenance attestations, and final release decisions are **PENDING MAINTAINER**. This document is not release approval and must not be used to claim those controls are active.
+Local evidence register prepared on 2026-06-12 and remote private-reporting state checked on 2026-06-13. Private vulnerability reporting is **VERIFIED REMOTE STATE: DISABLED**. Signing, SBOM publication, provenance attestations, response ownership, and final release decisions remain **PENDING MAINTAINER**. This document is not release approval.
 
 ## Status Vocabulary
 - `VERIFIED LOCAL`: reproduced from local source, tests, package inspection, or documented policy.
+- `VERIFIED REMOTE STATE`: reproduced through a read-only remote query; this can confirm a blocker is present and is not equivalent to completion.
 - `PROPOSED`: recommended decision that the maintainer has not accepted.
 - `PENDING MAINTAINER`: requires a dated maintainer decision or remote evidence.
 - `ACCEPTED RISK`: explicit dated owner acceptance with scope and review date.
@@ -13,7 +14,7 @@ Local evidence register prepared on 2026-06-12. Remote security settings, signin
 ## Evidence Register
 | Area | Current Status | Local Evidence | Maintainer Evidence Required | RC Effect |
 | --- | --- | --- | --- | --- |
-| Private vulnerability reporting | PENDING MAINTAINER | `SECURITY.md` and response targets prohibit sensitive public reports | Enable the repository setting; record verification date, maintainer, repository URL, and non-sensitive confirmation that the private report entry point is visible | P0 blocker |
+| Private vulnerability reporting | VERIFIED REMOTE STATE: DISABLED on 2026-06-13 | GitHub GET endpoint returned `enabled: false`; `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md` records the public endpoint and safe query | Enable the repository setting; verify `enabled: true`, record date/maintainer/reference, and confirm the private report entry point is visible | P0 blocker |
 | Security notification ownership | PENDING MAINTAINER | Incident fields and response targets are documented | Record who receives repository security notifications and the backup owner; do not record reporter data | P0 blocker |
 | Dependency vulnerability/deprecation review | VERIFIED LOCAL on 2026-06-12 | Direct/transitive vulnerability and deprecation reviews were clean after xUnit v3 migration; full suite passes 178/178 | Rerun on final candidate date and record commands, date, commit, sources reached, and result | Required fresh evidence |
 | NuGet author signing | PENDING MAINTAINER | Package metadata/content/install gates exist; current package is not claimed as author-signed | Choose sign or defer. If signing, record certificate lifecycle owner, timestamp policy, verification command/result, and recovery plan without private certificate data. If deferred, record ACCEPTED RISK and review date | P1 decision |
@@ -38,7 +39,7 @@ Candidate commit:
 Decision date:
 Maintainer: Cynrath
 
-Private vulnerability reporting: ENABLED / NOT ENABLED
+Private vulnerability reporting: DISABLED (verified 2026-06-13) / ENABLED
 Verification URL or repository setting reference:
 Security notification primary/backup owner:
 

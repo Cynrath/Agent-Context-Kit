@@ -24,3 +24,5 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 20. Before TASK-0097 edits, local and remote were aligned at `37d5220`; standard `ci`, published smoke, and source smoke are green for that commit.
 21. TASK-0097 is complete locally. It records exact public run URLs and preserves the zero-run manual RC workflow blocker; full local validation passes with 178/178 tests and a 3.716-second benchmark.
 22. Remaining RC progress requires maintainer action: dispatch the manual RC workflow, verify private reporting/security ownership, decide signing/SBOM/provenance/recovery, select a candidate, and approve release preparation.
+23. TASK-0098 is complete locally. The official read-only GitHub endpoint returned `enabled: false`; the verified P0 blocker and maintainer-only activation path are documented without changing the setting.
+24. TASK-0098 validation passes with 178/178 tests, zero scan/SARIF findings, full local release verification, and a 2.62-second synthetic benchmark. Remote activation and notification ownership remain open.

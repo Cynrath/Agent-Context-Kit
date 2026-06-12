@@ -34,6 +34,7 @@
 | 30 | Done locally | TASK-0095 security reporting and supply-chain maintainer evidence handoff | High | Remote settings and publication decisions remain pending | security/supply-chain/release docs | Local checklist plus maintainer evidence | Yes | Local evidence register, maintainer handoff, dependency review, and release-gate integration are complete without claiming remote completion. |
 | 31 | Done locally | TASK-0096 final RC local readiness consolidation | High | Hosted evidence, security settings, supply-chain decisions, and final approval remain pending | RC readiness docs/scripts | Full local gates plus explicit remote NO-GO boundary | Yes | One auditable local-readiness summary and read-only orchestration gate pass without closing remote gaps. |
 | 32 | Done locally | TASK-0097 hosted validation status sync | High | Dedicated RC workflow dispatch remains maintainer-only | hosted evidence docs | Read-only GitHub metadata plus full local gates | Yes | Exact successful standard workflow evidence is recorded without claiming the unrun RC workflow passed. |
+| 33 | Done locally | TASK-0098 private vulnerability reporting status | High | Setting is verified disabled; activation and notification ownership are maintainer-only | security/RC evidence docs | Read-only GitHub API plus full local gates | Yes | Disabled remote state and exact completion procedure are recorded without changing the setting. |
 
 ## Remote-Write Guardrail
 The following actions are not performed from an agent session without explicit maintainer approval:

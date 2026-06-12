@@ -25,7 +25,7 @@ Standard hosted `ci`, published-package smoke, and source-package smoke are gree
 | Area | Required Evidence | Status |
 | --- | --- | --- |
 | Hosted RC workflow | Standard CI/source/published smoke are green for `37d5220`; dedicated predecessor/config/baseline/performance workflow is still required | PENDING MAINTAINER |
-| Private vulnerability reporting | Enabled setting, verified entry point, date, owner, and non-sensitive reference | PENDING MAINTAINER |
+| Private vulnerability reporting | Read-only API verified disabled on 2026-06-13; enable it, verify `enabled: true` and the entry point, then record date/owner/reference | VERIFIED REMOTE BLOCKER |
 | Security notification ownership | Primary and backup owner confirmation | PENDING MAINTAINER |
 | Final contract acceptance | Candidate-specific CLI/config/JSON/baseline/SARIF/localization review | PENDING MAINTAINER |
 | Signing | Sign or defer decision with lifecycle/recovery evidence or accepted risk | PENDING MAINTAINER |

@@ -96,6 +96,7 @@
 - `docs/RC_LOCAL_READINESS.md`: consolidated local RC evidence with an explicit remote NO-GO boundary.
 - `scripts/check-rc-local-readiness.ps1`: read-only orchestration gate for final local RC evidence.
 - `docs/HOSTED_VALIDATION_STATUS.md`: exact standard Actions run evidence and the remaining manual RC workflow gap.
+- `docs/PRIVATE_VULNERABILITY_REPORTING_STATUS.md`: read-only GitHub setting evidence, disabled-state blocker, and maintainer enablement verification steps.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.
