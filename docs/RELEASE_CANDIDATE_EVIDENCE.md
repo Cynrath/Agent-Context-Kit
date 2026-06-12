@@ -1,7 +1,7 @@
 # Release Candidate Evidence
 
 ## Status
-Local evidence preparation includes TASK-0084 through TASK-0095 baseline/config hardening, dependency cleanup, the manual hosted evidence workflow design, machine-readable contract assets, localization parity gates, a security/supply-chain maintainer evidence handoff, and a conditional local contract freeze. This document does not approve a release candidate or 1.0 GA.
+Local evidence preparation includes TASK-0084 through TASK-0096 baseline/config hardening, dependency cleanup, the manual hosted evidence workflow design, machine-readable contract assets, localization parity gates, a security/supply-chain maintainer evidence handoff, a consolidated local-readiness gate, and a conditional local contract freeze. This document does not approve a release candidate or 1.0 GA.
 
 ## Local Evidence Matrix
 | Area | Local Evidence | Status | Remaining Blocker |
@@ -26,6 +26,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflo
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues
 ```
 
 ## Dated Local Result
@@ -39,6 +40,7 @@ Local evidence recorded on 2026-06-12:
 - TASK-0092 reconciled the CLI, exit-code, config schema `1`, JSON schema `2`, baseline schema `1`, SARIF `2.1.0`, generated-file, privacy, and upgrade contracts into a conditional local freeze.
 - TASK-0093 added machine-readable schemas/golden fixtures and TASK-0094 added English/Turkish human/error/exit/JSON semantic parity tests plus a local release gate.
 - TASK-0095 added the security/supply-chain evidence register, maintainer procedure, explicit pending/verified vocabulary, and a local evidence-structure gate. Remote/security credential actions remain pending.
+- TASK-0096 adds `docs/RC_LOCAL_READINESS.md` and a read-only orchestration gate that reports `LOCAL READY / REMOTE NO-GO`; it does not close hosted, security-setting, supply-chain, version, or approval blockers.
 
 The former xUnit test-tooling warning is resolved locally. Remaining supply-chain decisions are signing, SBOM, provenance, recovery policy, and release-date revalidation.
 

@@ -149,6 +149,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0094 centralizes English/Turkish human-readable CLI chrome, adds five command-matrix/error/JSON parity tests across all 13 language-aware JSON commands, and adds `scripts/check-localization-parity.ps1`. Stable technical tokens and machine-readable contracts remain English and language-independent.
 - TASK-0094 full validation passes with 178/178 tests, clean Turkish CLI smoke, all local gates, and clean hygiene.
 - TASK-0095 is complete locally with `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`, `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`, and `scripts/check-security-supply-chain-evidence.ps1`. Dependency reviews, 178/178 tests, local package verification, all integrated gates, clean hygiene, and a 3.368-second benchmark pass. All remote security settings and signing/SBOM/provenance/recovery actions remain explicitly pending maintainer evidence.
+- TASK-0096 is complete locally. `docs/RC_LOCAL_READINESS.md` and `scripts/check-rc-local-readiness.ps1` consolidate the final local evidence under `LOCAL READY / REMOTE NO-GO`; 178/178 tests, dependency review, package verification, hygiene, all local gates, and a 3.495-second benchmark pass. Hosted and maintainer-only gaps remain open.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

@@ -3,7 +3,7 @@
 ## Current Decision
 **NO-GO for release-candidate publication.**
 
-The local contract freeze, machine-readable schema assets, and localization parity gate are prepared and validated, but hosted evidence, remote security settings, supply-chain publication decisions, and final version/release approval remain incomplete.
+The local contract freeze, machine-readable schema assets, localization parity gate, security/supply-chain handoff, and consolidated local-readiness gate are prepared and validated, but hosted evidence, remote security settings, supply-chain publication decisions, and final version/release approval remain incomplete.
 
 ## Decision Inputs
 | Area | Current State | Required For GO | Owner / Action |

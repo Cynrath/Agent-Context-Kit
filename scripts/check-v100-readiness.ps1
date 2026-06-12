@@ -115,6 +115,7 @@ $requiredPaths = @(
     @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "maintainer release-candidate decision" },
     @{ Path = "docs\SECURITY_SUPPLY_CHAIN_EVIDENCE.md"; Description = "security/supply-chain evidence register" },
     @{ Path = "docs\MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md"; Description = "maintainer security/supply-chain handoff" },
+    @{ Path = "docs\RC_LOCAL_READINESS.md"; Description = "final RC local-readiness consolidation" },
     @{ Path = "docs\schemas\README.md"; Description = "machine-readable contract schema catalog" },
     @{ Path = "docs\schemas\ackit-command-output-v2.schema.json"; Description = "command output schema" },
     @{ Path = "docs\schemas\ackit-baseline-v1.schema.json"; Description = "baseline schema asset" },
@@ -141,6 +142,7 @@ $requiredPaths = @(
     @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "machine-readable contract asset check script" },
     @{ Path = "scripts\check-localization-parity.ps1"; Description = "localization parity check script" },
     @{ Path = "scripts\check-security-supply-chain-evidence.ps1"; Description = "security/supply-chain evidence check script" },
+    @{ Path = "scripts\check-rc-local-readiness.ps1"; Description = "final RC local-readiness check script" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "scan performance measurement script" },
     @{ Path = ".github\workflows\release-candidate-evidence.yml"; Description = "manual hosted release-candidate workflow" },
     @{ Path = "scripts\check-v050-readiness.ps1"; Description = "v0.5 readiness check script" },
@@ -187,12 +189,14 @@ $releaseValidationNeedles = @(
     "scripts/check-json-contract-assets.ps1",
     "scripts/check-localization-parity.ps1",
     "scripts/check-security-supply-chain-evidence.ps1",
+    "scripts/check-rc-local-readiness.ps1",
     "scripts/measure-scan-performance.ps1",
     "RELEASE_CANDIDATE_EVIDENCE.md",
     "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "MAINTAINER_RC_DECISION.md",
     "SECURITY_SUPPLY_CHAIN_EVIDENCE.md",
     "MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md",
+    "RC_LOCAL_READINESS.md",
     "docs/schemas/README.md",
     "LOCALIZATION.md",
     "RC_HOSTED_EVIDENCE.md"
@@ -219,6 +223,7 @@ $documentationIndexNeedles = @(
     "MAINTAINER_RC_DECISION.md",
     "SECURITY_SUPPLY_CHAIN_EVIDENCE.md",
     "MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md",
+    "RC_LOCAL_READINESS.md",
     "docs/schemas/README.md",
     "RC_HOSTED_EVIDENCE.md"
 )
@@ -291,6 +296,7 @@ $projectMapNeedles = @(
     "scripts/check-json-contract-assets.ps1",
     "scripts/check-localization-parity.ps1",
     "scripts/check-security-supply-chain-evidence.ps1",
+    "scripts/check-rc-local-readiness.ps1",
     "docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md",
     "scripts/check-v100-readiness.ps1"
 )

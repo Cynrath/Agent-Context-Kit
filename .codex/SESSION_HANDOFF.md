@@ -34,6 +34,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0095 is complete locally. It adds a metadata-only maintainer evidence register, manual security/supply-chain handoff, dependency review, and integrated local gate without changing GitHub settings or producing/signing/publishing artifacts.
 - Full TASK-0095 validation passed: zero-warning build, 178/178 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, clean dependency reviews, all contract/localization/security/readiness/RC/release gates, clean hygiene, local package verification, and a 3.368-second 2,000-file benchmark.
 - Remote private reporting, signing, SBOM, provenance, recovery acceptance, hosted evidence, and final RC approval remain pending maintainer actions.
+- TASK-0095 committed as `a828b0a docs: add security supply-chain evidence handoff`; post-commit public release gate passed.
+- TASK-0096 is complete locally. It consolidates local RC evidence and existing gates while preserving the maintainer NO-GO decision.
+- Full TASK-0096 validation passed: zero-warning build, 178/178 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, clean dependency reviews, CLI/config/contract/localization/security/readiness/RC gates, clean hygiene, local package verification, and a 3.495-second benchmark.
+- The next RC work is genuinely maintainer-gated: hosted three-OS dispatch, private reporting/security ownership, supply-chain decisions, candidate version selection, and final approval.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

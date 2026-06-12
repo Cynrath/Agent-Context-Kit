@@ -43,6 +43,13 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 28. TASK-0093 machine-readable JSON schema and golden contract assets - completed locally.
 29. TASK-0094 English/Turkish localization parity release gate - completed locally.
 30. TASK-0095 security reporting and supply-chain maintainer evidence handoff - completed locally; private reporting, signing, SBOM, provenance, and recovery acceptance remain maintainer-only.
+31. TASK-0096 final RC local readiness consolidation - completed locally; consolidated evidence reports `LOCAL READY / REMOTE NO-GO`.
+
+## Maintainer-Gated Next Work
+- Run the manual hosted RC evidence workflow on the exact reviewed commit and record all three OS results.
+- Enable and verify private vulnerability reporting and security notification ownership.
+- Record signing, SBOM, provenance, and package-recovery decisions with dated evidence or accepted risk.
+- Select a candidate version and open a dedicated release-preparation task only after the P0/P1 decision inputs are complete.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.

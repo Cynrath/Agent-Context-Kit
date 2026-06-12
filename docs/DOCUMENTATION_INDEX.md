@@ -93,6 +93,8 @@
 - `scripts/check-json-contract-assets.ps1`: parses schema/golden assets and runs live-output contract tests.
 - `scripts/check-localization-parity.ps1`: validates English/Turkish help, human/error exits, and JSON semantic invariance.
 - `scripts/check-security-supply-chain-evidence.ps1`: validates pending/verified evidence structure and optionally reruns dependency reviews.
+- `docs/RC_LOCAL_READINESS.md`: consolidated local RC evidence with an explicit remote NO-GO boundary.
+- `scripts/check-rc-local-readiness.ps1`: read-only orchestration gate for final local RC evidence.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

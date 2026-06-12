@@ -78,4 +78,6 @@
 - [x] Machine-readable JSON schema `2`, baseline schema `1`, SARIF profile assets, sanitized golden fixtures, and `scripts/check-json-contract-assets.ps1 -FailOnIssues` are present and passing.
 - [x] English/Turkish human output, known argument-error parity, exit-code parity, and language-independent JSON semantics are covered by `scripts/check-localization-parity.ps1 -FailOnIssues`.
 - [x] Security/supply-chain evidence structure and maintainer handoff are present and pass `scripts/check-security-supply-chain-evidence.ps1 -FailOnIssues`; remote items remain explicitly pending.
+- [x] Current-source consolidated local evidence passes `scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues`; the result remains `LOCAL READY / REMOTE NO-GO`.
+- [ ] Rerun the same gate on the exact selected candidate commit after hosted and maintainer evidence is recorded.
 - Signing, SBOM, provenance, and package recovery decisions are recorded.

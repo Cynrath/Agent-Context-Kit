@@ -32,6 +32,7 @@
 | 28 | Done locally | TASK-0093 machine-readable JSON schema and golden contract assets | High | Final candidate acceptance remains maintainer-only | schema assets/tests/docs | Full contract tests and local gates | No | Versioned machine-readable schemas/golden fixtures enforce additive and breaking-change rules. |
 | 29 | Done locally | TASK-0094 English/Turkish localization parity release gate | High | Final candidate acceptance remains maintainer-only | CLI/tests/docs/scripts | Full localized contract matrix | No | Help, diagnostics, errors, and JSON invariance are release-gated. |
 | 30 | Done locally | TASK-0095 security reporting and supply-chain maintainer evidence handoff | High | Remote settings and publication decisions remain pending | security/supply-chain/release docs | Local checklist plus maintainer evidence | Yes | Local evidence register, maintainer handoff, dependency review, and release-gate integration are complete without claiming remote completion. |
+| 31 | Done locally | TASK-0096 final RC local readiness consolidation | High | Hosted evidence, security settings, supply-chain decisions, and final approval remain pending | RC readiness docs/scripts | Full local gates plus explicit remote NO-GO boundary | Yes | One auditable local-readiness summary and read-only orchestration gate pass without closing remote gaps. |
 
 ## Remote-Write Guardrail
 The following actions are not performed from an agent session without explicit maintainer approval:

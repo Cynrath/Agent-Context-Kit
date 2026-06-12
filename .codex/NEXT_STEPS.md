@@ -20,3 +20,5 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 16. TASK-0094 is complete locally. Five focused tests cover help, all 13 language-aware JSON commands, known argument errors, exit parity, baseline/suppression labels, and JSON semantic invariance; the full suite passes 178/178.
 17. TASK-0095 is complete locally. The evidence register, maintainer handoff, dependency review, and local evidence gate pass with 178/178 tests and a 3.368-second synthetic benchmark.
 18. Private vulnerability reporting, NuGet signing, SBOM, provenance, bad-package recovery acceptance, hosted RC evidence, and final RC approval remain explicit maintainer-only actions.
+19. TASK-0096 is complete locally. `docs/RC_LOCAL_READINESS.md` and `scripts/check-rc-local-readiness.ps1` pass with 178/178 tests, clean dependency review, local package verification, and a 3.495-second benchmark.
+20. No additional unblocked local RC task is documented. Hosted workflow evidence, private reporting, security ownership, supply-chain decisions, candidate selection, and final approval require maintainer action before a release-preparation task starts.

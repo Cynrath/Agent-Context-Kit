@@ -22,6 +22,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflo
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues
 ```
 
 Hosted RC evidence is manual-only. After a maintainer push, dispatch `.github/workflows/release-candidate-evidence.yml` and record the three OS results as described in `docs/RC_HOSTED_EVIDENCE.md`.
@@ -35,6 +36,8 @@ Machine-readable command JSON, baseline, and SARIF profile assets are indexed in
 English/Turkish human output, known argument errors, exit decisions, and JSON semantic invariance are defined in [LOCALIZATION.md](LOCALIZATION.md) and validated by `tests/AgentContextKit.Tests/LocalizationParityTests.cs` plus `scripts/check-localization-parity.ps1`.
 
 Security reporting and supply-chain maintainer evidence fields are defined in [SECURITY_SUPPLY_CHAIN_EVIDENCE.md](SECURITY_SUPPLY_CHAIN_EVIDENCE.md) and [MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md](MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md), with local structure/dependency review through `scripts/check-security-supply-chain-evidence.ps1`. This gate does not prove remote settings or artifact publication.
+
+The consolidated local RC decision is defined in [RC_LOCAL_READINESS.md](RC_LOCAL_READINESS.md). `scripts/check-rc-local-readiness.ps1` orchestrates the existing local evidence gates and intentionally reports `LOCAL READY / REMOTE NO-GO` while hosted and maintainer-only evidence remains open.
 
 Release-candidate dependency review:
 
