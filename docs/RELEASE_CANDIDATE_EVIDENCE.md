@@ -10,7 +10,7 @@ Local evidence preparation includes TASK-0084 through TASK-0090 baseline/config 
 | Config compatibility | published `0.2.0-alpha.1` config fixture plus read-only `config-check` human/JSON/exit/privacy contract tests | Ready locally | hosted predecessor-config smoke and RC sign-off |
 | CLI/JSON/SARIF | contract tests, additive schema rules, exit-code parity | Ready locally | RC freeze/sign-off and machine-readable schema decision |
 | Performance | disposable 2,000-file benchmark with 30-second tripwire plus manual three-OS workflow design | Initial local evidence | successful hosted run, memory, cancellation, mixed corpus |
-| Security response | policy, Critical regression tests, privacy boundaries | Partial | private GitHub reporting channel and dated dependency review |
+| Security response | policy, Critical regression tests, privacy boundaries, clean dated dependency review | Partial | private GitHub reporting channel |
 | Runtime support | .NET 10, three-OS workflow policy, and manual RC workflow | Documented | fresh hosted RC run and final support window |
 | Supply chain | metadata/artifact/package install gates | Partial | signing/SBOM/provenance/recovery decisions |
 | Migration/localization | upgrade/rollback guide, fixtures, read-only config diagnostics, and explicit no-auto-migration policy | Partial | complete EN/TR parity gate and hosted evidence |
@@ -30,10 +30,11 @@ Local evidence recorded on 2026-06-12:
 - Published-config and baseline-schema fixture tests passed: 2/2.
 - The final disposable 2,000-file scan benchmark rerun completed in 2.936 seconds against a 30-second tripwire.
 - NuGet vulnerability review reported no vulnerable direct or transitive packages.
-- NuGet deprecation review reported `xunit` `2.9.3` as Legacy and identified `xunit.v3` as the alternative.
+- The initial NuGet deprecation review reported `xunit` `2.9.3` as Legacy. TASK-0091 migrated the executable test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5` using the official xUnit v3 migration requirements.
+- Disposable migration smoke and the repository suite both passed 169/169 tests; the post-migration vulnerability and deprecation reviews reported no findings.
 - Local Windows reproduction of the manual RC workflow steps passed isolated predecessor/source installs, config immutability, `config-check`, baseline, SARIF parse, and final scan.
 
-The xUnit finding affects test tooling rather than the shipped runtime package, but it still requires a migration or explicit dated maintainer risk acceptance before a 1.0 release candidate.
+The former xUnit test-tooling warning is resolved locally. Remaining supply-chain decisions are signing, SBOM, provenance, recovery policy, and release-date revalidation.
 
 ## Maintainer-Only Evidence
 - Enable and verify private vulnerability reporting.

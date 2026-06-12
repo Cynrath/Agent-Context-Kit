@@ -7,12 +7,13 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 3. Read-only GitHub CLI validation confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs on `master` succeeded for commit `e0a0fa9`.
 4. GitHub Release `v0.2.0-alpha.1` exists as a pre-release; its body has candidate-era wording, so `docs/RELEASE_BODY_V020_ALPHA1.md` is the maintainer-ready replacement draft.
 5. Published NuGet `0.2.0-alpha.1` includes `ackit sarif`.
-6. TASK-0066 through TASK-0089 are committed locally. TASK-0090 manual RC evidence workflow design passed full local validation with 169/169 tests; commit, rerun the public gate, then continue with TASK-0091 xUnit decision.
+6. TASK-0066 through TASK-0090 are committed locally. TASK-0091 migrated the test project to xUnit v3; disposable and repository suites passed 169/169 tests, and dependency vulnerability/deprecation reviews are clean. Commit TASK-0091 after full gates, then continue with TASK-0092.
 7. `docs/V100_GAP_ANALYSIS.md` is the source of truth for 1.0 readiness; historical v1.0 scripts validate asset presence, not GA completion.
 8. Remote writes remain maintainer-only: push, tag, GitHub Release edits, label creation, repo settings, branch protection, Code Scanning upload, issue creation, and NuGet publish.
 9. Generated `.ackit/`, SARIF, local reports, Web UI, packages, archives, `bin/`, `obj/`, `TestResults`, and coverage artifacts must not be committed.
-10. TASK-0088 local evidence: fixture tests 2/2, final 2,000-file benchmark rerun 2.936 seconds, no vulnerable packages, and a Legacy warning for test dependency `xunit` `2.9.3`.
+10. TASK-0088 initially found Legacy test dependency `xunit` `2.9.3`; TASK-0091 resolved it with `xunit.v3` `3.2.2` and runner `3.1.5` without reducing the 169-test suite.
 11. TASK-0089 adds current-source `config-check`; the published `0.2.0-alpha.1` package does not include this command. Full local validation passed with 169/169 tests.
 12. TASK-0090 adds a manual-only three-OS RC workflow. Static/local Windows smoke passed; hosted syntax/result evidence requires maintainer push and manual dispatch.
 13. `check-public-release-gates.ps1 -FailOnIssues` must be rerun after commit because it correctly fails on dirty working trees before commit.
 14. Local branch is ahead of origin; do not push from the agent session. Report `local ahead, maintainer push required`.
+15. TASK-0092 is next: freeze release-candidate contracts locally, distinguish unresolved hosted/remote evidence, and prepare the maintainer decision without publishing.

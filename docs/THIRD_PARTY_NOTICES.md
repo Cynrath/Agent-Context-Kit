@@ -1,6 +1,6 @@
 # Third Party Notices
 
-AgentContextKit currently uses the standard .NET SDK templates and xUnit test packages created by `dotnet new xunit`.
+AgentContextKit uses xUnit v3 test tooling under the Apache-2.0 license. TASK-0091 validated `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5`; these packages are test-only and are not shipped as CLI runtime dependencies.
 
 Runtime dependencies for the CLI/Core MVP are intentionally minimized.
 

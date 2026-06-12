@@ -16,11 +16,12 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0071 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0071 post-commit public release gate passed with the expected post-tag HEAD warning.
 - TASK-0087 committed as `4a31a3c feat: add baseline metadata to local outputs`; post-commit public release gate passed.
-- TASK-0088 completed upgrade fixtures, compatibility tests, performance/evidence scripts, and security/support/supply-chain/upgrade evidence docs. Focused tests passed 2/2, the final 2,000-file benchmark rerun completed in 2.936 seconds, vulnerability review was clean, and `xunit` `2.9.3` was flagged Legacy.
+- TASK-0088 completed upgrade fixtures, compatibility tests, performance/evidence scripts, and security/support/supply-chain/upgrade evidence docs. Focused tests passed 2/2, the final 2,000-file benchmark rerun completed in 2.936 seconds, vulnerability review was clean, and the then-current `xunit` Legacy warning was later resolved by TASK-0091.
 - TASK-0088 committed as `b560214 test: add release candidate evidence gates`; post-commit public release gate passed.
 - TASK-0089 adds read-only `ackit config-check`, sanitized JSON/human diagnostics, warning/error exit behavior, manual obsolete-key migration guidance, and five focused tests. Full validation passed with 169/169 tests; commit and post-commit public gate are next.
 - TASK-0089 committed as `1284646 feat: add config diagnostics command`; post-commit public release gate passed.
-- TASK-0090 adds a manual-only three-OS RC evidence workflow, static workflow gate, hosted evidence guide, and fixture self-noise correction. Local Windows predecessor/source/config/baseline/SARIF smoke and full validation passed with 169/169 tests; commit and post-commit public gate are next.
+- TASK-0090 committed as `fd1d8be ci: add release candidate evidence workflow`; post-commit public release gate passed.
+- TASK-0091 migrated the executable test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5`. Disposable and repository suites passed 169/169 tests; dependency reviews, CLI/JSON/SARIF/sample/hygiene/RC/release verification gates passed. The pre-commit public gate failed only on the expected dirty tree; commit and post-commit gate are next, followed by TASK-0092.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
@@ -476,6 +477,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0089 implements the current-source config diagnostics CLI contract. Full validation passed with 169/169 tests; the pre-commit public gate failed only on the expected dirty tree. Commit, rerun the public gate, then continue with TASK-0090.
 - TASK-0089 committed as `1284646 feat: add config diagnostics command`; post-commit public release gate passed.
 - TASK-0090 designs the hosted RC evidence workflow and passes local Windows reproduction/full validation. No local YAML parser was available; hosted three-OS dispatch remains maintainer-only. Commit, rerun the public gate, then continue with TASK-0091.
+- TASK-0091 resolves the Legacy xUnit warning through migration rather than risk acceptance. The official executable-project requirement is applied, no test source changed, and 169/169 tests remain green.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

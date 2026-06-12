@@ -23,6 +23,8 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflo
 
 Hosted RC evidence is manual-only. After a maintainer push, dispatch `.github/workflows/release-candidate-evidence.yml` and record the three OS results as described in `docs/RC_HOSTED_EVIDENCE.md`.
 
+The normative local evidence matrix and dated results are maintained in `docs/RELEASE_CANDIDATE_EVIDENCE.md`.
+
 Release-candidate dependency review:
 
 ```powershell
@@ -30,7 +32,7 @@ dotnet list AgentContextKit.sln package --vulnerable --include-transitive
 dotnet list AgentContextKit.sln package --deprecated
 ```
 
-The 2026-06-12 local review found no vulnerable packages. It reported test dependency `xunit` `2.9.3` as Legacy; see `docs/RELEASE_CANDIDATE_EVIDENCE.md` and `docs/SUPPLY_CHAIN_POLICY.md`.
+The 2026-06-12 post-migration review found no vulnerable or deprecated direct/transitive packages. TASK-0091 replaced Legacy `xunit` `2.9.3` with `xunit.v3` `3.2.2`, updated the Visual Studio runner to `3.1.5`, and preserved 169/169 passing tests.
 
 The `sarif` command is available in current source and in the published NuGet `0.2.0-alpha.1` global tool.
 

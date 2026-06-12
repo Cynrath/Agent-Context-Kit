@@ -18,7 +18,7 @@ Official public packages use NuGet package ID `AgentContextKit` and repository m
 - Review dependency licenses when adding or upgrading packages.
 - Do not add package sources or credentials to repository config.
 
-Local review on 2026-06-12 found no vulnerable direct or transitive packages. The same review marked test dependency `xunit` `2.9.3` as Legacy; migration to `xunit.v3` or explicit release-candidate risk acceptance remains required.
+Local review on 2026-06-12 found no vulnerable direct or transitive packages. TASK-0091 resolved the prior `xunit` `2.9.3` Legacy warning by migrating the test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5`. A disposable migration smoke and the repository suite both passed 169/169 tests; the post-migration vulnerability and deprecation reviews were clean.
 
 ## Artifact Controls
 - Never commit `.nupkg`, `.snupkg`, SARIF, generated HTML, archives, `bin/`, `obj/`, TestResults, coverage, or publish output.

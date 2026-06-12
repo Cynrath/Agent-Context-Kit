@@ -38,8 +38,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 23. TASK-0088 upgrade, performance, security, and release-candidate evidence - completed locally; hosted/manual RC blockers remain.
 24. TASK-0089 config diagnostics CLI integration and migration contract - completed locally.
 25. TASK-0090 hosted baseline upgrade and performance workflow design - completed locally; hosted dispatch remains maintainer-only.
-26. TASK-0091 xUnit v3 migration or explicit RC risk acceptance - next.
-27. TASK-0092 release-candidate contract freeze and maintainer decision - queued.
+26. TASK-0091 xUnit v3 migration or explicit RC risk acceptance - completed locally through migration.
+27. TASK-0092 release-candidate contract freeze and maintainer decision - next.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.
