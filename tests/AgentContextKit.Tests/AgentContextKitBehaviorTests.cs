@@ -1,4 +1,5 @@
 using AgentContextKit.Core;
+using System.Globalization;
 using System.Text.Json.Nodes;
 
 [assembly: Xunit.CollectionBehavior(DisableTestParallelization = true)]
@@ -201,6 +202,123 @@ public sealed class LlmProviderAbstractionTests
 
 public sealed class RiskScannerTests
 {
+    public static TheoryData<string, string, RiskSeverity, RiskCategory, string> SecretAndLocalPathFixtures => new()
+    {
+        { "settings.txt", "token" + "=" + TestData.OpenAiProjectKey(), RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "token" + "=" + TestData.GenericApiKey(), RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "token" + "=" + TestData.GitHubFineGrainedToken(), RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "token" + "=" + TestData.GitHubClassicToken(), RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "key=" + TestData.AwsAccessKey(), RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "key.pem", "-----BEGIN " + "OPENSSH PRIVATE KEY-----", RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "aws" + "_secret_access_key=placeholder", RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "password" + "=not-for-public", RiskSeverity.High, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "api" + "_key=not-for-public", RiskSeverity.High, RiskCategory.Secret, "ACKIT001" },
+        { "headers.txt", "Authorization: Bearer " + "abcdefghijklmnopqrstuvwxyz123456", RiskSeverity.High, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "connection" + " string=review-before-sharing", RiskSeverity.High, RiskCategory.Secret, "ACKIT001" },
+        { "settings.txt", "smtp" + "=review-before-sharing", RiskSeverity.Medium, RiskCategory.Secret, "ACKIT001" },
+        { "docs/paths.md", "Workspace " + TestData.WindowsWorkspacePath(), RiskSeverity.Low, RiskCategory.LocalPath, "ACKIT004" },
+        { "docs/paths.md", "Workspace " + TestData.UnixWorkspacePath(), RiskSeverity.Low, RiskCategory.LocalPath, "ACKIT004" }
+    };
+
+    public static TheoryData<string, RiskSeverity, RiskCategory, string> RepositoryPathFixtures => new()
+    {
+        { ".env", RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" },
+        { ".env.sample", RiskSeverity.Medium, RiskCategory.Configuration, "ACKIT005" },
+        { "config/appsettings.Production.json", RiskSeverity.High, RiskCategory.ProductionConfig, "ACKIT001" },
+        { "backups/export.txt", RiskSeverity.High, RiskCategory.RepositoryHygiene, "ACKIT005" },
+        { "artifacts/source.zip", RiskSeverity.Medium, RiskCategory.BuildArtifact, "ACKIT003" },
+        { "certs/signing.pfx", RiskSeverity.Critical, RiskCategory.Secret, "ACKIT001" }
+    };
+
+    public static TheoryData<string, string, string> SafeBrandPiiFixtures => new()
+    {
+        { "tests/fixtures/contact.txt", "Contact private@example.internal for fixture setup.", "Email-like" },
+        { "samples/demo/contact.txt", "Contact sample@example.test for sample setup.", "Email-like" },
+        { "docs/platforms.md", "Use github.com, api.nuget.org, and learn.microsoft.com.", "Domain-like" },
+        { "Program.cs", "using System.Net;", "Domain-like" },
+        { "Storage.cs", "using System.IO;", "Domain-like" },
+        { "docs/badges.md", "Badge host: img.shields.io.", "Domain-like" },
+        { "docs/network.md", "Examples use 127.0.0.1 and 203.0.113.10.", "IP address" },
+        { "docs/releases.md", "Released 2026-06-12 10.", "Phone-like" }
+    };
+
+    [Theory]
+    [MemberData(nameof(SecretAndLocalPathFixtures))]
+    public void SecretAndLocalPathFixturesMapToStableRules(
+        string path,
+        string content,
+        RiskSeverity severity,
+        RiskCategory category,
+        string ruleId)
+    {
+        var findings = new SecretScanner().ScanText(path, content);
+
+        Assert.Contains(findings, finding =>
+            finding.Severity == severity &&
+            finding.Category == category &&
+            RiskRuleCatalog.GetRuleId(finding) == ruleId);
+    }
+
+    [Theory]
+    [MemberData(nameof(RepositoryPathFixtures))]
+    public void RepositoryPathFixturesMapToStableRules(
+        string path,
+        RiskSeverity severity,
+        RiskCategory category,
+        string ruleId)
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(path, "fixture content");
+
+        var result = TestServices.CreateRepositoryScanner().Scan(repo.Path);
+
+        Assert.Contains(result.Findings, finding =>
+            finding.Path == path &&
+            finding.Severity == severity &&
+            finding.Category == category &&
+            RiskRuleCatalog.GetRuleId(finding) == ruleId);
+    }
+
+    [Theory]
+    [MemberData(nameof(SafeBrandPiiFixtures))]
+    public void SafeBrandPiiFixturesDoNotProduceKnownNoise(string path, string content, string messageFragment)
+    {
+        var findings = new BrandPiiScanner().ScanText(path, content, AckitConfig.Default);
+
+        Assert.DoesNotContain(findings, finding =>
+            finding.Message.Contains(messageFragment, StringComparison.OrdinalIgnoreCase));
+    }
+
+    [Fact]
+    public void ConfiguredWildcardSafeDomainIsCultureInvariantAndDoesNotMatchApexDomain()
+    {
+        var originalCulture = CultureInfo.CurrentCulture;
+        var originalUiCulture = CultureInfo.CurrentUICulture;
+        try
+        {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("tr-TR");
+            CultureInfo.CurrentUICulture = CultureInfo.GetCultureInfo("tr-TR");
+            var scanner = new BrandPiiScanner();
+            var config = AckitConfig.Default with
+            {
+                SafeDomains = ["*.tooling" + ".dev"]
+            };
+
+            var subdomain = "api.tooling" + ".dev";
+            var apex = "tooling" + ".dev";
+            var subdomainFindings = scanner.ScanText("docs/platforms.md", "Use " + subdomain + ".", config);
+            var apexFindings = scanner.ScanText("docs/platforms.md", "Use " + apex + ".", config);
+
+            Assert.DoesNotContain(subdomainFindings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+            Assert.Contains(apexFindings, finding => finding.Category == RiskCategory.Brand && finding.Match == apex);
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = originalCulture;
+            CultureInfo.CurrentUICulture = originalUiCulture;
+        }
+    }
+
     [Fact]
     public void SecretScannerFindsPasswordAssignment()
     {
@@ -1703,9 +1821,29 @@ internal static class TestData
         return "github" + "_pat_" + "1234567890abcdef";
     }
 
+    public static string GenericApiKey()
+    {
+        return "sk" + "-" + "1234567890abcdef";
+    }
+
+    public static string GitHubClassicToken()
+    {
+        return "ghp" + "_" + "1234567890abcdef";
+    }
+
     public static string AwsAccessKey()
     {
         return "AKIA" + "1234567890ABCDEF";
+    }
+
+    public static string WindowsWorkspacePath()
+    {
+        return "C" + ":\\Users\\example\\project";
+    }
+
+    public static string UnixWorkspacePath()
+    {
+        return "/" + "home/example/project";
     }
 }
 

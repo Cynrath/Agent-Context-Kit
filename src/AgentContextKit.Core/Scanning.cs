@@ -693,20 +693,20 @@ public sealed class SecretScanner : ISecretScanner
 
     private static readonly SecretPattern[] Patterns =
     [
-        new(new Regex(Regex.Escape(OpenAiProjectKeyPrefix) + @"[A-Za-z0-9_-]{8,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "OpenAI project key-like value detected."),
-        new(new Regex(@"\bsk-[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "API key-like value detected."),
-        new(new Regex(Regex.Escape(GitHubFineGrainedTokenPrefix) + @"[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
-        new(new Regex(@"\bghp_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
-        new(new Regex(@"\bgh[osru]_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
+        new(new Regex(Regex.Escape(OpenAiProjectKeyPrefix) + @"[A-Za-z0-9_-]{8,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "OpenAI project key-like value detected."),
+        new(new Regex(@"\bsk-[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "API key-like value detected."),
+        new(new Regex(Regex.Escape(GitHubFineGrainedTokenPrefix) + @"[A-Za-z0-9_]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "GitHub fine-grained token-like value detected."),
+        new(new Regex(@"\bghp_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
+        new(new Regex(@"\bgh[osru]_[A-Za-z0-9]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "GitHub token-like value detected."),
         new(new Regex(@"\b(?:AKIA|ASIA)[A-Z0-9]{16}\b", RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS access key-like value detected."),
-        new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
-        new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
-        new(new Regex(@"\b(password|pwd|mysql password|sql password)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Password-like assignment detected."),
-        new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
-        new(new Regex(@"\bbearer\s+[A-Za-z0-9._-]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Bearer token-like value detected."),
-        new(new Regex(@"\b(connectionstring|connection string)\b\s*[:=]|\b(data source|user id|uid)" + EqualsSign, RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.High, RiskCategory.Secret, "Connection string-like value detected."),
-        new(new Regex(@"\b(smtp|recaptcha|cloudflare)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Medium, RiskCategory.Secret, "Service credential-like setting detected."),
-        new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + @"|/(?:home|Users)/[^\s""'<>]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
+        new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
+        new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
+        new(new Regex(@"\b(password|pwd|mysql password|sql password)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Password-like assignment detected."),
+        new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
+        new(new Regex(@"\bbearer\s+[A-Za-z0-9._-]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Bearer token-like value detected."),
+        new(new Regex(@"\b(connectionstring|connection string)\b\s*[:=]|\b(data source|user id|uid)" + EqualsSign, RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Connection string-like value detected."),
+        new(new Regex(@"\b(smtp|recaptcha|cloudflare)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Medium, RiskCategory.Secret, "Service credential-like setting detected."),
+        new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + @"|/(?:home|Users)/[^\s""'<>]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
     ];
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content)
@@ -734,8 +734,8 @@ public sealed class SecretScanner : ISecretScanner
 public sealed class BrandPiiScanner : IBrandPiiScanner
 {
     private static readonly Regex PhoneRegex = new(@"(?<![A-Za-z0-9-])(\+?\d[\d\s()-]{7,}\d)(?![A-Za-z0-9])", RegexOptions.Compiled);
-    private static readonly Regex EmailRegex = new(@"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    private static readonly Regex DomainRegex = new(@"\b(?:[A-Z0-9-]+\.)+(?:com\.tr|com|net|org|io|dev|app|ai|co|tr|edu|gov|cloud|site)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+    private static readonly Regex EmailRegex = new(@"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
+    private static readonly Regex DomainRegex = new(@"\b(?:[A-Z0-9-]+\.)+(?:com\.tr|com|net|org|io|dev|app|ai|co|tr|edu|gov|cloud|site)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
     private static readonly Regex IpAddressRegex = new(@"\b(?:\d{1,3}\.){3}\d{1,3}\b", RegexOptions.Compiled);
     private static readonly HashSet<string> KnownSafeTechnicalDomains = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -746,12 +746,15 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         "visualstudio.microsoft.com",
         "nuget.org",
         "api.nuget.org",
+        "shields.io",
+        "img.shields.io",
         "json.schemastore.org",
         "aka.ms",
         "example.com",
         "example.net",
         "example.org",
         "ASP.NET",
+        "System.IO",
         "System.Net",
         "Microsoft.NET"
     };
@@ -760,7 +763,8 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
     [
         ".github.com",
         ".microsoft.com",
-        ".nuget.org"
+        ".nuget.org",
+        ".shields.io"
     ];
 
     private static readonly HashSet<string> FixtureOnlyEmailDomains = new(StringComparer.OrdinalIgnoreCase)

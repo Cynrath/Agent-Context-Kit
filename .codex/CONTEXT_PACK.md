@@ -127,6 +127,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0071 documents a manual Code Scanning opt-in workflow with job-level permissions and SARIF validation; no active upload workflow is installed.
 - TASK-0072 adds schema v2 JSON envelope and finding contract tests without changing runtime output.
 - TASK-0073 hardens the documented `0`/`1`/`2` CLI exit contract and verifies human/JSON parity without changing runtime behavior.
+- TASK-0074 expands scanner regression fixtures across detection, rule mapping, and known-noise boundaries without changing runtime behavior.
 
 ## Source Hygiene
 - Empty SDK scaffold file `src/AgentContextKit.Core/Class1.cs` has been removed.

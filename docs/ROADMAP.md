@@ -114,7 +114,7 @@
 - TASK-0073 CLI exit code contract hardening:
   - Completed locally with success-alias, invalid-invocation, and human/JSON exit parity coverage.
 - TASK-0074 scanner fixture coverage expansion:
-  - Add safe fixtures for scanner precision and expected severity.
+  - Completed locally with table-driven detection, stable rule mapping, and known-noise precision fixtures.
 - TASK-0075 safe suppression audit log:
   - Plan local auditability for non-Critical suppressions.
 

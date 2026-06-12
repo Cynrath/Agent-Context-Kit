@@ -22,6 +22,10 @@ AgentContextKit scanner findings use a stable rule catalog. The same catalog dri
 
 Scanner messages avoid requiring raw secret values. SARIF never writes the raw `Match` field.
 
+Case-insensitive scanner regexes use culture-invariant matching. ASCII token, email, domain, and local-path patterns therefore keep the same behavior under Turkish and other process cultures.
+
+The built-in technical-domain allowlist includes public package, documentation, source-hosting, and badge infrastructure used by this repository. It also recognizes common .NET namespace-shaped tokens such as `System.IO` and `System.Net` so they are not reported as domains.
+
 ## Config Allowlist Behavior
 `.ackit/config.yml` supports narrow local scanner controls:
 
@@ -42,6 +46,8 @@ Behavior:
 - Legacy `ignorePaths` excludes files from scanning and should be used sparingly.
 
 Safe example configs are available under `docs/examples/config/`. They show baseline, strict review, and CI-oriented settings without real secrets or Critical suppression examples.
+
+Regression fixture coverage and safe synthetic-data conventions are documented in `docs/SCANNER_FIXTURES.md`. Positive fixtures assert severity, category, and stable rule ID; negative fixtures cover known technical domains, documentation IP ranges, and narrow fixture-email exemptions.
 
 ## SARIF Mapping
 | AgentContextKit severity | SARIF level |

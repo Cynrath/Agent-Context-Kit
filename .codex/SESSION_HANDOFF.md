@@ -8,8 +8,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - `v0.2.0-alpha.1` is published on GitHub and NuGet; published package includes `ackit sarif`.
 - Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
 - Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
-- TASK-0066 through TASK-0072 are completed locally without remote writes.
-- TASK-0073 CLI exit-code contract hardening is in progress.
+- TASK-0066 through TASK-0073 are completed locally without remote writes.
+- TASK-0073 is completed and TASK-0074 scanner fixture coverage expansion is in progress.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 post-commit public release gate passed with the expected post-tag HEAD warning.
@@ -431,6 +431,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0072 post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote-tag verification note remain.
 - TASK-0073 hardened the CLI exit-code contract without runtime changes. Focused tests passed 34/34 and full tests passed 96/96; scan, doctor, SARIF parse, sample smoke, hygiene, CLI/config/v0.2/v1.0 gates, and release verification passed. The pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0073 post-commit public release gate passed with no blocking items; continue with TASK-0074 scanner fixture coverage expansion.
+- TASK-0074 added scanner fixture matrices and fixed Turkish-culture-sensitive ASCII regex matching. Focused tests passed 58/58 and full tests passed 125/125; scan, doctor, SARIF parse, sample smoke, hygiene, CLI/config/v0.2/v1.0 gates, and release verification passed. The pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0074 post-commit public release gate passed. Latest pushed predecessor `3ecf005` has successful CI, published smoke, and source smoke runs; TASK-0074 hosted validation remains pending maintainer push.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

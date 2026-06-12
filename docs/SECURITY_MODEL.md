@@ -37,12 +37,13 @@ AgentContextKit runs locally against a repository path. The MVP does not upload 
 - Loopback, wildcard, and documentation-reserved IP addresses are ignored to reduce docs false positives.
 - Private/internal IP addresses remain reportable.
 - Configured brand and PII keywords use token-boundary matching to reduce substring false positives.
-- Safe technical domain references for common platform/package documentation are allowlisted by default, including GitHub, Microsoft Learn, Microsoft/.NET, NuGet, and the NuGet API host.
+- Safe technical domain references for common platform/package documentation are allowlisted by default, including GitHub, Microsoft Learn, Microsoft/.NET namespaces, NuGet, the NuGet API host, and Shields.io badge assets.
 - Fixture/sample/test paths can contain clearly non-real placeholder email values without being treated as real PII. Real-looking domains and configured PII keywords remain reportable.
 - Critical secret-like values remain reportable even in test, sample, and fixture paths.
 - Configured `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` suppress only narrow non-Critical scanner noise.
 - Configured `ignoredFindingIds` uses stable scanner rule IDs documented in `docs/SCANNER_RULES.md`.
 - Provider-token-like patterns include OpenAI-like keys, GitHub-like tokens, AWS access key-like values, and bearer token-like values without requiring raw matches in SARIF.
+- Case-insensitive scanner regexes use culture-invariant semantics so process locale does not weaken ASCII token, email, or domain detection.
 
 ## Scanner Allowlist Policy
 Built-in allowlists are intentionally narrow and technical. They are for public platform/package domains and explicit placeholder fixture data, not customer domains, production hosts, private organizations, or broad path suppression.
@@ -50,6 +51,8 @@ Built-in allowlists are intentionally narrow and technical. They are for public 
 Config allowlists are local-only, explicit, reviewable, and documented. They cannot silently suppress Critical findings. Legacy `ignorePaths` excludes files from scanning and should be used sparingly because it hides files from reports.
 
 The scanner rule catalog, configurable allowlist foundation, and expanded scanner patterns are part of the published `0.2.0-alpha.1` package and current source.
+
+Scanner regression fixtures are synthetic and assembled to avoid committed live-looking credentials. The fixture matrix in `docs/SCANNER_FIXTURES.md` verifies both detection and known-noise boundaries without weakening Critical findings.
 
 GitHub Code Scanning upload is not enabled by default. `ackit sarif` creates local SARIF output; upload requires maintainer opt-in, reviewed workflow permissions, and the decision process in `docs/CODE_SCANNING_DECISION.md`.
 

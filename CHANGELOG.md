@@ -6,6 +6,13 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
 
+### Added
+- Added table-driven scanner regression fixtures for secret, artifact, local-path, PII/brand noise, stable rule IDs, and Critical suppression boundaries.
+
+### Fixed
+- Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.
+- Allowlisted Shields.io badge hosts and common `System.IO` namespace-shaped technical tokens to prevent culture-invariant self-scan noise.
+
 ## [0.2.0-alpha.1] - 2026-06-11
 ### Added
 - Added `ackit sarif` source command for SARIF 2.1.0 output.
