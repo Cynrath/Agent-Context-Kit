@@ -50,6 +50,12 @@ Recommended:
 - Do not publish `.nupkg` or `.snupkg` files as source repository artifacts.
 - Update README install commands, release validation docs, and published-package smoke workflow when the current NuGet version changes.
 
+## GitHub Pages
+- Current decision: keep repository Markdown canonical and leave Pages disabled.
+- Revisit the decision using `docs/DOCS_SITE_PLAN.md` triggers.
+- If enabled later, validate the repository project base path, internal links, accessibility, privacy, and visual assets before adding a public docs URL.
+- Pages source selection, deployment permissions, custom domains, and repository metadata changes are maintainer-only.
+
 ## Manual Verification Checklist
 - Repository is public.
 - Description matches the approved text.
@@ -67,6 +73,7 @@ Recommended:
 - GitHub Release for the current alpha is marked as a pre-release.
 - GitHub Release body matches `docs/RELEASE_BODY_V020_ALPHA1.md` if maintainer chooses to polish the published release text.
 - NuGet package ownership and API key handling remain maintainer-controlled.
+- GitHub Pages remains disabled unless `docs/DOCS_SITE_PLAN.md` activation criteria are met and reviewed.
 
 ## Maintainer-Only Manual Actions
 - Create or update labels from `docs/GITHUB_LABELS.md`.
@@ -74,6 +81,7 @@ Recommended:
 - Review repository settings, topics, and security settings.
 - Create milestones if the issue tracker needs version grouping.
 - Edit the GitHub Release body if stale wording should be corrected.
+- Enable or configure GitHub Pages and any Pages deployment permissions.
 
 ## Optional Read-Only Checks
 These commands inspect state and do not mutate repository settings:

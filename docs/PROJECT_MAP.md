@@ -1,6 +1,6 @@
 # Project Map
 
-Updated: 2026-06-06
+Updated: 2026-06-12
 
 ## Stack
 - .NET: .sln/.slnx/*proj/Program.cs
@@ -46,6 +46,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/DEMO_SCENARIOS.md`
 - `docs/DECISIONS.md`
 - `docs/DEVELOPMENT_STANDARD.md`
+- `docs/DOCS_SITE_PLAN.md`
 - `docs/DOCUMENTATION_INDEX.md`
 - `docs/SCREENSHOT_CAPTURE_PLAN.md`
 - `docs/EXAMPLES.md`

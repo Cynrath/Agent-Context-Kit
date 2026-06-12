@@ -14,7 +14,7 @@
 | 10 | Done locally | TASK-0075 safe suppression audit log | Medium | None | config/scanner docs/code/tests | Build/test/scan/doctor/hygiene/gates | No | Suppression behavior has auditable local output. |
 | 11 | Done locally | TASK-0076 README command examples and copy-paste polish | Low | None | README files | Build/test/scan/doctor/hygiene/gates | No | README examples are concise and current. |
 | 12 | Done locally | TASK-0077 sanitized screenshot capture plan | Low | Manual screenshot capture and review remain open | visual asset docs | Docs review/hygiene/gates | No | Screenshot plan avoids local paths and private data. |
-| 13 | Queued | TASK-0078 docs site / GitHub Pages planning | Low | GitHub Pages activation is maintainer-only | docs planning file | Docs review/hygiene/gates | Yes, to enable Pages | Docs site decision and risks are documented. |
+| 13 | Done locally | TASK-0078 docs site / GitHub Pages planning | Low | GitHub Pages activation remains deferred and maintainer-only | docs planning file | Docs review/hygiene/gates | Yes, to enable Pages | Docs site decision and risks are documented. |
 | 14 | Queued | TASK-0079 tutorial: first 5 minutes with ackit | Low | None | tutorial docs | Build/test/scan/doctor/hygiene/gates | No | Beginner tutorial exists and uses published package. |
 | 15 | Queued | TASK-0080 tutorial: prepare a repo for AI coding agents | Low | None | tutorial docs | Build/test/scan/doctor/hygiene/gates | No | AI agent prep tutorial exists. |
 | 16 | Queued | TASK-0081 v0.2.0-alpha.2 scope planning | Medium | Version decision needed before publish | roadmap/release docs | Docs review/hygiene/gates | No | Next alpha scope is documented. |

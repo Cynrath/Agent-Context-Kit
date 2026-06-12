@@ -49,6 +49,11 @@ Use:
 - `docs/assets/diagrams/` for safe diagrams.
 - `docs/assets/screenshots/` for future sanitized screenshots; its README is policy guidance, not an approved screenshot.
 
+## Documentation Hosting
+Repository Markdown is the canonical documentation surface. GitHub Pages is currently deferred; use `docs/DOCS_SITE_PLAN.md` for the decision, activation triggers, privacy constraints, and maintainer-only settings steps.
+
+Do not add a Pages workflow or site generator dependency only for presentation. Validate repository base paths and all assets in a separate reviewed task before activation.
+
 ## Issue And PR Templates
 The repository includes:
 - Bug report template.

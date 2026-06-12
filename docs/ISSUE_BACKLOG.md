@@ -40,7 +40,8 @@ Apply labels from `docs/GITHUB_LABELS.md` manually after issue creation.
 ### 7. Add docs site plan
 - Labels: `type: docs`, `area: docs`, `priority: low`
 - Goal: Decide whether GitHub Pages or another docs site is useful.
-- Done when: Plan covers scope, hosting, navigation, maintenance, and remote settings.
+- Status: Planning completed in `docs/DOCS_SITE_PLAN.md`; Pages activation remains deferred and maintainer-only.
+- Done when: A future activation task validates scope, hosting, navigation, accessibility, maintenance, base paths, and remote settings before enabling Pages.
 
 ### 8. Expand security fixture coverage
 - Labels: `type: security`, `area: scanner`, `priority: medium`

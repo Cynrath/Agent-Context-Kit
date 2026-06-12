@@ -30,6 +30,7 @@
 - `docs/WEB_UI_PREVIEW.md`: local Web UI preview, screenshot workflow, and public artifact boundaries.
 - `docs/VISUAL_ASSETS.md`: public screenshot and visual asset policy.
 - `docs/SCREENSHOT_CAPTURE_PLAN.md`: disposable demo, capture, sanitization, metadata, naming, and commit review plan.
+- `docs/DOCS_SITE_PLAN.md`: hosted documentation and GitHub Pages decision, triggers, architecture, and maintainer-only activation plan.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
 - `docs/SUPPORT_MATRIX.md`: supported OS, .NET, shell, and command coverage.
