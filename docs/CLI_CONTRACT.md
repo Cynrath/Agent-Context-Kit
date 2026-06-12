@@ -38,6 +38,8 @@ ackit help
 
 ## Stability Rules
 - Keep command names stable before v1.0 release.
+- Keep JSON schema version 2 envelope fields stable: `schemaVersion`, `toolVersion`, `generatedAtUtc`, and `command`.
+- Treat new JSON properties as additive; breaking removals, renames, type changes, or semantic changes require a schema version increment.
 - Keep documented options stable unless a task explicitly documents a breaking pre-v1.0 change.
 - Keep repository-relative output path behavior for generated files.
 - Keep skip-existing-file behavior as the default.

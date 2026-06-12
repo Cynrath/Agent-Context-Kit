@@ -9,6 +9,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
 - Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
 - TASK-0066 through TASK-0071 are completed as local-only docs tasks without remote writes.
+- TASK-0072 JSON schema contract test implementation is in progress.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0070 post-commit public release gate passed with the expected post-tag HEAD warning.
@@ -425,6 +426,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0062 full pre-commit validation passed: repository `scan --ci`, doctor, JSON scan, SARIF generation/parse, sample smoke, installed `ackit version`/`ackit --help`, maintainer identity scan, tracked artifact scan, exact token/local-path scans, new scanner literal self-noise scan, `git diff --check`, config/generated convention gate, v0.2 readiness gate, and v1.0 documentation release gate.
 - TASK-0062 public release gate was run before commit and failed only because the working tree had uncommitted changes; package metadata was clean and the post-release `HEAD` warning remains expected.
 - TASK-0062 post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote tag verification note remained.
+- TASK-0071 completed the documentation-only, manual-dispatch SARIF upload workflow design and was committed as `4615f65 docs: design opt-in SARIF upload workflow`.
+- TASK-0072 added schema v2 JSON envelope and scanner finding contract tests without changing runtime output; focused tests passed 23/23 and full tests passed 85/85. Scan, doctor, SARIF parse, sample smoke, hygiene checks, config/v0.2/v1.0 gates, and release verification passed; the pre-commit public gate reported only the expected dirty-tree blocker.
+- TASK-0072 post-commit public release gate passed with no blocking items; only the expected post-release `HEAD` warning and manual remote-tag verification note remain.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

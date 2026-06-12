@@ -1156,6 +1156,66 @@ public sealed class ConfigAndDoctorTests
 public sealed class CliJsonAndMetadataTests
 {
     [Fact]
+    public void SuccessfulJsonCommandsExposeSchemaVersionTwoEnvelope()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("README.md", "# Demo");
+        repo.Write("LICENSE", "MIT");
+        repo.Write("SECURITY.md", "# Security");
+        repo.Write("CONTRIBUTING.md", "# Contributing");
+        repo.Write("CODE_OF_CONDUCT.md", "# Code of Conduct");
+        repo.Write("CHANGELOG.md", "# Changelog");
+        repo.Write(".gitignore", "bin/");
+        repo.Write("AGENTS.md", "# Agents");
+        repo.Write("tests/DemoTests.cs", "// tests");
+
+        var commands = new (string Command, string[] Args)[]
+        {
+            ("init", ["init", "--json"]),
+            ("scan", ["scan", "--json"]),
+            ("sarif", ["sarif", "--output", ".ackit/reports/contract.sarif", "--json"]),
+            ("report", ["report", "--output", ".ackit/reports/contract.html", "--json"]),
+            ("webui", ["webui", "--output", ".ackit/webui/contract.html", "--json"]),
+            ("prompt-pack", ["prompt-pack", "--output", ".ackit/prompt-packs/contract.md", "--json"]),
+            ("context-export", ["context-export", "--prompt-pack", ".ackit/prompt-packs/contract.md", "--approve", "--output", ".ackit/context-exports/contract.json", "--json"]),
+            ("generate", ["generate", "--target", "codex", "--json"]),
+            ("task", ["task", "JSON contract task", "--json"]),
+            ("redact-check", ["redact-check", "--profile", "public-release", "--json"]),
+            ("doctor", ["doctor", "--json"])
+        };
+
+        foreach (var (command, args) in commands)
+        {
+            var result = RunCli(repo.Path, args);
+            var json = JsonNode.Parse(result.Output);
+
+            Assert.Equal(0, result.ExitCode);
+            AssertJsonEnvelope(json, command);
+        }
+    }
+
+    [Fact]
+    public void ScanJsonFindingContractIncludesStableRequiredFields()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "password" + "=not-for-public");
+
+        var result = RunCli(repo.Path, ["scan", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var finding = Assert.Single(json?["findings"]?.AsArray() ?? []);
+
+        Assert.Equal(0, result.ExitCode);
+        AssertJsonEnvelope(json, "scan");
+        AssertRiskSummary(json?["riskSummary"]);
+        Assert.StartsWith("ACKIT", finding?["ruleId"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(finding?["severity"]?.GetValue<string>()));
+        Assert.False(string.IsNullOrWhiteSpace(finding?["category"]?.GetValue<string>()));
+        Assert.Equal("settings.txt", finding?["path"]?.GetValue<string>());
+        Assert.False(string.IsNullOrWhiteSpace(finding?["message"]?.GetValue<string>()));
+        Assert.True(finding?.AsObject().ContainsKey("match"));
+    }
+
+    [Fact]
     public void ScanJsonOutputIsValid()
     {
         using var repo = TempRepository.Create();
@@ -1520,6 +1580,25 @@ public sealed class CliJsonAndMetadataTests
             Console.SetOut(originalOut);
             Console.SetError(originalError);
             Directory.SetCurrentDirectory(originalDirectory);
+        }
+    }
+
+    private static void AssertJsonEnvelope(JsonNode? json, string command)
+    {
+        Assert.NotNull(json);
+        Assert.Equal(2, json["schemaVersion"]?.GetValue<int>());
+        Assert.Equal("0.2.0-alpha.1", json["toolVersion"]?.GetValue<string>());
+        Assert.Equal(command, json["command"]?.GetValue<string>());
+        Assert.True(DateTimeOffset.TryParse(json["generatedAtUtc"]?.GetValue<string>(), out _));
+    }
+
+    private static void AssertRiskSummary(JsonNode? summary)
+    {
+        Assert.NotNull(summary);
+        foreach (var field in new[] { "total", "critical", "high", "medium", "low", "info" })
+        {
+            Assert.True(summary.AsObject().ContainsKey(field));
+            Assert.True(summary[field]?.GetValue<int>() >= 0);
         }
     }
 

@@ -29,6 +29,16 @@ JSON responses include:
 
 `schemaVersion` describes the JSON output shape, not the repository config format. The schema is early and can change before `1.0.0`.
 
+## Stability Rules
+- Every successful JSON command includes `schemaVersion`, `toolVersion`, `generatedAtUtc`, and `command`.
+- Existing fields should not be removed or renamed within schema version `2`.
+- New optional fields may be added without changing the schema version.
+- Breaking field removal, rename, type change, or semantic change requires a schema version increment and migration notes.
+- JSON field names remain English and language-independent even when `--lang tr` is used.
+- Consumers should ignore unknown additive fields.
+
+Contract tests require stable fields but intentionally do not reject additional properties.
+
 ## Schema Version 2
 Schema version `2` adds:
 - `generatedAtUtc` on JSON command outputs.
@@ -105,6 +115,8 @@ Finding shape:
   "match": null
 }
 ```
+
+Finding objects keep these schema v2 fields: `ruleId`, `severity`, `category`, `path`, `message`, and `match`. `match` may be `null` when exposing the raw matched value would be unsafe or unnecessary.
 
 ## Summary Shapes
 `riskSummary`:
