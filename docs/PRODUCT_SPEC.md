@@ -12,6 +12,7 @@ AgentContextKit is an offline-first .NET CLI that prepares repositories for safe
 - Improve OSS readiness with docs and health checks.
 - Provide JSON output for CI/script integrations.
 - Provide local static review artifacts for reports and Web UI prototype review.
+- Support incremental adoption through sanitized, baseline-aware CI policy and deterministic config diagnostics in the next v0.3 product line.
 
 ## Non-goals For MVP
 - Hosted/server Web UI.
@@ -19,6 +20,9 @@ AgentContextKit is an offline-first .NET CLI that prepares repositories for safe
 - Automatic redaction.
 - Remote repository creation.
 - NuGet publishing automation.
+
+## Next Product Direction
+The next v0.3 line focuses on local baseline-aware CI policy and configuration diagnostics. Baselines must be explicit, sanitized, repository-relative, reviewable, and unable to broadly suppress Critical findings. See `docs/V030_ROADMAP_DECISION.md`.
 
 ## Future Optional LLM Scope
 v0.5 may add optional LLM-assisted workflows, but the default product remains offline-first. Any future provider integration must require explicit user consent, dry-run context review, safe secret handling, and local auditability before remote calls or context export.

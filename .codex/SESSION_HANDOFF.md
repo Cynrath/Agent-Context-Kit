@@ -447,6 +447,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0080 post-commit public release gate passed with no blocking items; continue with TASK-0081 `v0.2.0-alpha.2` scope planning.
 - TASK-0081 froze alpha.2 as a compatible scanner precision/suppression-audit hardening release without version/workflow pin changes. Tests passed 127/127 and scan/doctor/JSON/SARIF/sample smoke, version-pin checks, hygiene, and gates passed; the pre-commit public gate reported only the expected dirty-tree blocker.
 - TASK-0081 post-commit public release gate passed with no blocking items; continue with TASK-0082 v0.3 roadmap decision.
+- TASK-0082 selected baseline-aware CI policy and configuration diagnostics as the next v0.3 product direction, separated that direction from the completed historical v0.3-labelled milestone, and documented sanitized baseline, compatibility, security, and sequencing boundaries.
+- TASK-0082 pre-commit validation passed: restore, Release build with 0 warnings/errors, 127/127 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, global tool checks, hygiene scans, CLI/config/v0.2/v1.0 gates, and release verification. The public gate failed only on the expected dirty working tree and must be rerun after commit.
+- TASK-0082 post-commit public release gate passed with no blocking items; continue with TASK-0083 1.0 readiness gap analysis.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

@@ -18,8 +18,8 @@
 | 14 | Done locally | TASK-0079 tutorial: first 5 minutes with ackit | Low | None | tutorial docs | Build/test/scan/doctor/hygiene/gates | No | Beginner tutorial exists and uses published package. |
 | 15 | Done locally | TASK-0080 tutorial: prepare a repo for AI coding agents | Low | None | tutorial docs | Build/test/scan/doctor/hygiene/gates | No | AI agent prep tutorial exists. |
 | 16 | Done locally | TASK-0081 v0.2.0-alpha.2 scope planning | Medium | Version bump and publication require separate tasks | roadmap/release docs | Docs review/hygiene/gates | No | Next alpha scope is documented. |
-| 17 | Queued | TASK-0082 v0.3 roadmap decision | Medium | Product decision | roadmap docs | Docs review/hygiene/gates | No | v0.3 direction is decided. |
-| 18 | Queued | TASK-0083 1.0 readiness gap analysis | Medium | None | readiness docs | Full local gates | No | 1.0 gaps are listed with owners and validation. |
+| 17 | Done locally | TASK-0082 v0.3 roadmap decision | Medium | None | roadmap/product decision docs | Docs review/hygiene/gates | No | Baseline-aware CI policy and config diagnostics are selected with compatibility and security boundaries. |
+| 18 | Next | TASK-0083 1.0 readiness gap analysis | Medium | None | readiness docs | Full local gates | No | 1.0 gaps are listed with owners and validation. |
 
 ## Remote-Write Guardrail
 The following actions are not performed from an agent session without explicit maintainer approval:

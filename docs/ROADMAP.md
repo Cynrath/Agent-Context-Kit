@@ -130,14 +130,16 @@
 - TASK-0081 v0.2.0-alpha.2 scope planning:
   - Completed locally with a compatibility-preserving scanner precision/suppression-audit scope, explicit exclusions, and separate release-preparation/publication gates.
 
-## v0.3.0-beta
-- HTML report generation. Started with offline static `ackit report`.
-- CI mode. Started with `ackit scan --ci` and GitHub Actions integration.
-- Exit code standardization. Started with centralized CLI constants and an exit code matrix.
-- Public release hardening. Started with public release gate orchestration.
-- More tests.
-- Example workflows. Started with local development, CI, HTML report, public release preflight, and sample scanning flows.
-- Final local readiness consolidation.
+## v0.3 Product Direction
+- Decision: baseline-aware CI policy and configuration diagnostics.
+- Add sanitized deterministic finding fingerprints and a versioned local baseline manifest.
+- Distinguish reviewed existing findings from new findings without hiding Critical risk.
+- Add deterministic config validation for unknown, invalid, unsafe, and obsolete settings.
+- Extend JSON, SARIF, reports, and Web UI through additive compatible metadata.
+- Preserve offline-first behavior and cross-platform determinism.
+- Detailed decision: `docs/V030_ROADMAP_DECISION.md`.
+
+Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 
 ## v0.4.0-beta
 - Local Web UI prototype. Started with offline static `ackit webui`.

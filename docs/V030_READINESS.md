@@ -1,6 +1,8 @@
-# v0.3 Readiness
+# Historical v0.3 Milestone Readiness
 
-AgentContextKit v0.3 local readiness is tracked separately from public release approval.
+This document records an early internal milestone that used the v0.3 label for CI mode, exit code standardization, HTML reports, example workflows, and local readiness orchestration. Those capabilities are already implemented and published in `v0.2.0-alpha.1`.
+
+The future v0.3 package direction is a separate product decision focused on baseline-aware CI policy and configuration diagnostics. See `docs/V030_ROADMAP_DECISION.md`.
 
 This page consolidates the local review after these completed work areas:
 - CI mode with `ackit scan --ci`.
@@ -24,12 +26,10 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v030-readiness.ps1 -FailO
 
 `-FailOnIssues` fails only for missing v0.3 readiness assets. It reports public-release blockers separately because those require maintainer-only decisions.
 
-## Expected Public Blockers
-Public release remains blocked until:
-- `RepositoryUrl` is replaced with the real public repository URL.
-- `PackageProjectUrl` is replaced with the real public project URL.
-- A release tag is created after explicit maintainer approval.
-- Push and NuGet publish are explicitly approved.
+## Current Public State
+- Repository and package URLs are finalized at `https://github.com/Cynrath/agent-context-kit`.
+- Current published release is `v0.2.0-alpha.1` on GitHub and NuGet.
+- Future package publication, tags, and GitHub Release changes remain maintainer-only actions.
 
 ## Required Validation
 Use these commands before treating v0.3 local readiness as reviewed:
@@ -44,16 +44,11 @@ dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Relea
 powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 ```
 
-Use failing public gates only after maintainer-only public release blockers are resolved:
+Use the failing public gate to verify the current local tree remains release-clean:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
 ```
 
-## Next Roadmap Step
-After v0.3 local readiness is consolidated, the next product line is v0.4:
-- Local Web UI prototype.
-- Scan result dashboard.
-- Generated file preview.
-- Risk finding browser.
-- Task preview.
+## Status
+The historical milestone is complete. New v0.3 implementation work must follow `docs/V030_ROADMAP_DECISION.md` and use new task files rather than reopening TASK-0018 through TASK-0023.

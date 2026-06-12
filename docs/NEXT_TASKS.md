@@ -27,8 +27,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 
 ## Next Package Planning
 16. TASK-0081 v0.2.0-alpha.2 scope planning - completed locally; version bump remains separate.
-17. TASK-0082 v0.3 roadmap decision - queued.
-18. TASK-0083 1.0 readiness gap analysis - queued.
+17. TASK-0082 v0.3 roadmap decision - completed locally; baseline-aware CI policy and config diagnostics selected.
+18. TASK-0083 1.0 readiness gap analysis - next.
 
 ## Current Remote State
 - Current published release: `v0.2.0-alpha.1`.

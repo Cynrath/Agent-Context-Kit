@@ -29,3 +29,6 @@ Generated files are skipped when they already exist. The MVP does not overwrite,
 
 ## ADR-0010: Defer Live LLM Calls Behind Explicit Architecture Gates
 AgentContextKit may add optional LLM-assisted workflows after v0.4, but live provider calls, SDK dependencies, API key handling, and context export remain deferred until explicit maintainer approval. The architecture requires provider abstractions, dry-run review, data minimization, local audit records, and per-run user consent before any repository content can leave the local machine.
+
+## ADR-0011: Use Sanitized Local Baselines For Incremental CI Adoption
+The next v0.3 product line will use explicit local baseline manifests to distinguish reviewed existing findings from new findings. Baselines must contain deterministic fingerprints and sanitized repository-relative metadata only; they must not contain raw finding matches, secrets, usernames, machine-specific paths, or broad Critical suppression. Scanner output contracts remain additive, baseline files use an independent schema version, and baseline updates require a reviewable local action.
