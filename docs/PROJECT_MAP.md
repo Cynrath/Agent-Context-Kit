@@ -182,6 +182,8 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/SUPPORT_LIFECYCLE.md`
 - `docs/SUPPLY_CHAIN_POLICY.md`
 - `docs/RELEASE_CANDIDATE_EVIDENCE.md`
+- `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`
+- `docs/MAINTAINER_RC_DECISION.md`
 - `docs/RC_HOSTED_EVIDENCE.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `docs/WEB_UI_PREVIEW.md`
@@ -248,7 +250,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `tests/fixtures/upgrade/baseline-schema-v1.json`
 
 ## v1.0 Tracking
-- Release-candidate local evidence: `docs/RELEASE_CANDIDATE_EVIDENCE.md`, upgrade fixtures, disposable performance benchmark, security/support/supply-chain policies, and `scripts/check-release-candidate-evidence.ps1`.
+- Release-candidate local evidence and decision package: `docs/RELEASE_CANDIDATE_EVIDENCE.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, `docs/MAINTAINER_RC_DECISION.md`, upgrade fixtures, disposable performance benchmark, security/support/supply-chain policies, and `scripts/check-release-candidate-evidence.ps1`.
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
 - Final public release preparation and alpha.2/v0.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 and v0.2.0-alpha.1 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, sample smoke helper, scanner rule catalog hardening, config allowlist foundation, expanded scanner risk patterns, README preview guidance, Web UI screenshot policy, safe visual asset docs, and published `0.2.0-alpha.1` package verification.

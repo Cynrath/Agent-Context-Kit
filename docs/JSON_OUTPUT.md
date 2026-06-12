@@ -29,7 +29,7 @@ JSON responses include:
 }
 ```
 
-`schemaVersion` describes the JSON output shape, not the repository config format. The schema is early and can change before `1.0.0`.
+`schemaVersion` describes the JSON output shape, not the repository config format. TASK-0092 conditionally freezes schema `2` for release-candidate preparation; a breaking change requires reopening the freeze, incrementing the schema, and adding migration notes.
 
 ## Stability Rules
 - Every successful JSON command includes `schemaVersion`, `toolVersion`, `generatedAtUtc`, and `command`.

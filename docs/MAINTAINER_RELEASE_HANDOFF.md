@@ -4,6 +4,9 @@ This handoff records the completed `v0.2.0-alpha.1` GitHub and NuGet pre-release
 
 Codex must not push commits, create GitHub releases, publish NuGet packages, or handle API keys unless the maintainer explicitly asks for each public action.
 
+## Future Release-Candidate Decision
+TASK-0092 prepares a conditional local contract freeze in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and the authoritative GO/NO-GO checklist in `docs/MAINTAINER_RC_DECISION.md`. The current decision is NO-GO for RC publication until hosted evidence, remaining P0 gaps, private vulnerability reporting, schema assets, and supply-chain decisions are complete.
+
 ## Current Published State
 - GitHub repository public: yes, `https://github.com/Cynrath/agent-context-kit`.
 - `master` pushed: yes.

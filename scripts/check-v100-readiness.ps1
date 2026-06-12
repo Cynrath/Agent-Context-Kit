@@ -111,6 +111,8 @@ $requiredPaths = @(
     @{ Path = "docs\SUPPORT_LIFECYCLE.md"; Description = "support lifecycle" },
     @{ Path = "docs\SUPPLY_CHAIN_POLICY.md"; Description = "supply-chain policy" },
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "release-candidate evidence" },
+    @{ Path = "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"; Description = "release-candidate contract freeze" },
+    @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "maintainer release-candidate decision" },
     @{ Path = "docs\RC_HOSTED_EVIDENCE.md"; Description = "hosted release-candidate evidence guide" },
     @{ Path = "docs\RELEASE_VALIDATION.md"; Description = "Release validation docs" },
     @{ Path = "docs\DOCUMENTATION_INDEX.md"; Description = "Documentation index" },
@@ -151,6 +153,8 @@ $projectMap = Get-FileText "docs\PROJECT_MAP.md"
 $changelog = Get-FileText "CHANGELOG.md"
 $readinessDoc = Get-FileText "docs\V100_READINESS.md"
 $gapAnalysis = Get-FileText "docs\V100_GAP_ANALYSIS.md"
+$rcContractFreeze = Get-FileText "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"
+$maintainerRcDecision = Get-FileText "docs\MAINTAINER_RC_DECISION.md"
 $freezeDoc = Get-FileText "docs\V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md"
 $freezeScript = Get-FileText "scripts\check-v100-documentation-release-gates.ps1"
 $contextPack = Get-FileText ".codex\CONTEXT_PACK.md"
@@ -172,6 +176,8 @@ $releaseValidationNeedles = @(
     "scripts/check-release-candidate-workflow.ps1",
     "scripts/measure-scan-performance.ps1",
     "RELEASE_CANDIDATE_EVIDENCE.md",
+    "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "MAINTAINER_RC_DECISION.md",
     "RC_HOSTED_EVIDENCE.md"
 )
 
@@ -192,6 +198,8 @@ $documentationIndexNeedles = @(
     "SUPPORT_LIFECYCLE.md",
     "SUPPLY_CHAIN_POLICY.md",
     "RELEASE_CANDIDATE_EVIDENCE.md",
+    "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "MAINTAINER_RC_DECISION.md",
     "RC_HOSTED_EVIDENCE.md"
 )
 
@@ -228,11 +236,37 @@ foreach ($needle in $gapAnalysisNeedles) {
     Require-Text -Content $gapAnalysis -Needle $needle -Description "Gap analysis section $needle"
 }
 
+$rcContractFreezeNeedles = @(
+    "Conditional local freeze",
+    "Frozen Contract Inventory",
+    "Compatibility Rules",
+    "Evidence Not Yet Complete",
+    "NO-GO for RC publication"
+)
+
+foreach ($needle in $rcContractFreezeNeedles) {
+    Require-Text -Content $rcContractFreeze -Needle $needle -Description "RC contract freeze section $needle"
+}
+
+$maintainerRcDecisionNeedles = @(
+    "NO-GO for release-candidate publication",
+    "Decision Inputs",
+    "GO Conditions",
+    "NO-GO Triggers",
+    "Remote-Write Boundary"
+)
+
+foreach ($needle in $maintainerRcDecisionNeedles) {
+    Require-Text -Content $maintainerRcDecision -Needle $needle -Description "Maintainer RC decision section $needle"
+}
+
 Require-Text -Content $roadmap -Needle "Final local readiness consolidation" -Description "Roadmap final local readiness note"
 
 $projectMapNeedles = @(
     "Final local readiness consolidation",
     "docs/V100_READINESS.md",
+    "docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "docs/MAINTAINER_RC_DECISION.md",
     "docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md",
     "scripts/check-v100-readiness.ps1"
 )
@@ -262,7 +296,9 @@ foreach ($needle in $freezeScriptNeedles) {
 }
 
 $codexNeedles = @(
-    "V100_GAP_ANALYSIS.md"
+    "V100_GAP_ANALYSIS.md",
+    "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "MAINTAINER_RC_DECISION.md"
 )
 
 foreach ($needle in $codexNeedles) {

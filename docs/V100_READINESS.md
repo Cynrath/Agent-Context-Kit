@@ -50,6 +50,8 @@ It does not prove API/CLI stability, migration safety, performance, security res
 ## Actual 1.0 Readiness
 `docs/V100_GAP_ANALYSIS.md` is the source of truth. A 1.0 release candidate requires zero open P0 gaps and an explicit disposition for every P1 gap.
 
+TASK-0092 records a conditional local contract freeze in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and keeps the maintainer decision at NO-GO in `docs/MAINTAINER_RC_DECISION.md` until remaining P0, hosted, and remote evidence is complete.
+
 ## Required Validation
 Run these checks when reviewing the historical assets and current gap register:
 

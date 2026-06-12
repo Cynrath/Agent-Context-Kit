@@ -25,6 +25,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Froze a compatibility-preserving `v0.2.0-alpha.2` hardening scope without changing version metadata.
 - Reclassified historical v1.0 asset checks and added an explicit P0/P1/P2 1.0 readiness gap register.
 - Migrated the test project from Legacy `xunit` `2.9.3` to xUnit v3 while preserving all 169 tests and clean dependency reviews.
+- Added a conditional release-candidate contract freeze and explicit maintainer GO/NO-GO decision package without changing version or publishing.
 
 ### Fixed
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.

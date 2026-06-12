@@ -11,6 +11,8 @@ The first release-candidate upgrade target is the published NuGet package `Agent
 - Existing generated files are skipped by default and are not overwritten during upgrade.
 - Default `scan` and `scan --ci` exit behavior is unchanged unless `--baseline` is explicit.
 
+These expectations are part of the TASK-0092 conditional local contract freeze. Hosted predecessor/current-candidate evidence and maintainer approval are still required before release-candidate publication.
+
 ## Config Evidence
 `tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml` represents the published predecessor config surface. `ReleaseCandidateEvidenceTests` verifies that the current reader preserves its language, keywords, ignore paths, extensions, safe domains, ignored paths, and ignored finding IDs without validation errors.
 

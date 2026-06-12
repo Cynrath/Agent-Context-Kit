@@ -47,3 +47,4 @@ AgentContextKit uses small, automation-friendly exit codes.
 - Existing meanings of `0`, `1`, and `2` are stable within the current command contract.
 - A command-specific exit-code change requires tests, documentation, changelog notes, and an explicit compatibility review.
 - JSON payloads that expose an `exitCode` field must match the actual process exit code.
+- TASK-0092 conditionally freezes this matrix for release-candidate preparation. A changed exit decision is breaking and must reopen the contract freeze.

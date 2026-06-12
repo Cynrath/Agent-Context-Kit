@@ -144,6 +144,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0089 exposes Core config diagnostics through current-source `ackit config-check`. It is read-only, preserves the existing reader fallback, emits sanitized schema `2` JSON, keeps warnings non-blocking, returns `1` for errors, and requires manual obsolete-key migration.
 - TASK-0090 adds a `workflow_dispatch`-only Windows/Ubuntu/macOS RC evidence workflow with read-only permissions, isolated predecessor/source tool installs, config immutability, config/baseline/SARIF checks, and the synthetic performance tripwire. Hosted execution remains maintainer-only.
 - TASK-0091 migrates the executable test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5` per official guidance. Disposable and repository suites pass 169/169 tests; vulnerability and deprecation reviews are clean.
+- TASK-0092 adds `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`. The local contract surface is conditionally frozen, but RC publication remains NO-GO pending hosted/remote evidence and remaining P0/P1 disposition.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

@@ -74,4 +74,5 @@
 - Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
 - `scripts/check-release-candidate-workflow.ps1 -FailOnIssues` passes and the manual `release-candidate-evidence` workflow is green on all three OS runners.
 - [x] The `xunit` Legacy warning is resolved through the TASK-0091 xUnit v3 migration; 169/169 tests and clean dependency reviews are recorded.
+- [x] The conditional local contract freeze and NO-GO decision package are recorded in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`.
 - Signing, SBOM, provenance, and package recovery decisions are recorded.

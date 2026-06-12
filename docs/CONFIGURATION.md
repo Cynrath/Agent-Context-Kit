@@ -19,6 +19,8 @@ Unknown fields are ignored. Invalid or unknown language values fall back to Engl
 
 Current source includes `ackit config-check` backed by stable `ACKITCFG` diagnostics for unknown, obsolete, duplicate, malformed, and unsafe settings. It is read-only: warnings remain non-blocking, errors return exit `1`, and missing config reports valid defaults. See [CONFIGURATION_DIAGNOSTICS.md](CONFIGURATION_DIAGNOSTICS.md).
 
+TASK-0092 conditionally freezes config schema `1`, read-only diagnostics, and the no-auto-migration rule for release-candidate preparation. A breaking config or migration behavior change must reopen `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`.
+
 Baseline policy is intentionally not enabled through `.ackit/config.yml`. Use the explicit `ackit baseline` and `ackit scan --baseline <repo-relative.json>` command options so CI policy changes remain visible in command lines and reviewable diffs.
 
 ## Default Config

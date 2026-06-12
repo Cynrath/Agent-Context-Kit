@@ -25,6 +25,8 @@ Hosted RC evidence is manual-only. After a maintainer push, dispatch `.github/wo
 
 The normative local evidence matrix and dated results are maintained in `docs/RELEASE_CANDIDATE_EVIDENCE.md`.
 
+The conditional local contract freeze and maintainer GO/NO-GO conditions are maintained in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`.
+
 Release-candidate dependency review:
 
 ```powershell

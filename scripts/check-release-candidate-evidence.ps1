@@ -53,6 +53,8 @@ $requiredPaths = @(
     @{ Path = "docs\SUPPORT_LIFECYCLE.md"; Description = "Support lifecycle" },
     @{ Path = "docs\SUPPLY_CHAIN_POLICY.md"; Description = "Supply-chain policy" },
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "Release-candidate evidence matrix" },
+    @{ Path = "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"; Description = "Release-candidate contract freeze" },
+    @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "Maintainer release-candidate decision" },
     @{ Path = "tests\fixtures\upgrade\v0.2.0-alpha.1-config.yml"; Description = "Published config fixture" },
     @{ Path = "tests\fixtures\upgrade\baseline-schema-v1.json"; Description = "Baseline schema fixture" },
     @{ Path = "tests\AgentContextKit.Tests\ReleaseCandidateEvidenceTests.cs"; Description = "Compatibility tests" },
@@ -70,6 +72,11 @@ Require-Text -RelativePath "docs\SECURITY_RESPONSE_READINESS.md" -Needle "privat
 Require-Text -RelativePath "docs\SUPPORT_LIFECYCLE.md" -Needle ".NET 10" -Description "Runtime lifecycle baseline"
 Require-Text -RelativePath "docs\SUPPLY_CHAIN_POLICY.md" -Needle "Signing, SBOM, And Provenance Decision" -Description "Supply-chain decision boundary"
 Require-Text -RelativePath "docs\RELEASE_CANDIDATE_EVIDENCE.md" -Needle "Do not call the project 1.0 RC-ready" -Description "RC decision rule"
+Require-Text -RelativePath "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md" -Needle "Conditional local freeze" -Description "Conditional contract freeze status"
+Require-Text -RelativePath "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md" -Needle "NO-GO for RC publication" -Description "Contract freeze publication boundary"
+Require-Text -RelativePath "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md" -Needle "sha256-rule-path-location-occurrence-v1" -Description "Frozen baseline fingerprint algorithm"
+Require-Text -RelativePath "docs\MAINTAINER_RC_DECISION.md" -Needle "NO-GO for release-candidate publication" -Description "Maintainer current decision"
+Require-Text -RelativePath "docs\MAINTAINER_RC_DECISION.md" -Needle "Remote-Write Boundary" -Description "Maintainer remote-write boundary"
 
 Push-Location $repoRoot
 try {

@@ -2,6 +2,8 @@
 
 This page records the intended stable v1.0 command contract for `ackit`. It is a local contract review aid, not public release approval.
 
+TASK-0092 conditionally freezes this command/option surface for release-candidate preparation. Any breaking change requires reopening `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`; the freeze is not publication approval.
+
 ## Command Name
 The packaged tool command name is:
 

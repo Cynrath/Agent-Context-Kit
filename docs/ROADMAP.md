@@ -144,6 +144,10 @@
 - TASK-0089 completes local config diagnostics CLI integration and the no-auto-migration contract; hosted predecessor-config evidence remains part of RC validation.
 - TASK-0090 adds a manual-only three-OS RC evidence workflow for isolated predecessor/current-source package checks, config immutability, baseline/SARIF behavior, and the synthetic performance tripwire. Hosted results remain maintainer-only evidence after push/dispatch.
 - TASK-0091 completes the xUnit v3 migration with 169/169 tests and clean post-migration vulnerability/deprecation reviews.
+- TASK-0092 conditionally freezes CLI, exit-code, config, JSON, baseline, SARIF, generated-file, privacy, and upgrade contracts while keeping RC publication at NO-GO until hosted/remote evidence and maintainer decisions are complete.
+- TASK-0093 will add machine-readable JSON schema and golden contract assets for V100-04.
+- TASK-0094 will add English/Turkish localization parity release gates.
+- TASK-0095 will consolidate maintainer-only private reporting and signing/SBOM/provenance evidence.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 

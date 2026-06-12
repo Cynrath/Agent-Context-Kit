@@ -4,6 +4,8 @@ AgentContextKit published `0.2.0-alpha.1` package and current source can write s
 
 Availability note: the published NuGet package `AgentContextKit` `0.2.0-alpha.1` includes `ackit sarif`.
 
+TASK-0092 conditionally freezes SARIF `2.1.0`, repository-relative locations, visible findings, and the no-raw-match privacy boundary for release-candidate preparation.
+
 ## What SARIF Is
 SARIF is a standard JSON format for static analysis results. Security platforms and CI systems can read it to show findings with rules, severity levels, messages, and file locations.
 

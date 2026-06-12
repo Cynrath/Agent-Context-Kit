@@ -84,6 +84,8 @@
 - `docs/PERFORMANCE_POLICY.md`: local benchmark scope, tripwire, and non-guarantees.
 - `docs/SUPPLY_CHAIN_POLICY.md`: dependency, artifact, signing, SBOM, provenance, and recovery policy.
 - `docs/RELEASE_CANDIDATE_EVIDENCE.md`: dated local evidence and remaining hosted/maintainer blockers.
+- `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`: conditional local CLI/config/JSON/baseline/SARIF/upgrade contract freeze.
+- `docs/MAINTAINER_RC_DECISION.md`: release-candidate GO/NO-GO inputs, conditions, and remote-write boundary.
 - `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
