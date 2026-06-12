@@ -15,6 +15,9 @@ AgentContextKit uses small, automation-friendly exit codes.
 | `ackit init` | `0` when config inspection/write completes |
 | `ackit scan` | `0` in default report-only mode |
 | `ackit scan --ci` | `0` with no high/critical findings, `1` with high findings, `2` with critical findings |
+| `ackit scan --baseline <path> --ci` | `0` with no new high/critical findings, `1` with new high findings or an invalid baseline, `2` with new critical findings |
+| `ackit baseline` | `0` when a new sanitized baseline is written, `1` for invalid paths or an existing file without `--update` |
+| `ackit baseline --update` | `0` when an existing baseline is explicitly replaced |
 | `ackit sarif` | `0` when SARIF creation/skip reporting completes, `1` when required output path is missing or invalid |
 | `ackit report` | `0` when report creation/skip reporting completes |
 | `ackit webui` | `0` when Web UI creation/skip reporting completes |
@@ -31,6 +34,7 @@ AgentContextKit uses small, automation-friendly exit codes.
 ## Notes
 - `ackit scan` is report-only by default so existing local workflows are not broken by findings.
 - Use `ackit scan --ci` in automated checks when high or critical findings should fail the job.
+- Use `ackit scan --baseline <path> --ci` only after reviewing the baseline diff. Existing findings remain visible; baseline status is not suppression.
 - JSON output uses the same process exit code as human-readable output.
 - Exit codes are language-independent and must not change when `--lang` changes.
 - Automation should branch on the numeric process exit code, not localized output text.

@@ -127,7 +127,8 @@ foreach ($entry in $requiredPaths) {
 $helpText = Get-CliHelp
 $helpLines = @(
     "ackit init [--lang en|tr] [--json]",
-    "ackit scan [--lang en|tr] [--json] [--ci]",
+    "ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]",
+    "ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]",
     "ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]",
     "ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]",
     "ackit prompt-pack [--output <repo-relative.md>] [--lang en|tr] [--json]",
@@ -154,6 +155,7 @@ $contract = Get-FileText "docs\CLI_CONTRACT.md"
 $allCommands = @(
     "ackit init",
     "ackit scan",
+    "ackit baseline",
     "ackit report",
     "ackit webui",
     "ackit prompt-pack",
@@ -174,6 +176,7 @@ foreach ($command in $allCommands) {
 $jsonCommands = @(
     "ackit init --json",
     "ackit scan --json",
+    "ackit baseline --json",
     "ackit report --json",
     "ackit webui --json",
     "ackit prompt-pack --json",
@@ -217,6 +220,7 @@ $exitCodeNeedles = @(
     "ackit init",
     "ackit scan",
     "ackit scan --ci",
+    "ackit baseline",
     "ackit report",
     "ackit webui",
     "ackit prompt-pack",

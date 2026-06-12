@@ -8,12 +8,12 @@ public static class BaselineSchema
 {
     public const int CurrentVersion = 1;
 
-    public const string FingerprintAlgorithm = "sha256-rule-path-location-v1";
+    public const string FingerprintAlgorithm = "sha256-rule-path-location-occurrence-v1";
 }
 
 public sealed record BaselineLocation
 {
-    public BaselineLocation(int? startLine = null, int? startColumn = null)
+    public BaselineLocation(int? startLine = null, int? startColumn = null, int? occurrence = null)
     {
         if (startLine is <= 0)
         {
@@ -30,13 +30,21 @@ public sealed record BaselineLocation
             throw new ArgumentException("A baseline column requires a line number.", nameof(startColumn));
         }
 
+        if (occurrence is <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(occurrence), "Baseline occurrence numbers must be positive.");
+        }
+
         StartLine = startLine;
         StartColumn = startColumn;
+        Occurrence = occurrence;
     }
 
     public int? StartLine { get; }
 
     public int? StartColumn { get; }
+
+    public int? Occurrence { get; }
 }
 
 public sealed record BaselineEntry
@@ -52,6 +60,7 @@ public sealed record BaselineEntry
         Severity = severity;
         StartLine = location?.StartLine;
         StartColumn = location?.StartColumn;
+        Occurrence = location?.Occurrence;
         Fingerprint = BaselineFingerprint.Create(RuleId, Path, location);
     }
 
@@ -66,6 +75,8 @@ public sealed record BaselineEntry
     public int? StartLine { get; }
 
     public int? StartColumn { get; }
+
+    public int? Occurrence { get; }
 }
 
 public sealed record BaselineManifest
@@ -79,6 +90,7 @@ public sealed record BaselineManifest
             .ThenBy(entry => entry.RuleId, StringComparer.Ordinal)
             .ThenBy(entry => entry.StartLine)
             .ThenBy(entry => entry.StartColumn)
+            .ThenBy(entry => entry.Occurrence)
             .ThenBy(entry => entry.Fingerprint, StringComparer.Ordinal)
             .ToArray();
 
@@ -114,7 +126,8 @@ public static partial class BaselineFingerprint
             normalizedRuleId,
             normalizedPath,
             location?.StartLine?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty,
-            location?.StartColumn?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty);
+            location?.StartColumn?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty,
+            location?.Occurrence?.ToString(System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty);
         var hash = SHA256.HashData(Encoding.UTF8.GetBytes(canonical));
         return Convert.ToHexStringLower(hash);
     }

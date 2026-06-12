@@ -133,3 +133,17 @@ public interface IAckitConfigWriter
 {
     GeneratedFileResult WriteDefaultIfMissing(string repositoryPath, LanguageCode language);
 }
+
+public interface IBaselineStore
+{
+    BaselineFileResult Write(string repositoryPath, string relativePath, BaselineManifest manifest, bool update);
+
+    BaselineManifest Load(string repositoryPath, string relativePath);
+}
+
+public interface IBaselineClassifier
+{
+    BaselineManifest CreateManifest(IReadOnlyList<RiskFinding> findings);
+
+    BaselineEvaluation Classify(IReadOnlyList<RiskFinding> findings, BaselineManifest manifest);
+}

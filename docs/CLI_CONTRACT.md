@@ -22,7 +22,8 @@ The v1.0 target command surface is:
 
 ```text
 ackit init [--lang en|tr] [--json]
-ackit scan [--lang en|tr] [--json] [--ci]
+ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
+ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
 ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]
 ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]
 ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]
@@ -49,7 +50,9 @@ ackit help
 ## Global Options
 - `--lang en|tr`: selects English or Turkish output/templates where supported. Unknown language values fall back to English.
 - `--json`: emits machine-readable JSON where supported.
-- `--ci`: applies only to `scan` and turns high/critical findings into non-zero process exits.
+- `--ci`: applies only to `scan`; default mode evaluates every finding, while explicit baseline mode evaluates only new High/Critical findings.
+- `--baseline <repo-relative.json>`: opts `scan` into baseline classification and new-finding CI policy.
+- `--update`: permits explicit replacement only for `ackit baseline`.
 
 ## Output Paths
 Generated local artifacts must stay repository-relative:
@@ -58,6 +61,7 @@ Generated local artifacts must stay repository-relative:
 - `.ackit/webui/index.html`
 - `.ackit/prompt-packs/prompt-pack.md`
 - `.ackit/context-exports/context-export-manifest.json`
+- `.ackit-baseline.json`
 - `docs/tasks/TASK-####.md`
 
 Generated artifact directories under `.ackit/` are ignored by default.
@@ -71,6 +75,8 @@ Stable expectations:
 - `2`: critical risk condition.
 
 `scan` remains report-only by default. Use `scan --ci` for automation that should fail on high or critical findings.
+
+`scan --baseline <path> --ci` is an explicit alternate policy: every finding remains visible, but only new High/Critical findings fail the process. Missing, malformed, incompatible, or tampered baseline files return `1`.
 
 Exit decisions are language- and output-format-independent. When a JSON payload includes `exitCode`, it must equal the process exit code returned for the equivalent human-readable invocation.
 

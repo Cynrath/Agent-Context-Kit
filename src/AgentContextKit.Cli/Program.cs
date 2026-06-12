@@ -6,6 +6,7 @@ namespace AgentContextKit.Cli;
 public static class Program
 {
     private const string Version = "0.2.0-alpha.1";
+    private const string DefaultBaselinePath = ".ackit-baseline.json";
     private const int JsonSchemaVersion = 2;
     private const int ExitSuccess = 0;
     private const int ExitError = 1;
@@ -28,7 +29,8 @@ public static class Program
                 "help" or "--help" or "-h" => RunHelp(language, services.TextProvider),
                 "version" or "--version" => RunVersion(),
                 "init" => RunInit(repositoryPath, language, json, services),
-                "scan" => RunScan(repositoryPath, config, language, json, ci, services),
+                "scan" => RunScan(args, repositoryPath, config, language, json, ci, services),
+                "baseline" => RunBaseline(args, repositoryPath, config, language, json, services),
                 "sarif" => RunSarif(args, repositoryPath, config, language, json, services),
                 "report" => RunReport(args, repositoryPath, config, language, json, services),
                 "webui" => RunWebUi(args, repositoryPath, config, language, json, services),
@@ -55,7 +57,8 @@ public static class Program
         Console.WriteLine();
         Console.WriteLine("Usage:");
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
-        Console.WriteLine("  ackit scan [--lang en|tr] [--json] [--ci]");
+        Console.WriteLine("  ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]");
+        Console.WriteLine("  ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit sarif --output <repo-relative.sarif> [--lang en|tr] [--json]");
         Console.WriteLine("  ackit report [--output <repo-relative.html>] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit webui [--output <repo-relative.html>] [--lang en|tr] [--json]");
@@ -116,18 +119,87 @@ public static class Program
         return ExitSuccess;
     }
 
-    private static int RunScan(string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
+    private static int RunScan(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
     {
         var scan = services.RepositoryScanner.Scan(repositoryPath, config);
-        var exitCode = GetScanExitCode(scan, ci);
+        var baselinePath = GetOption(args, "--baseline");
+        BaselineEvaluation? baseline = null;
+        if (!string.IsNullOrWhiteSpace(baselinePath))
+        {
+            try
+            {
+                var manifest = services.BaselineStore.Load(repositoryPath, baselinePath);
+                baseline = services.BaselineClassifier.Classify(scan.Findings, manifest);
+            }
+            catch (BaselineException ex)
+            {
+                return WriteBaselineError("scan", ex, json, services.Clock.UtcNow);
+            }
+        }
+
+        var exitCode = baseline is null
+            ? GetScanExitCode(scan, ci)
+            : GetBaselineScanExitCode(baseline, ci);
         if (json)
         {
-            WriteJson(ToScanDto("scan", scan, services.Clock.UtcNow, ci, exitCode));
+            WriteJson(ToScanDto("scan", scan, services.Clock.UtcNow, ci, exitCode, baselinePath, baseline));
             return exitCode;
         }
 
         PrintScan(scan, language, services);
+        if (baseline is not null)
+        {
+            PrintBaselineClassification(baselinePath!, baseline);
+        }
+
         return exitCode;
+    }
+
+    private static int RunBaseline(
+        string[] args,
+        string repositoryPath,
+        AckitConfig config,
+        LanguageCode language,
+        bool json,
+        Services services)
+    {
+        var outputPath = GetOption(args, "--output") ?? DefaultBaselinePath;
+        try
+        {
+            var scan = services.RepositoryScanner.Scan(repositoryPath, config);
+            var manifest = services.BaselineClassifier.CreateManifest(scan.Findings);
+            var result = services.BaselineStore.Write(repositoryPath, outputPath, manifest, HasFlag(args, "--update"));
+            if (json)
+            {
+                WriteJson(new
+                {
+                    schemaVersion = JsonSchemaVersion,
+                    toolVersion = Version,
+                    generatedAtUtc = services.Clock.UtcNow,
+                    command = "baseline",
+                    repositoryName = GetRepositoryName(repositoryPath),
+                    baseline = new
+                    {
+                        path = result.Path,
+                        status = result.Status.ToString(),
+                        schemaVersion = manifest.SchemaVersion,
+                        fingerprintAlgorithm = manifest.FingerprintAlgorithm,
+                        entryCount = result.EntryCount
+                    }
+                });
+                return ExitSuccess;
+            }
+
+            var verb = result.Status == BaselineFileStatus.Created ? "created" : "updated";
+            Console.WriteLine($"Baseline {verb}: {result.Path}");
+            Console.WriteLine($"Entries: {result.EntryCount}");
+            Console.WriteLine("Review and commit the baseline only if it contains no private repository metadata.");
+            return ExitSuccess;
+        }
+        catch (BaselineException ex)
+        {
+            return WriteBaselineError("baseline", ex, json, services.Clock.UtcNow);
+        }
     }
 
     private static int RunSarif(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, Services services)
@@ -459,6 +531,24 @@ public static class Program
         PrintSuppressions(scan.Suppressions);
     }
 
+    private static void PrintBaselineClassification(string baselinePath, BaselineEvaluation baseline)
+    {
+        Console.WriteLine();
+        Console.WriteLine("Baseline classification:");
+        Console.WriteLine($"- File: {baselinePath}");
+        Console.WriteLine($"- Existing findings: {baseline.Existing.Count}");
+        Console.WriteLine($"- New findings: {baseline.New.Count}");
+        foreach (var finding in baseline.Findings.Take(25))
+        {
+            Console.WriteLine($"- {finding.Status}: {finding.Finding.Path} {RiskRuleCatalog.GetRuleId(finding.Finding)} [{finding.Finding.Severity}] occurrence {finding.Occurrence}");
+        }
+
+        if (baseline.Findings.Count > 25)
+        {
+            Console.WriteLine($"- ... {baseline.Findings.Count - 25} more");
+        }
+    }
+
     private static void PrintSuppressions(IReadOnlyList<RiskSuppression> suppressions)
     {
         if (suppressions.Count == 0)
@@ -527,25 +617,32 @@ public static class Program
         }));
     }
 
-    private static object ToScanDto(string command, ScanResult scan, DateTimeOffset generatedAtUtc, bool ciMode, int exitCode)
+    private static object ToScanDto(
+        string command,
+        ScanResult scan,
+        DateTimeOffset generatedAtUtc,
+        bool ciMode,
+        int exitCode,
+        string? baselinePath = null,
+        BaselineEvaluation? baseline = null)
     {
-        return new
+        var result = new Dictionary<string, object?>
         {
-            schemaVersion = JsonSchemaVersion,
-            toolVersion = Version,
-            generatedAtUtc,
-            command,
-            ciMode,
-            exitCode,
-            repositoryPath = scan.RepositoryPath,
-            repositoryName = GetRepositoryName(scan.RepositoryPath),
-            fileCount = scan.Files.Count,
-            stacks = scan.Stacks.Select(stack => new
+            ["schemaVersion"] = JsonSchemaVersion,
+            ["toolVersion"] = Version,
+            ["generatedAtUtc"] = generatedAtUtc,
+            ["command"] = command,
+            ["ciMode"] = ciMode,
+            ["exitCode"] = exitCode,
+            ["repositoryPath"] = scan.RepositoryPath,
+            ["repositoryName"] = GetRepositoryName(scan.RepositoryPath),
+            ["fileCount"] = scan.Files.Count,
+            ["stacks"] = scan.Stacks.Select(stack => new
             {
                 name = stack.Name,
                 signal = stack.Signal
             }).ToArray(),
-            health = new
+            ["health"] = new
             {
                 hasReadme = scan.HasReadme,
                 hasLicense = scan.HasLicense,
@@ -558,16 +655,16 @@ public static class Program
                 hasDocker = scan.HasDocker,
                 hasAgentInstructions = scan.HasAgentInstructions
             },
-            riskSummary = ToRiskSummary(scan.Findings),
-            findings = scan.Findings.Select(ToRiskFindingDto).ToArray(),
-            suppressionSummary = new
+            ["riskSummary"] = ToRiskSummary(scan.Findings),
+            ["findings"] = scan.Findings.Select(ToRiskFindingDto).ToArray(),
+            ["suppressionSummary"] = new
             {
                 total = scan.Suppressions.Count,
                 safeDomains = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.SafeDomain),
                 ignoredPaths = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.IgnoredPath),
                 ignoredFindingIds = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.IgnoredFindingId)
             },
-            suppressions = scan.Suppressions.Select(suppression => new
+            ["suppressions"] = scan.Suppressions.Select(suppression => new
             {
                 ruleId = suppression.RuleId,
                 severity = suppression.Severity.ToString(),
@@ -576,6 +673,30 @@ public static class Program
                 reason = ToSuppressionReason(suppression.Reason)
             }).ToArray()
         };
+
+        if (baseline is not null)
+        {
+            result["baseline"] = new
+            {
+                path = baselinePath,
+                schemaVersion = BaselineSchema.CurrentVersion,
+                fingerprintAlgorithm = BaselineSchema.FingerprintAlgorithm,
+                entryCount = baseline.BaselineEntryCount,
+                existing = baseline.Existing.Count,
+                @new = baseline.New.Count,
+                classifiedFindings = baseline.Findings.Select(finding => new
+                {
+                    ruleId = RiskRuleCatalog.GetRuleId(finding.Finding),
+                    severity = finding.Finding.Severity.ToString(),
+                    path = finding.Finding.Path,
+                    fingerprint = finding.Fingerprint,
+                    status = finding.Status.ToString().ToLowerInvariant(),
+                    occurrence = finding.Occurrence
+                }).ToArray()
+            };
+        }
+
+        return result;
     }
 
     private static string ToSuppressionReason(RiskSuppressionReason reason)
@@ -689,6 +810,50 @@ public static class Program
         return ExitSuccess;
     }
 
+    private static int GetBaselineScanExitCode(BaselineEvaluation baseline, bool ci)
+    {
+        if (!ci)
+        {
+            return ExitSuccess;
+        }
+
+        if (baseline.New.Any(finding => finding.Finding.Severity == RiskSeverity.Critical))
+        {
+            return ExitCritical;
+        }
+
+        if (baseline.New.Any(finding => finding.Finding.Severity == RiskSeverity.High))
+        {
+            return ExitError;
+        }
+
+        return ExitSuccess;
+    }
+
+    private static int WriteBaselineError(string command, BaselineException exception, bool json, DateTimeOffset generatedAtUtc)
+    {
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc,
+                command,
+                exitCode = ExitError,
+                error = new
+                {
+                    code = exception.Code,
+                    message = exception.Message
+                }
+            });
+            return ExitError;
+        }
+
+        Console.Error.WriteLine($"{exception.Code}: {exception.Message}");
+        return ExitError;
+    }
+
     private static AgentTarget ParseTarget(string? value)
     {
         return value?.Trim().ToLowerInvariant() switch
@@ -754,6 +919,7 @@ public static class Program
         return string.Equals(option, "--lang", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--target", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--profile", StringComparison.OrdinalIgnoreCase) ||
+               string.Equals(option, "--baseline", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--prompt-pack", StringComparison.OrdinalIgnoreCase) ||
                string.Equals(option, "--output", StringComparison.OrdinalIgnoreCase);
     }
@@ -774,6 +940,8 @@ public static class Program
             fileSystem,
             new AckitConfigReader(fileSystem),
             new AckitConfigWriter(fileSystem),
+            new BaselineStore(fileSystem),
+            new BaselineClassifier(),
             repositoryScanner,
             new AgentInstructionGenerator(fileSystem, templateRenderer, clock),
             new HtmlReportGenerator(fileSystem, clock),
@@ -791,6 +959,8 @@ public static class Program
         IFileSystem FileSystem,
         IAckitConfigReader ConfigReader,
         IAckitConfigWriter ConfigWriter,
+        IBaselineStore BaselineStore,
+        IBaselineClassifier BaselineClassifier,
         IRepositoryScanner RepositoryScanner,
         IAgentInstructionGenerator AgentInstructionGenerator,
         IHtmlReportGenerator HtmlReportGenerator,

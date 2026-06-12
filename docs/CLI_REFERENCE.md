@@ -19,7 +19,7 @@ Select output/template language. Unknown values fall back to `en`.
 Emit machine-readable JSON where supported. Current JSON output schema version: `2`.
 
 ### `--ci`
-CI mode for `ackit scan`. High findings return exit code `1`; critical findings return exit code `2`.
+CI mode for `ackit scan`. Without a baseline, High findings return exit code `1` and Critical findings return exit code `2`. With an explicit baseline, only new High/Critical findings affect the exit code.
 
 ## Commands
 ### `ackit init`
@@ -42,6 +42,7 @@ ackit scan
 ackit scan --ci
 ackit scan --json
 ackit scan --ci --json
+ackit scan --baseline .ackit-baseline.json --ci
 ```
 
 Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly, .NET Worker Service, ASP.NET Core Minimal API, Node, npm, pnpm, Yarn, Bun, TypeScript, Vite, Next.js, Nuxt, Angular, Tailwind CSS, Python, PHP/Laravel, Docker, GitHub Actions, and database/migration files when matching local files are present.
@@ -51,6 +52,25 @@ Risk findings include stable `ACKIT` rule IDs in JSON output. See [SCANNER_RULES
 Current source also reports sanitized config suppression counts and reasons in human and JSON scan output. This additive audit surface is documented in [SUPPRESSION_AUDIT.md](SUPPRESSION_AUDIT.md) and is not part of the published `0.2.0-alpha.1` package.
 
 Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
+
+### `ackit baseline`
+Creates a deterministic, sanitized local finding baseline. This current-source command is not included in the published `0.2.0-alpha.1` package.
+
+```powershell
+ackit baseline
+ackit baseline --output policy/ackit-baseline.json
+ackit baseline --update --json
+```
+
+Default output path:
+- `.ackit-baseline.json`
+
+Safety behavior:
+- The path must be repository-relative and end in `.json`.
+- Existing files are rejected unless `--update` is explicit.
+- Entries contain rule ID, repository-relative path, severity, occurrence, and fingerprint only.
+- Raw matches, messages, absolute paths, repository roots, usernames, and timestamps are omitted.
+- A baseline records prior review state; it does not suppress or hide findings.
 
 ### `ackit sarif`
 Generates a privacy-first SARIF 2.1.0 report from scanner findings. Existing SARIF files are skipped.

@@ -24,6 +24,8 @@ tests/
 - `IBrandPiiScanner`
 - `RiskRuleCatalog`
 - `BaselineFingerprint`
+- `BaselineStore`
+- `BaselineClassifier`
 - `IRiskReporter`
 - `ITemplateRenderer`
 - `ITextProvider`
@@ -52,7 +54,7 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 `RiskScanResult` carries visible findings plus sanitized config suppression records. `ScanResult.Suppressions` is additive and defaults to an empty list so existing positional construction remains compatible. Audit-capable interface methods have default implementations that return existing findings with an empty audit, allowing custom implementations to opt in without an immediate source break. The CLI exposes this audit only through local human/JSON scan output; SARIF continues to contain visible findings only.
 
-`BaselineSchema`, `BaselineEntry`, `BaselineManifest`, and `BaselineFingerprint` define the future baseline identity boundary. Fingerprints use only normalized rule IDs, repository-relative paths, and optional numeric location metadata. They exclude messages, raw matches, absolute roots, and machine identity. This Core foundation is not connected to current CLI scanning or exit behavior yet.
+`BaselineSchema`, `BaselineEntry`, `BaselineManifest`, and `BaselineFingerprint` define the baseline identity boundary. `BaselineStore` validates repository-relative JSON paths, schema/algorithm compatibility, and fingerprint integrity; it refuses replacement unless the caller explicitly requests update. `BaselineClassifier` assigns deterministic same-rule/file occurrence numbers and classifies every visible finding as existing or new. The CLI exposes this through `ackit baseline` and opt-in `scan --baseline`; default scan behavior is unchanged.
 
 `AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior or current CLI exit codes. Diagnostic messages are invariant and omit raw config values.
 

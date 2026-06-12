@@ -19,6 +19,8 @@ Unknown fields are ignored. Invalid or unknown language values fall back to Engl
 
 Current source also includes a report-only Core validator with stable `ACKITCFG` diagnostics for unknown, obsolete, duplicate, malformed, and unsafe settings. It is not connected to CLI exit behavior yet. See [CONFIGURATION_DIAGNOSTICS.md](CONFIGURATION_DIAGNOSTICS.md).
 
+Baseline policy is intentionally not enabled through `.ackit/config.yml`. Use the explicit `ackit baseline` and `ackit scan --baseline <repo-relative.json>` command options so CI policy changes remain visible in command lines and reviewable diffs.
+
 ## Default Config
 ```yaml
 schemaVersion: 1

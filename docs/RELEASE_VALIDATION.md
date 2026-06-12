@@ -377,3 +377,14 @@ Hosted workflow validation is complete for the latest TASK-0056 push. Future wor
 - Confirm Codex for OSS form submission remains recorded; keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and alpha.2 follow-up guidance.
+
+## Current-Source Baseline Validation
+TASK-0086 adds a current-source-only baseline workflow; it is not in published NuGet `0.2.0-alpha.1`.
+
+```powershell
+dotnet run --project src/AgentContextKit.Cli -- baseline --output .ackit-baseline.json
+dotnet run --project src/AgentContextKit.Cli -- scan --baseline .ackit-baseline.json --ci
+dotnet run --project src/AgentContextKit.Cli -- baseline --output .ackit-baseline.json --update --json
+```
+
+Validate that the first command refuses an existing file without `--update`, baseline JSON contains no raw matches/messages/absolute paths, existing Critical findings remain visible, and only new High/Critical findings affect baseline-aware CI exits. Use a disposable repository for secret-pattern smoke tests and remove its generated baseline after validation.

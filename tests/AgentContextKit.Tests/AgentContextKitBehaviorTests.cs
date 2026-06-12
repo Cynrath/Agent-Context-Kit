@@ -1584,6 +1584,79 @@ public sealed class CliJsonAndMetadataTests
     }
 
     [Fact]
+    public void BaselineCommandCreatesSanitizedFileAndRequiresExplicitUpdate()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+
+        var created = RunCli(repo.Path, ["baseline", "--json"]);
+        var json = JsonNode.Parse(created.Output);
+        var path = System.IO.Path.Combine(repo.Path, ".ackit-baseline.json");
+        var content = File.ReadAllText(path);
+        var duplicate = RunCli(repo.Path, ["baseline"]);
+        var updated = RunCli(repo.Path, ["baseline", "--update", "--json"]);
+
+        Assert.Equal(0, created.ExitCode);
+        Assert.Equal("baseline", json?["command"]?.GetValue<string>());
+        Assert.Equal(".ackit-baseline.json", json?["baseline"]?["path"]?.GetValue<string>());
+        Assert.True(json?["baseline"]?["entryCount"]?.GetValue<int>() > 0);
+        Assert.True(File.Exists(path));
+        Assert.DoesNotContain(TestData.OpenAiProjectKey(), content, StringComparison.Ordinal);
+        Assert.DoesNotContain("match", content, StringComparison.OrdinalIgnoreCase);
+        Assert.Equal(1, duplicate.ExitCode);
+        Assert.Contains("ACKITBASE003", duplicate.Error);
+        Assert.Equal(0, updated.ExitCode);
+        Assert.Equal("Updated", JsonNode.Parse(updated.Output)?["baseline"]?["status"]?.GetValue<string>());
+    }
+
+    [Fact]
+    public void BaselineAwareCiIgnoresExistingCriticalButBlocksNewCritical()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+        Assert.Equal(0, RunCli(repo.Path, ["baseline"]).ExitCode);
+
+        var baselineHuman = RunCli(repo.Path, ["scan", "--ci", "--baseline", ".ackit-baseline.json"]);
+        var baselineJson = RunCli(repo.Path, ["scan", "--ci", "--baseline", ".ackit-baseline.json", "--json"]);
+        var json = JsonNode.Parse(baselineJson.Output);
+        var defaultCi = RunCli(repo.Path, ["scan", "--ci"]);
+
+        Assert.Equal(0, baselineHuman.ExitCode);
+        Assert.Equal(0, baselineJson.ExitCode);
+        Assert.Contains("Critical", baselineHuman.Output);
+        Assert.Contains("Existing findings:", baselineHuman.Output);
+        Assert.Contains("New findings: 0", baselineHuman.Output);
+        Assert.True(json?["baseline"]?["existing"]?.GetValue<int>() > 0);
+        Assert.Equal(0, json?["baseline"]?["new"]?.GetValue<int>());
+        Assert.Equal("existing", json?["baseline"]?["classifiedFindings"]?[0]?["status"]?.GetValue<string>());
+        Assert.Equal(2, defaultCi.ExitCode);
+
+        repo.Write("second.txt", "token" + "=" + TestData.GitHubFineGrainedToken());
+        var changed = RunCli(repo.Path, ["scan", "--ci", "--baseline", ".ackit-baseline.json", "--json"]);
+        var changedJson = JsonNode.Parse(changed.Output);
+
+        Assert.Equal(2, changed.ExitCode);
+        Assert.True(changedJson?["baseline"]?["new"]?.GetValue<int>() > 0);
+        Assert.Equal(2, changedJson?["exitCode"]?.GetValue<int>());
+    }
+
+    [Fact]
+    public void BaselineScanReportsStructuredMissingFileError()
+    {
+        using var repo = TempRepository.Create();
+
+        var human = RunCli(repo.Path, ["scan", "--baseline", "missing.json"]);
+        var jsonResult = RunCli(repo.Path, ["scan", "--baseline", "missing.json", "--json"]);
+        var json = JsonNode.Parse(jsonResult.Output);
+
+        Assert.Equal(1, human.ExitCode);
+        Assert.Contains("ACKITBASE002", human.Error);
+        Assert.Equal(1, jsonResult.ExitCode);
+        Assert.Equal("ACKITBASE002", json?["error"]?["code"]?.GetValue<string>());
+        Assert.Equal(1, json?["exitCode"]?.GetValue<int>());
+    }
+
+    [Fact]
     public void UnknownCommandReturnsErrorExitCode()
     {
         using var repo = TempRepository.Create();

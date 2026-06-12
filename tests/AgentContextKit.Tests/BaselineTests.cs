@@ -71,6 +71,7 @@ public sealed class BaselineTests
         Assert.Throws<ArgumentOutOfRangeException>(() => new BaselineLocation(0));
         Assert.Throws<ArgumentOutOfRangeException>(() => new BaselineLocation(1, 0));
         Assert.Throws<ArgumentException>(() => new BaselineLocation(startColumn: 2));
+        Assert.Throws<ArgumentOutOfRangeException>(() => new BaselineLocation(occurrence: 0));
     }
 
     [Fact]
@@ -83,6 +84,7 @@ public sealed class BaselineTests
         Assert.Equal(RiskSeverity.Critical, entry.Severity);
         Assert.Equal(7, entry.StartLine);
         Assert.Equal(3, entry.StartColumn);
+        Assert.Null(entry.Occurrence);
         Assert.Null(typeof(BaselineEntry).GetProperty("Match"));
         Assert.Null(typeof(BaselineEntry).GetProperty("Message"));
         Assert.Null(typeof(BaselineEntry).GetProperty("RepositoryPath"));

@@ -460,6 +460,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0085 adds a report-only Core config validator with stable `ACKITCFG` codes, line/key diagnostics, unsafe path/domain/rule checks, Critical suppression errors, and focused tests without changing current reader/CLI behavior.
 - TASK-0085 pre-commit validation passed with 144/144 tests and all source, sample, hygiene, contract, readiness, and release checks; the public gate failed only on the expected dirty working tree.
 - TASK-0085 post-commit public release gate passed with no blocking items; continue with TASK-0086.
+- TASK-0086 adds explicit sanitized baseline create/update/load, deterministic occurrence classification, integrity validation, additive JSON metadata, and opt-in new-finding CI exits while preserving default scan behavior.
+- TASK-0086 passed full pre-commit validation with 154/154 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, hygiene, contract/readiness gates, and local package verification. A disposable CLI smoke confirmed existing Critical/High findings remain visible with baseline CI exit 0, a new Critical produces exit 2, and the baseline file contains no raw token. The public gate failed only on the expected dirty working tree and must be rerun after commit.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

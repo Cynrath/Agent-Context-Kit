@@ -218,6 +218,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `src/AgentContextKit.Core/Abstractions.cs`
 - `src/AgentContextKit.Core/AgentContextKit.Core.csproj`
 - `src/AgentContextKit.Core/Baseline.cs`
+- `src/AgentContextKit.Core/BaselinePolicy.cs`
 - `src/AgentContextKit.Core/ConfigurationValidation.cs`
 - `src/AgentContextKit.Core/Configuration.cs`
 - `src/AgentContextKit.Core/Doctor.cs`
@@ -229,6 +230,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `src/AgentContextKit.Core/Templates.cs`
 - `tests/AgentContextKit.Tests/AgentContextKit.Tests.csproj`
 - `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`
+- `tests/AgentContextKit.Tests/BaselinePolicyTests.cs`
 
 ## v1.0 Tracking
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.

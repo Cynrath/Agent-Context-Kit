@@ -5,6 +5,7 @@ AgentContextKit supports machine-readable JSON output for automation and CI usag
 Supported commands:
 - `ackit init --json`
 - `ackit scan --json`
+- `ackit baseline --json`
 - `ackit sarif --json`
 - `ackit report --json`
 - `ackit webui --json`
@@ -54,6 +55,7 @@ Schema version `2` adds:
 - `contextExport` generated file metadata on `context-export`.
 - `ruleId` on scanner finding objects. This is additive and uses the stable rule IDs from [SCANNER_RULES.md](SCANNER_RULES.md).
 - `suppressionSummary` and sanitized `suppressions` on current-source `scan` output. These are additive and are not present in the published `0.2.0-alpha.1` package.
+- `baseline` on current-source `baseline --json` and opt-in `scan --baseline <path> --json` output.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -69,6 +71,11 @@ See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
 - `0`: no high/critical findings
 - `1`: high findings and no critical findings
 - `2`: critical findings
+
+`scan --baseline <path> --ci`:
+- `0`: no new high/critical findings
+- `1`: new high findings or baseline load/integrity error
+- `2`: new critical findings
 
 `doctor`:
 - `0`: no failed high/critical checks
@@ -138,6 +145,36 @@ Suppression shape:
 ```
 
 Suppression records intentionally omit `match` and `message`. See [SUPPRESSION_AUDIT.md](SUPPRESSION_AUDIT.md).
+
+## Baseline Shapes
+`ackit baseline --json` returns path, status, baseline schema version, fingerprint algorithm, and entry count. It never emits raw finding matches or messages.
+
+Opt-in `ackit scan --baseline .ackit-baseline.json --json` keeps the existing `findings` array unchanged and adds:
+
+```json
+{
+  "baseline": {
+    "path": ".ackit-baseline.json",
+    "schemaVersion": 1,
+    "fingerprintAlgorithm": "sha256-rule-path-location-occurrence-v1",
+    "entryCount": 4,
+    "existing": 3,
+    "new": 1,
+    "classifiedFindings": [
+      {
+        "ruleId": "ACKIT003",
+        "severity": "Medium",
+        "path": "artifacts/package.nupkg",
+        "fingerprint": "<lowercase-sha256>",
+        "status": "existing",
+        "occurrence": 1
+      }
+    ]
+  }
+}
+```
+
+Classified entries omit `match` and `message`. Baseline errors use exit code `1` and an `error` object with a stable `ACKITBASE` code and sanitized message.
 
 ## Summary Shapes
 `riskSummary`:
