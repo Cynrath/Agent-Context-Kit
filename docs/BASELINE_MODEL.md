@@ -13,6 +13,8 @@ The baseline manifest has an independent schema from CLI JSON output:
 - fingerprint algorithm: `sha256-rule-path-location-occurrence-v1`;
 - entries: deterministic ordered finding identities.
 
+The machine-readable Draft 2020-12 schema is `docs/schemas/ackit-baseline-v1.schema.json`. The sanitized golden fixture is `tests/fixtures/contracts/baseline-v1-golden.json`.
+
 Each entry contains only:
 
 - lowercase SHA-256 fingerprint;

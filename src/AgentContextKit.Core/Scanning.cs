@@ -789,6 +789,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         "api.nuget.org",
         "shields.io",
         "img.shields.io",
+        "json-schema.org",
         "json.schemastore.org",
         "aka.ms",
         "example.com",

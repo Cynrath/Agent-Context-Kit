@@ -145,6 +145,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0090 adds a `workflow_dispatch`-only Windows/Ubuntu/macOS RC evidence workflow with read-only permissions, isolated predecessor/source tool installs, config immutability, config/baseline/SARIF checks, and the synthetic performance tripwire. Hosted execution remains maintainer-only.
 - TASK-0091 migrates the executable test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5` per official guidance. Disposable and repository suites pass 169/169 tests; vulnerability and deprecation reviews are clean.
 - TASK-0092 adds `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`. The local contract surface is conditionally frozen, but RC publication remains NO-GO pending hosted/remote evidence and remaining P0/P1 disposition.
+- TASK-0093 adds the machine-readable schema catalog at `docs/schemas/README.md`, command JSON schema `2`, baseline schema `1`, an AgentContextKit SARIF `2.1.0` profile, sanitized golden fixtures, live-output tests, and a local contract asset gate. Full validation passes with 173/173 tests; TASK-0094 is next.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

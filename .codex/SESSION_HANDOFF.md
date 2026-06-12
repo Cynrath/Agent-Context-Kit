@@ -23,6 +23,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0090 committed as `fd1d8be ci: add release candidate evidence workflow`; post-commit public release gate passed.
 - TASK-0091 committed as `47d6d8b test: migrate test suite to xunit v3`; post-commit public release gate passed.
 - TASK-0092 adds `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`, keeps RC publication at NO-GO, extends the queue through TASK-0095, and passes full local validation with 169/169 tests. Commit and post-commit public gate are next.
+- TASK-0092 committed as `99860a8 docs: freeze release candidate contracts`; post-commit public release gate passed.
+- TASK-0093 is complete locally. It adds Draft 2020-12 command/baseline/SARIF profile schemas, sanitized golden fixtures, four live-output asset tests, and `scripts/check-json-contract-assets.ps1`; the full suite passes 173/173.
+- The standard `json-schema.org` schema URI is now an exact built-in safe technical domain, with focused scanner coverage and no broad suffix exemption.
+- Full TASK-0093 validation passed, including clean scan/doctor, JSON/SARIF parse, sample smoke, dependency reviews, contract/readiness/RC/release gates, and a 3.72-second 2,000-file benchmark. Commit and post-commit public gate are next, followed by TASK-0094.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
@@ -479,7 +483,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0089 committed as `1284646 feat: add config diagnostics command`; post-commit public release gate passed.
 - TASK-0090 designs the hosted RC evidence workflow and passes local Windows reproduction/full validation. No local YAML parser was available; hosted three-OS dispatch remains maintainer-only. Commit, rerun the public gate, then continue with TASK-0091.
 - TASK-0091 resolves the Legacy xUnit warning through migration rather than risk acceptance. The official executable-project requirement is applied, no test source changed, and 169/169 tests remain green.
-- TASK-0092 conditionally freezes local contracts without selecting a version or approving release. Hosted evidence, machine-readable schema assets, private vulnerability reporting, and signing/SBOM/provenance decisions remain open.
+- TASK-0092 conditionally freezes local contracts without selecting a version or approving release. Hosted evidence, private vulnerability reporting, and signing/SBOM/provenance decisions remain open.
+- TASK-0093 adds versioned machine-readable schemas and sanitized golden contract assets, validates all 13 JSON-capable commands, and closes the local asset portion of V100-04 while final candidate acceptance remains open.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

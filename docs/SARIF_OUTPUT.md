@@ -6,6 +6,8 @@ Availability note: the published NuGet package `AgentContextKit` `0.2.0-alpha.1`
 
 TASK-0092 conditionally freezes SARIF `2.1.0`, repository-relative locations, visible findings, and the no-raw-match privacy boundary for release-candidate preparation.
 
+The local machine-readable profile is `docs/schemas/ackit-sarif-profile-v1.schema.json`, with a sanitized golden fixture at `tests/fixtures/contracts/sarif-profile-v1-golden.json`. The profile adds AgentContextKit tool/privacy requirements and does not replace the official complete SARIF schema.
+
 ## What SARIF Is
 SARIF is a standard JSON format for static analysis results. Security platforms and CI systems can read it to show findings with rules, severity levels, messages, and file locations.
 

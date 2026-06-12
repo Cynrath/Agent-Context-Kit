@@ -27,6 +27,7 @@
 - `docs/BASELINE_MODEL.md`: versioned baseline identity, explicit local workflow, deterministic fingerprints, error codes, CI policy, and privacy boundary.
 - `docs/SUPPRESSION_AUDIT.md`: sanitized local audit output for configured non-Critical suppressions.
 - `docs/JSON_OUTPUT.md`: JSON output and exit codes.
+- `docs/schemas/README.md`: machine-readable command JSON, baseline, and SARIF profile schema catalog plus validation command.
 - `docs/EXIT_CODES.md`: CLI exit code matrix.
 - `docs/SARIF_OUTPUT.md`: SARIF 2.1.0 scanner output for local CI and future GitHub Code Scanning workflows.
 - `docs/HTML_REPORTS.md`: offline static HTML report generation.
@@ -87,6 +88,7 @@
 - `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`: conditional local CLI/config/JSON/baseline/SARIF/upgrade contract freeze.
 - `docs/MAINTAINER_RC_DECISION.md`: release-candidate GO/NO-GO inputs, conditions, and remote-write boundary.
 - `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
+- `scripts/check-json-contract-assets.ps1`: parses schema/golden assets and runs live-output contract tests.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

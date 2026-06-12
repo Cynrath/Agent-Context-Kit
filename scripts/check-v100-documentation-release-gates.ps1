@@ -85,6 +85,8 @@ $criticalDocs = @(
     "docs\V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md",
     "docs\V100_READINESS.md",
     "docs\V100_GAP_ANALYSIS.md",
+    "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "docs\MAINTAINER_RC_DECISION.md",
     "docs\RELEASE_VALIDATION.md",
     "docs\RELEASE_BLOCKERS.md",
     "docs\PUBLIC_RELEASE_AUDIT.md",
@@ -109,6 +111,7 @@ $gateScripts = @(
     "scripts\check-v050-readiness.ps1",
     "scripts\check-v100-documentation-release-gates.ps1",
     "scripts\check-v100-readiness.ps1",
+    "scripts\check-json-contract-assets.ps1",
     "scripts\check-package-metadata.ps1",
     "scripts\audit-public-release.ps1",
     "scripts\check-release-blockers.ps1",
@@ -151,7 +154,9 @@ $releaseValidationDocs = @(
     "NUGET_METADATA.md",
     "PUBLIC_RELEASE_AUDIT.md",
     "PUBLIC_RELEASE_GATES.md",
-    "MAINTAINER_RELEASE_HANDOFF.md"
+    "MAINTAINER_RELEASE_HANDOFF.md",
+    "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
+    "MAINTAINER_RC_DECISION.md"
 )
 
 foreach ($doc in $releaseValidationDocs) {

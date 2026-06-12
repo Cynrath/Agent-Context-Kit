@@ -55,10 +55,18 @@ $requiredPaths = @(
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "Release-candidate evidence matrix" },
     @{ Path = "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"; Description = "Release-candidate contract freeze" },
     @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "Maintainer release-candidate decision" },
+    @{ Path = "docs\schemas\ackit-command-output-v2.schema.json"; Description = "Command output schema" },
+    @{ Path = "docs\schemas\ackit-baseline-v1.schema.json"; Description = "Baseline machine-readable schema" },
+    @{ Path = "docs\schemas\ackit-sarif-profile-v1.schema.json"; Description = "SARIF machine-readable profile" },
+    @{ Path = "tests\fixtures\contracts\command-output-v2-golden.json"; Description = "Command output golden fixture" },
+    @{ Path = "tests\fixtures\contracts\baseline-v1-golden.json"; Description = "Baseline golden fixture" },
+    @{ Path = "tests\fixtures\contracts\sarif-profile-v1-golden.json"; Description = "SARIF golden fixture" },
     @{ Path = "tests\fixtures\upgrade\v0.2.0-alpha.1-config.yml"; Description = "Published config fixture" },
     @{ Path = "tests\fixtures\upgrade\baseline-schema-v1.json"; Description = "Baseline schema fixture" },
     @{ Path = "tests\AgentContextKit.Tests\ReleaseCandidateEvidenceTests.cs"; Description = "Compatibility tests" },
-    @{ Path = "scripts\measure-scan-performance.ps1"; Description = "Synthetic scan benchmark" }
+    @{ Path = "tests\AgentContextKit.Tests\JsonContractAssetTests.cs"; Description = "Machine-readable contract asset tests" },
+    @{ Path = "scripts\measure-scan-performance.ps1"; Description = "Synthetic scan benchmark" },
+    @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "Machine-readable contract asset gate" }
 )
 
 foreach ($entry in $requiredPaths) {
@@ -100,6 +108,14 @@ try {
     }
     else {
         Add-Warning "Synthetic scan benchmark was skipped."
+    }
+
+    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-json-contract-assets.ps1") -FailOnIssues
+    if ($LASTEXITCODE -eq 0) {
+        Add-Note "Machine-readable contract asset gate passed."
+    }
+    else {
+        Add-Issue "Machine-readable contract asset gate failed."
     }
 
     if (Get-Command git -ErrorAction SilentlyContinue) {

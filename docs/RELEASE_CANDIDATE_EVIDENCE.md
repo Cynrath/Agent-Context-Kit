@@ -8,7 +8,7 @@ Local evidence preparation includes TASK-0084 through TASK-0092 baseline/config 
 | --- | --- | --- | --- |
 | Baseline policy | schema/fingerprint fixtures, explicit update, integrity checks, new/existing CI tests, JSON/SARIF/report/Web UI parity, manual three-OS workflow design | Ready locally | successful hosted workflow run |
 | Config compatibility | published `0.2.0-alpha.1` config fixture plus read-only `config-check` human/JSON/exit/privacy contract tests | Ready locally | hosted predecessor-config smoke and RC sign-off |
-| CLI/JSON/SARIF | contract tests, additive schema rules, exit-code parity, conditional local freeze | Ready locally | maintainer sign-off and machine-readable schema decision |
+| CLI/JSON/SARIF | contract tests, additive schema rules, exit-code parity, conditional local freeze, machine-readable schemas/golden fixtures | Ready locally | final candidate maintainer sign-off |
 | Performance | disposable 2,000-file benchmark with 30-second tripwire plus manual three-OS workflow design | Initial local evidence | successful hosted run, memory, cancellation, mixed corpus |
 | Security response | policy, Critical regression tests, privacy boundaries, clean dated dependency review | Partial | private GitHub reporting channel |
 | Runtime support | .NET 10, three-OS workflow policy, and manual RC workflow | Documented | fresh hosted RC run and final support window |
@@ -23,6 +23,7 @@ dotnet test AgentContextKit.sln -c Release --no-build
 powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 ```
 
 ## Dated Local Result

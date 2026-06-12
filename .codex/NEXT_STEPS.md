@@ -7,7 +7,7 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 3. Read-only GitHub CLI validation confirmed latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs on `master` succeeded for commit `e0a0fa9`.
 4. GitHub Release `v0.2.0-alpha.1` exists as a pre-release; its body has candidate-era wording, so `docs/RELEASE_BODY_V020_ALPHA1.md` is the maintainer-ready replacement draft.
 5. Published NuGet `0.2.0-alpha.1` includes `ackit sarif`.
-6. TASK-0066 through TASK-0091 are committed locally. TASK-0092 passed full local validation and is ready to commit; `docs/MAINTAINER_RC_DECISION.md` keeps RC publication at NO-GO.
+6. TASK-0066 through TASK-0092 are committed locally. `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md` keep RC publication at NO-GO.
 7. `docs/V100_GAP_ANALYSIS.md` is the source of truth for 1.0 readiness; historical v1.0 scripts validate asset presence, not GA completion.
 8. Remote writes remain maintainer-only: push, tag, GitHub Release edits, label creation, repo settings, branch protection, Code Scanning upload, issue creation, and NuGet publish.
 9. Generated `.ackit/`, SARIF, local reports, Web UI, packages, archives, `bin/`, `obj/`, `TestResults`, and coverage artifacts must not be committed.
@@ -16,4 +16,5 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 12. TASK-0090 adds a manual-only three-OS RC workflow. Static/local Windows smoke passed; hosted syntax/result evidence requires maintainer push and manual dispatch.
 13. `check-public-release-gates.ps1 -FailOnIssues` must be rerun after commit because it correctly fails on dirty working trees before commit.
 14. Local branch is ahead of origin; do not push from the agent session. Report `local ahead, maintainer push required`.
-15. Commit TASK-0092, rerun the public gate, then continue with TASK-0093 machine-readable JSON schema and golden contract assets.
+15. TASK-0093 is complete locally: machine-readable assets are indexed in `docs/schemas/README.md`; focused scanner/contract tests pass 5/5 and the full suite passes 173/173.
+16. Continue with TASK-0094 English/Turkish localization parity release gate. Do not change human-language output without preserving JSON invariance.

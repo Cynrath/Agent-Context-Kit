@@ -113,6 +113,10 @@ $requiredPaths = @(
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "release-candidate evidence" },
     @{ Path = "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"; Description = "release-candidate contract freeze" },
     @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "maintainer release-candidate decision" },
+    @{ Path = "docs\schemas\README.md"; Description = "machine-readable contract schema catalog" },
+    @{ Path = "docs\schemas\ackit-command-output-v2.schema.json"; Description = "command output schema" },
+    @{ Path = "docs\schemas\ackit-baseline-v1.schema.json"; Description = "baseline schema asset" },
+    @{ Path = "docs\schemas\ackit-sarif-profile-v1.schema.json"; Description = "SARIF profile schema" },
     @{ Path = "docs\RC_HOSTED_EVIDENCE.md"; Description = "hosted release-candidate evidence guide" },
     @{ Path = "docs\RELEASE_VALIDATION.md"; Description = "Release validation docs" },
     @{ Path = "docs\DOCUMENTATION_INDEX.md"; Description = "Documentation index" },
@@ -132,6 +136,7 @@ $requiredPaths = @(
     @{ Path = "scripts\check-v100-readiness.ps1"; Description = "v1.0 final readiness check script" },
     @{ Path = "scripts\check-release-candidate-evidence.ps1"; Description = "release-candidate evidence check script" },
     @{ Path = "scripts\check-release-candidate-workflow.ps1"; Description = "release-candidate workflow check script" },
+    @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "machine-readable contract asset check script" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "scan performance measurement script" },
     @{ Path = ".github\workflows\release-candidate-evidence.yml"; Description = "manual hosted release-candidate workflow" },
     @{ Path = "scripts\check-v050-readiness.ps1"; Description = "v0.5 readiness check script" },
@@ -174,10 +179,12 @@ $releaseValidationNeedles = @(
     "V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md",
     "scripts/check-release-candidate-evidence.ps1",
     "scripts/check-release-candidate-workflow.ps1",
+    "scripts/check-json-contract-assets.ps1",
     "scripts/measure-scan-performance.ps1",
     "RELEASE_CANDIDATE_EVIDENCE.md",
     "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "MAINTAINER_RC_DECISION.md",
+    "docs/schemas/README.md",
     "RC_HOSTED_EVIDENCE.md"
 )
 
@@ -200,6 +207,7 @@ $documentationIndexNeedles = @(
     "RELEASE_CANDIDATE_EVIDENCE.md",
     "RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "MAINTAINER_RC_DECISION.md",
+    "docs/schemas/README.md",
     "RC_HOSTED_EVIDENCE.md"
 )
 
@@ -267,6 +275,8 @@ $projectMapNeedles = @(
     "docs/V100_READINESS.md",
     "docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md",
     "docs/MAINTAINER_RC_DECISION.md",
+    "docs/schemas/README.md",
+    "scripts/check-json-contract-assets.ps1",
     "docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md",
     "scripts/check-v100-readiness.ps1"
 )

@@ -3,7 +3,7 @@
 ## Current Decision
 **NO-GO for release-candidate publication.**
 
-The local contract freeze is prepared and validated, but hosted evidence, remote security settings, machine-readable schema assets, supply-chain publication decisions, and final version/release approval remain incomplete.
+The local contract freeze and machine-readable schema assets are prepared and validated, but hosted evidence, remote security settings, supply-chain publication decisions, and final version/release approval remain incomplete.
 
 ## Decision Inputs
 | Area | Current State | Required For GO | Owner / Action |
@@ -12,7 +12,7 @@ The local contract freeze is prepared and validated, but hosted evidence, remote
 | Local tests and gates | Complete locally: 169/169 tests and clean gates | Rerun on final candidate commit | Local/CI validation |
 | Hosted RC workflow | Workflow designed; hosted result pending | Green Windows, Ubuntu, and macOS manual run for final candidate commit | Maintainer push/dispatch |
 | Upgrade/config evidence | Local fixtures pass | Hosted predecessor install, config hash, `config-check`, baseline, SARIF, and final scan pass | Hosted workflow |
-| JSON/SARIF contract | Normative docs/tests exist | Add/approve machine-readable schema or equivalent golden contract assets | Local task + maintainer review |
+| JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
 | Security reporting | Local policy exists | Enable and verify private vulnerability reporting | Maintainer GitHub settings |
 | Dependency review | Clean on 2026-06-12 | Rerun on final candidate date | Maintainer/release validation |
 | Signing/SBOM/provenance | Decision pending | Record explicit use/defer decisions and publication locations | Maintainer supply-chain decision |

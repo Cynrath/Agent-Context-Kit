@@ -12,9 +12,9 @@ Current source/package metadata remains `0.2.0-alpha.1` until a dedicated releas
 | CLI command and option surface | Current command list, including `config-check`, `baseline`, and baseline-aware output options | `docs/CLI_CONTRACT.md`, `docs/CLI_REFERENCE.md` |
 | Exit codes | General codes `0`, `1`, and `2` plus command-specific meanings | `docs/EXIT_CODES.md` |
 | Config format | Config schema `1`; read-only diagnostics; no automatic migration | `docs/CONFIGURATION.md`, `docs/CONFIGURATION_DIAGNOSTICS.md` |
-| JSON output | JSON schema `2`; common envelope fields and additive-field policy | `docs/JSON_OUTPUT.md` |
-| Baseline | Baseline schema `1`; `sha256-rule-path-location-occurrence-v1` | `docs/BASELINE_MODEL.md`, `docs/UPGRADE_COMPATIBILITY.md` |
-| SARIF | SARIF `2.1.0`; repository-relative paths; no raw scanner match values | `docs/SARIF_OUTPUT.md` |
+| JSON output | JSON schema `2`; common envelope, command requirements, additive-field policy, machine-readable schema/golden catalog | `docs/JSON_OUTPUT.md`, `docs/schemas/ackit-command-output-v2.schema.json` |
+| Baseline | Baseline schema `1`; `sha256-rule-path-location-occurrence-v1`; machine-readable schema/golden fixture | `docs/BASELINE_MODEL.md`, `docs/schemas/ackit-baseline-v1.schema.json` |
+| SARIF | SARIF `2.1.0`; repository-relative paths; no raw scanner match values; local machine-readable profile | `docs/SARIF_OUTPUT.md`, `docs/schemas/ackit-sarif-profile-v1.schema.json` |
 | Scanner rules | Stable `ACKIT` rule IDs and Critical suppression boundary | `docs/SCANNER_RULES.md`, `docs/SECURITY_MODEL.md` |
 | Generated files | Repository-relative paths; skip existing files by default; local `.ackit/` artifacts ignored | `docs/CONFIG_GENERATED_CONVENTIONS.md` |
 | Upgrade predecessor | Published `AgentContextKit` `0.2.0-alpha.1` | `docs/UPGRADE_COMPATIBILITY.md` |
@@ -44,7 +44,6 @@ Any breaking change after this freeze requires a new task that reopens the contr
 ## Evidence Not Yet Complete
 - Green hosted `release-candidate-evidence` runs on Windows, Ubuntu, and macOS for the reviewed commit.
 - Final invalid-invocation and English/Turkish parity review for the selected candidate.
-- Published machine-readable JSON schema/golden contract assets beyond the current normative documentation and tests.
 - Enabled and verified private GitHub vulnerability reporting.
 - Maintainer decisions for signing, SBOM, provenance, and package recovery publication.
 - Candidate version selection, package diff review, tag, GitHub pre-release, NuGet publication, and post-publish smoke.

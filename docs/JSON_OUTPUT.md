@@ -31,6 +31,8 @@ JSON responses include:
 
 `schemaVersion` describes the JSON output shape, not the repository config format. TASK-0092 conditionally freezes schema `2` for release-candidate preparation; a breaking change requires reopening the freeze, incrementing the schema, and adding migration notes.
 
+The machine-readable Draft 2020-12 contract is `docs/schemas/ackit-command-output-v2.schema.json`. It defines the common envelope and command-specific required top-level fields for all JSON-capable commands while allowing additive properties. Sanitized golden examples live in `tests/fixtures/contracts/command-output-v2-golden.json`.
+
 ## Stability Rules
 - Every successful JSON command includes `schemaVersion`, `toolVersion`, `generatedAtUtc`, and `command`.
 - Existing fields should not be removed or renamed within schema version `2`.

@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Cynrath/agent-context-kit/blob/master/docs/schemas/ackit-command-output-v2.schema.json",
+  "title": "AgentContextKit command output schema v2",
+  "description": "Normative top-level contract for JSON-capable ackit commands. Additional properties are allowed for backward-compatible additive evolution.",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "toolVersion",
+    "generatedAtUtc",
+    "command"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 2 },
+    "toolVersion": { "type": "string", "minLength": 1 },
+    "generatedAtUtc": { "type": "string", "format": "date-time" },
+    "command": {
+      "type": "string",
+      "enum": [
+        "init",
+        "config-check",
+        "scan",
+        "baseline",
+        "sarif",
+        "report",
+        "webui",
+        "prompt-pack",
+        "context-export",
+        "generate",
+        "task",
+        "redact-check",
+        "doctor"
+      ]
+    },
+    "repositoryPath": { "type": "string" },
+    "repositoryName": { "type": "string", "minLength": 1 },
+    "ciMode": { "type": "boolean" },
+    "exitCode": { "type": "integer", "enum": [0, 1, 2] },
+    "fileCount": { "type": "integer", "minimum": 0 },
+    "target": { "type": "string" },
+    "profile": { "type": "string" },
+    "criticalHighCount": { "type": "integer", "minimum": 0 },
+    "config": { "type": "object", "additionalProperties": true },
+    "agentInstructionFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "exists"],
+        "properties": {
+          "path": { "type": "string" },
+          "exists": { "type": "boolean" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "diagnosticSummary": { "$ref": "#/$defs/diagnosticSummary" },
+    "diagnostics": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/configDiagnostic" }
+    },
+    "stacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "signal"],
+        "properties": {
+          "name": { "type": "string" },
+          "signal": { "type": "string" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "health": { "type": "object", "additionalProperties": true },
+    "riskSummary": { "$ref": "#/$defs/riskSummary" },
+    "findings": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/finding" }
+    },
+    "suppressionSummary": { "type": "object", "additionalProperties": true },
+    "suppressions": { "type": "array", "items": { "type": "object" } },
+    "baseline": { "type": "object", "additionalProperties": true },
+    "sarif": { "$ref": "#/$defs/generatedFile" },
+    "report": { "$ref": "#/$defs/generatedFile" },
+    "webUi": { "$ref": "#/$defs/generatedFile" },
+    "promptPack": { "$ref": "#/$defs/generatedFile" },
+    "contextExport": { "$ref": "#/$defs/generatedFile" },
+    "file": { "$ref": "#/$defs/generatedFile" },
+    "fileSummary": { "$ref": "#/$defs/fileSummary" },
+    "files": { "type": "array", "items": { "$ref": "#/$defs/generatedFile" } },
+    "checkSummary": { "$ref": "#/$defs/checkSummary" },
+    "checks": { "type": "array", "items": { "$ref": "#/$defs/check" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "command": { "const": "init" } }, "required": ["command"] },
+      "then": { "required": ["config", "agentInstructionFiles"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "config-check" } }, "required": ["command"] },
+      "then": { "required": ["repositoryName", "exitCode", "config", "diagnosticSummary", "diagnostics"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "scan" } }, "required": ["command"] },
+      "then": { "required": ["ciMode", "exitCode", "repositoryPath", "repositoryName", "fileCount", "stacks", "health", "riskSummary", "findings", "suppressionSummary", "suppressions"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "baseline" } }, "required": ["command"] },
+      "then": { "required": ["repositoryName", "baseline"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "sarif" } }, "required": ["command"] },
+      "then": { "required": ["repositoryName", "riskSummary", "criticalHighCount", "sarif"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "report" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "riskSummary", "report"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "webui" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "riskSummary", "webUi"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "prompt-pack" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "riskSummary", "promptPack"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "context-export" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "riskSummary", "contextExport"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "generate" } }, "required": ["command"] },
+      "then": { "required": ["target", "fileSummary", "files"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "task" } }, "required": ["command"] },
+      "then": { "required": ["file"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "redact-check" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "profile", "exitCode", "riskSummary", "findings"] }
+    },
+    {
+      "if": { "properties": { "command": { "const": "doctor" } }, "required": ["command"] },
+      "then": { "required": ["repositoryPath", "repositoryName", "exitCode", "checkSummary", "checks"] }
+    }
+  ],
+  "$defs": {
+    "generatedFile": {
+      "type": "object",
+      "required": ["path", "status", "created", "message"],
+      "properties": {
+        "path": { "type": "string" },
+        "status": { "type": "string" },
+        "created": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "riskSummary": {
+      "type": "object",
+      "required": ["total", "critical", "high", "medium", "low", "info"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "critical": { "type": "integer", "minimum": 0 },
+        "high": { "type": "integer", "minimum": 0 },
+        "medium": { "type": "integer", "minimum": 0 },
+        "low": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "finding": {
+      "type": "object",
+      "required": ["ruleId", "severity", "category", "path", "message", "match"],
+      "properties": {
+        "ruleId": { "type": "string", "pattern": "^ACKIT[0-9]{3}$" },
+        "severity": { "type": "string" },
+        "category": { "type": "string" },
+        "path": { "type": "string" },
+        "message": { "type": "string" },
+        "match": { "type": ["string", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "diagnosticSummary": {
+      "type": "object",
+      "required": ["total", "info", "warnings", "errors"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "info": { "type": "integer", "minimum": 0 },
+        "warnings": { "type": "integer", "minimum": 0 },
+        "errors": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "configDiagnostic": {
+      "type": "object",
+      "required": ["code", "severity", "line", "key", "message"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^ACKITCFG[0-9]{3}$" },
+        "severity": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 },
+        "key": { "type": ["string", "null"] },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "fileSummary": {
+      "type": "object",
+      "required": ["total", "created", "skipped"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "created": { "type": "integer", "minimum": 0 },
+        "skipped": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "checkSummary": {
+      "type": "object",
+      "required": ["total", "passed", "failed", "failedHighOrCritical"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "passed": { "type": "integer", "minimum": 0 },
+        "failed": { "type": "integer", "minimum": 0 },
+        "failedHighOrCritical": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "check": {
+      "type": "object",
+      "required": ["name", "severity", "passed", "message"],
+      "properties": {
+        "name": { "type": "string" },
+        "severity": { "type": "string" },
+        "passed": { "type": "boolean" },
+        "message": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

@@ -70,6 +70,10 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/HTML_REPORTS.md`
 - `docs/ISSUE_TRIAGE.md`
 - `docs/JSON_OUTPUT.md`
+- `docs/schemas/README.md`
+- `docs/schemas/ackit-command-output-v2.schema.json`
+- `docs/schemas/ackit-baseline-v1.schema.json`
+- `docs/schemas/ackit-sarif-profile-v1.schema.json`
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`
 - `docs/LOCALIZATION.md`
 - `docs/MAINTAINER_GUIDE.md`
@@ -215,6 +219,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-candidate-evidence.ps1`
 - `scripts/check-release-candidate-workflow.ps1`
+- `scripts/check-json-contract-assets.ps1`
 - `scripts/check-release-blockers.ps1`
 - `scripts/check-v020-readiness.ps1`
 - `scripts/check-v030-readiness.ps1`
@@ -248,6 +253,9 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `tests/AgentContextKit.Tests/ConfigurationValidationTests.cs`
 - `tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml`
 - `tests/fixtures/upgrade/baseline-schema-v1.json`
+- `tests/fixtures/contracts/command-output-v2-golden.json`
+- `tests/fixtures/contracts/baseline-v1-golden.json`
+- `tests/fixtures/contracts/sarif-profile-v1-golden.json`
 
 ## v1.0 Tracking
 - Release-candidate local evidence and decision package: `docs/RELEASE_CANDIDATE_EVIDENCE.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, `docs/MAINTAINER_RC_DECISION.md`, upgrade fixtures, disposable performance benchmark, security/support/supply-chain policies, and `scripts/check-release-candidate-evidence.ps1`.

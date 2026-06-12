@@ -574,7 +574,7 @@ public sealed class RiskScannerTests
 
         var findings = scanner.ScanText(
             "docs/platforms.md",
-            "Use Microsoft.NET with api.nuget.org, github.com, nuget.org, and learn.microsoft.com.",
+            "Use Microsoft.NET with api.nuget.org, github.com, nuget.org, learn.microsoft.com, and json-schema.org.",
             AckitConfig.Default);
 
         Assert.DoesNotContain(findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
