@@ -2,6 +2,8 @@
 
 This plan turns the v1.0 roadmap into local, reviewable work. It does not approve public release, remote publishing, live LLM provider use, repository upload, or NuGet publish.
 
+Status note: TASK-0035 through TASK-0039 created an early asset/readiness foundation, not a completed 1.0 stabilization program. Current blocking gaps are maintained in `docs/V100_GAP_ANALYSIS.md`.
+
 ## Current Boundary
 AgentContextKit is locally validated through v0.5:
 - Offline repository scanning and risk reporting.
@@ -11,11 +13,10 @@ AgentContextKit is locally validated through v0.5:
 - Local dry-run prompt packs and context export approval manifests.
 - v0.2, v0.3, v0.4, and v0.5 readiness scripts.
 
-Public release is still blocked by maintainer-only decisions:
-- Keep the selected public repository URL at `https://github.com/Cynrath/agent-context-kit`.
-- Keep the pushed `master` and `v0.1.0-alpha.1` release state at `aee808244bf33d00808e7e70db6235132c2d3829`.
-- Create the GitHub Release page.
-- Publish NuGet only after maintainer approval.
+Current public state:
+- Repository URL is `https://github.com/Cynrath/agent-context-kit`.
+- Current published GitHub/NuGet pre-release is `v0.2.0-alpha.1`.
+- Future release writes remain maintainer-only.
 
 ## Stabilization Themes
 

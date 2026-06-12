@@ -1,8 +1,10 @@
-# v1.0 Final Local Readiness
+# Historical v1.0 Asset Readiness
 
-This page consolidates v1.0 local readiness. It confirms that the local docs, tasks, release gates, CLI contract, config conventions, and validation scripts are present and linked. It does not approve public release.
+This page records an early local milestone that assembled v1.0-target contract, convention, documentation, and release-gate assets. It confirms that those assets are present and linked. It does not prove 1.0 product readiness or approve a release.
 
-## Local Readiness Scope
+Actual 1.0 gaps and blocking evidence are tracked in `docs/V100_GAP_ANALYSIS.md`. The current published release is `v0.2.0-alpha.1`.
+
+## Historical Local Readiness Scope
 The v1.0 local readiness review covers:
 - TASK-0035 stabilization planning.
 - TASK-0036 stable CLI contract review.
@@ -25,23 +27,31 @@ Run it as a failing local gate for missing local readiness assets:
 powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues
 ```
 
-Public release blockers are reported separately. They do not cause `-FailOnIssues` to fail because they require maintainer-only decisions.
+`-FailOnIssues` validates historical readiness assets and the presence of the current gap analysis. It does not fail merely because planned 1.0 product gaps remain open.
 
-## Published Public Release State
-The local v1.0 readiness gate reports release state separately from local readiness:
+## Current Published State
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
-- `master` and `v0.1.0-alpha.1` are pushed at `aee808244bf33d00808e7e70db6235132c2d3829`.
-- GitHub Release page for `v0.1.0-alpha.1` is completed.
-- NuGet package `AgentContextKit` version `0.1.0-alpha.1` is published.
+- GitHub Release `v0.2.0-alpha.1` is published as a pre-release.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
 - NuGet global tool install verification is completed.
-- Codex for OSS application pack is ready.
+- `ackit sarif` is included in the published package.
 
 Current release follow-ups are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBLIC_RELEASE_AUDIT.md`, `docs/PUBLIC_RELEASE_GATES.md`, and `docs/MAINTAINER_RELEASE_HANDOFF.md`.
 
+## What This Gate Proves
+- Required historical task/docs/script assets exist.
+- Package URLs and the current local release tag are available.
+- The maintained 1.0 gap analysis is linked.
+
+It does not prove API/CLI stability, migration safety, performance, security response readiness, support lifetime, or release supply-chain completeness.
+
+## Actual 1.0 Readiness
+`docs/V100_GAP_ANALYSIS.md` is the source of truth. A 1.0 release candidate requires zero open P0 gaps and an explicit disposition for every P1 gap.
+
 ## Required Validation
-Run these local checks before treating v1.0 local readiness as complete:
+Run these checks when reviewing the historical assets and current gap register:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues

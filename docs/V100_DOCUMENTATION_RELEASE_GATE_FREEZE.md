@@ -2,6 +2,8 @@
 
 This page records the v1.0 target documentation and release gate freeze. It validates local readiness documentation only; it does not approve public release.
 
+This is a historical asset freeze, not evidence that 1.0 GA criteria are complete. See `docs/V100_GAP_ANALYSIS.md` for current blockers.
+
 ## Freeze Scope
 The v1.0 documentation freeze covers:
 - CLI contract and command reference.
@@ -28,6 +30,7 @@ docs/V050_READINESS.md
 docs/V100_STABILIZATION_PLAN.md
 docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md
 docs/V100_READINESS.md
+docs/V100_GAP_ANALYSIS.md
 docs/RELEASE_VALIDATION.md
 docs/RELEASE_BLOCKERS.md
 docs/PUBLIC_RELEASE_AUDIT.md
@@ -59,11 +62,7 @@ scripts/verify-release.ps1
 ```
 
 ## Public Release Blockers
-GitHub source publication, GitHub Release creation, NuGet publication, and NuGet global tool install verification for `v0.1.0-alpha.1` are complete. Remaining maintainer follow-up:
-- Keep package URLs at `https://github.com/Cynrath/agent-context-kit`.
-- Keep `master` and `v0.1.0-alpha.1` associated with `aee808244bf33d00808e7e70db6235132c2d3829`.
-- Submit or save the Codex for OSS form using `docs/CODEX_FOR_OSS_APPLICATION.md`.
-- Continue future roadmap planning from `docs/ROADMAP.md`.
+GitHub source publication, GitHub Release creation, NuGet publication, and global install verification for `v0.2.0-alpha.1` are complete. There are no active blockers for that already-published pre-release. Future package releases and 1.0 GA remain separate maintainer decisions after local product gaps close.
 
 Failing public gates should pass locally when package metadata is final, tracked artifact checks are clean, and the release tag exists locally. Remote tag verification, GitHub Release status, and NuGet package availability remain external checks.
 

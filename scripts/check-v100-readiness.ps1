@@ -90,7 +90,7 @@ function Require-Text {
     }
 }
 
-Write-Host "AgentContextKit v1.0 final local readiness review"
+Write-Host "AgentContextKit historical v1.0 asset readiness review"
 Write-Host "Repository: $repoRoot"
 
 $requiredPaths = @(
@@ -104,6 +104,7 @@ $requiredPaths = @(
     @{ Path = "docs\CONFIG_GENERATED_CONVENTIONS.md"; Description = "Config/generated conventions" },
     @{ Path = "docs\V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md"; Description = "v1.0 documentation/release gate freeze" },
     @{ Path = "docs\V100_READINESS.md"; Description = "v1.0 final readiness docs" },
+    @{ Path = "docs\V100_GAP_ANALYSIS.md"; Description = "current v1.0 gap analysis" },
     @{ Path = "docs\RELEASE_VALIDATION.md"; Description = "Release validation docs" },
     @{ Path = "docs\DOCUMENTATION_INDEX.md"; Description = "Documentation index" },
     @{ Path = "docs\ROADMAP.md"; Description = "Roadmap" },
@@ -135,6 +136,7 @@ $roadmap = Get-FileText "docs\ROADMAP.md"
 $projectMap = Get-FileText "docs\PROJECT_MAP.md"
 $changelog = Get-FileText "CHANGELOG.md"
 $readinessDoc = Get-FileText "docs\V100_READINESS.md"
+$gapAnalysis = Get-FileText "docs\V100_GAP_ANALYSIS.md"
 $freezeDoc = Get-FileText "docs\V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md"
 $freezeScript = Get-FileText "scripts\check-v100-documentation-release-gates.ps1"
 $contextPack = Get-FileText ".codex\CONTEXT_PACK.md"
@@ -162,6 +164,7 @@ $documentationIndexNeedles = @(
     "V100_STABILIZATION_PLAN.md",
     "V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md",
     "V100_READINESS.md",
+    "V100_GAP_ANALYSIS.md",
     "RELEASE_VALIDATION.md",
     "MAINTAINER_RELEASE_HANDOFF.md"
 )
@@ -171,9 +174,11 @@ foreach ($needle in $documentationIndexNeedles) {
 }
 
 $readinessDocNeedles = @(
-    "Local Readiness Scope",
+    "Historical Local Readiness Scope",
     "Usage",
-    "Expected Public Release Blockers",
+    "Current Published State",
+    "What This Gate Proves",
+    "Actual 1.0 Readiness",
     "Required Validation",
     "Maintainer-Only Boundary",
     "does not"
@@ -181,6 +186,20 @@ $readinessDocNeedles = @(
 
 foreach ($needle in $readinessDocNeedles) {
     Require-Text -Content $readinessDoc -Needle $needle -Description "Readiness doc section $needle"
+}
+
+$gapAnalysisNeedles = @(
+    "Verdict",
+    "Priority Definitions",
+    "Gap Register",
+    "V100-01",
+    "Required Sequence",
+    "Readiness Gates",
+    "Status Maintenance"
+)
+
+foreach ($needle in $gapAnalysisNeedles) {
+    Require-Text -Content $gapAnalysis -Needle $needle -Description "Gap analysis section $needle"
 }
 
 Require-Text -Content $roadmap -Needle "Final local readiness consolidation" -Description "Roadmap final local readiness note"
@@ -217,8 +236,8 @@ foreach ($needle in $freezeScriptNeedles) {
 }
 
 $codexNeedles = @(
-    "scripts/check-v100-readiness.ps1",
-    "TASK-0039"
+    "V100_GAP_ANALYSIS.md",
+    "TASK-0083"
 )
 
 foreach ($needle in $codexNeedles) {
@@ -247,9 +266,9 @@ else {
 if (Get-Command git -ErrorAction SilentlyContinue) {
     Push-Location $repoRoot
     try {
-        $releaseTagCommit = git rev-parse "v0.1.0-alpha.1^{commit}" 2>$null
+        $releaseTagCommit = git rev-parse "v0.2.0-alpha.1^{commit}" 2>$null
         if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($releaseTagCommit)) {
-            Add-PublicBlocker "Release tag v0.1.0-alpha.1 was not found locally."
+            Add-PublicBlocker "Current release tag v0.2.0-alpha.1 was not found locally."
         }
 
         $status = git status --short 2>$null
@@ -267,10 +286,10 @@ else {
 
 Write-Host ""
 if ($issues.Count -eq 0) {
-    Write-Host "No v1.0 final local readiness asset issues detected."
+    Write-Host "No historical v1.0 asset or gap-analysis presence issues detected."
 }
 else {
-    Write-Host "v1.0 final local readiness asset issues:"
+    Write-Host "Historical v1.0 asset or gap-analysis presence issues:"
     foreach ($issue in $issues) {
         Write-Host "- $issue"
     }
@@ -305,7 +324,7 @@ Write-Host "This review is local-only. It does not push, publish, tag, redact, d
 
 if ($FailOnIssues -and $issues.Count -gt 0) {
     Write-Host ""
-    Write-Host "v1.0 final local readiness gate failed."
+    Write-Host "Historical v1.0 asset readiness gate failed."
     exit 1
 }
 

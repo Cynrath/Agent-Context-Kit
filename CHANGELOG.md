@@ -14,6 +14,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ### Changed
 - Polished README installed-tool and source command examples.
 - Froze a compatibility-preserving `v0.2.0-alpha.2` hardening scope without changing version metadata.
+- Reclassified historical v1.0 asset checks and added an explicit P0/P1/P2 1.0 readiness gap register.
 
 ### Fixed
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.

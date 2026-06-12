@@ -91,6 +91,7 @@
 - `docs/V100_STABILIZATION_PLAN.md`: v1.0 local stabilization plan.
 - `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`: v1.0 documentation and release gate freeze.
 - `docs/V100_READINESS.md`: v1.0 final local readiness review.
+- `docs/V100_GAP_ANALYSIS.md`: current 1.0 P0/P1/P2 gap register, owners, evidence, and release criteria.
 - `docs/MAINTAINER_RELEASE_HANDOFF.md`: maintainer-only public release handoff.
 - `docs/PUBLIC_RELEASE_AUDIT.md`: final public release audit workflow.
 - `docs/PUBLIC_RELEASE_GATES.md`: package metadata, audit, and blocker gate orchestration.

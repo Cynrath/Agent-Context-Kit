@@ -171,6 +171,9 @@ Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, ex
 - Complete documentation.
 - Reliable test suite.
 - Green CI.
+- TASK-0083 1.0 readiness gap analysis:
+  - Completed locally with explicit P0/P1/P2 gaps, owners, evidence requirements, blocking status, and remote-write boundaries.
+  - Current verdict remains not ready for 1.0 GA; `docs/V100_GAP_ANALYSIS.md` is the source of truth.
 
 ## Post-v1.0
 - Optional sample stack reporting that lists `samples/*` stacks separately from the main repository stack.

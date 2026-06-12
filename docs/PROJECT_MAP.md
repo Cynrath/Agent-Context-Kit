@@ -172,6 +172,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `docs/V100_STABILIZATION_PLAN.md`
 - `docs/V100_DOCUMENTATION_RELEASE_GATE_FREEZE.md`
 - `docs/V100_READINESS.md`
+- `docs/V100_GAP_ANALYSIS.md`
 - `docs/WEB_UI_PROTOTYPE.md`
 - `docs/WEB_UI_PREVIEW.md`
 - `docs/VISUAL_ASSETS.md`

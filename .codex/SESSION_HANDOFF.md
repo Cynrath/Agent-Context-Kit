@@ -450,6 +450,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0082 selected baseline-aware CI policy and configuration diagnostics as the next v0.3 product direction, separated that direction from the completed historical v0.3-labelled milestone, and documented sanitized baseline, compatibility, security, and sequencing boundaries.
 - TASK-0082 pre-commit validation passed: restore, Release build with 0 warnings/errors, 127/127 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, global tool checks, hygiene scans, CLI/config/v0.2/v1.0 gates, and release verification. The public gate failed only on the expected dirty working tree and must be rerun after commit.
 - TASK-0082 post-commit public release gate passed with no blocking items; continue with TASK-0083 1.0 readiness gap analysis.
+- TASK-0083 audited actual 1.0 readiness, classified P0/P1/P2 gaps with owners and evidence, and separated historical v1.0 asset checks from GA readiness.
+- `docs/V100_GAP_ANALYSIS.md` is now the current 1.0 source of truth; TASK-0084 is the next local product task.
+- TASK-0083 pre-commit validation passed with 127/127 tests and all source, sample, hygiene, contract, readiness, and release checks; the public gate failed only on the expected dirty working tree.
+- TASK-0083 post-commit public release gate passed with no blocking items; continue with TASK-0084.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.
