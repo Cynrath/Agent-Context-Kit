@@ -127,6 +127,7 @@ foreach ($entry in $requiredPaths) {
 $helpText = Get-CliHelp
 $helpLines = @(
     "ackit init [--lang en|tr] [--json]",
+    "ackit config-check [--lang en|tr] [--json]",
     "ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]",
     "ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]",
     "ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]",
@@ -155,6 +156,7 @@ $contract = Get-FileText "docs\CLI_CONTRACT.md"
 
 $allCommands = @(
     "ackit init",
+    "ackit config-check",
     "ackit scan",
     "ackit baseline",
     "ackit sarif",
@@ -177,6 +179,7 @@ foreach ($command in $allCommands) {
 
 $jsonCommands = @(
     "ackit init --json",
+    "ackit config-check --json",
     "ackit scan --json",
     "ackit baseline --json",
     "ackit sarif --json",
@@ -195,6 +198,7 @@ foreach ($command in $jsonCommands) {
 }
 
 $releaseValidationNeedles = @(
+    "dotnet run --project src/AgentContextKit.Cli -- config-check --json",
     "dotnet run --project src/AgentContextKit.Cli -- scan",
     "dotnet run --project src/AgentContextKit.Cli -- scan --ci",
     "dotnet run --project src/AgentContextKit.Cli -- report --json",
@@ -221,6 +225,7 @@ $exitCodeNeedles = @(
     "ackit help",
     "ackit version",
     "ackit init",
+    "ackit config-check",
     "ackit scan",
     "ackit scan --ci",
     "ackit baseline",

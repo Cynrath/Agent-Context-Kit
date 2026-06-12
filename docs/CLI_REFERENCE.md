@@ -34,6 +34,21 @@ Safe behavior:
 - Does not overwrite existing config.
 - Reports detected agent instruction files.
 
+### `ackit config-check`
+Validates `.ackit/config.yml` without changing it. This is a current-source command and is not included in the published `0.2.0-alpha.1` package.
+
+```powershell
+ackit config-check
+ackit config-check --json
+```
+
+Behavior:
+- Missing config uses the valid default state and returns `0`.
+- Warning-only diagnostics return `0` and remain visible.
+- Error diagnostics return `1`.
+- Obsolete keys require a reviewed manual migration; no auto-fix is performed.
+- Diagnostic output omits raw config values and full source lines.
+
 ### `ackit scan`
 Scans repository structure, stack signals, docs, CI, tests, agent files, and risk findings.
 

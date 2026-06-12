@@ -29,6 +29,7 @@ public static class Program
                 "help" or "--help" or "-h" => RunHelp(language, services.TextProvider),
                 "version" or "--version" => RunVersion(),
                 "init" => RunInit(repositoryPath, language, json, services),
+                "config-check" => RunConfigCheck(repositoryPath, language, json, services),
                 "scan" => RunScan(args, repositoryPath, config, language, json, ci, services),
                 "baseline" => RunBaseline(args, repositoryPath, config, language, json, services),
                 "sarif" => RunSarif(args, repositoryPath, config, language, json, services),
@@ -57,6 +58,7 @@ public static class Program
         Console.WriteLine();
         Console.WriteLine("Usage:");
         Console.WriteLine("  ackit init [--lang en|tr] [--json]");
+        Console.WriteLine("  ackit config-check [--lang en|tr] [--json]");
         Console.WriteLine("  ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]");
         Console.WriteLine("  ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]");
         Console.WriteLine("  ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]");
@@ -117,6 +119,134 @@ public static class Program
         }
 
         return ExitSuccess;
+    }
+
+    private static int RunConfigCheck(
+        string repositoryPath,
+        LanguageCode language,
+        bool json,
+        Services services)
+    {
+        const string relativePath = ".ackit/config.yml";
+        var fullPath = Path.Combine(repositoryPath, ".ackit", "config.yml");
+        var exists = services.FileSystem.FileExists(fullPath);
+        var result = exists
+            ? services.ConfigValidator.Validate(services.FileSystem.ReadAllText(fullPath))
+            : new ConfigValidationResult(Array.Empty<ConfigDiagnostic>());
+        var errorCount = result.Diagnostics.Count(diagnostic => diagnostic.Severity == ConfigDiagnosticSeverity.Error);
+        var warningCount = result.Diagnostics.Count(diagnostic => diagnostic.Severity == ConfigDiagnosticSeverity.Warning);
+        var infoCount = result.Diagnostics.Count(diagnostic => diagnostic.Severity == ConfigDiagnosticSeverity.Info);
+        var migrationRequired = result.Diagnostics.Any(diagnostic =>
+            diagnostic.Code is ConfigDiagnosticCodes.ObsoleteKey or ConfigDiagnosticCodes.InvalidSchemaVersion);
+        var status = !exists
+            ? "default"
+            : errorCount > 0
+                ? "errors"
+                : warningCount > 0
+                    ? "warnings"
+                    : "valid";
+        var exitCode = errorCount > 0 ? ExitError : ExitSuccess;
+
+        if (json)
+        {
+            WriteJson(new
+            {
+                schemaVersion = JsonSchemaVersion,
+                toolVersion = Version,
+                generatedAtUtc = services.Clock.UtcNow,
+                command = "config-check",
+                repositoryName = GetRepositoryName(repositoryPath),
+                exitCode,
+                config = new
+                {
+                    path = relativePath,
+                    exists,
+                    status,
+                    supportedSchemaVersion = AckitConfig.Default.SchemaVersion,
+                    migrationRequired
+                },
+                diagnosticSummary = new
+                {
+                    total = result.Diagnostics.Count,
+                    info = infoCount,
+                    warnings = warningCount,
+                    errors = errorCount
+                },
+                diagnostics = result.Diagnostics.Select(ToConfigDiagnosticDto).ToArray()
+            });
+            return exitCode;
+        }
+
+        var turkish = string.Equals(language.Value, LanguageCode.Turkish.Value, StringComparison.OrdinalIgnoreCase);
+        Console.WriteLine(turkish ? "Yapılandırma kontrolü" : "Configuration check");
+        Console.WriteLine($"- {(turkish ? "Yol" : "Path")}: {relativePath}");
+        Console.WriteLine($"- {(turkish ? "Durum" : "Status")}: {ToConfigStatusLabel(status, turkish)}");
+        Console.WriteLine(turkish
+            ? $"- Tanılar: {result.Diagnostics.Count} ({errorCount} hata, {warningCount} uyarı)"
+            : $"- Diagnostics: {result.Diagnostics.Count} ({errorCount} errors, {warningCount} warnings)");
+
+        if (!exists)
+        {
+            Console.WriteLine(turkish
+                ? "Yapılandırma dosyası yok; varsayılan ayarlar geçerli."
+                : "Configuration file is missing; defaults are valid.");
+            return exitCode;
+        }
+
+        if (result.Diagnostics.Count == 0)
+        {
+            Console.WriteLine(turkish ? "Yapılandırma tanısı yok." : "No configuration diagnostics.");
+            return exitCode;
+        }
+
+        foreach (var diagnostic in result.Diagnostics)
+        {
+            var key = diagnostic.Key is null
+                ? ""
+                : turkish
+                    ? $" anahtar {diagnostic.Key}"
+                    : $" key {diagnostic.Key}";
+            var severity = turkish ? ToTurkishConfigSeverity(diagnostic.Severity) : diagnostic.Severity.ToString();
+            var line = turkish ? "satır" : "line";
+            Console.WriteLine($"- {severity} {diagnostic.Code} {line} {diagnostic.Line}{key}: {diagnostic.Message}");
+        }
+
+        if (migrationRequired)
+        {
+            Console.WriteLine(turkish
+                ? "Geçiş incelemesi gerekli; dosya otomatik olarak değiştirilmedi."
+                : "Migration review is required; the file was not changed automatically.");
+        }
+
+        return exitCode;
+    }
+
+    private static string ToConfigStatusLabel(string status, bool turkish)
+    {
+        if (!turkish)
+        {
+            return status;
+        }
+
+        return status switch
+        {
+            "default" => "varsayılan",
+            "valid" => "geçerli",
+            "warnings" => "uyarılar",
+            "errors" => "hatalar",
+            _ => status
+        };
+    }
+
+    private static string ToTurkishConfigSeverity(ConfigDiagnosticSeverity severity)
+    {
+        return severity switch
+        {
+            ConfigDiagnosticSeverity.Info => "Bilgi",
+            ConfigDiagnosticSeverity.Warning => "Uyarı",
+            ConfigDiagnosticSeverity.Error => "Hata",
+            _ => severity.ToString()
+        };
     }
 
     private static int RunScan(string[] args, string repositoryPath, AckitConfig config, LanguageCode language, bool json, bool ci, Services services)
@@ -791,6 +921,18 @@ public static class Program
         };
     }
 
+    private static object ToConfigDiagnosticDto(ConfigDiagnostic diagnostic)
+    {
+        return new
+        {
+            code = diagnostic.Code,
+            severity = diagnostic.Severity.ToString(),
+            line = diagnostic.Line,
+            key = diagnostic.Key,
+            message = diagnostic.Message
+        };
+    }
+
     private static object ToGeneratedFileDto(GeneratedFileResult result)
     {
         return new
@@ -1013,6 +1155,7 @@ public static class Program
         return new Services(
             fileSystem,
             new AckitConfigReader(fileSystem),
+            new AckitConfigValidator(),
             new AckitConfigWriter(fileSystem),
             new BaselineStore(fileSystem),
             new BaselineClassifier(),
@@ -1032,6 +1175,7 @@ public static class Program
     private sealed record Services(
         IFileSystem FileSystem,
         IAckitConfigReader ConfigReader,
+        IAckitConfigValidator ConfigValidator,
         IAckitConfigWriter ConfigWriter,
         IBaselineStore BaselineStore,
         IBaselineClassifier BaselineClassifier,

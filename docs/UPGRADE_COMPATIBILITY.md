@@ -14,7 +14,7 @@ The first release-candidate upgrade target is the published NuGet package `Agent
 ## Config Evidence
 `tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml` represents the published predecessor config surface. `ReleaseCandidateEvidenceTests` verifies that the current reader preserves its language, keywords, ignore paths, extensions, safe domains, ignored paths, and ignored finding IDs without validation errors.
 
-Unknown or unsafe config diagnostics exist in Core but are not yet a CLI migration command. Config CLI validation remains a release-candidate gap until its invocation and migration behavior are explicitly frozen.
+Current source exposes unknown, obsolete, duplicate, malformed, and unsafe config diagnostics through read-only `ackit config-check`. Warnings remain non-blocking, errors return `1`, and obsolete keys require a reviewed manual edit; no auto-migration rewrites the file.
 
 ## Baseline Evidence
 Baseline files were introduced after `0.2.0-alpha.1`; there is no predecessor baseline to migrate. `tests/fixtures/upgrade/baseline-schema-v1.json` is the first golden baseline fixture and verifies schema/algorithm/fingerprint integrity for future upgrades.
@@ -41,5 +41,5 @@ Restore reviewed config/baseline files if a future migration task changed them. 
 
 ## Remaining Evidence
 - Hosted Windows/Ubuntu/macOS upgrade smoke from `0.2.0-alpha.1` to the selected release candidate.
-- CLI config validation/migration contract.
+- Hosted predecessor-config smoke for `ackit config-check`.
 - English/Turkish upgrade and error-output parity.

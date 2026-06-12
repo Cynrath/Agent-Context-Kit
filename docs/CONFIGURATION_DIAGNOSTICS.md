@@ -1,7 +1,7 @@
 # Configuration Diagnostics
 
 ## Status
-TASK-0085 adds a Core validation service and stable diagnostic contract. Current CLI commands still use the existing backward-compatible config reader and do not fail on these diagnostics yet. A later task will decide CLI integration and exit behavior.
+TASK-0085 added the Core validation service and stable diagnostic contract. TASK-0089 exposes it through read-only `ackit config-check` while preserving the existing config reader behavior for all other commands.
 
 ## Contract
 Each diagnostic contains:
@@ -43,6 +43,14 @@ Messages do not echo raw config values or full source lines.
 - Broad `ignorePaths` values such as `src/`, `tests/`, `docs/`, or `samples/` produce warnings.
 
 ## Compatibility
-Validation is report-only in TASK-0085. `AckitConfigReader` keeps existing fallback and normalization behavior, so current commands, JSON output, and exit codes do not change.
+`AckitConfigReader` keeps existing fallback and normalization behavior, so scan/generation commands are not changed by validation diagnostics.
 
-Future CLI integration must document whether warnings remain non-blocking, which errors fail a command, and how human/JSON diagnostics preserve the same exit decision.
+`ackit config-check` contract:
+- missing `.ackit/config.yml`: status `default`, exit `0`;
+- valid config: status `valid`, exit `0`;
+- warning-only config: status `warnings`, exit `0`;
+- one or more Error diagnostics: status `errors`, exit `1`;
+- human and JSON modes return the same process exit code;
+- the command never rewrites or auto-migrates the file.
+
+`allowedFindingIds` remains readable for predecessor compatibility but produces `ACKITCFG002`, sets `migrationRequired` in JSON, and should be replaced with `ignoredFindingIds` during a reviewed edit.

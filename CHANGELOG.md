@@ -17,6 +17,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added published-config and baseline-schema upgrade compatibility fixtures with focused tests.
 - Added a disposable synthetic scan benchmark and release-candidate evidence gate.
 - Added security response, support lifecycle, upgrade compatibility, performance, and supply-chain policy documents.
+- Added read-only `ackit config-check` with sanitized human/JSON diagnostics, explicit warning/error exits, and manual obsolete-key migration guidance.
 
 ### Changed
 - Polished README installed-tool and source command examples.

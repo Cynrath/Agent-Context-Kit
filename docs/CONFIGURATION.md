@@ -17,7 +17,7 @@ ignorePaths:
 
 Unknown fields are ignored. Invalid or unknown language values fall back to English.
 
-Current source also includes a report-only Core validator with stable `ACKITCFG` diagnostics for unknown, obsolete, duplicate, malformed, and unsafe settings. It is not connected to CLI exit behavior yet. See [CONFIGURATION_DIAGNOSTICS.md](CONFIGURATION_DIAGNOSTICS.md).
+Current source includes `ackit config-check` backed by stable `ACKITCFG` diagnostics for unknown, obsolete, duplicate, malformed, and unsafe settings. It is read-only: warnings remain non-blocking, errors return exit `1`, and missing config reports valid defaults. See [CONFIGURATION_DIAGNOSTICS.md](CONFIGURATION_DIAGNOSTICS.md).
 
 Baseline policy is intentionally not enabled through `.ackit/config.yml`. Use the explicit `ackit baseline` and `ackit scan --baseline <repo-relative.json>` command options so CI policy changes remain visible in command lines and reviewable diffs.
 
@@ -133,6 +133,15 @@ These examples do not contain real secrets and do not demonstrate Critical suppr
 Configuration never causes AgentContextKit to delete, overwrite, redact, upload, or publish files. It only changes local analysis and generated reports.
 
 The validator reports attempts to suppress Critical rule `ACKIT001` as an error even though the runtime scanner already refuses to suppress Critical findings.
+
+Validate without changing the file:
+
+```powershell
+ackit config-check
+ackit config-check --json
+```
+
+The command does not auto-migrate obsolete keys. Review `ACKITCFG002`, replace `allowedFindingIds` with `ignoredFindingIds`, and rerun the check.
 
 ## Generated File Conventions
 See [CONFIG_GENERATED_CONVENTIONS.md](CONFIG_GENERATED_CONVENTIONS.md) for the v1.0 target conventions around default config, ignored generated artifact paths, repository-relative output paths, and skip-existing behavior.

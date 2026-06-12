@@ -58,7 +58,7 @@ The CLI must not contain business logic. Core services are designed to be testab
 
 The same `BaselineEvaluation` instance can be passed to SARIF, HTML report, and Web UI generators. Generators validate finding-count alignment and render additive metadata only when baseline mode is explicit. SARIF uses sanitize-only result properties; local HTML outputs add counts/status labels while retaining every finding.
 
-`AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior or current CLI exit codes. Diagnostic messages are invariant and omit raw config values.
+`AckitConfigValidator` is a read-only Core service with stable `ACKITCFG` diagnostic codes. It validates the existing small YAML-like grammar and safety boundaries without changing `AckitConfigReader` fallback behavior. The CLI exposes it through `ackit config-check`: warnings remain non-blocking, errors return `1`, missing config reports the valid default state, and diagnostic messages omit raw config values.
 
 These SARIF, rule catalog, and config allowlist capabilities are part of current source and the published `0.2.0-alpha.1` package. The published NuGet `0.1.0-alpha.2` package remains the previous public release.
 

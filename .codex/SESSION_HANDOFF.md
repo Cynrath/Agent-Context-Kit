@@ -16,7 +16,9 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0071 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
 - TASK-0071 post-commit public release gate passed with the expected post-tag HEAD warning.
 - TASK-0087 committed as `4a31a3c feat: add baseline metadata to local outputs`; post-commit public release gate passed.
-- TASK-0088 is active. Upgrade fixtures, compatibility tests, performance/evidence scripts, and security/support/supply-chain/upgrade evidence docs are implemented. Focused tests passed 2/2, the final 2,000-file benchmark rerun completed in 2.936 seconds, vulnerability review was clean, and `xunit` `2.9.3` was flagged Legacy.
+- TASK-0088 completed upgrade fixtures, compatibility tests, performance/evidence scripts, and security/support/supply-chain/upgrade evidence docs. Focused tests passed 2/2, the final 2,000-file benchmark rerun completed in 2.936 seconds, vulnerability review was clean, and `xunit` `2.9.3` was flagged Legacy.
+- TASK-0088 committed as `b560214 test: add release candidate evidence gates`; post-commit public release gate passed.
+- TASK-0089 adds read-only `ackit config-check`, sanitized JSON/human diagnostics, warning/error exit behavior, manual obsolete-key migration guidance, and five focused tests. Full validation passed with 169/169 tests; commit and post-commit public gate are next.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
@@ -468,6 +470,8 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0087 adds shared baseline metadata to SARIF, HTML report, Web UI, and their JSON command summaries. Full pre-commit validation passed with 162/162 tests, clean scan, doctor PASS, disposable output smoke, sample smoke, hygiene, contract/readiness gates, and local package verification. The public gate failed only on the expected dirty working tree and must be rerun after commit.
 - TASK-0087 committed as `4a31a3c feat: add baseline metadata to local outputs`; post-commit public release gate passed.
 - TASK-0088 adds upgrade compatibility fixtures/tests, a disposable performance benchmark, an evidence gate, and RC security/support/supply-chain policies. Full validation passed with 164/164 tests; the pre-commit public gate failed only on the expected dirty working tree. Commit, rerun the public gate, then continue with TASK-0089.
+- TASK-0088 committed as `b560214 test: add release candidate evidence gates`; post-commit public release gate passed.
+- TASK-0089 implements the current-source config diagnostics CLI contract. Full validation passed with 169/169 tests; the pre-commit public gate failed only on the expected dirty tree. Commit, rerun the public gate, then continue with TASK-0090.
 
 ## Rules To Preserve While Continuing
 - Do not ask the user questions; make safe assumptions and document them.

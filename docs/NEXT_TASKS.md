@@ -36,8 +36,8 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 21. TASK-0086 baseline-aware scan and CI policy - completed locally; explicit baseline create/update/load and new-finding CI policy added.
 22. TASK-0087 JSON/SARIF/report baseline integration - completed locally; shared sanitize-only output metadata added.
 23. TASK-0088 upgrade, performance, security, and release-candidate evidence - completed locally; hosted/manual RC blockers remain.
-24. TASK-0089 config diagnostics CLI integration and migration contract - next.
-25. TASK-0090 hosted baseline upgrade and performance workflow design - queued.
+24. TASK-0089 config diagnostics CLI integration and migration contract - completed locally.
+25. TASK-0090 hosted baseline upgrade and performance workflow design - next.
 26. TASK-0091 xUnit v3 migration or explicit RC risk acceptance - queued.
 27. TASK-0092 release-candidate contract freeze and maintainer decision - queued.
 

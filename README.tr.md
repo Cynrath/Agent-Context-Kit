@@ -49,6 +49,7 @@ MVP uzak AI API cagrisi yapmaz ve repository icerigini yuklemez. Bu yaklasim pri
 
 ## Ozellikler
 - `ackit init`: `.ackit/config.yml` olusturur, var olan config'i ezmez.
+- `ackit config-check` (mevcut source): config dosyasini degistirmeden sanitize edilmis tani ve gecis rehberi verir.
 - `ackit scan`: stack, docs, test, CI, Docker, agent dosyalari ve riskli yolları tespit eder.
 - `ackit scan --ci`: high veya critical risk bulgularinda otomasyon kontrollerini basarisiz yapar.
 - `ackit baseline`: incelenmis bulgular icin sanitize edilmis lokal baseline olusturur; baseline modu sadece yeni High/Critical bulgulari CI blocker yapar.
@@ -84,9 +85,10 @@ ackit doctor
 
 `scan --ci`, High veya Critical bulguda non-zero exit code dondurur. Sadece rapor almak icin once `ackit scan` kullanin.
 
-Mevcut source ayrica explicit baseline workflow destekler. Bu ozellik yayinlanmis `0.2.0-alpha.1` paketinde yoktur:
+Mevcut source ayrica read-only config tanilarini ve explicit baseline workflow'u destekler. Bu komutlar yayinlanmis `0.2.0-alpha.1` paketinde yoktur:
 
 ```powershell
+ackit config-check --json
 ackit baseline
 ackit scan --baseline .ackit-baseline.json --ci
 ackit sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
@@ -173,6 +175,7 @@ Daha fazla rehberli ornek icin [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo
 
 ```text
 ackit init [--lang en|tr] [--json]
+ackit config-check [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
 ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]

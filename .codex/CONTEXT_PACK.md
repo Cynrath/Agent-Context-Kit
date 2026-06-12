@@ -141,6 +141,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0087 passes the same validated classification to SARIF, HTML report, and Web UI. SARIF uses sanitize-only result properties; local HTML outputs add existing/new counts and finding status without suppression.
 - TASK-0085 adds deterministic report-only config diagnostics for the existing small YAML-like grammar; current config reader fallback and CLI exit behavior remain unchanged.
 - TASK-0088 adds local RC evidence: published-config and baseline-schema fixtures, a disposable 2,000-file benchmark, an evidence gate, and security response/support lifecycle/supply-chain/upgrade policies. Hosted RC evidence and maintainer-only security/release decisions remain open.
+- TASK-0089 exposes Core config diagnostics through current-source `ackit config-check`. It is read-only, preserves the existing reader fallback, emits sanitized schema `2` JSON, keeps warnings non-blocking, returns `1` for errors, and requires manual obsolete-key migration.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

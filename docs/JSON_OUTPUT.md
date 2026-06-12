@@ -4,6 +4,7 @@ AgentContextKit supports machine-readable JSON output for automation and CI usag
 
 Supported commands:
 - `ackit init --json`
+- `ackit config-check --json`
 - `ackit scan --json`
 - `ackit baseline --json`
 - `ackit sarif --json`
@@ -56,6 +57,7 @@ Schema version `2` adds:
 - `ruleId` on scanner finding objects. This is additive and uses the stable rule IDs from [SCANNER_RULES.md](SCANNER_RULES.md).
 - `suppressionSummary` and sanitized `suppressions` on current-source `scan` output. These are additive and are not present in the published `0.2.0-alpha.1` package.
 - `baseline` on current-source `baseline --json` and opt-in `scan --baseline <path> --json` output.
+- `config`, `diagnosticSummary`, and sanitized `diagnostics` on current-source `config-check --json` output.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -80,6 +82,12 @@ See [EXIT_CODES.md](EXIT_CODES.md) for the full exit code matrix.
 `doctor`:
 - `0`: no failed high/critical checks
 - `1`: at least one failed high/critical check
+
+`config-check`:
+- `0`: missing/default, valid, or warning-only config
+- `1`: one or more Error diagnostics
+
+Config diagnostics include stable `code`, `severity`, one-based `line`, optional `key`, and sanitized `message`. Raw values and full config lines are not emitted. `config.migrationRequired` is true for obsolete keys or unsupported schema versions; the command does not rewrite the file.
 
 ## Example
 ```powershell

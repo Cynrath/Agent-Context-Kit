@@ -7,6 +7,7 @@ This checklist validates local release readiness without publishing.
 dotnet restore AgentContextKit.sln
 dotnet build AgentContextKit.sln -c Release --no-restore
 dotnet test AgentContextKit.sln -c Release --no-build
+dotnet run --project src/AgentContextKit.Cli -- config-check --json
 dotnet run --project src/AgentContextKit.Cli -- scan
 dotnet run --project src/AgentContextKit.Cli -- scan --ci
 dotnet run --project src/AgentContextKit.Cli -- sarif --output .ackit/reports/release-validation.sarif

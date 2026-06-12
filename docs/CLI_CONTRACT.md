@@ -22,6 +22,7 @@ The v1.0 target command surface is:
 
 ```text
 ackit init [--lang en|tr] [--json]
+ackit config-check [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
 ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]
@@ -77,6 +78,8 @@ Stable expectations:
 `scan` remains report-only by default. Use `scan --ci` for automation that should fail on high or critical findings.
 
 `scan --baseline <path> --ci` is an explicit alternate policy: every finding remains visible, but only new High/Critical findings fail the process. Missing, malformed, incompatible, or tampered baseline files return `1`.
+
+`config-check` is read-only. Missing/valid/warning-only config returns `0`; Error diagnostics return `1`. It does not change the existing config reader fallback used by other commands and never auto-migrates the file.
 
 Exit decisions are language- and output-format-independent. When a JSON payload includes `exitCode`, it must equal the process exit code returned for the equivalent human-readable invocation.
 

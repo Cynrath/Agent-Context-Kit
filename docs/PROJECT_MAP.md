@@ -240,6 +240,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `tests/AgentContextKit.Tests/AgentContextKitBehaviorTests.cs`
 - `tests/AgentContextKit.Tests/BaselinePolicyTests.cs`
 - `tests/AgentContextKit.Tests/ReleaseCandidateEvidenceTests.cs`
+- `tests/AgentContextKit.Tests/ConfigurationValidationTests.cs`
 - `tests/fixtures/upgrade/v0.2.0-alpha.1-config.yml`
 - `tests/fixtures/upgrade/baseline-schema-v1.json`
 

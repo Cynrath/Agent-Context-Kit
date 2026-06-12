@@ -1427,6 +1427,10 @@ public sealed class CliJsonAndMetadataTests
 
         using var incompleteRepo = TempRepository.Create();
         AssertSameExitCode(incompleteRepo.Path, ["doctor"], 1);
+
+        using var invalidConfigRepo = TempRepository.Create();
+        invalidConfigRepo.Write(".ackit/config.yml", "safeDomains: [not-a-domain]");
+        AssertSameExitCode(invalidConfigRepo.Path, ["config-check"], 1);
     }
 
     [Fact]
@@ -1446,6 +1450,7 @@ public sealed class CliJsonAndMetadataTests
         var commands = new (string Command, string[] Args)[]
         {
             ("init", ["init", "--json"]),
+            ("config-check", ["config-check", "--json"]),
             ("scan", ["scan", "--json"]),
             ("sarif", ["sarif", "--output", ".ackit/reports/contract.sarif", "--json"]),
             ("report", ["report", "--output", ".ackit/reports/contract.html", "--json"]),
@@ -1487,6 +1492,87 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal("settings.txt", finding?["path"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(finding?["message"]?.GetValue<string>()));
         Assert.True(finding?.AsObject().ContainsKey("match"));
+    }
+
+    [Fact]
+    public void ConfigCheckMissingFileReportsValidDefaults()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["config-check", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(0, result.ExitCode);
+        AssertJsonEnvelope(json, "config-check");
+        Assert.Equal(0, json?["exitCode"]?.GetValue<int>());
+        Assert.False(json?["config"]?["exists"]?.GetValue<bool>());
+        Assert.Equal("default", json?["config"]?["status"]?.GetValue<string>());
+        Assert.Equal(0, json?["diagnosticSummary"]?["total"]?.GetValue<int>());
+        Assert.Empty(json?["diagnostics"]?.AsArray() ?? []);
+    }
+
+    [Fact]
+    public void ConfigCheckWarningReportsMigrationWithoutMutation()
+    {
+        using var repo = TempRepository.Create();
+        const string content = "allowedFindingIds: [ACKIT003]";
+        repo.Write(".ackit/config.yml", content);
+
+        var result = RunCli(repo.Path, ["config-check", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+        var diagnostic = Assert.Single(json?["diagnostics"]?.AsArray() ?? []);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("warnings", json?["config"]?["status"]?.GetValue<string>());
+        Assert.True(json?["config"]?["migrationRequired"]?.GetValue<bool>());
+        Assert.Equal("ACKITCFG002", diagnostic?["code"]?.GetValue<string>());
+        Assert.Equal("Warning", diagnostic?["severity"]?.GetValue<string>());
+        Assert.Equal(content, File.ReadAllText(Path.Combine(repo.Path, ".ackit", "config.yml")));
+    }
+
+    [Fact]
+    public void ConfigCheckErrorsAreSanitizedAndReturnOne()
+    {
+        using var repo = TempRepository.Create();
+        const string rawValue = "private-value-not-for-output/path";
+        repo.Write(".ackit/config.yml", $"safeDomains: [{rawValue}]");
+
+        var human = RunCli(repo.Path, ["config-check"]);
+        var jsonResult = RunCli(repo.Path, ["config-check", "--json"]);
+        var json = JsonNode.Parse(jsonResult.Output);
+
+        Assert.Equal(1, human.ExitCode);
+        Assert.Equal(1, jsonResult.ExitCode);
+        Assert.Equal(1, json?["exitCode"]?.GetValue<int>());
+        Assert.Equal("errors", json?["config"]?["status"]?.GetValue<string>());
+        Assert.Equal(1, json?["diagnosticSummary"]?["errors"]?.GetValue<int>());
+        Assert.Equal("ACKITCFG009", json?["diagnostics"]?[0]?["code"]?.GetValue<string>());
+        Assert.DoesNotContain(rawValue, human.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(rawValue, jsonResult.Output, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void HelpIncludesConfigCheckCommand()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["--help"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("ackit config-check [--lang en|tr] [--json]", result.Output);
+    }
+
+    [Fact]
+    public void TurkishConfigCheckUsesLocalizedLabels()
+    {
+        using var repo = TempRepository.Create();
+
+        var result = RunCli(repo.Path, ["config-check", "--lang", "tr"]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Contains("Yapılandırma kontrolü", result.Output);
+        Assert.Contains("Durum: varsayılan", result.Output);
+        Assert.Contains("Tanılar: 0", result.Output);
     }
 
     [Fact]

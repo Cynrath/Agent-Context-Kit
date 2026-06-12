@@ -78,6 +78,7 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 | Capability | Command | Output |
 | --- | --- | --- |
 | Initialize config | `ackit init` | `.ackit/config.yml` |
+| Validate config (current source) | `ackit config-check` | Read-only sanitized diagnostics and migration guidance |
 | Scan repository | `ackit scan` | Stack, docs, tests, CI, Docker, agent files, risky paths |
 | Fail CI on risk | `ackit scan --ci` | Non-zero exit on high or critical findings |
 | Record reviewed findings | `ackit baseline` | Sanitized local baseline for opt-in new-finding CI policy |
@@ -113,9 +114,10 @@ ackit doctor
 
 `scan --ci` returns a non-zero exit code for High or Critical findings. Start with `ackit scan` when you want report-only behavior.
 
-Current source also supports an explicit baseline workflow. It is not part of the published `0.2.0-alpha.1` package:
+Current source also supports read-only config diagnostics and an explicit baseline workflow. These commands are not part of the published `0.2.0-alpha.1` package:
 
 ```powershell
+ackit config-check --json
 ackit baseline
 ackit scan --baseline .ackit-baseline.json --ci
 ackit sarif --output .ackit/reports/baseline.sarif --baseline .ackit-baseline.json
@@ -207,6 +209,7 @@ Pop-Location
 
 ```text
 ackit init [--lang en|tr] [--json]
+ackit config-check [--lang en|tr] [--json]
 ackit scan [--baseline <repo-relative.json>] [--lang en|tr] [--json] [--ci]
 ackit baseline [--output <repo-relative.json>] [--update] [--lang en|tr] [--json]
 ackit sarif --output <repo-relative.sarif> [--baseline <repo-relative.json>] [--lang en|tr] [--json]

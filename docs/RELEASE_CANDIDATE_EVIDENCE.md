@@ -7,7 +7,7 @@ Local evidence preparation is in progress after TASK-0084 through TASK-0087 base
 | Area | Local Evidence | Status | Remaining Blocker |
 | --- | --- | --- | --- |
 | Baseline policy | schema/fingerprint fixtures, explicit update, integrity checks, new/existing CI tests, JSON/SARIF/report/Web UI parity | Ready locally | hosted/package upgrade smoke |
-| Config compatibility | published `0.2.0-alpha.1` config fixture read/validation test | Ready locally | CLI validation/migration contract |
+| Config compatibility | published `0.2.0-alpha.1` config fixture plus read-only `config-check` human/JSON/exit/privacy contract tests | Ready locally | hosted predecessor-config smoke and RC sign-off |
 | CLI/JSON/SARIF | contract tests, additive schema rules, exit-code parity | Ready locally | RC freeze/sign-off and machine-readable schema decision |
 | Performance | disposable 2,000-file benchmark with 30-second tripwire | Initial local evidence | hosted three-OS, memory, cancellation, mixed corpus |
 | Security response | policy, Critical regression tests, privacy boundaries | Partial | private GitHub reporting channel and dated dependency review |
