@@ -21,6 +21,7 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidenc
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
 ```
 
 Hosted RC evidence is manual-only. After a maintainer push, dispatch `.github/workflows/release-candidate-evidence.yml` and record the three OS results as described in `docs/RC_HOSTED_EVIDENCE.md`.
@@ -32,6 +33,8 @@ The conditional local contract freeze and maintainer GO/NO-GO conditions are mai
 Machine-readable command JSON, baseline, and SARIF profile assets are indexed in `docs/schemas/README.md` and validated by `scripts/check-json-contract-assets.ps1`.
 
 English/Turkish human output, known argument errors, exit decisions, and JSON semantic invariance are defined in [LOCALIZATION.md](LOCALIZATION.md) and validated by `tests/AgentContextKit.Tests/LocalizationParityTests.cs` plus `scripts/check-localization-parity.ps1`.
+
+Security reporting and supply-chain maintainer evidence fields are defined in [SECURITY_SUPPLY_CHAIN_EVIDENCE.md](SECURITY_SUPPLY_CHAIN_EVIDENCE.md) and [MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md](MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md), with local structure/dependency review through `scripts/check-security-supply-chain-evidence.ps1`. This gate does not prove remote settings or artifact publication.
 
 Release-candidate dependency review:
 

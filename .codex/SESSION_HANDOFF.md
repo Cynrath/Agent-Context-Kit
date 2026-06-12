@@ -30,6 +30,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - TASK-0093 committed as `b74b847 test: add machine-readable contract assets`; post-commit public release gate passed.
 - TASK-0094 is complete locally. It release-gates English/Turkish human output, invalid invocation and exit parity, baseline/suppression labels, and language-independent JSON semantics without translating stable technical identifiers.
 - Full TASK-0094 validation passed: zero-warning build, 178/178 tests, clean Turkish scan/doctor/SARIF smoke, JSON/SARIF parse, sample smoke, clean dependency reviews, all contract/readiness/RC/release gates, clean hygiene, and a 3.171-second 2,000-file benchmark. Commit and post-commit public gate are next, followed by TASK-0095.
+- TASK-0094 committed as `c8c5e62 feat: add localization parity release gate`; post-commit public release gate passed.
+- TASK-0095 is complete locally. It adds a metadata-only maintainer evidence register, manual security/supply-chain handoff, dependency review, and integrated local gate without changing GitHub settings or producing/signing/publishing artifacts.
+- Full TASK-0095 validation passed: zero-warning build, 178/178 tests, clean scan, doctor PASS, JSON/SARIF parse, sample smoke, clean dependency reviews, all contract/localization/security/readiness/RC/release gates, clean hygiene, local package verification, and a 3.368-second 2,000-file benchmark.
+- Remote private reporting, signing, SBOM, provenance, recovery acceptance, hosted evidence, and final RC approval remain pending maintainer actions.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

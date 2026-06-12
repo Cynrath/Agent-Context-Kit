@@ -55,6 +55,8 @@
 ## Security And Privacy
 - `SECURITY.md`: security policy.
 - `docs/SECURITY_RESPONSE_READINESS.md`: disclosure channel, response expectations, and RC security evidence.
+- `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`: local versus maintainer security/signing/SBOM/provenance evidence register.
+- `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`: manual private-reporting and supply-chain decision procedure.
 - `docs/SECURITY_MODEL.md`: scanner and trust boundary model.
 - `docs/SCANNER_RULES.md`: stable `ACKIT` rule IDs and Critical suppression boundaries.
 - `docs/SECURITY_NOTES.md`: generated security notes.
@@ -90,6 +92,7 @@
 - `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
 - `scripts/check-json-contract-assets.ps1`: parses schema/golden assets and runs live-output contract tests.
 - `scripts/check-localization-parity.ps1`: validates English/Turkish help, human/error exits, and JSON semantic invariance.
+- `scripts/check-security-supply-chain-evidence.ps1`: validates pending/verified evidence structure and optionally reruns dependency reviews.
 - `scripts/test-samples.ps1`: local sample smoke validation helper.
 - `docs/examples/github-actions-scan-ci.yml`: non-active CI scan example.
 - `docs/examples/github-actions-sarif-upload.yml`: non-active example workflow for SARIF upload after maintainer approval.

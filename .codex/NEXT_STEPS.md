@@ -18,4 +18,5 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 14. Local branch is ahead of origin; do not push from the agent session. Report `local ahead, maintainer push required`.
 15. TASK-0093 is complete locally: machine-readable assets are indexed in `docs/schemas/README.md`; focused scanner/contract tests pass 5/5 and the full suite passes 173/173.
 16. TASK-0094 is complete locally. Five focused tests cover help, all 13 language-aware JSON commands, known argument errors, exit parity, baseline/suppression labels, and JSON semantic invariance; the full suite passes 178/178.
-17. Continue with TASK-0095 security reporting and supply-chain maintainer evidence handoff. Keep GitHub settings, signing, SBOM/provenance publication, push, tag, and release actions maintainer-only.
+17. TASK-0095 is complete locally. The evidence register, maintainer handoff, dependency review, and local evidence gate pass with 178/178 tests and a 3.368-second synthetic benchmark.
+18. Private vulnerability reporting, NuGet signing, SBOM, provenance, bad-package recovery acceptance, hosted RC evidence, and final RC approval remain explicit maintainer-only actions.

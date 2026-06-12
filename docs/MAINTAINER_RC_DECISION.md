@@ -13,9 +13,9 @@ The local contract freeze, machine-readable schema assets, and localization pari
 | Hosted RC workflow | Workflow designed; hosted result pending | Green Windows, Ubuntu, and macOS manual run for final candidate commit | Maintainer push/dispatch |
 | Upgrade/config evidence | Local fixtures pass | Hosted predecessor install, config hash, `config-check`, baseline, SARIF, and final scan pass | Hosted workflow |
 | JSON/SARIF contract | TASK-0093 machine-readable schemas, golden fixtures, live-output tests, and local gate exist | Review the final candidate assets and rerun the contract gate | Maintainer review |
-| Security reporting | Local policy exists | Enable and verify private vulnerability reporting | Maintainer GitHub settings |
+| Security reporting | TASK-0095 evidence register/handoff ready; remote status PENDING MAINTAINER | Enable and verify private vulnerability reporting; record date/owner/non-sensitive reference | Maintainer GitHub settings |
 | Dependency review | Clean on 2026-06-12 | Rerun on final candidate date | Maintainer/release validation |
-| Signing/SBOM/provenance | Decision pending | Record explicit use/defer decisions and publication locations | Maintainer supply-chain decision |
+| Signing/SBOM/provenance | TASK-0095 decision fields/options ready; status PENDING MAINTAINER | Record explicit sign/publish/attest or defer decisions, evidence, owner, and review date | Maintainer supply-chain decision |
 | Localization parity | TASK-0094 human/error/exit/JSON parity matrix and local gate complete | Rerun on final candidate and review intended stable technical tokens | Maintainer review |
 | Version and release | Not selected | Select version, update metadata, review package diff, approve release plan | Dedicated release task |
 
@@ -44,6 +44,8 @@ Conditional GO may authorize a dedicated release-preparation task after local an
 
 ## Maintainer Decision Record
 Complete this section in a dedicated release task; do not prefill it from local documentation work.
+
+Use `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` for the detailed security/supply-chain evidence record and `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md` for the manual procedure.
 
 ```text
 Decision: GO / CONDITIONAL GO / NO-GO

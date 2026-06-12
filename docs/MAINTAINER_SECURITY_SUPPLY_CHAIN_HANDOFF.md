@@ -1,0 +1,81 @@
+# Maintainer Security And Supply-Chain Handoff
+
+## Boundary
+This is a manual maintainer procedure. It does not authorize an agent to change GitHub settings, handle certificates or credentials, enable attestations, upload SBOM/provenance, push, tag, publish NuGet, or create/edit releases.
+
+Use `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` as the single evidence register. Keep records metadata-only.
+
+## 1. Private Vulnerability Reporting
+1. Review GitHub's current private vulnerability reporting instructions: <https://docs.github.com/code-security/security-advisories/working-with-repository-security-advisories/configuring-private-vulnerability-reporting-for-a-repository>.
+2. Enable private vulnerability reporting for `Cynrath/agent-context-kit` using a maintainer account.
+3. Confirm the public repository security surface offers a private report path. Do not submit a fake secret or real sensitive report merely to test the UI.
+4. Confirm the primary and backup maintainer receive repository security notifications.
+5. Record date, maintainer, repository/settings reference, and non-sensitive verification result in the evidence register.
+6. Update `SECURITY.md` only after the private path is verified. Do not publish a private email address unless intentionally selected and protected.
+
+## 2. Final-Candidate Dependency Review
+Run on the exact candidate commit:
+
+```powershell
+dotnet restore AgentContextKit.sln
+dotnet list AgentContextKit.sln package --vulnerable --include-transitive
+dotnet list AgentContextKit.sln package --deprecated --include-transitive
+```
+
+Record the candidate commit, date, reachable package sources, and result. A network/source failure is incomplete evidence, not a clean result.
+
+## 3. NuGet Signing Decision
+Choose one path:
+
+### Sign
+- Use a controlled certificate lifecycle and timestamp service following Microsoft guidance: <https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-nuget-sign>.
+- Keep certificate material and private identifiers outside the repository.
+- Verify the signed package before publish and record only non-sensitive certificate identity metadata, package digest, verification result, owner, and recovery/rotation procedure.
+
+### Defer
+- Record `Package signing decision: DEFER`.
+- Add an `ACCEPTED RISK` entry with owner, reason, affected release scope, compensating controls, and next review date.
+- Do not describe the package as author-signed. NuGet repository signing must not be presented as equivalent to a project author-signing decision.
+
+## 4. SBOM Decision
+Choose one path:
+
+### Publish
+- Prefer an SPDX-compatible SBOM tied to the exact candidate commit. GitHub's dependency graph can export an SPDX SBOM: <https://docs.github.com/code-security/supply-chain-security/understanding-your-software-supply-chain/exporting-a-software-bill-of-materials-for-your-repository>.
+- Review the file for local paths, private package sources, unexpected dependencies, or sensitive metadata.
+- Record format/version, generation method, candidate commit, digest, publication location, date, and owner.
+
+### Defer
+- Record `SBOM decision: DEFER` with owner, reason, release scope, compensating dependency review, and next review date.
+
+Do not commit generated SBOM files unless a dedicated task defines the public artifact path, format, privacy review, and release lifecycle.
+
+## 5. Provenance Decision
+Choose one path:
+
+### Attest
+- Use a dedicated release workflow, not ordinary CI, and review GitHub's artifact attestation requirements: <https://docs.github.com/actions/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds>.
+- Grant only the documented read-only contents permission plus write access for the OpenID Connect identity token and attestations to the attestation job.
+- Record workflow/run URL, candidate commit, subject digest, verification command/result, publication location, date, and owner.
+
+### Defer
+- Record `Provenance decision: DEFER` with owner, reason, release scope, compensating package hash/content review, and next review date.
+
+## 6. Bad-Package Recovery Acceptance
+Record the maintainer who can unlist/deprecate a package and the decision threshold. The accepted procedure must:
+
+- stop recommending the affected version;
+- preserve immutable published package content;
+- unlist or deprecate through maintainer-controlled NuGet actions when appropriate;
+- publish a fixed successor version;
+- update GitHub Release/install/security guidance;
+- record impact, remediation commit, package/tag actions, and post-incident review.
+
+## 7. Final Evidence Check
+Run locally:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -FailOnIssues
+```
+
+The local gate proves the evidence structure and pending/verified distinctions exist. It cannot prove GitHub settings, certificate custody, signing, SBOM publication, or provenance attestations. Those require maintainer evidence in the register.

@@ -147,7 +147,7 @@
 - TASK-0092 conditionally freezes CLI, exit-code, config, JSON, baseline, SARIF, generated-file, privacy, and upgrade contracts while keeping RC publication at NO-GO until hosted/remote evidence and maintainer decisions are complete.
 - TASK-0093 adds machine-readable JSON schema `2`, baseline schema `1`, SARIF profile assets, sanitized golden fixtures, live-output tests, and a local contract gate for V100-04.
 - TASK-0094 adds localized human-readable CLI chrome plus English/Turkish help, command, error, exit-code, and JSON semantic parity release gates.
-- TASK-0095 will consolidate maintainer-only private reporting and signing/SBOM/provenance evidence.
+- TASK-0095 consolidates maintainer-only private reporting, dependency review, signing, SBOM, provenance, and recovery evidence fields without claiming remote completion.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
 

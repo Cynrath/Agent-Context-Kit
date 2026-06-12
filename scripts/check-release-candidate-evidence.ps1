@@ -55,6 +55,8 @@ $requiredPaths = @(
     @{ Path = "docs\RELEASE_CANDIDATE_EVIDENCE.md"; Description = "Release-candidate evidence matrix" },
     @{ Path = "docs\RELEASE_CANDIDATE_CONTRACT_FREEZE.md"; Description = "Release-candidate contract freeze" },
     @{ Path = "docs\MAINTAINER_RC_DECISION.md"; Description = "Maintainer release-candidate decision" },
+    @{ Path = "docs\SECURITY_SUPPLY_CHAIN_EVIDENCE.md"; Description = "Security/supply-chain evidence register" },
+    @{ Path = "docs\MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md"; Description = "Maintainer security/supply-chain handoff" },
     @{ Path = "docs\schemas\ackit-command-output-v2.schema.json"; Description = "Command output schema" },
     @{ Path = "docs\schemas\ackit-baseline-v1.schema.json"; Description = "Baseline machine-readable schema" },
     @{ Path = "docs\schemas\ackit-sarif-profile-v1.schema.json"; Description = "SARIF machine-readable profile" },
@@ -68,7 +70,8 @@ $requiredPaths = @(
     @{ Path = "tests\AgentContextKit.Tests\LocalizationParityTests.cs"; Description = "Localization parity tests" },
     @{ Path = "scripts\measure-scan-performance.ps1"; Description = "Synthetic scan benchmark" },
     @{ Path = "scripts\check-json-contract-assets.ps1"; Description = "Machine-readable contract asset gate" },
-    @{ Path = "scripts\check-localization-parity.ps1"; Description = "Localization parity gate" }
+    @{ Path = "scripts\check-localization-parity.ps1"; Description = "Localization parity gate" },
+    @{ Path = "scripts\check-security-supply-chain-evidence.ps1"; Description = "Security/supply-chain evidence gate" }
 )
 
 foreach ($entry in $requiredPaths) {
@@ -126,6 +129,14 @@ try {
     }
     else {
         Add-Issue "Localization parity gate failed."
+    }
+
+    & powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-security-supply-chain-evidence.ps1") -FailOnIssues
+    if ($LASTEXITCODE -eq 0) {
+        Add-Note "Security/supply-chain evidence structure gate passed."
+    }
+    else {
+        Add-Issue "Security/supply-chain evidence structure gate failed."
     }
 
     if (Get-Command git -ErrorAction SilentlyContinue) {

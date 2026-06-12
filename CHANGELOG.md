@@ -28,6 +28,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added a conditional release-candidate contract freeze and explicit maintainer GO/NO-GO decision package without changing version or publishing.
 - Added machine-readable command JSON, baseline, and SARIF profile schemas with sanitized golden fixtures and live-output contract tests.
 - Added English/Turkish human-output, known-error, exit-code, and JSON semantic parity release gates across all language-aware commands.
+- Added a metadata-only security/supply-chain evidence register, maintainer handoff, and local structure gate for private reporting, signing, SBOM, provenance, and package recovery decisions.
 
 ### Fixed
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.

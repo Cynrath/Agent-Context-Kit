@@ -147,7 +147,8 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - TASK-0092 adds `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`. The local contract surface is conditionally frozen, but RC publication remains NO-GO pending hosted/remote evidence and remaining P0/P1 disposition.
 - TASK-0093 adds the machine-readable schema catalog at `docs/schemas/README.md`, command JSON schema `2`, baseline schema `1`, an AgentContextKit SARIF `2.1.0` profile, sanitized golden fixtures, live-output tests, and a local contract asset gate.
 - TASK-0094 centralizes English/Turkish human-readable CLI chrome, adds five command-matrix/error/JSON parity tests across all 13 language-aware JSON commands, and adds `scripts/check-localization-parity.ps1`. Stable technical tokens and machine-readable contracts remain English and language-independent.
-- TASK-0094 full validation passes with 178/178 tests, clean Turkish CLI smoke, all local gates, and clean hygiene. TASK-0095 is next.
+- TASK-0094 full validation passes with 178/178 tests, clean Turkish CLI smoke, all local gates, and clean hygiene.
+- TASK-0095 is complete locally with `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md`, `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`, and `scripts/check-security-supply-chain-evidence.ps1`. Dependency reviews, 178/178 tests, local package verification, all integrated gates, clean hygiene, and a 3.368-second benchmark pass. All remote security settings and signing/SBOM/provenance/recovery actions remain explicitly pending maintainer evidence.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

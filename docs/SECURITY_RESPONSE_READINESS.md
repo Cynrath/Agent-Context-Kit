@@ -23,6 +23,8 @@ These are maintainer targets, not contractual SLAs:
 ## Maintainer-Only Blocker
 A private vulnerability reporting channel must be enabled and verified on GitHub before a 1.0 release candidate. Do not request sensitive details through a public issue. Repository security settings are remote writes and are not changed by this task.
 
+The exact metadata-only evidence fields and manual verification steps are maintained in `docs/SECURITY_SUPPLY_CHAIN_EVIDENCE.md` and `docs/MAINTAINER_SECURITY_SUPPLY_CHAIN_HANDOFF.md`. The current status remains `PENDING MAINTAINER`; a checklist or local gate is not proof that the GitHub setting is active.
+
 ## Dependency Review
 Before an RC, run:
 
