@@ -16,7 +16,7 @@ Remote-write work such as GitHub Release edits, label creation, branch protectio
 7. TASK-0072 JSON schema stability and contract tests - completed locally.
 8. TASK-0073 CLI exit code contract hardening - completed locally.
 9. TASK-0074 scanner fixture coverage expansion - completed locally.
-10. TASK-0075 safe suppression audit log - queued.
+10. TASK-0075 safe suppression audit log - completed locally.
 
 ## Documentation / Presentation
 11. TASK-0076 README command examples and copy-paste polish - queued.

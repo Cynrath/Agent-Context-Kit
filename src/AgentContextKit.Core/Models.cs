@@ -72,6 +72,28 @@ public sealed record RiskFinding(
     string Message,
     string? Match = null);
 
+public enum RiskSuppressionReason
+{
+    SafeDomain,
+    IgnoredPath,
+    IgnoredFindingId
+}
+
+public sealed record RiskSuppression(
+    string RuleId,
+    RiskSeverity Severity,
+    RiskCategory Category,
+    string Path,
+    RiskSuppressionReason Reason);
+
+public sealed record RiskScanResult(
+    IReadOnlyList<RiskFinding> Findings,
+    IReadOnlyList<RiskSuppression> Suppressions);
+
+public sealed record BrandPiiScanResult(
+    IReadOnlyList<RiskFinding> Findings,
+    IReadOnlyList<RiskSuppression> Suppressions);
+
 public sealed record RiskRule(
     string Id,
     string Name,
@@ -176,7 +198,10 @@ public sealed record ScanResult(
     bool HasTests,
     bool HasCi,
     bool HasDocker,
-    bool HasAgentInstructions);
+    bool HasAgentInstructions)
+{
+    public IReadOnlyList<RiskSuppression> Suppressions { get; init; } = Array.Empty<RiskSuppression>();
+}
 
 public sealed record GeneratedFileResult(
     string Path,

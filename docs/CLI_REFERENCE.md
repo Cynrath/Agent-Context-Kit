@@ -48,6 +48,8 @@ Stack signals include .NET, ASP.NET Core, Razor/Razor Pages, Blazor WebAssembly,
 
 Risk findings include stable `ACKIT` rule IDs in JSON output. See [SCANNER_RULES.md](SCANNER_RULES.md) for the rule catalog and [CONFIGURATION.md](CONFIGURATION.md) for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds`.
 
+Current source also reports sanitized config suppression counts and reasons in human and JSON scan output. This additive audit surface is documented in [SUPPRESSION_AUDIT.md](SUPPRESSION_AUDIT.md) and is not part of the published `0.2.0-alpha.1` package.
+
 Exit codes are documented in [EXIT_CODES.md](EXIT_CODES.md).
 
 ### `ackit sarif`

@@ -43,11 +43,14 @@ Behavior:
 - `ignoredPaths` suppresses non-Critical findings under repository-relative paths while keeping files visible in scan file lists.
 - `ignoredFindingIds` suppresses non-Critical findings for stable rule IDs.
 - Critical findings cannot be silently ignored by `safeDomains`, `ignoredPaths`, or `ignoredFindingIds`.
+- Current source records explicit config suppressions as sanitized local audit entries; built-in technical allowlists are not logged as config decisions.
 - Legacy `ignorePaths` excludes files from scanning and should be used sparingly.
 
 Safe example configs are available under `docs/examples/config/`. They show baseline, strict review, and CI-oriented settings without real secrets or Critical suppression examples.
 
 Regression fixture coverage and safe synthetic-data conventions are documented in `docs/SCANNER_FIXTURES.md`. Positive fixtures assert severity, category, and stable rule ID; negative fixtures cover known technical domains, documentation IP ranges, and narrow fixture-email exemptions.
+
+Suppression audit fields and privacy boundaries are documented in `docs/SUPPRESSION_AUDIT.md`. SARIF excludes suppressed findings and does not carry the local suppression audit.
 
 ## SARIF Mapping
 | AgentContextKit severity | SARIF level |

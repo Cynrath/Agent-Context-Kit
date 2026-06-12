@@ -50,6 +50,8 @@ Built-in allowlists are intentionally narrow and technical. They are for public 
 
 Config allowlists are local-only, explicit, reviewable, and documented. They cannot silently suppress Critical findings. Legacy `ignorePaths` excludes files from scanning and should be used sparingly because it hides files from reports.
 
+Current source keeps config suppressions auditable through sanitized local scan output. Audit entries omit raw matches and messages, do not change exit codes, and are not added to SARIF. See `docs/SUPPRESSION_AUDIT.md`.
+
 The scanner rule catalog, configurable allowlist foundation, and expanded scanner patterns are part of the published `0.2.0-alpha.1` package and current source.
 
 Scanner regression fixtures are synthetic and assembled to avoid committed live-looking credentials. The fixture matrix in `docs/SCANNER_FIXTURES.md` verifies both detection and known-noise boundaries without weakening Critical findings.

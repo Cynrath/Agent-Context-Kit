@@ -18,6 +18,11 @@ public interface IProjectMapBuilder
 public interface IRiskScanner
 {
     IReadOnlyList<RiskFinding> Scan(string repositoryPath, IReadOnlyList<string> relativeFiles, AckitConfig config);
+
+    RiskScanResult ScanWithAudit(string repositoryPath, IReadOnlyList<string> relativeFiles, AckitConfig config)
+    {
+        return new RiskScanResult(Scan(repositoryPath, relativeFiles, config), Array.Empty<RiskSuppression>());
+    }
 }
 
 public interface ISecretScanner
@@ -28,6 +33,11 @@ public interface ISecretScanner
 public interface IBrandPiiScanner
 {
     IReadOnlyList<RiskFinding> ScanText(string relativePath, string content, AckitConfig config);
+
+    BrandPiiScanResult ScanTextWithAudit(string relativePath, string content, AckitConfig config)
+    {
+        return new BrandPiiScanResult(ScanText(relativePath, content, config), Array.Empty<RiskSuppression>());
+    }
 }
 
 public interface IRiskReporter

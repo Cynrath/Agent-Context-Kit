@@ -306,10 +306,11 @@ public sealed class RiskScannerTests
 
             var subdomain = "api.tooling" + ".dev";
             var apex = "tooling" + ".dev";
-            var subdomainFindings = scanner.ScanText("docs/platforms.md", "Use " + subdomain + ".", config);
+            var subdomainScan = scanner.ScanTextWithAudit("docs/platforms.md", "Use " + subdomain + ".", config);
             var apexFindings = scanner.ScanText("docs/platforms.md", "Use " + apex + ".", config);
 
-            Assert.DoesNotContain(subdomainFindings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+            Assert.DoesNotContain(subdomainScan.Findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(RiskSuppressionReason.SafeDomain, Assert.Single(subdomainScan.Suppressions).Reason);
             Assert.Contains(apexFindings, finding => finding.Category == RiskCategory.Brand && finding.Match == apex);
         }
         finally
@@ -482,6 +483,10 @@ public sealed class RiskScannerTests
 
         Assert.Contains(result.Files, file => file == "generated-output/archive.bak");
         Assert.DoesNotContain(result.Findings, finding => finding.Path == "generated-output/archive.bak");
+        var suppression = Assert.Single(result.Suppressions);
+        Assert.Equal("ACKIT003", suppression.RuleId);
+        Assert.Equal(RiskSuppressionReason.IgnoredPath, suppression.Reason);
+        Assert.Equal("generated-output/archive.bak", suppression.Path);
     }
 
     [Fact]
@@ -497,6 +502,10 @@ public sealed class RiskScannerTests
         });
 
         Assert.DoesNotContain(result.Findings, finding => finding.Path == "artifacts/tool.nupkg");
+        var suppression = Assert.Single(result.Suppressions);
+        Assert.Equal("ACKIT003", suppression.RuleId);
+        Assert.Equal(RiskSuppressionReason.IgnoredFindingId, suppression.Reason);
+        Assert.Equal("artifacts/tool.nupkg", suppression.Path);
     }
 
     [Fact]
@@ -515,6 +524,10 @@ public sealed class RiskScannerTests
             finding.Path == "settings.txt" &&
             finding.Severity == RiskSeverity.Critical &&
             finding.Category == RiskCategory.Secret);
+        Assert.DoesNotContain(result.Suppressions, suppression => suppression.Severity == RiskSeverity.Critical);
+        Assert.Contains(result.Suppressions, suppression =>
+            suppression.Severity == RiskSeverity.High &&
+            suppression.Reason == RiskSuppressionReason.IgnoredFindingId);
     }
 
     [Fact]
@@ -533,6 +546,10 @@ public sealed class RiskScannerTests
             finding.Path == "fixtures/settings.txt" &&
             finding.Severity == RiskSeverity.Critical &&
             finding.Category == RiskCategory.Secret);
+        Assert.DoesNotContain(result.Suppressions, suppression => suppression.Severity == RiskSeverity.Critical);
+        Assert.Contains(result.Suppressions, suppression =>
+            suppression.Severity == RiskSeverity.High &&
+            suppression.Reason == RiskSuppressionReason.IgnoredPath);
     }
 
     [Fact]
@@ -569,7 +586,7 @@ public sealed class RiskScannerTests
         var scanner = new BrandPiiScanner();
         var configuredDomain = "internal" + ".tooling" + ".dev";
 
-        var findings = scanner.ScanText(
+        var scan = scanner.ScanTextWithAudit(
             "docs/platforms.md",
             "Use " + configuredDomain + " for local fixture docs.",
             AckitConfig.Default with
@@ -577,7 +594,11 @@ public sealed class RiskScannerTests
                 SafeDomains = [configuredDomain]
             });
 
-        Assert.DoesNotContain(findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+        Assert.DoesNotContain(scan.Findings, finding => finding.Message.Contains("Domain-like", StringComparison.OrdinalIgnoreCase));
+        var suppression = Assert.Single(scan.Suppressions);
+        Assert.Equal("ACKIT002", suppression.RuleId);
+        Assert.Equal(RiskSuppressionReason.SafeDomain, suppression.Reason);
+        Assert.Equal(RiskCategory.Brand, suppression.Category);
     }
 
     [Fact]
@@ -716,6 +737,29 @@ public sealed class RiskScannerTests
 
 public sealed class SarifReportWriterTests
 {
+    [Fact]
+    public void SarifExcludesSuppressionAuditRecords()
+    {
+        using var repo = TempRepository.Create();
+        var writer = new SarifReportWriter(new PhysicalFileSystem());
+        var scan = CreateScan(repo.Path, []) with
+        {
+            Suppressions =
+            [
+                new RiskSuppression(
+                    "ACKIT003",
+                    RiskSeverity.Medium,
+                    RiskCategory.BuildArtifact,
+                    "artifacts/tool.nupkg",
+                    RiskSuppressionReason.IgnoredFindingId)
+            ]
+        };
+
+        var report = writer.BuildReport(repo.Path, scan, "0.2.0-test");
+
+        Assert.Empty(report.Runs[0].Results);
+    }
+
     [Fact]
     public void SarifEmptyFindingsProducesValidReport()
     {
@@ -1380,6 +1424,39 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal("settings.txt", finding?["path"]?.GetValue<string>());
         Assert.False(string.IsNullOrWhiteSpace(finding?["message"]?.GetValue<string>()));
         Assert.True(finding?.AsObject().ContainsKey("match"));
+    }
+
+    [Fact]
+    public void ScanJsonIncludesSanitizedSuppressionAudit()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write(".ackit/config.yml", """
+            schemaVersion: 1
+            defaultLanguage: en
+            ignoredFindingIds:
+              - ACKIT003
+            """);
+        repo.Write("artifacts/tool.nupkg", "fixture content");
+
+        var jsonResult = RunCli(repo.Path, ["scan", "--json"]);
+        var json = JsonNode.Parse(jsonResult.Output);
+        var suppression = Assert.Single(json?["suppressions"]?.AsArray() ?? []);
+
+        Assert.Equal(0, jsonResult.ExitCode);
+        Assert.Empty(json?["findings"]?.AsArray() ?? []);
+        Assert.Equal(1, json?["suppressionSummary"]?["total"]?.GetValue<int>());
+        Assert.Equal(1, json?["suppressionSummary"]?["ignoredFindingIds"]?.GetValue<int>());
+        Assert.Equal("ACKIT003", suppression?["ruleId"]?.GetValue<string>());
+        Assert.Equal("artifacts/tool.nupkg", suppression?["path"]?.GetValue<string>());
+        Assert.Equal("ignoredFindingIds", suppression?["reason"]?.GetValue<string>());
+        Assert.False(suppression?.AsObject().ContainsKey("match"));
+        Assert.False(suppression?.AsObject().ContainsKey("message"));
+
+        var humanResult = RunCli(repo.Path, ["scan"]);
+        Assert.Equal(0, humanResult.ExitCode);
+        Assert.Contains("Suppressed findings: 1", humanResult.Output);
+        Assert.Contains("via ignoredFindingIds", humanResult.Output);
+        Assert.DoesNotContain("fixture content", humanResult.Output);
     }
 
     [Fact]

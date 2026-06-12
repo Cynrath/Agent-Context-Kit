@@ -116,7 +116,7 @@
 - TASK-0074 scanner fixture coverage expansion:
   - Completed locally with table-driven detection, stable rule mapping, and known-noise precision fixtures.
 - TASK-0075 safe suppression audit log:
-  - Plan local auditability for non-Critical suppressions.
+  - Completed locally with sanitized human/JSON config suppression records and Critical safety boundaries.
 
 ## v0.3.0-beta
 - HTML report generation. Started with offline static `ackit report`.

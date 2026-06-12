@@ -41,13 +41,13 @@ public sealed class RepositoryScanner : IRepositoryScanner
             .ToArray();
 
         var stacks = _stackDetector.Detect(root, files);
-        var findings = _riskScanner.Scan(root, files, activeConfig);
+        var riskScan = _riskScanner.ScanWithAudit(root, files, activeConfig);
 
         return new ScanResult(
             root,
             files,
             stacks,
-            findings,
+            riskScan.Findings,
             HasAny(files, "README.md", "README.tr.md"),
             HasAny(files, "LICENSE", "LICENSE.md"),
             HasAny(files, "SECURITY.md"),
@@ -58,7 +58,10 @@ public sealed class RepositoryScanner : IRepositoryScanner
             files.Any(file => file.StartsWith(".github/workflows/", StringComparison.OrdinalIgnoreCase)),
             files.Any(file => string.Equals(file, "Dockerfile", StringComparison.OrdinalIgnoreCase) || file.Contains("docker-compose", StringComparison.OrdinalIgnoreCase)),
             HasAny(files, "AGENTS.md", "CLAUDE.md", ".github/copilot-instructions.md") ||
-            files.Any(file => file.StartsWith(".cursor/rules/", StringComparison.OrdinalIgnoreCase)));
+            files.Any(file => file.StartsWith(".cursor/rules/", StringComparison.OrdinalIgnoreCase)))
+        {
+            Suppressions = riskScan.Suppressions
+        };
     }
 
     internal static string ToRelativePath(string root, string path)
@@ -459,7 +462,13 @@ public sealed class RiskScanner : IRiskScanner
 
     public IReadOnlyList<RiskFinding> Scan(string repositoryPath, IReadOnlyList<string> relativeFiles, AckitConfig config)
     {
+        return ScanWithAudit(repositoryPath, relativeFiles, config).Findings;
+    }
+
+    public RiskScanResult ScanWithAudit(string repositoryPath, IReadOnlyList<string> relativeFiles, AckitConfig config)
+    {
         var findings = new List<RiskFinding>();
+        var suppressions = new List<RiskSuppression>();
 
         foreach (var relativeFile in relativeFiles)
         {
@@ -486,30 +495,62 @@ public sealed class RiskScanner : IRiskScanner
             }
 
             findings.AddRange(_secretScanner.ScanText(relativeFile, content));
-            findings.AddRange(_brandPiiScanner.ScanText(relativeFile, content, config));
+            var brandPiiScan = _brandPiiScanner.ScanTextWithAudit(relativeFile, content, config);
+            findings.AddRange(brandPiiScan.Findings);
+            suppressions.AddRange(brandPiiScan.Suppressions);
         }
 
-        return findings
-            .Where(finding => !IsSuppressedByConfig(finding, config))
+        var visibleFindings = new List<RiskFinding>();
+        foreach (var finding in findings)
+        {
+            var suppressionReason = GetSuppressionReason(finding, config);
+            if (suppressionReason is null)
+            {
+                visibleFindings.Add(finding);
+                continue;
+            }
+
+            suppressions.Add(ToSuppression(finding, suppressionReason.Value));
+        }
+
+        return new RiskScanResult(
+            visibleFindings
             .OrderByDescending(finding => finding.Severity)
             .ThenBy(finding => finding.Path, StringComparer.OrdinalIgnoreCase)
-            .ToArray();
+            .ToArray(),
+            suppressions
+                .OrderBy(suppression => suppression.Path, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(suppression => suppression.RuleId, StringComparer.OrdinalIgnoreCase)
+                .ThenBy(suppression => suppression.Reason)
+                .ToArray());
     }
 
-    private static bool IsSuppressedByConfig(RiskFinding finding, AckitConfig config)
+    private static RiskSuppressionReason? GetSuppressionReason(RiskFinding finding, AckitConfig config)
     {
         if (finding.Severity == RiskSeverity.Critical)
         {
-            return false;
+            return null;
         }
 
         if (MatchesConfiguredPath(finding.Path, config.IgnoredPaths))
         {
-            return true;
+            return RiskSuppressionReason.IgnoredPath;
         }
 
         var ruleId = RiskRuleCatalog.GetRuleId(finding);
-        return config.IgnoredFindingIds.Any(ignoredId => string.Equals(ignoredId, ruleId, StringComparison.OrdinalIgnoreCase));
+        return config.IgnoredFindingIds.Any(ignoredId => string.Equals(ignoredId, ruleId, StringComparison.OrdinalIgnoreCase))
+            ? RiskSuppressionReason.IgnoredFindingId
+            : null;
+    }
+
+    private static RiskSuppression ToSuppression(RiskFinding finding, RiskSuppressionReason reason)
+    {
+        return new RiskSuppression(
+            RiskRuleCatalog.GetRuleId(finding),
+            finding.Severity,
+            finding.Category,
+            finding.Path,
+            reason);
     }
 
     private static bool MatchesConfiguredPath(string relativePath, IReadOnlyList<string> configuredPaths)
@@ -776,7 +817,13 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content, AckitConfig config)
     {
+        return ScanTextWithAudit(relativePath, content, config).Findings;
+    }
+
+    public BrandPiiScanResult ScanTextWithAudit(string relativePath, string content, AckitConfig config)
+    {
         var findings = new List<RiskFinding>();
+        var suppressions = new List<RiskSuppression>();
 
         foreach (var keyword in config.BrandKeywords.Where(keyword => !string.IsNullOrWhiteSpace(keyword)))
         {
@@ -801,18 +848,37 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         }
 
         var emailMatch = EmailRegex.Match(content);
-        if (emailMatch.Success && !IsIgnoredEmailLikeValue(relativePath, emailMatch.Value, config))
+        if (emailMatch.Success)
         {
-            findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
+            var emailDomain = GetEmailDomain(emailMatch.Value);
+            if (!IsBuiltInIgnoredDomainLikeValue(emailDomain) && !IsNonRealFixtureEmail(relativePath, emailMatch.Value, emailDomain))
+            {
+                if (IsConfiguredSafeDomain(emailDomain, config.SafeDomains))
+                {
+                    suppressions.Add(new RiskSuppression(RiskRuleCatalog.PiiOrBrandLike.Id, RiskSeverity.Medium, RiskCategory.Pii, relativePath, RiskSuppressionReason.SafeDomain));
+                }
+                else
+                {
+                    findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
+                }
+            }
         }
 
-        var domainMatch = DomainRegex.Matches(content)
-            .Select(match => match.Value)
-            .FirstOrDefault(domain => !IsIgnoredDomainLikeValue(domain, config) && !emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase));
-
-        if (!string.IsNullOrWhiteSpace(domainMatch))
+        foreach (var domain in DomainRegex.Matches(content).Select(match => match.Value).Distinct(StringComparer.OrdinalIgnoreCase))
         {
-            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Brand, relativePath, "Domain-like value detected.", domainMatch));
+            if (emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase) || IsBuiltInIgnoredDomainLikeValue(domain))
+            {
+                continue;
+            }
+
+            if (IsConfiguredSafeDomain(domain, config.SafeDomains))
+            {
+                suppressions.Add(new RiskSuppression(RiskRuleCatalog.PiiOrBrandLike.Id, RiskSeverity.Low, RiskCategory.Brand, relativePath, RiskSuppressionReason.SafeDomain));
+                continue;
+            }
+
+            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Brand, relativePath, "Domain-like value detected.", domain));
+            break;
         }
 
         var ipAddressMatch = IpAddressRegex.Match(content);
@@ -821,7 +887,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
             findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "IP address-like value detected.", ipAddressMatch.Value));
         }
 
-        return findings;
+        return new BrandPiiScanResult(findings, suppressions);
     }
 
     private static bool IsReportableIpAddress(string value)
@@ -912,14 +978,7 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
         return at >= 0 && at + 1 < email.Length ? email[(at + 1)..] : "";
     }
 
-    private static bool IsIgnoredEmailLikeValue(string relativePath, string email, AckitConfig config)
-    {
-        var domain = GetEmailDomain(email);
-        return IsIgnoredDomainLikeValue(domain, config) ||
-               IsNonRealFixtureEmail(relativePath, email, domain);
-    }
-
-    private static bool IsIgnoredDomainLikeValue(string domain, AckitConfig config)
+    private static bool IsBuiltInIgnoredDomainLikeValue(string domain)
     {
         if (string.IsNullOrWhiteSpace(domain))
         {
@@ -928,7 +987,6 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
 
         return KnownSafeTechnicalDomains.Contains(domain) ||
                KnownSafeTechnicalDomainSuffixes.Any(suffix => domain.EndsWith(suffix, StringComparison.OrdinalIgnoreCase)) ||
-               IsConfiguredSafeDomain(domain, config.SafeDomains) ||
                domain.StartsWith("README.", StringComparison.OrdinalIgnoreCase);
     }
 

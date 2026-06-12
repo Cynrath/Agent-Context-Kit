@@ -53,6 +53,7 @@ Schema version `2` adds:
 - `promptPack` generated file metadata on `prompt-pack`.
 - `contextExport` generated file metadata on `context-export`.
 - `ruleId` on scanner finding objects. This is additive and uses the stable rule IDs from [SCANNER_RULES.md](SCANNER_RULES.md).
+- `suppressionSummary` and sanitized `suppressions` on current-source `scan` output. These are additive and are not present in the published `0.2.0-alpha.1` package.
 
 ## Exit Codes
 Human output and JSON output use the same exit code strategy.
@@ -100,7 +101,14 @@ Example shape:
     "low": 0,
     "info": 0
   },
-  "findings": []
+  "findings": [],
+  "suppressionSummary": {
+    "total": 0,
+    "safeDomains": 0,
+    "ignoredPaths": 0,
+    "ignoredFindingIds": 0
+  },
+  "suppressions": []
 }
 ```
 
@@ -117,6 +125,19 @@ Finding shape:
 ```
 
 Finding objects keep these schema v2 fields: `ruleId`, `severity`, `category`, `path`, `message`, and `match`. `match` may be `null` when exposing the raw matched value would be unsafe or unnecessary.
+
+Suppression shape:
+```json
+{
+  "ruleId": "ACKIT003",
+  "severity": "Medium",
+  "category": "BuildArtifact",
+  "path": "artifacts/package.nupkg",
+  "reason": "ignoredFindingIds"
+}
+```
+
+Suppression records intentionally omit `match` and `message`. See [SUPPRESSION_AUDIT.md](SUPPRESSION_AUDIT.md).
 
 ## Summary Shapes
 `riskSummary`:

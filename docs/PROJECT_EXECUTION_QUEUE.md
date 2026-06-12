@@ -11,7 +11,7 @@
 | 7 | Done locally | TASK-0072 JSON schema stability and contract tests | Medium | None | JSON docs/tests | Build/test/scan/doctor/hygiene/gates | No | Schema behavior is covered by tests. |
 | 8 | Done locally | TASK-0073 CLI exit code contract hardening | Medium | None | exit code docs/tests | Build/test/scan/doctor/hygiene/gates | No | Exit code behavior is documented and tested. |
 | 9 | Done locally | TASK-0074 scanner fixture coverage expansion | Medium | None | scanner fixtures/tests/docs | Build/test/scan/doctor/hygiene/gates | No | Fixture coverage increases without false-negative risk. |
-| 10 | Queued | TASK-0075 safe suppression audit log | Medium | Product decision may be needed | config/scanner docs/code/tests | Build/test/scan/doctor/hygiene/gates | No | Suppression behavior has auditable local output. |
+| 10 | Done locally | TASK-0075 safe suppression audit log | Medium | None | config/scanner docs/code/tests | Build/test/scan/doctor/hygiene/gates | No | Suppression behavior has auditable local output. |
 | 11 | Queued | TASK-0076 README command examples and copy-paste polish | Low | None | README files | Build/test/scan/doctor/hygiene/gates | No | README examples are concise and current. |
 | 12 | Queued | TASK-0077 sanitized screenshot capture plan | Low | Screenshots require manual sanitization | visual asset docs | Docs review/hygiene/gates | No | Screenshot plan avoids local paths and private data. |
 | 13 | Queued | TASK-0078 docs site / GitHub Pages planning | Low | GitHub Pages activation is maintainer-only | docs planning file | Docs review/hygiene/gates | Yes, to enable Pages | Docs site decision and risks are documented. |

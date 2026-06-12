@@ -456,6 +456,27 @@ public static class Program
 
         Console.WriteLine();
         PrintFindings(scan.Findings, language, services);
+        PrintSuppressions(scan.Suppressions);
+    }
+
+    private static void PrintSuppressions(IReadOnlyList<RiskSuppression> suppressions)
+    {
+        if (suppressions.Count == 0)
+        {
+            return;
+        }
+
+        Console.WriteLine();
+        Console.WriteLine($"Suppressed findings: {suppressions.Count}");
+        foreach (var suppression in suppressions.Take(25))
+        {
+            Console.WriteLine($"- {suppression.Path}: {suppression.RuleId} [{suppression.Severity}/{suppression.Category}] via {ToSuppressionReason(suppression.Reason)}");
+        }
+
+        if (suppressions.Count > 25)
+        {
+            Console.WriteLine($"- ... {suppressions.Count - 25} more");
+        }
     }
 
     private static void PrintFindings(IReadOnlyList<RiskFinding> findings, LanguageCode language, Services services)
@@ -538,7 +559,33 @@ public static class Program
                 hasAgentInstructions = scan.HasAgentInstructions
             },
             riskSummary = ToRiskSummary(scan.Findings),
-            findings = scan.Findings.Select(ToRiskFindingDto).ToArray()
+            findings = scan.Findings.Select(ToRiskFindingDto).ToArray(),
+            suppressionSummary = new
+            {
+                total = scan.Suppressions.Count,
+                safeDomains = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.SafeDomain),
+                ignoredPaths = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.IgnoredPath),
+                ignoredFindingIds = scan.Suppressions.Count(suppression => suppression.Reason == RiskSuppressionReason.IgnoredFindingId)
+            },
+            suppressions = scan.Suppressions.Select(suppression => new
+            {
+                ruleId = suppression.RuleId,
+                severity = suppression.Severity.ToString(),
+                category = suppression.Category.ToString(),
+                path = suppression.Path,
+                reason = ToSuppressionReason(suppression.Reason)
+            }).ToArray()
+        };
+    }
+
+    private static string ToSuppressionReason(RiskSuppressionReason reason)
+    {
+        return reason switch
+        {
+            RiskSuppressionReason.SafeDomain => "safeDomains",
+            RiskSuppressionReason.IgnoredPath => "ignoredPaths",
+            RiskSuppressionReason.IgnoredFindingId => "ignoredFindingIds",
+            _ => "unknown"
         };
     }
 

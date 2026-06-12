@@ -8,6 +8,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 
 ### Added
 - Added table-driven scanner regression fixtures for secret, artifact, local-path, PII/brand noise, stable rule IDs, and Critical suppression boundaries.
+- Added current-source sanitized suppression audit metadata for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` in human/JSON scan output.
 
 ### Fixed
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.
