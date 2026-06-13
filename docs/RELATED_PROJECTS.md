@@ -1,5 +1,9 @@
 # Related Projects
 
+The normalized comparison now lives in [Related Tools Comparison Matrix](RELATED_TOOLS_COMPARISON_MATRIX.md). Evidence and staleness rules live in [Related Tools Evidence](RELATED_TOOLS_EVIDENCE.md) and [Related Tools Review Policy](RELATED_TOOLS_REVIEW_POLICY.md). The catalog below remains a readable category summary.
+
+Public positioning is intentionally narrower than this catalog: AgentContextKit prepares, hardens, documents, validates, and hands off repositories; external packers, graphs, scanners, and docs tools remain optional complementary workflows and are never installed or invoked by default.
+
 ## Status
 This is an initial catalog, reviewed on 2026-06-13 from official repositories and project documentation. It is not an endorsement, dependency list, or compatibility guarantee. License, privacy, CLI, and output contracts must be reviewed again before any interoperability implementation.
 

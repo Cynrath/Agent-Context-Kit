@@ -6,6 +6,8 @@ Define how AgentContextKit evaluates related open-source tools while preserving 
 ## Research Method
 The initial 2026-06-13 catalog uses official GitHub repository metadata, license identifiers, project READMEs, and official documentation. Stars and activity were used only as maturity signals, not quality guarantees. Projects with ambiguous licenses, unclear local behavior, or separate commercial/service terms are not labeled integration-ready.
 
+Normalized evidence is recorded in `docs/RELATED_TOOLS_EVIDENCE.md`; comparison claims expire under `docs/RELATED_TOOLS_REVIEW_POLICY.md`. `Offline` always describes a specific local workflow after installation, not package acquisition, database updates, remote repository fetch, hosted UI use, or model/API enrichment.
+
 ## Offline Capability Levels
 ### Yes
 - Repository processing occurs on the user's machine.
