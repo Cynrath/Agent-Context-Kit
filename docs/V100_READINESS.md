@@ -2,7 +2,7 @@
 
 This page records an early local milestone that assembled v1.0-target contract, convention, documentation, and release-gate assets. It confirms that those assets are present and linked. It does not prove 1.0 product readiness or approve a release.
 
-Actual 1.0 gaps and blocking evidence are tracked in `docs/V100_GAP_ANALYSIS.md`. The current published release is `v0.2.0-alpha.1`.
+Actual 1.0 gaps and blocking evidence are tracked in `docs/V100_GAP_ANALYSIS.md`. The current published release is `v0.2.0-alpha.2`.
 
 ## Historical Local Readiness Scope
 The v1.0 local readiness review covers:
@@ -33,8 +33,8 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailO
 - `RepositoryUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - `PackageProjectUrl` is `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
-- GitHub Release `v0.2.0-alpha.1` is published as a pre-release.
-- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
+- GitHub Release `v0.2.0-alpha.2` is published as a pre-release.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.2` is published.
 - NuGet global tool install verification is completed.
 - `ackit sarif` is included in the published package.
 
@@ -47,7 +47,7 @@ Current release follow-ups are tracked by `docs/RELEASE_BLOCKERS.md`, `docs/PUBL
 
 It does not prove API/CLI stability, migration safety, performance, security response readiness, support lifetime, or release supply-chain completeness.
 
-TASK-0099 narrows the published-state uncertainty: `0.2.0-alpha.1` has a valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a NuGet owner profile that differs from the project persona. These remain maintainer decisions rather than completed controls.
+TASK-0099 narrows the predecessor published-state uncertainty: `0.2.0-alpha.1` has a valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a NuGet owner profile that differs from the project persona. Alpha.2 requires the same read-only supply-chain audit before equivalent claims are made. These remain maintainer decisions rather than completed controls.
 
 ## Actual 1.0 Readiness
 `docs/V100_GAP_ANALYSIS.md` is the source of truth. A 1.0 release candidate requires zero open P0 gaps and an explicit disposition for every P1 gap.

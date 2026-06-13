@@ -52,7 +52,7 @@ Use `gh run view`, NuGet package query/install, `git rev-list`, and `gh release 
 NuGet is immutable. If GitHub completion fails after publish, resume only missing tag/release steps; never republish.
 
 ## Completion Evidence
-Pending.
+Pre-publication exact commit `f540479a92cbe66097f6796553828ee49ddd5512` passed the required eight standard hosted jobs. Workflow run `27470659578` used NuGet OIDC Trusted Publishing and successfully published `AgentContextKit` `0.2.0-alpha.2`, then stopped before tag/GitHub Release creation because the Linux verifier assumed `$env:TEMP`. The immutable package was detected without republishing; exact tag `v0.2.0-alpha.2` was pushed at `f540479a92cbe66097f6796553828ee49ddd5512`, and the GitHub pre-release was created with the validated `.nupkg` and `.snupkg` assets.
 
 ## Commit
 Publication itself does not require a new code commit.

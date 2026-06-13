@@ -8,7 +8,7 @@ Current package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.
 Important fields:
 - `PackageId`: `AgentContextKit`
 - `ToolCommandName`: `ackit`
-- `Version`: `0.2.0-alpha.2` release candidate
+- `Version`: `0.2.0-alpha.2` published pre-release
 - `Authors`: `Cynrath`
 - `PackageLicenseExpression`: `MIT`
 - `PackageReadmeFile`: `README.md`
@@ -51,17 +51,17 @@ dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --versi
 Install the published package from NuGet:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 ackit version
 ackit --help
 ackit scan --ci
 ```
 
 ## Current Published Package
-The current published package remains `0.2.0-alpha.1`. Current source/package metadata is prepared as the `0.2.0-alpha.2` release candidate; public install commands remain on alpha.1 until publication is verified.
+The current published package is `0.2.0-alpha.2`. Source/package metadata, public install commands, and published-package smoke are synchronized to that version.
 
 ## OIDC NuGet Publish
-Version `0.2.0-alpha.1` has been published and install-verified. Future versions are published only from the reviewed exact commit after all gates pass, using the manual `.github/workflows/release.yml` workflow and the preconfigured `nuget-release` environment.
+Version `0.2.0-alpha.2` has been published and install-verified. Future versions are published only from the reviewed exact commit after all gates pass, using the manual `.github/workflows/release.yml` workflow and the preconfigured `nuget-release` environment.
 
 The workflow uses NuGet Trusted Publishing through `NuGet/login@v1`. API keys, repository secrets for package credentials, local environment credentials, and credential-bearing `NuGet.Config` files are prohibited.
 

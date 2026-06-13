@@ -371,9 +371,9 @@ else {
 if (Get-Command git -ErrorAction SilentlyContinue) {
     Push-Location $repoRoot
     try {
-        $releaseTagCommit = git rev-parse "v0.2.0-alpha.1^{commit}" 2>$null
+        $releaseTagCommit = git rev-parse "v0.2.0-alpha.2^{commit}" 2>$null
         if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($releaseTagCommit)) {
-            Add-PublicBlocker "Current release tag v0.2.0-alpha.1 was not found locally."
+            Add-PublicBlocker "Current release tag v0.2.0-alpha.2 was not found locally."
         }
 
         $status = git status --short 2>$null

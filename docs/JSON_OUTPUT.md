@@ -26,7 +26,7 @@ JSON responses include:
 ```json
 {
   "schemaVersion": 2,
-  "toolVersion": "0.2.0-alpha.1",
+  "toolVersion": "0.2.0-alpha.2",
   "generatedAtUtc": "2026-06-03T00:00:00+00:00",
   "command": "scan"
 }
@@ -62,7 +62,7 @@ Schema version `2` adds:
 - `promptPack` generated file metadata on `prompt-pack`.
 - `contextExport` generated file metadata on `context-export`.
 - `ruleId` on scanner finding objects. This is additive and uses the stable rule IDs from [SCANNER_RULES.md](SCANNER_RULES.md).
-- `suppressionSummary` and sanitized `suppressions` on current-source `scan` output. These are additive and are not present in the published `0.2.0-alpha.1` package.
+- `suppressionSummary` and sanitized `suppressions` on current-source `scan` output. These are additive and are not present in the published `0.2.0-alpha.2` package.
 - `baseline` on current-source `baseline --json` and opt-in `scan --baseline <path> --json` output.
 - `config`, `diagnosticSummary`, and sanitized `diagnostics` on current-source `config-check --json` output.
 
@@ -105,7 +105,7 @@ Example shape:
 ```json
 {
   "schemaVersion": 2,
-  "toolVersion": "0.2.0-alpha.1",
+  "toolVersion": "0.2.0-alpha.2",
   "generatedAtUtc": "2026-06-03T00:00:00+00:00",
   "command": "scan",
   "ciMode": false,

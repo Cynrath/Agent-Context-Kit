@@ -195,7 +195,7 @@ foreach ($doc in $releaseValidationDocs) {
 $blockerNeedles = @(
     "RepositoryUrl",
     "PackageProjectUrl",
-    "v0.2.0-alpha.1",
+    "v0.2.0-alpha.2",
     "No active release blockers remain",
     "Codex for OSS application"
 )

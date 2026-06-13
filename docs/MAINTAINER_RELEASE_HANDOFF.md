@@ -1,10 +1,10 @@
 # Maintainer Release Handoff
 
-Current alpha.2 scope is in `docs/V020_ALPHA2_SCOPE.md`. PROJECT-CONTROL-0102 explicitly authorizes validated normal pushes and the exact-SHA OIDC release workflow for `v0.2.0-alpha.2`.
+The completed alpha.2 scope is in `docs/V020_ALPHA2_SCOPE.md`. PROJECT-CONTROL-0102 authorized the validated normal pushes and exact-SHA OIDC release sequence for `v0.2.0-alpha.2`.
 
-This handoff records the completed `v0.2.0-alpha.1` GitHub and NuGet pre-release state.
+This handoff records the completed `v0.2.0-alpha.2` GitHub and NuGet pre-release state.
 
-This release sequence must not use API keys. Publication is allowed only through the manual OIDC workflow after the exact release commit passes all eight standard hosted jobs.
+Future release sequences must not use API keys. Publication is allowed only through the manual OIDC workflow after the exact release commit passes all required hosted jobs.
 
 ## Future Release-Candidate Decision
 TASK-0092 prepares a conditional local contract freeze in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and the authoritative GO/NO-GO checklist in `docs/MAINTAINER_RC_DECISION.md`. The current decision is NO-GO for RC publication until hosted evidence, remaining P0 gaps, private vulnerability reporting, schema assets, and supply-chain decisions are complete.
@@ -12,15 +12,15 @@ TASK-0092 prepares a conditional local contract freeze in `docs/RELEASE_CANDIDAT
 ## Current Published State
 - GitHub repository public: yes, `https://github.com/Cynrath/agent-context-kit`.
 - `master` pushed: yes.
-- `v0.2.0-alpha.1` tag pushed: yes.
+- `v0.2.0-alpha.2` tag pushed: yes.
 - GitHub Actions latest `master` run is green per maintainer-provided release status.
 - Read-only GitHub CLI validation on 2026-06-05 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded for commit `8dac9237c27ba912d056344155f1c9f901557bf5`.
 - Repository description is set.
 - Repository topics are set.
-- GitHub Release page for `v0.2.0-alpha.1`: completed as a pre-release.
-- NuGet publish for `AgentContextKit` `0.2.0-alpha.1`: completed.
-- NuGet global tool install verification for `0.2.0-alpha.1`: completed.
-- NuGet global tool smoke test for `0.2.0-alpha.1`: completed.
+- GitHub Release page for `v0.2.0-alpha.2`: completed as a pre-release.
+- NuGet publish for `AgentContextKit` `0.2.0-alpha.2`: completed.
+- NuGet global tool install verification for `0.2.0-alpha.2`: completed.
+- NuGet global tool smoke test for `0.2.0-alpha.2`: completed.
 - Cross-platform CI smoke validation: completed on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Current published-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
 - Current source-package smoke validation: completed on commit `8dac9237c27ba912d056344155f1c9f901557bf5` for Windows, Ubuntu, and macOS.
@@ -35,7 +35,7 @@ TASK-0092 prepares a conditional local contract freeze in `docs/RELEASE_CANDIDAT
 Maintainer verification evidence:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 ackit version
 ackit --help
 ```
@@ -43,13 +43,13 @@ ackit --help
 Expected version output:
 
 ```text
-AgentContextKit 0.2.0-alpha.1
+AgentContextKit 0.2.0-alpha.2
 ```
 
 If the tool is already installed, use:
 
 ```powershell
-dotnet tool update --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool update --global AgentContextKit --version 0.2.0-alpha.2
 ```
 
 ## Verified NuGet Smoke Test
@@ -76,7 +76,7 @@ Completed smoke test evidence:
 - `ubuntu-latest`
 - `macos-latest`
 
-The workflow installs .NET 10, installs `AgentContextKit` version `0.2.0-alpha.1` globally, adds the platform-specific `.dotnet/tools` path, creates a clean demo app, runs the installed-tool smoke flow, verifies fake secret detection returns exit code `2`, deletes the fake secret, runs `ackit sarif`, and finishes with `ackit scan --ci`.
+The workflow installs .NET 10, installs `AgentContextKit` version `0.2.0-alpha.2` globally, adds the platform-specific `.dotnet/tools` path, creates a clean demo app, runs the installed-tool smoke flow, verifies fake secret detection returns exit code `2`, deletes the fake secret, runs `ackit sarif`, and finishes with `ackit scan --ci`.
 
 This workflow remains the published-package smoke baseline for the current release. It does not create tags, publish NuGet packages, or mutate release metadata.
 
@@ -99,21 +99,21 @@ Latest read-only GitHub CLI evidence:
 - TASK-0064 pre-change observation: latest `cross-platform-source-smoke` run for commit `6d38f11` completed with conclusion `success`.
 - Jobs `source smoke (windows-2025)`, `source smoke (ubuntu-latest)`, and `source smoke (macos-latest)` completed successfully.
 
-## v0.2.0-alpha.1 Published Handoff
-Current source is published as the `0.2.0-alpha.1` package. It includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
+## v0.2.0-alpha.2 Published Handoff
+Current source is published as the `0.2.0-alpha.2` package. It includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery docs, demo scenarios, Web UI preview docs, and visual asset guidance.
 
 Maintainer-only next release actions:
-- Decide the next version, likely `v0.2.0-alpha.2`.
-- Optionally polish the existing `v0.2.0-alpha.1` GitHub Release body using `docs/RELEASE_BODY_V020_ALPHA1.md`.
+- Decide the next version after TASK-0125 final hosted validation.
+- Use `docs/RELEASE_BODY_V020_ALPHA2.md` as the immutable alpha.2 release-note reference.
 - Confirm hosted `ci`, published-package smoke, and source-package smoke are green after the next push.
 - Create any future tags and GitHub Releases only after reviewed release commits.
 - Publish future NuGet packages only from reviewed exact release commits through OIDC Trusted Publishing.
 - Decide whether CodeQL or GitHub Code Scanning/SARIF upload should be enabled.
 
-## v0.2.0-alpha.2 Release-Candidate Handoff
-`docs/V020_ALPHA2_SCOPE.md` freezes alpha.2 as a small hardening package: culture-invariant scanner matching, expanded scanner fixtures, and sanitized human/JSON suppression audit output. CLI commands, exit codes, JSON schema `2`, config schema `1`, and visible-findings-only SARIF stay compatible.
+## v0.2.0-alpha.2 Release Handoff
+`docs/V020_ALPHA2_SCOPE.md` records alpha.2 as a small hardening package: culture-invariant scanner matching, expanded scanner fixtures, sanitized human/JSON suppression audit output, baseline-aware CI polish, config diagnostics, and release automation. CLI command compatibility, exit codes, JSON schema `2`, config schema `1`, and visible-findings-only SARIF were preserved.
 
-TASK-0123 updates csproj/CLI/source-smoke versions to `0.2.0-alpha.2`, runs local package install smoke, pushes the exact candidate, and obtains hosted validation. Published-package smoke remains on `0.2.0-alpha.1` until NuGet `0.2.0-alpha.2` exists.
+TASK-0123 prepared and validated the exact package commit. TASK-0124 published through OIDC, then completed the exact tag and GitHub pre-release without republishing after an idempotent recovery. TASK-0125 owns the public install/workflow sync and final post-publish 8/8 validation.
 
 ## GitHub Contributor Workflow
 The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
@@ -132,7 +132,7 @@ Implemented locally:
 
 Not performed:
 - Push.
-- Future tag, GitHub Release, or NuGet publish actions beyond `v0.2.0-alpha.1`.
+- Future tag, GitHub Release, or NuGet publish actions beyond `v0.2.0-alpha.2`.
 
 ## GitHub Actions Node 24 Readiness
 The local workflow files have been prepared for Node 24-compatible official actions:

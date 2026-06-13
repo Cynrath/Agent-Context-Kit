@@ -1,7 +1,7 @@
 # 1.0 Readiness Gap Analysis
 
 ## Verdict
-AgentContextKit is **not ready for 1.0 general availability**. The current published release is `v0.2.0-alpha.1`. Existing v1.0-labelled documents and scripts prove that early contract, convention, documentation, and release-gate assets exist; they do not prove long-term compatibility, production-scale performance, migration safety, or a complete support/security process.
+AgentContextKit is **not ready for 1.0 general availability**. The current published release is `v0.2.0-alpha.2`. Existing v1.0-labelled documents and scripts prove that early contract, convention, documentation, and release-gate assets exist; they do not prove long-term compatibility, production-scale performance, migration safety, or a complete support/security process.
 
 ## Priority Definitions
 - **P0**: must be complete before a 1.0 release candidate.

@@ -19,4 +19,4 @@ Status date: 2026-06-13. Decision boundary: `LOCAL READY / REMOTE NO-GO` for the
 - `TBD` is a placeholder, not a due-date commitment.
 - An accepted-risk option is not accepted until the decision register has decision, rationale, owner role, evidence, review date, and exact release scope.
 - Local docs/tests/gates cannot mark a remote/security/package blocker done.
-- The current published `v0.2.0-alpha.1` remains unaffected; this board governs future candidate decisions.
+- The current published `v0.2.0-alpha.2` remains unaffected; this board governs future candidate decisions.

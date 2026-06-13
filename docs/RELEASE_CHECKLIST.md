@@ -27,13 +27,13 @@
 ## Completed Public Release State
 - Public repository exists: `https://github.com/Cynrath/agent-context-kit`.
 - `master` is pushed.
-- `v0.2.0-alpha.1` is pushed.
+- `v0.2.0-alpha.2` is pushed.
 - GitHub Actions latest `master` run is green.
 - Repository description is set.
 - Repository topics are set.
-- GitHub Release page for `v0.2.0-alpha.1` is created as a pre-release.
-- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
-- NuGet global tool install is verified for `0.2.0-alpha.1`.
+- GitHub Release page for `v0.2.0-alpha.2` is created as a pre-release.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.2` is published.
+- NuGet global tool install is verified for `0.2.0-alpha.2`.
 - NuGet global tool smoke test is verified in a clean demo app.
 - Cross-platform CI smoke workflow succeeded on Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
@@ -47,20 +47,19 @@
 - `v0.1.0-alpha.2` tag, GitHub Release, NuGet publish, and install verification are complete.
 - Hosted `ci`, published-package smoke, and source smoke validation remain maintainer checks after future pushes.
 
-## v0.2.0-alpha.1 Published State
-- Source/package metadata and CLI runtime version are `0.2.0-alpha.1`.
+## v0.2.0-alpha.2 Published State
+- Source/package metadata and CLI runtime version are `0.2.0-alpha.2`.
 - `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog, configurable allowlist fields, additive JSON `ruleId`, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance are published release content.
-- Published install commands are pinned to `0.2.0-alpha.1`.
-- `v0.2.0-alpha.1` tag push, GitHub pre-release, NuGet publish, global install verification, and `ackit sarif` help verification are complete.
+- Published install commands are pinned to `0.2.0-alpha.2`.
+- `v0.2.0-alpha.2` tag push, GitHub pre-release, NuGet publish, global install verification, and `ackit sarif` help verification are complete.
 
-## v0.2.0-alpha.2 Release-Candidate Gate
+## Historical v0.2.0-alpha.2 Release-Candidate Gate
 - Scope is defined in `docs/V020_ALPHA2_SCOPE.md`.
 - Release is limited to scanner precision, fixture hardening, sanitized suppression audit, contract validation, and repository documentation polish.
 - CLI commands, exit codes, JSON schema `2`, config schema `1`, SARIF visible-findings-only behavior, package ID, and tool command remain compatible.
-- Source/package/CLI version and source-package smoke are `0.2.0-alpha.2` under TASK-0123.
-- Published-package smoke stays pinned to `0.2.0-alpha.1` until alpha.2 is available on NuGet.
-- Public README install commands stay pinned to `0.2.0-alpha.1` until alpha.2 is available on NuGet.
-- Publication requires exact-commit 8/8 hosted checks and the manual OIDC release workflow.
+- Source/package/CLI version and source-package smoke were moved to `0.2.0-alpha.2` under TASK-0123.
+- Published-package smoke and public README install commands were updated to `0.2.0-alpha.2` only after NuGet publication.
+- Publication used exact-commit 8/8 hosted checks and the manual OIDC release workflow.
 - Code Scanning, Pages, screenshot assets, remote LLM integration, and breaking schema changes are out of scope.
 
 ## Remaining Manual Actions
@@ -78,7 +77,8 @@
 - Hosted Windows, Ubuntu, and macOS upgrade/source-package smoke evidence is green.
 - [x] Standard `ci`, published-package smoke, and source-package smoke are green for commit `37d5220`; see `docs/HOSTED_VALIDATION_STATUS.md`.
 - [ ] The dedicated manual `release-candidate-evidence` workflow has a green Windows, Ubuntu, and macOS run for the selected candidate commit.
-- [x] Published `0.2.0-alpha.1` package signature, package entries, release assets, and accessible attestations were audited read-only on 2026-06-13.
+- [x] Published predecessor `0.2.0-alpha.1` package signature, package entries, release assets, and accessible attestations were audited read-only on 2026-06-13.
+- [ ] Repeat the read-only supply-chain audit for published `0.2.0-alpha.2` without changing package or release state.
 - [ ] Align or explicitly accept the NuGet owner profile `Cyranth` versus project persona/package author `Cynrath`.
 - [ ] Record author signing, SBOM, provenance, and bad-package recovery decisions for the exact candidate.
 - `scripts/check-release-candidate-workflow.ps1 -FailOnIssues` passes and the manual `release-candidate-evidence` workflow is green on all three OS runners.

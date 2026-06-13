@@ -6,9 +6,9 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
 
-No changes have been recorded after the alpha.2 release candidate.
+No changes have been recorded after the alpha.2 publication.
 
-## [0.2.0-alpha.2] - Unreleased
+## [0.2.0-alpha.2] - 2026-06-13
 
 ### Added
 - Added a dependency-free local Markdown-link gate with positive/negative smoke coverage and release-gate integration.
@@ -53,8 +53,13 @@ No changes have been recorded after the alpha.2 release candidate.
 - Run Markdown link release gates in isolated hosted `pwsh` child processes and preserve child output on fixture failures.
 - Normalize Markdown targets as repository-relative path segments so Windows 8.3 temp paths cannot create false repository-escape failures.
 - Use cross-platform `pwsh` for release-job preparation and published-package verification on Ubuntu.
+- Make published-package verification choose a portable temporary directory and opt release actions into the Node.js 24 runtime.
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.
 - Allowlisted Shields.io badge hosts and common `System.IO` namespace-shaped technical tokens to prevent culture-invariant self-scan noise.
+
+### Release
+- Published `AgentContextKit` `0.2.0-alpha.2` to NuGet through GitHub OIDC Trusted Publishing.
+- Created exact tag `v0.2.0-alpha.2` at `f540479a92cbe66097f6796553828ee49ddd5512` and published the GitHub pre-release with validated package assets.
 
 ## [0.2.0-alpha.1] - 2026-06-11
 ### Added

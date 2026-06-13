@@ -10,13 +10,13 @@ This is the unified execution queue for the explicitly authorized PROJECT-CONTRO
 5. TASK-0120 config diagnostics polish.
 6. TASK-0121 contract, regression, and performance validation.
 7. TASK-0122 OIDC release automation and credential boundary.
-8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push (in progress).
-9. TASK-0124 hosted validation and publication.
-10. TASK-0125 post-publish verification and final hosted validation.
+8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push - completed.
+9. TASK-0124 hosted validation and publication - completed.
+10. TASK-0125 post-publish verification and final hosted validation - in progress.
 
 ## Completed Local Execution
 - TASK-0066 through TASK-0099 are completed locally.
-- The current published release remains `v0.2.0-alpha.1`.
+- The current published release is `v0.2.0-alpha.2`.
 - Standard `ci`, published-package smoke, and source-package smoke are green for current remote `master`.
 - The release-candidate evidence boundary remains `LOCAL READY / REMOTE NO-GO` where applicable.
 - Completed local documentation, tests, and gates do not claim 1.0 readiness or close remote P0/P1 decisions.
@@ -50,12 +50,12 @@ These actions require explicit maintainer control and do not block safe local-on
 14. TASK-0113 no-network/default-offline policy hardening - completed locally.
 15. TASK-0114 release blocker board and maintainer decision register - completed locally.
 16. TASK-0115 `v0.2.0-alpha.2` candidate planning refresh - completed locally.
-17. TASK-0116 ecosystem documentation consistency and local link audit - queued.
+17. TASK-0116 ecosystem documentation consistency and local link audit - completed.
 
 ## Current Remote State
-- Current published release: `v0.2.0-alpha.1`.
+- Current published release: `v0.2.0-alpha.2` at exact package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 - GitHub Release: published pre-release.
-- NuGet package: `AgentContextKit` `0.2.0-alpha.1`.
+- NuGet package: `AgentContextKit` `0.2.0-alpha.2`, published through OIDC Trusted Publishing.
 - Published global tool includes `ackit sarif`.
 - Local and remote `master` were aligned at PROJECT-CONTROL-0102 start on `8dadd16`.
 - All eight checked `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs succeeded for `8dadd16`.

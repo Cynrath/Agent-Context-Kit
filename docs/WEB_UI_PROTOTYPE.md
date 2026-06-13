@@ -49,7 +49,7 @@ ackit webui --output .ackit/webui/baseline.html --baseline .ackit-baseline.json
 ```json
 {
   "schemaVersion": 2,
-  "toolVersion": "0.2.0-alpha.1",
+  "toolVersion": "0.2.0-alpha.2",
   "command": "webui",
   "webUi": {
     "path": ".ackit/webui/index.html",

@@ -27,11 +27,15 @@
 - Further Turkish generated-template and documentation localization polish beyond the current CLI output pass.
 - Final local readiness consolidation.
 
+## v0.2.0-alpha.2
+- Published on GitHub and NuGet through TASK-0124 from exact package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
+- Includes the alpha.1 SARIF/scanner catalog/config allowlist surface plus scanner precision hardening, sanitized suppression audit output, baseline-aware CI policy, config diagnostics, contract coverage, local Markdown-link validation, and exact-commit OIDC release automation.
+- Published install command is `dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2`.
+
 ## v0.2.0-alpha.1
 - Published on GitHub and NuGet in TASK-0065.
-- Includes `ackit sarif` as a published package command.
-- Includes SARIF 2.1.0 output, scanner rule catalog metadata, additive JSON `ruleId`, configurable non-Critical allowlists, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance.
-- Published install command is `dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1`.
+- Added `ackit sarif` as a published package command.
+- Added SARIF 2.1.0 output, scanner rule catalog metadata, additive JSON `ruleId`, configurable non-Critical allowlists, expanded scanner patterns, sample gallery, demo scenarios, Web UI preview docs, and visual asset guidance.
 
 ## v0.1.0-alpha.2
 - Published on GitHub and NuGet.
@@ -172,13 +176,13 @@
 - TASK-0115 completed `v0.2.0-alpha.2` planning without version, tag, package, or release changes.
 - PROJECT-CONTROL-0102 authorizes sequential TASK-0116 through TASK-0125 implementation, validated normal pushes, exact-commit hosted checks, OIDC NuGet publication, GitHub pre-release creation, and post-publish verification.
 - TASK-0116 through TASK-0122 completed local link validation, scanner/config/baseline/suppression hardening, full regression/performance validation, and manual exact-SHA OIDC release automation.
-- TASK-0123 is preparing source/package/CLI metadata and source-package smoke for `0.2.0-alpha.2`; published-package smoke and README install commands remain on alpha.1 until publication.
-- TASK-0124 will require exact-commit 8/8 hosted checks before OIDC NuGet publication, exact tag creation, and GitHub pre-release creation.
-- TASK-0125 will perform global installed-tool smoke, published-package version sync, final docs sync, and post-publish 8/8 hosted validation.
+- TASK-0123 completed source/package/CLI metadata, source-package smoke, package inspection, and exact-commit preparation for `0.2.0-alpha.2`.
+- TASK-0124 completed NuGet OIDC publication, exact tag creation, and GitHub pre-release creation after exact-commit 8/8 hosted checks.
+- TASK-0125 is completing global installed-tool smoke, published-package version sync, final docs sync, and post-publish 8/8 hosted validation.
 - TASK-0115 planning scope: scanner precision, suppression audit, baseline-aware CI, config diagnostics, and ecosystem/offline documentation. It excludes dependency expansion, default network behavior, and external tool execution.
 - Maintainer-gated RC/security decisions do not block this local-only research, but the research does not close release blockers or imply 1.0 readiness.
 
-Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.
+Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.2` package.
 
 ## v0.4.0-beta
 - Local Web UI prototype. Started with offline static `ackit webui`.

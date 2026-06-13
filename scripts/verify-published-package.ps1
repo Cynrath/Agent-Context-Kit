@@ -11,7 +11,13 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version Latest
 
 $stamp = Get-Date -Format "yyyyMMddHHmmssfff"
-$root = Join-Path $env:TEMP "ackit-package-verification-$stamp"
+$tempBase = @($env:TEMP, $env:TMPDIR, $env:RUNNER_TEMP, [System.IO.Path]::GetTempPath()) |
+    Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
+    Select-Object -First 1
+if ([string]::IsNullOrWhiteSpace($tempBase)) {
+    throw "No temporary directory is available for package verification."
+}
+$root = Join-Path $tempBase "ackit-package-verification-$stamp"
 $toolRoot = Join-Path $root "tool"
 $smokeRoot = Join-Path $root "smoke"
 

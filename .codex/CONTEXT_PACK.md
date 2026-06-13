@@ -33,13 +33,13 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - No risk findings in the latest local scan.
 - Package URLs point to `https://github.com/Cynrath/agent-context-kit`.
 - GitHub repository is public.
-- Current release tag `v0.2.0-alpha.1` is pushed.
+- Current release tag `v0.2.0-alpha.2` is pushed at exact package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 - GitHub Actions latest `master` run is green.
 - Read-only GitHub CLI validation on 2026-06-06 confirmed `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` succeeded after `docs: add sample gallery and demo scenarios`.
 - Repository description and topics are set.
-- GitHub Release page for `v0.2.0-alpha.1` is completed as a pre-release.
-- NuGet package `AgentContextKit` version `0.2.0-alpha.1` is published.
-- NuGet global tool install verification is completed for `0.2.0-alpha.1`.
+- GitHub Release page for `v0.2.0-alpha.2` is completed as a pre-release with validated package assets.
+- NuGet package `AgentContextKit` version `0.2.0-alpha.2` is published through GitHub OIDC Trusted Publishing.
+- NuGet global tool install verification for `0.2.0-alpha.2` is part of TASK-0125 final verification.
 - NuGet global tool smoke test is completed, including `ackit --help` and Web UI generation.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
@@ -161,7 +161,7 @@ powershell -ExecutionPolicy Bypass -File scripts/verify-release.ps1
 - Starting state is clean aligned `master`/`origin/master` at `8dadd16`; the exact commit has 8/8 successful standard hosted jobs.
 - Secret values are never displayed, logged, persisted, or committed. Force push, history rewrite, tag movement, immutable-version overwrite, and user-change deletion remain prohibited.
 - TASK-0116–0122 completed locally on 2026-06-13: local Markdown gate, scanner multi-candidate/boundary privacy hardening, suppression dedupe, baseline severity-escalation policy, unmatched-quote config diagnostics, 186-test regression/performance validation, and exact-commit OIDC release automation.
-- TASK-0123 local validation passed with 186/186 tests, package inspection, full installed-tool smoke, clean source outputs, all local gates, and 3.704/3.685-second performance evidence. Commits through `ed9bf78` each passed 8/8. The latest dispatch completed validation/package upload and stopped before OIDC because Ubuntu release-job scripts used `powershell`; they now use cross-platform `pwsh`, requiring a new exact SHA and fresh 8/8.
+- TASK-0123 local validation passed with 186/186 tests, package inspection, full installed-tool smoke, clean source outputs, all local gates, and 3.704/3.685-second performance evidence. TASK-0124 run `27470659578` published NuGet `0.2.0-alpha.2` through OIDC, then stopped before tag/release on a missing Linux `$env:TEMP`. Portable temp fallback is prepared; recovery must skip republish, verify the existing package, and create the missing exact tag/pre-release after a new 8/8 SHA.
 - TASK-0081 freezes `v0.2.0-alpha.2` as a compatible scanner precision and sanitized suppression-audit hardening release without changing version metadata.
 
 ## Source Hygiene

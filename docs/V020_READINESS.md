@@ -27,14 +27,14 @@ powershell -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailO
 `-FailOnIssues` fails only for missing v0.2 readiness assets. It reports public-release blockers separately because those require maintainer-only decisions.
 
 ## Current Public Release State
-`v0.2.0-alpha.1` is published on GitHub and NuGet as a pre-release. The repository now includes a manual exact-commit release workflow for authorized OIDC publication; it has no push or pull-request trigger and does not activate SARIF upload.
+`v0.2.0-alpha.2` is published on GitHub and NuGet as a pre-release. The repository now includes a manual exact-commit release workflow for authorized OIDC publication; it has no push or pull-request trigger and does not activate SARIF upload.
 
-`0.2.0-alpha.1` published content includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery and demo scenario docs, Web UI preview docs, and visual asset guidance.
+`0.2.0-alpha.2` published content includes `ackit sarif`, SARIF 2.1.0 output, scanner rule catalog hardening, configurable allowlists, additive JSON `ruleId`, expanded scanner patterns, sample gallery and demo scenario docs, Web UI preview docs, and visual asset guidance.
 
-## Planned v0.2.0-alpha.2
-The next package scope is frozen in `docs/V020_ALPHA2_SCOPE.md` as a compatibility-preserving hardening release. It includes culture-invariant scanner precision, expanded fixture coverage, and sanitized human/JSON suppression audit output while retaining CLI commands, JSON schema `2`, config schema `1`, exit codes, and SARIF visible-findings-only behavior.
+## Published v0.2.0-alpha.2
+The package scope in `docs/V020_ALPHA2_SCOPE.md` was published as a compatibility-preserving hardening release. It includes culture-invariant scanner precision, expanded fixture coverage, sanitized human/JSON suppression audit output, baseline-aware CI policy, config diagnostics, and exact-commit OIDC release automation while retaining JSON schema `2`, config schema `1`, documented exit codes, and SARIF visible-findings-only behavior.
 
-Source/package/CLI metadata and source-package smoke are now prepared as `0.2.0-alpha.2`. Published-package smoke and public install commands remain on `0.2.0-alpha.1` until alpha.2 is published and verified.
+Source/package/CLI metadata, README install commands, source-package smoke, and published-package smoke are synchronized to `0.2.0-alpha.2`.
 
 ## Required Validation
 Use these commands before treating v0.2 local readiness as reviewed:

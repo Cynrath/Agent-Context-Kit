@@ -28,7 +28,7 @@ Exit behavior:
 Use the published package for stable CI checks:
 
 ```yaml
-- run: dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+- run: dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 - run: echo "$HOME/.dotnet/tools" >> "$GITHUB_PATH"
 - run: ackit scan --ci
 ```
@@ -41,10 +41,10 @@ See `docs/examples/github-actions-scan-ci.yml`.
 Use it after `scan --ci` so risk findings are handled first. A minimal demo app can fail `doctor` because it intentionally lacks full OSS metadata; that is expected health reporting, not necessarily a tool failure.
 
 ## SARIF Output And Code Scanning Decision
-`ackit sarif --output .ackit/reports/ackit.sarif` is available in current source and the `0.2.0-alpha.1` package. The published NuGet package `0.2.0-alpha.1` includes this command.
+`ackit sarif --output .ackit/reports/ackit.sarif` is available in current source and the `0.2.0-alpha.2` package. The published NuGet package `0.2.0-alpha.2` includes this command.
 
 Use one of these approaches:
-- Install the published `0.2.0-alpha.1` package in CI.
+- Install the published `0.2.0-alpha.2` package in CI.
 - Pack the current branch locally and install from the temporary package source.
 
 SARIF output is local-only by default. It uses repository-relative artifact locations and does not write raw scanner match values into result messages.
@@ -57,7 +57,7 @@ The recommended first opt-in is a manual `workflow_dispatch` job using the pinne
 Published tool smoke validates the package users install from NuGet. It should stay pinned to the current published version:
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 ackit version
 ackit --help
 ackit scan --ci
@@ -67,7 +67,7 @@ Source package smoke validates the current branch before future publication. Use
 
 ```powershell
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.2 --ignore-failed-sources
 ```
 
 See:
@@ -108,7 +108,7 @@ Upload SARIF only when:
 
 ## When Not To Upload SARIF
 Do not upload SARIF when:
-- using a package version older than `0.2.0-alpha.1`, because it does not include `ackit sarif`;
+- using a package version older than `0.2.0-alpha.2`, because it does not include `ackit sarif`;
 - reviewing a private or sensitive repository without approval;
 - findings include data that should not appear in a public security integration;
 - repository permissions have not been reviewed; or

@@ -21,6 +21,7 @@ $required = @(
     "commit_sha:",
     "prerelease:",
     "concurrency:",
+    "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
     "contents: read",
     "environment: nuget-release",
     "contents: write",
@@ -54,6 +55,13 @@ if (-not $content.Contains('pwsh -NoProfile -File scripts/test-local-markdown-li
 $prepareRelease = Get-Content -Raw (Join-Path $repoRoot "scripts\prepare-release.ps1")
 if (-not $prepareRelease.Contains('git tag --list $tagName')) {
     $issues.Add("Release preparation must treat an absent target tag as an idempotent state.") | Out-Null
+}
+
+$publishedVerifier = Get-Content -Raw (Join-Path $repoRoot "scripts\verify-published-package.ps1")
+foreach ($tempMarker in @('$env:TEMP', '$env:TMPDIR', '$env:RUNNER_TEMP', '[System.IO.Path]::GetTempPath()')) {
+    if (-not $publishedVerifier.Contains($tempMarker)) {
+        $issues.Add("Published-package verifier temp fallback missing: $tempMarker") | Out-Null
+    }
 }
 
 foreach ($marker in $required) {

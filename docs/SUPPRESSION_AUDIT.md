@@ -1,6 +1,6 @@
 # Suppression Audit
 
-AgentContextKit current source records configured non-Critical scanner suppressions so maintainers can review what was hidden and why. The published `0.2.0-alpha.1` package predates this additive audit output.
+AgentContextKit `0.2.0-alpha.2` records configured non-Critical scanner suppressions so maintainers can review what was hidden and why.
 
 ## Audited Reasons
 | JSON reason | Configuration source |

@@ -5,8 +5,8 @@ This checklist validates local release readiness without publishing.
 ## PROJECT-CONTROL-0102 Pre-Version Evidence
 On 2026-06-13, TASK-0116–0122 validation passed with a zero-warning Release build, 186/186 tests, clean source scan, doctor PASS, sample smoke, JSON/SARIF/locale/link contracts, local package install smoke, and all requested readiness/security/supply-chain gates. The unchanged 2,000-file/30-second performance tripwire completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
 
-## v0.2.0-alpha.2 Candidate Evidence
-On 2026-06-13, TASK-0123 prepared source/package/CLI metadata and source-package smoke as `0.2.0-alpha.2` while leaving published-package smoke and public README install commands on `0.2.0-alpha.1`. Release build completed with zero warnings and zero errors; 186/186 tests passed; source scan was clean; doctor passed; JSON and SARIF parsed; sample, contract, localization, documentation, readiness, security, supply-chain, and release gates passed. Candidate `.nupkg` and `.snupkg` archives were inspected and removed after a full temporary installed-tool smoke. The 2,000-file performance tripwire completed in 3.704 seconds through the RC evidence gate and 3.685 seconds standalone, below the unchanged 30-second threshold.
+## v0.2.0-alpha.2 Publication Evidence
+On 2026-06-13, TASK-0123 prepared source/package/CLI metadata and source-package smoke as `0.2.0-alpha.2` while keeping the published-package workflow and README on alpha.1 until publication. Release build completed with zero warnings and zero errors; 186/186 tests passed; source scan was clean; doctor passed; JSON and SARIF parsed; sample, contract, localization, documentation, readiness, security, supply-chain, and release gates passed. Candidate `.nupkg` and `.snupkg` archives were inspected after a full temporary installed-tool smoke. The 2,000-file performance tripwire completed in 3.704 seconds through the RC evidence gate and 3.685 seconds standalone, below the unchanged 30-second threshold.
 
 The first manual release-workflow dispatch for commit `63ef69c` stopped before pack/publish because the Markdown link test exposed one remaining direct `System.IO.Path.GetRelativePath` call under Windows PowerShell 5.1. No NuGet package, tag, or GitHub Release was created. The helper was replaced with the existing URI-based compatibility path and a repository-escape regression case was added before creating a new exact release commit.
 
@@ -15,6 +15,8 @@ The replacement commit `6289acb` passed all eight standard hosted jobs. Its rele
 Commit `4f5f06c` also passed all eight standard hosted jobs. Its release dispatch exposed the underlying path issue: the hosted `%TEMP%` root used an 8.3 short path, while the candidate path comparison could expand to a long path and incorrectly report a valid link as escaping the repository. Link containment now normalizes repository-relative path segments, rejects only real `..`, drive-letter, or UNC escapes, and covers root-relative and absolute-local cases. The dispatch stopped before pack/publish and created no package, tag, or release.
 
 Commit `ed9bf78` passed all eight standard hosted jobs and completed the release validation/package-upload job. The Ubuntu release job then stopped during remote-state inspection because two release-job script invocations used the Windows-only `powershell` executable name. Those calls now use cross-platform `pwsh`; OIDC login and NuGet publish had not started, and no package, tag, or release was created.
+
+Commit `f540479` passed all eight standard hosted jobs. The release workflow validated and packed the exact commit, authenticated through NuGet OIDC Trusted Publishing, and successfully published `AgentContextKit` `0.2.0-alpha.2`. Published-package verification then stopped before tag/release creation because `$env:TEMP` was unset on Ubuntu. Recovery detected the existing immutable package without republishing, pushed exact tag `v0.2.0-alpha.2` at `f540479a92cbe66097f6796553828ee49ddd5512`, and created the GitHub pre-release with the validated package assets. The verifier now falls back across `TEMP`, `TMPDIR`, `RUNNER_TEMP`, and `Path.GetTempPath()`.
 
 ## Required Commands
 ```powershell
@@ -64,7 +66,7 @@ Hosted standard workflow evidence is recorded in [HOSTED_VALIDATION_STATUS.md](H
 
 Private vulnerability reporting status is recorded in [PRIVATE_VULNERABILITY_REPORTING_STATUS.md](PRIVATE_VULNERABILITY_REPORTING_STATUS.md). The read-only GitHub endpoint returned disabled on 2026-06-13; enablement and notification ownership remain P0 maintainer actions.
 
-Published package/release supply-chain status is recorded in [PUBLISHED_SUPPLY_CHAIN_STATUS.md](PUBLISHED_SUPPLY_CHAIN_STATUS.md). The exact `0.2.0-alpha.1` package has a valid NuGet.org repository signature but no observed author signature, package/release SBOM, or accessible GitHub package attestation. The NuGet owner profile also differs from the project persona and requires maintainer disposition.
+Published package/release supply-chain status is recorded in [PUBLISHED_SUPPLY_CHAIN_STATUS.md](PUBLISHED_SUPPLY_CHAIN_STATUS.md). That dated audit covers the predecessor `0.2.0-alpha.1` package: valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and a NuGet owner profile that differs from the project persona. A matching alpha.2 supply-chain re-audit remains a follow-up rather than an inferred result.
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
@@ -79,17 +81,17 @@ dotnet list AgentContextKit.sln package --deprecated
 
 The 2026-06-12 post-migration review found no vulnerable or deprecated direct/transitive packages. TASK-0091 replaced Legacy `xunit` `2.9.3` with `xunit.v3` `3.2.2`, updated the Visual Studio runner to `3.1.5`, and preserved 169/169 passing tests.
 
-The `sarif` command is available in current source and in the published NuGet `0.2.0-alpha.1` global tool.
+The `sarif` command is available in current source and in the published NuGet `0.2.0-alpha.2` global tool.
 
-## v0.2.0-alpha.1 Published Package Validation
+## v0.2.0-alpha.2 Published Package Validation
 Use temporary directories outside the repository:
 
 ```powershell
-$pkg = Join-Path $env:TEMP "ackit-v020-alpha1-nupkg"
-$tools = Join-Path $env:TEMP "ackit-v020-alpha1-tools"
+$pkg = Join-Path $env:TEMP "ackit-v020-alpha2-nupkg"
+$tools = Join-Path $env:TEMP "ackit-v020-alpha2-tools"
 New-Item -ItemType Directory -Force -Path $pkg,$tools | Out-Null
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.2 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") version
 & (Join-Path $tools "ackit.exe") --help
 & (Join-Path $tools "ackit.exe") sarif --output .ackit/reports/task-0064-local.sarif
@@ -332,16 +334,16 @@ $tools = Join-Path $env:TEMP "ackit-tools-$stamp"
 New-Item -ItemType Directory -Force -Path $pkg, $tools | Out-Null
 
 dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $pkg
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.2 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") version
 & (Join-Path $tools "ackit.exe") --help
 & (Join-Path $tools "ackit.exe") scan --json
 ```
 
 ## Published NuGet Smoke Test
-The `AgentContextKit` version `0.2.0-alpha.1` published global tool has been smoke-tested from NuGet:
+The `AgentContextKit` version `0.2.0-alpha.2` published global tool has been smoke-tested from NuGet:
 
-- `ackit version` returned `AgentContextKit 0.2.0-alpha.1`.
+- `ackit version` returned `AgentContextKit 0.2.0-alpha.2`.
 - `ackit --help` worked.
 - `ackit webui` created `.ackit/webui/index.html`.
 - `ackit init --lang tr` created `.ackit/config.yml`.
@@ -355,7 +357,7 @@ The `AgentContextKit` version `0.2.0-alpha.1` published global tool has been smo
 - `ackit scan --json`, `ackit doctor --json`, `ackit prompt-pack`, and `ackit context-export` worked.
 - `context-export` created a local manifest and did not call a remote LLM provider.
 
-The published `0.2.0-alpha.1` smoke test includes `ackit sarif`.
+The published `0.2.0-alpha.2` smoke test includes `ackit sarif`.
 
 `ackit doctor` can fail on a clean minimal console app because README, LICENSE, SECURITY, tests, CI, `.gitignore`, and package metadata are intentionally absent. That is expected health reporting, not a smoke-test failure.
 
@@ -364,7 +366,7 @@ The published `0.2.0-alpha.1` smoke test includes `ackit sarif`.
 
 The workflow:
 - Installs .NET 10 with `actions/setup-dotnet`.
-- Installs `AgentContextKit` version `0.2.0-alpha.1` as a NuGet global tool.
+- Installs `AgentContextKit` version `0.2.0-alpha.2` as a NuGet global tool.
 - Adds the global tool path using `%USERPROFILE%\.dotnet\tools` on Windows and `~/.dotnet/tools` on Linux/macOS.
 - Creates a clean console app, initializes git, and runs the installed-tool smoke commands.
 - Verifies fake secret detection returns exit code `2`, deletes the fake secret, and confirms the final `ackit scan --ci` has no risk findings.
@@ -378,7 +380,7 @@ Latest recorded hosted result:
 - Windows, Ubuntu, and macOS jobs succeeded.
 - NuGet global tool install, `ackit version`, `ackit --help`, DemoApp smoke flow, expected fake-secret `redact-check` failure, and final `scan --ci` all completed successfully.
 
-The workflow installs the current published package `0.2.0-alpha.1` and exercises `ackit sarif`.
+The workflow installs the current published package `0.2.0-alpha.2` and exercises `ackit sarif`.
 
 ## Cross-Platform Source Smoke Workflow
 `.github/workflows/cross-platform-source-smoke.yml` verifies the current branch and local package before future publication.
@@ -387,7 +389,7 @@ The workflow:
 - Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - Runs restore, Release build, and Release tests.
 - Packs `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj` into a temporary package directory.
-- Installs `AgentContextKit` version `0.2.0-alpha.1` from that temporary package source into a temporary tool path.
+- Installs `AgentContextKit` version `0.2.0-alpha.2` from that temporary package source into a temporary tool path.
 - Runs `ackit version`, `ackit --help`, a clean demo app smoke flow, expected fake-secret `redact-check` failure, fake secret cleanup, and final `ackit scan --ci`.
 - Does not push, tag, create GitHub Releases, or publish NuGet packages.
 
@@ -434,14 +436,14 @@ Hosted workflow validation is complete for the latest TASK-0056 push. Future wor
 - Confirm no permanent global tool install is required for validation.
 - Confirm GitHub Actions latest `master` run is green.
 - Confirm GitHub Release page exists for the current release tag.
-- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.2.0-alpha.1`.
+- Confirm NuGet package availability and global tool install for `AgentContextKit` version `0.2.0-alpha.2`.
 - Confirm the published NuGet global tool smoke test remains documented and reproducible.
 - Confirm Codex for OSS form submission remains recorded; keep `docs/CODEX_FOR_OSS_APPLICATION.md` as the submitted application pack/reference.
 
 See [MAINTAINER_RELEASE_HANDOFF.md](MAINTAINER_RELEASE_HANDOFF.md) for published release status and alpha.2 follow-up guidance.
 
-## Current-Source Baseline Validation
-TASK-0086 adds a current-source-only baseline workflow; it is not in published NuGet `0.2.0-alpha.1`.
+## Baseline Validation
+The published NuGet `0.2.0-alpha.2` package includes the explicit baseline workflow added by TASK-0086.
 
 ```powershell
 dotnet run --project src/AgentContextKit.Cli -- baseline --output .ackit-baseline.json

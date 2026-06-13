@@ -38,13 +38,13 @@ Default commands process repository content locally: no repository upload, AI AP
 
 | Area | Status |
 | --- | --- |
-| Current release | `v0.2.0-alpha.1` published on GitHub and NuGet as a pre-release |
+| Current release | `v0.2.0-alpha.2` published on GitHub and NuGet as a pre-release |
 | Package | `AgentContextKit` global tool install verified |
 | Previous release | `v0.1.0-alpha.2` |
 | Runtime | .NET 10 |
 | Platforms | Windows, Ubuntu, macOS via GitHub Actions smoke flows |
 | Privacy model | Offline-first; no repository upload and no remote AI API calls in the MVP |
-| SARIF | `ackit sarif` is included in the published `0.2.0-alpha.1` package |
+| SARIF | `ackit sarif` is included in the published `0.2.0-alpha.2` package |
 
 ---
 
@@ -93,7 +93,7 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 | Capability | Command | Output |
 | --- | --- | --- |
 | Initialize config | `ackit init` | `.ackit/config.yml` |
-| Validate config (current source) | `ackit config-check` | Read-only sanitized diagnostics and migration guidance |
+| Validate config | `ackit config-check` | Read-only sanitized diagnostics and migration guidance |
 | Scan repository | `ackit scan` | Stack, docs, tests, CI, Docker, agent files, risky paths |
 | Fail CI on risk | `ackit scan --ci` | Non-zero exit on high or critical findings |
 | Record reviewed findings | `ackit baseline` | Sanitized local baseline for opt-in new-finding CI policy |
@@ -114,7 +114,7 @@ AgentContextKit gives teams a repeatable local workflow before they hand a repos
 ### Install from NuGet
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 ackit version
 ackit --help
 ```
@@ -129,7 +129,7 @@ ackit doctor
 
 `scan --ci` returns a non-zero exit code for High or Critical findings. Start with `ackit scan` when you want report-only behavior.
 
-Current source also supports read-only config diagnostics and an explicit baseline workflow. These commands are not part of the published `0.2.0-alpha.1` package:
+The published `0.2.0-alpha.2` package supports read-only config diagnostics and an explicit baseline workflow:
 
 ```powershell
 ackit config-check --json
@@ -176,7 +176,7 @@ dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Relea
 dotnet run --project src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -- sarif --output .ackit/reports/ackit.sarif
 ```
 
-Current source adds sanitized suppression audit fields to human/JSON scan output. The published `0.2.0-alpha.1` package predates that additive audit surface.
+The published `0.2.0-alpha.2` package adds sanitized suppression audit fields to human/JSON scan output.
 
 ### Try it on a sample
 
@@ -335,10 +335,10 @@ Public release blockers are tracked in [Release Blockers](docs/RELEASE_BLOCKERS.
 
 ## Packaging
 
-Local package validation is documented in [Packaging](docs/PACKAGING.md) and [Release Validation](docs/RELEASE_VALIDATION.md). The `0.2.0-alpha.1` package is published as a NuGet global tool.
+Local package validation is documented in [Packaging](docs/PACKAGING.md) and [Release Validation](docs/RELEASE_VALIDATION.md). The `0.2.0-alpha.2` package is published as a NuGet global tool.
 
 ```powershell
-dotnet tool install --global AgentContextKit --version 0.2.0-alpha.1
+dotnet tool install --global AgentContextKit --version 0.2.0-alpha.2
 ackit version
 ```
 
