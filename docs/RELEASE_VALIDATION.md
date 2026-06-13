@@ -12,6 +12,8 @@ The first manual release-workflow dispatch for commit `63ef69c` stopped before p
 
 The replacement commit `6289acb` passed all eight standard hosted jobs. Its release dispatch also stopped before pack/publish because the nested legacy PowerShell child returned a nonzero fixture result only on the hosted image. The release workflow now runs both Markdown link gates in isolated `pwsh` child processes, while the fixture runner reuses its current host and preserves child output for diagnosis. No NuGet package, tag, or GitHub Release was created by either failed dispatch.
 
+Commit `4f5f06c` also passed all eight standard hosted jobs. Its release dispatch exposed the underlying path issue: the hosted `%TEMP%` root used an 8.3 short path, while the candidate path comparison could expand to a long path and incorrectly report a valid link as escaping the repository. Link containment now normalizes repository-relative path segments, rejects only real `..`, drive-letter, or UNC escapes, and covers root-relative and absolute-local cases. The dispatch stopped before pack/publish and created no package, tag, or release.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

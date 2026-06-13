@@ -12,7 +12,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Successful validation is followed by normal commit and push in this authorized control task. Release publication uses OIDC only and never exposes or persists credential values.
 - TASK-0116 through TASK-0122 are complete locally. The suite is 186/186; scan is clean; doctor passes; performance completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
 - Release automation is manual-only, exact-SHA, per-version serialized, OIDC-only, and idempotent across NuGet/tag/GitHub Release partial states. Local package and full installed-tool smoke passed with `.nupkg` and `.snupkg` output.
-- TASK-0123 commits `63ef69c` and `6289acb` each passed 8/8 standard hosted jobs. Both release dispatches stopped before package/tag/release writes on Markdown-link gate host compatibility. The workflow now runs those gates in isolated `pwsh` child processes, and fixture failures preserve child output; a new exact release commit and fresh 8/8 are required.
+- TASK-0123 commits `63ef69c`, `6289acb`, and `4f5f06c` each passed 8/8 standard hosted jobs. Their release dispatches stopped before package/tag/release writes while exposing Markdown-link host/path compatibility. The final fix uses isolated `pwsh`, repository-relative segment normalization, and explicit real-escape tests; a new exact release commit and fresh 8/8 are required.
 - TASK-0066 through TASK-0073 are completed locally without remote writes.
 - TASK-0075 and TASK-0076 are completed locally; TASK-0076 is ready to commit after full validation.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.

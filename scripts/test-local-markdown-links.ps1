@@ -32,7 +32,7 @@ function Invoke-Case {
 
 try {
     Invoke-Case -Name "valid-local" -ExpectedExitCode 0 -Files @{
-        "README.md" = "[Guide](docs/guide.md#start)"
+        "README.md" = "[Guide](docs/guide.md#start) [Root](/docs/guide.md)"
         "docs/guide.md" = "# Start"
     }
     Invoke-Case -Name "external-and-code" -ExpectedExitCode 0 -Files @{
@@ -43,6 +43,9 @@ try {
     }
     Invoke-Case -Name "repository-escape" -ExpectedExitCode 1 -Files @{
         "README.md" = "[Outside](../outside.md)"
+    }
+    Invoke-Case -Name "absolute-local" -ExpectedExitCode 1 -Files @{
+        "README.md" = "[Machine](C:/private/file.md)"
     }
 
     Write-Host "Local Markdown link gate tests passed."

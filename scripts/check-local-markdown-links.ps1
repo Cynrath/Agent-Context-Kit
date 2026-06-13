@@ -89,25 +89,43 @@ function Test-MarkdownTarget {
         return
     }
 
+    $sourceRelative = (Get-RelativePath -BasePath $repoRoot -TargetPath $SourcePath).Replace('\', '/')
     $script:checkedTargets++
-    if ([System.IO.Path]::IsPathRooted($target)) {
-        $candidate = Join-Path $repoRoot $target.TrimStart('/', '\')
-    }
-    else {
-        $candidate = Join-Path ([System.IO.Path]::GetDirectoryName($SourcePath)) $target
-    }
-
-    $fullCandidate = [System.IO.Path]::GetFullPath($candidate)
-    $repoPrefix = $repoRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
-    if (-not $fullCandidate.StartsWith($repoPrefix, [System.StringComparison]::OrdinalIgnoreCase) -and
-        -not $fullCandidate.Equals($repoRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
-        $sourceRelative = (Get-RelativePath -BasePath $repoRoot -TargetPath $SourcePath).Replace('\', '/')
-        $issues.Add("${sourceRelative}: link escapes repository: '$RawTarget'.")
+    if ($target -match '^[A-Za-z]:[\\/]' -or $target.StartsWith('\\')) {
+        $issues.Add("${sourceRelative}: link uses an absolute local path: '$RawTarget'.")
         return
     }
 
+    if ($target.StartsWith('/') -or $target.StartsWith('\')) {
+        $combinedRelative = $target.TrimStart('/', '\')
+    }
+    else {
+        $sourceDirectory = [System.IO.Path]::GetDirectoryName($sourceRelative)
+        $combinedRelative = if ([string]::IsNullOrWhiteSpace($sourceDirectory)) {
+            $target
+        }
+        else {
+            "$($sourceDirectory.Replace('\', '/'))/$target"
+        }
+    }
+
+    $segments = [System.Collections.Generic.List[string]]::new()
+    foreach ($segment in ($combinedRelative.Replace('\', '/') -split '/')) {
+        if ([string]::IsNullOrWhiteSpace($segment) -or $segment -eq '.') { continue }
+        if ($segment -eq '..') {
+            if ($segments.Count -eq 0) {
+                $issues.Add("${sourceRelative}: link escapes repository: '$RawTarget'.")
+                return
+            }
+            $segments.RemoveAt($segments.Count - 1)
+            continue
+        }
+        $segments.Add($segment)
+    }
+
+    $repoRelativeTarget = $segments -join [System.IO.Path]::DirectorySeparatorChar
+    $fullCandidate = Join-Path $repoRoot $repoRelativeTarget
     if (-not (Test-Path -LiteralPath $fullCandidate)) {
-        $sourceRelative = (Get-RelativePath -BasePath $repoRoot -TargetPath $SourcePath).Replace('\', '/')
         $issues.Add("${sourceRelative}: missing local Markdown target '$RawTarget'.")
     }
 }
