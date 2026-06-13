@@ -37,7 +37,7 @@ Full local gates and hosted run inspection.
 Revert workflow hardening; retain previous evidence as historical.
 
 ## Completion Evidence
-Local hardening implemented: exact SHA/candidate/predecessor inputs, current origin/master validation, per-commit/version concurrency, read-only permissions, no-upload boundaries, and positive/negative input tests. Push, standard 8/8, and dedicated three-OS dispatch remain.
+Local hardening implemented: exact SHA/candidate/predecessor inputs, current origin/master validation, per-commit/version concurrency, read-only permissions, no-upload boundaries, and positive/negative input tests. First hosted run `27478415124` passed all Windows evidence and all non-performance Ubuntu/macOS checks; those two runners exposed a null `$env:TEMP` portability defect before benchmark execution. Portable temp fallback is pending repeat validation and dispatch without changing the 2,000-file/30-second threshold.
 
 ## Commit
 `ci: harden hosted release candidate evidence`

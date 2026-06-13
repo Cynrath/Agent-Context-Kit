@@ -11,7 +11,13 @@ Set-StrictMode -Version Latest
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
 $cliProject = Join-Path $repoRoot "src\AgentContextKit.Cli\AgentContextKit.Cli.csproj"
-$tempRoot = Join-Path $env:TEMP ("ackit-performance-" + [guid]::NewGuid().ToString("N"))
+$tempBase = @($env:TEMP, $env:TMPDIR, $env:RUNNER_TEMP, [System.IO.Path]::GetTempPath()) |
+    Where-Object { -not [string]::IsNullOrWhiteSpace($_) } |
+    Select-Object -First 1
+if ([string]::IsNullOrWhiteSpace($tempBase)) {
+    throw "No temporary directory is available for the synthetic benchmark."
+}
+$tempRoot = Join-Path $tempBase ("ackit-performance-" + [guid]::NewGuid().ToString("N"))
 
 Write-Host "AgentContextKit synthetic scan benchmark"
 Write-Host "Files requested: $FileCount"

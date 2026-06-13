@@ -90,6 +90,13 @@ else {
             Add-Issue "Release-candidate input positive/negative tests failed."
         }
     }
+
+    $performanceScript = Get-Content -Raw (Join-Path $PSScriptRoot "measure-scan-performance.ps1")
+    foreach ($tempMarker in @('$env:TEMP', '$env:TMPDIR', '$env:RUNNER_TEMP', '[System.IO.Path]::GetTempPath()')) {
+        if (-not $performanceScript.Contains($tempMarker)) {
+            Add-Issue "Performance tripwire temp fallback missing: $tempMarker"
+        }
+    }
 }
 
 Write-Host ""
