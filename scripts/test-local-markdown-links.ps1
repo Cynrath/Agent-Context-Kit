@@ -38,6 +38,9 @@ try {
     Invoke-Case -Name "broken-local" -ExpectedExitCode 1 -Files @{
         "README.md" = "[Missing](docs/missing.md)"
     }
+    Invoke-Case -Name "repository-escape" -ExpectedExitCode 1 -Files @{
+        "README.md" = "[Outside](../outside.md)"
+    }
 
     Write-Host "Local Markdown link gate tests passed."
 }

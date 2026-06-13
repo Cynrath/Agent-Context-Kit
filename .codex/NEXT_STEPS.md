@@ -12,6 +12,6 @@ PROJECT-CONTROL-0102 is active and explicitly authorizes the `v0.2.0-alpha.2` re
 8. Never force push, rewrite history, move an existing tag, overwrite an immutable NuGet version, or delete user changes.
 9. Keep generated `.ackit/`, SARIF/HTML, package, archive, `bin/`, `obj/`, `TestResults`, and coverage outputs untracked.
 10. TASK-0116 through TASK-0122 are complete locally with 186/186 tests and green contract/performance/package gates.
-11. TASK-0123 local validation is complete; create/push the exact alpha.2 release-candidate commit, then wait for its eight standard hosted jobs.
+11. Commit/push the PowerShell 5.1 link-check compatibility fix, then require a fresh exact-SHA 8/8 before re-dispatching the release workflow.
 12. Published-package smoke remains on `0.2.0-alpha.1` until NuGet alpha.2 publication succeeds; source-package smoke moves with the alpha.2 candidate.
 13. `docs/V100_GAP_ANALYSIS.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, and `docs/MAINTAINER_RC_DECISION.md` remain the historical 1.0/RC evidence boundary; PROJECT-CONTROL-0102 authorizes only the alpha.2 release described here.

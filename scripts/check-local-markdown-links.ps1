@@ -101,7 +101,8 @@ function Test-MarkdownTarget {
     $repoPrefix = $repoRoot.TrimEnd([System.IO.Path]::DirectorySeparatorChar) + [System.IO.Path]::DirectorySeparatorChar
     if (-not $fullCandidate.StartsWith($repoPrefix, [System.StringComparison]::OrdinalIgnoreCase) -and
         -not $fullCandidate.Equals($repoRoot, [System.StringComparison]::OrdinalIgnoreCase)) {
-        $issues.Add("$([System.IO.Path]::GetRelativePath($repoRoot, $SourcePath)): link escapes repository: '$RawTarget'.")
+        $sourceRelative = (Get-RelativePath -BasePath $repoRoot -TargetPath $SourcePath).Replace('\', '/')
+        $issues.Add("${sourceRelative}: link escapes repository: '$RawTarget'.")
         return
     }
 
