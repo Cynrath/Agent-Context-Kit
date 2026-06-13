@@ -3,16 +3,28 @@ name: release
 on:
   workflow_dispatch:
     inputs:
+      operation:
+        description: Publish a new version or verify an existing immutable release
+        required: true
+        default: verify-existing
+        type: choice
+        options:
+          - publish
+          - verify-existing
       version:
         description: SemVer package version without v prefix
         required: true
         type: string
-      commit_sha:
-        description: Exact origin/master commit to publish
+      automation_commit_sha:
+        description: Exact origin/master commit containing the release automation
+        required: true
+        type: string
+      release_commit_sha:
+        description: Exact commit represented by the package, tag, and GitHub Release
         required: true
         type: string
       prerelease:
-        description: Create a GitHub pre-release
+        description: Require or create a GitHub pre-release
         required: true
         default: true
         type: boolean
@@ -24,21 +36,22 @@ env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 concurrency:
-  group: release-${{ inputs.version }}
+  group: release-${{ inputs.operation }}-${{ inputs.version }}
   cancel-in-progress: false
 
 jobs:
-  validate:
+  validate-publish:
+    if: inputs.operation == 'publish'
     name: validate exact package
     runs-on: windows-2025
     permissions:
       contents: read
 
     steps:
-      - name: Checkout exact commit
+      - name: Checkout exact automation commit
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.commit_sha }}
+          ref: ${{ inputs.automation_commit_sha }}
           fetch-depth: 0
 
       - name: Setup .NET
@@ -51,7 +64,10 @@ jobs:
         run: |
           $ErrorActionPreference = "Stop"
           $PSNativeCommandUseErrorActionPreference = $true
-          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version "${{ inputs.version }}" -CommitSha "${{ inputs.commit_sha }}" -RequireOriginMaster -FailOnIssues
+          if ("${{ inputs.automation_commit_sha }}" -ne "${{ inputs.release_commit_sha }}") {
+            throw "Publish requires automation_commit_sha and release_commit_sha to be identical."
+          }
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version "${{ inputs.version }}" -CommitSha "${{ inputs.release_commit_sha }}" -RequireOriginMaster -FailOnIssues
 
       - name: Restore, build, and test
         shell: pwsh
@@ -92,6 +108,7 @@ jobs:
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-release-workflow.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-release-recovery.ps1
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1 -Version "${{ inputs.version }}"
 
       - name: Pack and inspect candidate
@@ -117,7 +134,6 @@ jobs:
             $archive.Dispose()
           }
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}" -PackageSource $packageRoot
-          "PACKAGE_ROOT=$packageRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
 
       - name: Upload validated package
         uses: actions/upload-artifact@v4
@@ -127,9 +143,10 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-  release:
+  publish:
+    if: inputs.operation == 'publish'
     name: publish and create release
-    needs: validate
+    needs: validate-publish
     runs-on: ubuntu-latest
     environment: nuget-release
     permissions:
@@ -137,10 +154,10 @@ jobs:
       id-token: write
 
     steps:
-      - name: Checkout exact commit
+      - name: Checkout exact release commit
         uses: actions/checkout@v6
         with:
-          ref: ${{ inputs.commit_sha }}
+          ref: ${{ inputs.release_commit_sha }}
           fetch-depth: 0
 
       - name: Setup .NET
@@ -163,7 +180,7 @@ jobs:
           $ErrorActionPreference = "Stop"
           $PSNativeCommandUseErrorActionPreference = $true
           $version = "${{ inputs.version }}"
-          $commit = "${{ inputs.commit_sha }}"
+          $commit = "${{ inputs.release_commit_sha }}"
           $tagName = "v$version"
           pwsh -NoProfile -File scripts/prepare-release.ps1 -Version $version -CommitSha $commit -RequireOriginMaster -FailOnIssues
 
@@ -214,7 +231,7 @@ jobs:
           $tagName = "v${{ inputs.version }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag "$tagName" "${{ inputs.commit_sha }}"
+          git tag "$tagName" "${{ inputs.release_commit_sha }}"
           git push origin "$tagName"
 
       - name: Create or complete GitHub pre-release
@@ -230,10 +247,10 @@ jobs:
           $assets = @(Get-ChildItem $packageRoot -Filter "AgentContextKit.$version.*nupkg" | ForEach-Object FullName)
           if ("${{ steps.state.outputs.release_exists }}" -ne "true") {
             if ([System.Convert]::ToBoolean("${{ inputs.prerelease }}")) {
-              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md" --prerelease
+              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.release_commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md" --prerelease
             }
             else {
-              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md"
+              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.release_commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md"
             }
           }
           else {
@@ -254,5 +271,41 @@ jobs:
           $PSNativeCommandUseErrorActionPreference = $true
           git fetch --tags origin
           $tagCommit = (git rev-list -n 1 "v${{ inputs.version }}").Trim()
-          if ($tagCommit -ne "${{ inputs.commit_sha }}") { throw "Published tag does not target the exact release commit." }
+          if ($tagCommit -ne "${{ inputs.release_commit_sha }}") { throw "Published tag does not target the exact release commit." }
           gh release view "v${{ inputs.version }}" --repo "${{ github.repository }}" --json tagName,isPrerelease,assets | ConvertFrom-Json | Out-Null
+
+  verify-existing:
+    if: inputs.operation == 'verify-existing'
+    name: verify existing immutable release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout exact automation commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.automation_commit_sha }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Verify existing release without mutation
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $evidencePath = Join-Path $env:RUNNER_TEMP "release-verification.json"
+          pwsh -NoProfile -File scripts/verify-existing-release.ps1 `
+            -Version "${{ inputs.version }}" `
+            -AutomationCommitSha "${{ inputs.automation_commit_sha }}" `
+            -ReleaseCommitSha "${{ inputs.release_commit_sha }}" `
+            -Prerelease "${{ inputs.prerelease }}" `
+            -Repository "${{ github.repository }}" `
+            -OutputPath $evidencePath
+          Get-Content $evidencePath -Raw | ConvertFrom-Json | Out-Null

@@ -116,8 +116,10 @@
 - `scripts/check-localization-parity.ps1`: validates English/Turkish help, human/error exits, and JSON semantic invariance.
 - `scripts/check-local-markdown-links.ps1`: validates repository-local Markdown targets without network access.
 - `scripts/test-local-markdown-links.ps1`: exercises passing, skipped-external, inline-code, and broken-link cases for the local Markdown gate.
-- `docs/RELEASE_AUTOMATION.md`: exact-commit release workflow, OIDC credential boundary, idempotency, and partial-failure recovery.
-- `scripts/check-release-workflow.ps1`: static safety gate for the manual OIDC release workflow.
+- `docs/RELEASE_AUTOMATION.md`: exact-commit publish workflow, OIDC boundary, and read-only existing-release recovery verification.
+- `scripts/check-release-workflow.ps1`: static permission and mutation-boundary gate for publish and verify-existing jobs.
+- `scripts/verify-existing-release.ps1`: read-only NuGet/tag/release/asset/metadata/hash and installed-tool verification.
+- `scripts/test-release-recovery.ps1`: network-free positive, negative, and idempotency recovery fixtures.
 - `scripts/prepare-release.ps1`: version, commit, source-smoke, verification, and tag-target consistency check.
 - `scripts/verify-published-package.ps1`: disposable NuGet/local-package install and full installed-tool smoke verification.
 - `scripts/check-security-supply-chain-evidence.ps1`: validates pending/verified evidence structure and optionally reruns dependency reviews.

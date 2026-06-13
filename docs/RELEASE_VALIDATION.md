@@ -20,6 +20,8 @@ Commit `f540479` passed all eight standard hosted jobs. The release workflow val
 
 Post-publish commit `ead65120928835419fb91bf695e845721620c394` completed the README/workflow/release-document sync and passed all eight standard hosted jobs in runs `27471224858`, `27471224861`, and `27471224867`.
 
+TASK-0126 adds a distinct read-only recovery operation to the manual release workflow. `verify-existing` uses current `origin/master` automation against an immutable historical release commit, receives only `contents: read`, performs no login/publish/tag/release mutation, and records NuGet plus GitHub Release asset SHA-256 evidence after a full installed-tool smoke. The network-free positive, negative, and idempotency fixtures are validated by `scripts/test-release-recovery.ps1`.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln
@@ -42,8 +44,10 @@ powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -
 powershell -ExecutionPolicy Bypass -File scripts/test-local-markdown-links.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-local-markdown-links.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-workflow.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/test-release-recovery.ps1
 powershell -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version <version> -CommitSha <sha> -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version <published-version>
+powershell -ExecutionPolicy Bypass -File scripts/verify-existing-release.ps1 -Version <published-version> -AutomationCommitSha <current-master-sha> -ReleaseCommitSha <exact-release-sha> -Prerelease true -OutputPath <temporary-json-path>
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues
 ```

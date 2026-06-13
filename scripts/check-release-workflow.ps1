@@ -15,54 +15,33 @@ else {
     $content = Get-Content -Raw $workflowPath
 }
 
+function Get-JobBlock {
+    param([string]$Name)
+    $match = [regex]::Match($content, "(?ms)^  $([regex]::Escape($Name)):\r?\n(?<body>.*?)(?=^  [A-Za-z0-9_-]+:\r?\n|\z)")
+    if (-not $match.Success) {
+        $issues.Add("Workflow job is missing: $Name") | Out-Null
+        return ""
+    }
+    return $match.Groups["body"].Value
+}
+
 $required = @(
     "workflow_dispatch:",
-    "version:",
-    "commit_sha:",
+    "operation:",
+    "automation_commit_sha:",
+    "release_commit_sha:",
     "prerelease:",
     "concurrency:",
     "FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true",
-    "contents: read",
-    "environment: nuget-release",
-    "contents: write",
-    "id-token: write",
-    "NuGet/login@v1",
-    "user: Cyranth",
-    "steps.login.outputs.NUGET_API_KEY",
-    'git tag --list $tagName',
-    "gh release list",
     "scripts/prepare-release.ps1",
     "scripts/verify-published-package.ps1",
+    "scripts/verify-existing-release.ps1",
+    "scripts/test-release-recovery.ps1",
     "scripts/check-local-markdown-links.ps1",
     "scripts/verify-release.ps1",
-    "gh release create"
+    'git tag --list $tagName',
+    "gh release list"
 )
-
-foreach ($ubuntuCommand in @(
-    'pwsh -NoProfile -File scripts/prepare-release.ps1 -Version $version',
-    'pwsh -NoProfile -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}"'
-)) {
-    if (-not $content.Contains($ubuntuCommand)) {
-        $issues.Add("Cross-platform release command missing: $ubuntuCommand") | Out-Null
-    }
-}
-
-if (-not $content.Contains('pwsh -NoProfile -File scripts/test-local-markdown-links.ps1') -or
-    -not $content.Contains('pwsh -NoProfile -File scripts/check-local-markdown-links.ps1 -FailOnIssues')) {
-    $issues.Add("Markdown link gates must run in isolated pwsh child processes.") | Out-Null
-}
-
-$prepareRelease = Get-Content -Raw (Join-Path $repoRoot "scripts\prepare-release.ps1")
-if (-not $prepareRelease.Contains('git tag --list $tagName')) {
-    $issues.Add("Release preparation must treat an absent target tag as an idempotent state.") | Out-Null
-}
-
-$publishedVerifier = Get-Content -Raw (Join-Path $repoRoot "scripts\verify-published-package.ps1")
-foreach ($tempMarker in @('$env:TEMP', '$env:TMPDIR', '$env:RUNNER_TEMP', '[System.IO.Path]::GetTempPath()')) {
-    if (-not $publishedVerifier.Contains($tempMarker)) {
-        $issues.Add("Published-package verifier temp fallback missing: $tempMarker") | Out-Null
-    }
-}
 
 foreach ($marker in $required) {
     if (-not $content.Contains($marker)) {
@@ -70,17 +49,60 @@ foreach ($marker in $required) {
     }
 }
 
-foreach ($forbidden in @('push:', 'pull_request:', 'NUGET_API_KEY: ${{ secrets.', 'force-with-lease', '--force')) {
+$validateBlock = Get-JobBlock -Name "validate-publish"
+$publishBlock = Get-JobBlock -Name "publish"
+$verifyBlock = Get-JobBlock -Name "verify-existing"
+
+foreach ($marker in @("if: inputs.operation == 'publish'", "contents: read", "inputs.automation_commit_sha", "inputs.release_commit_sha")) {
+    if (-not $validateBlock.Contains($marker)) { $issues.Add("Publish validation marker missing: $marker") | Out-Null }
+}
+
+if (-not $validateBlock.Contains('if ("${{ inputs.automation_commit_sha }}" -ne "${{ inputs.release_commit_sha }}")')) {
+    $issues.Add("Publish validation must require identical automation and release commits.") | Out-Null
+}
+
+if (-not $validateBlock.Contains('pwsh -NoProfile -File scripts/test-local-markdown-links.ps1') -or
+    -not $validateBlock.Contains('pwsh -NoProfile -File scripts/check-local-markdown-links.ps1 -FailOnIssues')) {
+    $issues.Add("Markdown link gates must run in isolated pwsh child processes.") | Out-Null
+}
+
+foreach ($marker in @("if: inputs.operation == 'publish'", "environment: nuget-release", "contents: write", "id-token: write", "NuGet/login@v1", "user: Cyranth", "steps.login.outputs.NUGET_API_KEY", "dotnet nuget push", "gh release create")) {
+    if (-not $publishBlock.Contains($marker)) { $issues.Add("Publish permission/operation marker missing: $marker") | Out-Null }
+}
+
+foreach ($marker in @("if: inputs.operation == 'verify-existing'", "contents: read", "scripts/verify-existing-release.ps1", "inputs.automation_commit_sha", "inputs.release_commit_sha")) {
+    if (-not $verifyBlock.Contains($marker)) { $issues.Add("Read-only verification marker missing: $marker") | Out-Null }
+}
+
+foreach ($forbidden in @("contents: write", "id-token: write", "NuGet/login@", "dotnet nuget push", "gh release create", "gh release upload", "gh release edit", "git push", "environment: nuget-release", "NUGET_API_KEY")) {
+    if ($verifyBlock.Contains($forbidden)) {
+        $issues.Add("Read-only verification job contains forbidden marker: $forbidden") | Out-Null
+    }
+}
+
+foreach ($forbidden in @("pull_request:", "push:", "NUGET_API_KEY: `${{ secrets.", "force-with-lease", "--force")) {
     if ($content.Contains($forbidden)) {
         $issues.Add("Forbidden workflow marker present: $forbidden") | Out-Null
     }
 }
 
-$publishIndex = $content.IndexOf("dotnet nuget push", [StringComparison]::Ordinal)
-$tagIndex = $content.IndexOf('git tag "$tagName"', [StringComparison]::Ordinal)
-$releaseIndex = $content.IndexOf("gh release create", [StringComparison]::Ordinal)
+$prepareRelease = Get-Content -Raw (Join-Path $repoRoot "scripts\prepare-release.ps1")
+if (-not $prepareRelease.Contains('git tag --list $tagName')) {
+    $issues.Add("Release preparation must treat an absent target tag as an idempotent state.") | Out-Null
+}
+
+$publishIndex = $publishBlock.IndexOf("dotnet nuget push", [StringComparison]::Ordinal)
+$tagIndex = $publishBlock.IndexOf('git tag "$tagName"', [StringComparison]::Ordinal)
+$releaseIndex = $publishBlock.IndexOf("gh release create", [StringComparison]::Ordinal)
 if ($publishIndex -lt 0 -or $tagIndex -lt 0 -or $releaseIndex -lt 0 -or $publishIndex -gt $tagIndex -or $tagIndex -gt $releaseIndex) {
-    $issues.Add("Workflow must publish and verify NuGet before tag and GitHub Release creation.") | Out-Null
+    $issues.Add("Publish job must publish and verify NuGet before tag and GitHub Release creation.") | Out-Null
+}
+
+$publishedVerifier = Get-Content -Raw (Join-Path $repoRoot "scripts\verify-published-package.ps1")
+foreach ($tempMarker in @('$env:TEMP', '$env:TMPDIR', '$env:RUNNER_TEMP', '[System.IO.Path]::GetTempPath()')) {
+    if (-not $publishedVerifier.Contains($tempMarker)) {
+        $issues.Add("Published-package verifier temp fallback missing: $tempMarker") | Out-Null
+    }
 }
 
 if ($issues.Count -eq 0) {

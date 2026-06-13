@@ -37,7 +37,7 @@ Full local gates, standard 8/8, then manual `verify-existing` run with automatio
 Revert workflow/script changes; existing release remains untouched.
 
 ## Completion Evidence
-Pending.
+Local implementation complete: publish and verify-existing jobs are permission-isolated; static workflow checks and positive/negative/idempotency fixtures pass. Hosted 8/8 and the read-only alpha.2 verification dispatch remain the completion evidence after push.
 
 ## Commit
 `ci: add read-only release recovery verification`

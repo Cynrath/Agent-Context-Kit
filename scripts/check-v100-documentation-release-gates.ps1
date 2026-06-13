@@ -110,6 +110,8 @@ $gateScripts = @(
     "scripts\check-local-markdown-links.ps1",
     "scripts\test-local-markdown-links.ps1",
     "scripts\check-release-workflow.ps1",
+    "scripts\test-release-recovery.ps1",
+    "scripts\verify-existing-release.ps1",
     "scripts\prepare-release.ps1",
     "scripts\verify-published-package.ps1",
     "scripts\check-cli-contract.ps1",
@@ -150,6 +152,22 @@ if ($LASTEXITCODE -ne 0) {
 }
 else {
     Add-Note "Local Markdown link audit passed."
+}
+
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-release-workflow.ps1") -FailOnIssues
+if ($LASTEXITCODE -ne 0) {
+    Add-Issue "Release workflow static safety gate failed."
+}
+else {
+    Add-Note "Release workflow static safety gate passed."
+}
+
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "test-release-recovery.ps1")
+if ($LASTEXITCODE -ne 0) {
+    Add-Issue "Release recovery behavior tests failed."
+}
+else {
+    Add-Note "Release recovery behavior tests passed."
 }
 
 $documentationIndex = Get-FileText "docs\DOCUMENTATION_INDEX.md"

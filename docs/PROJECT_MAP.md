@@ -262,6 +262,8 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-localization-parity.ps1`
 - `scripts/check-local-markdown-links.ps1`
 - `scripts/check-release-workflow.ps1`
+- `scripts/test-release-recovery.ps1`
+- `scripts/verify-existing-release.ps1`
 - `scripts/prepare-release.ps1`
 - `scripts/check-security-supply-chain-evidence.ps1`
 - `scripts/check-published-supply-chain-status.ps1`

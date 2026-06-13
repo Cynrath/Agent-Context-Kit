@@ -6,9 +6,10 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 ## Current Task
 - PROJECT-CONTROL-0103 is active for TASK-0126 through TASK-0134. Normal commits/pushes and authorized GitHub security/release workflow actions are allowed; force/history/tag movement/version reuse/API-key publication remain prohibited.
 - TASK-0126 must create a read-only `verify-existing` release operation with no login, OIDC, contents write, publish, tag, or release mutation.
+- TASK-0126 local implementation now separates `publish` and `verify-existing`, adds sanitized package/release digest evidence, and passes static plus fixture tests. Full validation, push, 8/8, and hosted recovery dispatch are next.
 - PROJECT-CONTROL-0102 completed the authorized alpha.2 implementation, publication, post-publish synchronization, and hosted validation sequence.
 - `v0.2.0-alpha.2` is published on GitHub and NuGet; exact tag `v0.2.0-alpha.2` points to package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
-- Local `master` started aligned with `origin/master` at `8dadd16`.
+- Local `master` started aligned with `origin/master` at `0cac249`; task docs were committed as `23595e2`.
 - GitHub CLI checks reported all eight `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs successful for `8dadd16`.
 - TASK-0116 through TASK-0125 task files were created before implementation.
 - Successful validation is followed by normal commit and push in this authorized control task. Release publication uses OIDC only and never exposes or persists credential values.
