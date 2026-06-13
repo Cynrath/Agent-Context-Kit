@@ -1,5 +1,9 @@
 # Product Spec
 
+The default runtime network policy is `docs/NO_NETWORK_DEFAULT_POLICY.md`: local repository processing, no repository upload, no AI API call, no telemetry, and no external-tool invocation.
+
+The product workflow is standardized in `docs/AGENT_CONTEXT_PIPELINE.md`: Inspect, Harden, Generate, Review, Optional external enrichment, Validate, Handoff, and Release decision. External enrichment is optional, manually controlled, and outside the default AgentContextKit trust boundary.
+
 ## Summary
 AgentContextKit is an offline-first .NET CLI that prepares repositories for safer AI-assisted development and public OSS readiness.
 

@@ -16,6 +16,8 @@ Public repository URL: `https://github.com/Cynrath/agent-context-kit`
 
 Current release: `v0.2.0-alpha.1` GitHub ve NuGet uzerinde pre-release olarak yayinlandi; global tool kurulumu dogrulandi.
 
+Varsayılan komutlar repository içeriğini yerelde işler; repository upload, AI API çağrısı, telemetry veya harici araç çalıştırma yapmaz. Ayrıntı: [Varsayılan No-Network Politikası](docs/NO_NETWORK_DEFAULT_POLICY.md).
+
 Kaynak notu: yayinlanmis `0.2.0-alpha.1` NuGet paketi `ackit sarif` komutunu icerir. `0.1.0-alpha.2` onceki release olarak kalir.
 
 ## Preview
@@ -25,11 +27,16 @@ Web UI dashboard; readiness score, stack signals, health checks, findings, gener
 
 Screenshot dosyalari, sanitize edilmis public asset hazir olana kadar bilerek commitlenmez. Ayrinti icin [Web UI Preview](docs/WEB_UI_PREVIEW.md), [Visual Assets](docs/VISUAL_ASSETS.md), [Sample Gallery](docs/SAMPLE_GALLERY.md) ve [Demo Scenarios](docs/DEMO_SCENARIOS.md) dosyalarina bakin.
 
-## Ilgili ekosistem
+## İlgili ekosistem
 
-AgentContextKit; lokal repo hazirligi, agent handoff dosyalari, scanner guvenligi, SARIF/JSON ciktilari ve release gate'lerine odaklanir. Graphify, Repomix, Gitingest, Code2Prompt ve lokal scanner araclari; proje grafigi, repo-to-context paketleme veya daha derin analiz icin tamamlayici olabilir.
+AgentContextKit, bir repository AI kodlama aracına veya release kararına ulaşmadan önce yerel hazırlık ve güvenlik kontrollerini düzenler. Uzmanlaşmış yerel araçlar bu akışı tamamlayabilir; ancak AgentContextKit varsayılan olarak harici araç kurmaz veya çalıştırmaz.
 
-Detaylar: [Ilgili Projeler](docs/RELATED_PROJECTS.md).
+- Repo-to-context araçları, yerel hygiene incelemesinden sonra model için paket oluşturabilir.
+- Graph ve arama araçları isteğe bağlı mimari ve navigasyon bağlamı sağlayabilir.
+- Güvenlik scanner'ları ve SBOM araçları ayrı incelenen daha derin kanıtlar üretebilir.
+- Harici çıktılar, insan tarafından privacy incelemesi yapılana kadar yalnızca yerelde tutulur.
+
+Detaylar: [İlgili Projeler](docs/RELATED_PROJECTS.md), [Karşılaştırma Matrisi](docs/RELATED_TOOLS_COMPARISON_MATRIX.md), [Harici Araç Workflow'ları](docs/EXTERNAL_TOOL_WORKFLOWS.md) ve [Agent Context Pipeline](docs/AGENT_CONTEXT_PIPELINE.md).
 
 ## Problem
 AI coding agent'lar cogu projede eksik, eski veya guvensiz context ile calisir. Bu durum yanlis dosya degisikligi, production ayari sizintisi, zayif task plani, eksik test, tutarsiz agent yonergeleri ve private projenin public hale gelirken hassas bilgi sizdirmasi gibi riskler dogurur.

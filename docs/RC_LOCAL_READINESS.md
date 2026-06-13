@@ -1,5 +1,7 @@
 # Release Candidate Local Readiness
 
+The local/remote boundary is summarized in `docs/RELEASE_BLOCKER_BOARD.md`. Local readiness evidence does not close hosted, security-setting, ownership, signing, SBOM, provenance, recovery, candidate, or approval rows.
+
 ## Decision
 **LOCAL READY / REMOTE NO-GO** as of 2026-06-12.
 

@@ -1,5 +1,7 @@
 # Maintainer Release Handoff
 
+Current future-candidate planning is in `docs/V020_ALPHA2_PLAN.md`. It is planning-only and does not replace the blocker board, select a version, or authorize release writes.
+
 This handoff records the completed `v0.2.0-alpha.1` GitHub and NuGet pre-release state.
 
 Codex must not push commits, create GitHub releases, publish NuGet packages, or handle API keys unless the maintainer explicitly asks for each public action.

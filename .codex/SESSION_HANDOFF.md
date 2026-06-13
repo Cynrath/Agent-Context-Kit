@@ -4,10 +4,10 @@
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
 ## Current Task
-- PROJECT-CONTROL-0001 unified next-steps roadmap and local execution queue is active.
+- PROJECT-CONTROL-0101 local-only ecosystem/product roadmap continuation is complete locally.
 - `v0.2.0-alpha.1` is published on GitHub and NuGet; published package includes `ackit sarif`.
-- Local `master` started aligned with `origin/master`; no push suggestion is needed while same.
-- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for commit `e0a0fa9`.
+- Local `master` started aligned with `origin/master` at `1347874`.
+- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for `1347874`.
 - TASK-0066 through TASK-0073 are completed locally without remote writes.
 - TASK-0075 and TASK-0076 are completed locally; TASK-0076 is ready to commit after full validation.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
@@ -50,7 +50,15 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Initial ecosystem research uses official repositories/docs only. Graphify, Repomix, Gitingest, Code2Prompt, Aider, Joern, Zoekt, local scanners, AGENTS.md conventions, and docs tools are documented without dependencies or copied code.
 - Maintainer-gated RC/security decisions remain open and are not release-blocked by local ecosystem research; no release-ready or 1.0-ready claim is made.
 - TASK-0100 validation passed with a zero-warning Release build, 178/178 tests, clean source scan and doctor, parsed JSON and global-tool SARIF, sample smoke, clean hygiene, readiness/security/supply-chain gates, and local package verification. The pre-commit public release gate failed only on the expected dirty working tree and must be rerun after commit.
-- The next local-only queue item is TASK-0101 related tools comparison matrix.
+- TASK-0101 through TASK-0115 are complete locally with full validation and three logical documentation commits.
+- PROJECT-CONTROL-0101 preflight confirmed clean aligned `master`/`origin/master` at `1347874`, a published `v0.2.0-alpha.1` pre-release, and successful `ci`, published smoke, and source smoke runs for `1347874`.
+- TASK-0101 through TASK-0115 task files were created before implementation and executed sequentially as safe local-only documentation/design work.
+- Added normalized official-source ecosystem evidence, privacy-first workflow examples, no-dependency executable/import designs, pipeline taxonomy, no-network policy, threat/lab controls, maintainer blocker visibility, and planning-only alpha.2 scope.
+- No external tool was installed or invoked; no runtime command, dependency, import parser, version, tag, package, release, security setting, or remote state changed.
+- The clean-tree post-commit public release gate passed with no blocking items; only the expected post-release HEAD/manual tag-verification warning remains.
+- Next local-only task is TASK-0116 ecosystem documentation consistency and local link audit.
+- PROJECT-CONTROL-0101 pre-commit validation passed with a zero-warning Release build, 178/178 tests, source scan/JSON zero findings, doctor PASS, parsed global-tool SARIF with 7 results and no Critical/High findings, sample smoke, clean identity/artifact/token/path/local-link hygiene, all readiness/security/supply-chain gates, and `scripts/verify-release.ps1`.
+- The pre-commit public release gate failed only on the intentional dirty working tree; package metadata was clean. Rerun after the final commit.
 - Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far

@@ -155,11 +155,23 @@
 
 ## Ecosystem And Interoperability Intelligence
 - TASK-0100 resets the queue into completed local work, maintainer-gated release/security work, and a local-only ecosystem/product intelligence track.
-- TASK-0101 will deepen the related-tools comparison matrix and evidence review.
-- TASK-0102 will validate offline workflow examples in disposable repositories without adding dependencies or auto-install behavior.
-- TASK-0103 will design optional interoperability boundaries without implementation.
-- TASK-0104 will define an agent context pipeline taxonomy.
-- TASK-0105 will finalize concise public ecosystem positioning after the research sequence.
+- TASK-0101 completed the related-tools comparison matrix and evidence review.
+- TASK-0102 completed docs-only offline workflow examples without dependencies or auto-install behavior.
+- TASK-0103 completed optional interoperability boundaries without implementation.
+- TASK-0104 completed the agent context pipeline taxonomy.
+- TASK-0105 completed concise public ecosystem positioning.
+- TASK-0106 completed the evidence schema, confidence scale, review ownership, and staleness policy.
+- TASK-0107 completed the external executable/output privacy threat model.
+- TASK-0108 completed the disposable, synthetic, no-secret external workflow lab plan.
+- TASK-0109 completed design-only `ackit external-tools` discovery guidance.
+- TASK-0110 completed design-only `ackit workflow` guidance.
+- TASK-0111 completed namespaced, sanitized external SARIF/JSON/SBOM/graph import boundaries.
+- TASK-0112 completed the optional docs quality toolchain decision while keeping Markdown canonical.
+- TASK-0113 completed the authoritative no-network/default-offline policy hardening.
+- TASK-0114 completed the maintainer-gated P0/P1 blocker board and decision register without closing blockers.
+- TASK-0115 completed `v0.2.0-alpha.2` planning without version, tag, package, or release changes.
+- TASK-0116 will audit cross-links, terminology, duplicate content, and stale design-versus-shipped language.
+- TASK-0115 planning scope: scanner precision, suppression audit, baseline-aware CI, config diagnostics, and ecosystem/offline documentation. It excludes dependency expansion, default network behavior, and external tool execution.
 - Maintainer-gated RC/security decisions do not block this local-only research, but the research does not close release blockers or imply 1.0 readiness.
 
 Historical note: TASK-0018 through TASK-0023 used the v0.3 label for CI mode, exit codes, HTML reports, workflows, and readiness. Those capabilities are complete and already included in the published `v0.2.0-alpha.1` package.

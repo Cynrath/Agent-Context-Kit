@@ -1,5 +1,7 @@
 # Maintainer Security And Supply-Chain Handoff
 
+Use `docs/RELEASE_BLOCKER_BOARD.md` for current P0/P1 visibility and `docs/MAINTAINER_DECISION_REGISTER.md` to record explicit decisions. No board row is currently implicit approval.
+
 ## Boundary
 This is a manual maintainer procedure. It does not authorize an agent to change GitHub settings, handle certificates or credentials, enable attestations, upload SBOM/provenance, push, tag, publish NuGet, or create/edit releases.
 

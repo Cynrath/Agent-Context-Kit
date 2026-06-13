@@ -12,6 +12,12 @@
 - `docs/EXTERNAL_TOOL_WORKFLOWS.md`: docs-only opt-in local workflow sketches for external tools.
 - `docs/ECOSYSTEM_POSITIONING.md`: product boundary versus packers, graphs, scanners, and docs tools.
 - `docs/INTEROPERABILITY_BACKLOG.md`: non-approved future external-tool command and adapter ideas.
+- `docs/RELATED_TOOLS_COMPARISON_MATRIX.md`: normalized runtime, offline/network, output, privacy, and recommendation matrix.
+- `docs/RELATED_TOOLS_EVIDENCE.md`: official-source evidence, confidence, and stale-after register.
+- `docs/RELATED_TOOLS_REVIEW_POLICY.md`: source priority, review cadence, and stale evidence behavior.
+- `docs/ECOSYSTEM_EVIDENCE_SCHEMA.md`: required ecosystem evidence fields and confidence contract.
+- `docs/AGENT_CONTEXT_PIPELINE.md`: Inspect through Release decision product taxonomy.
+- `docs/README_POSITIONING_NOTES.md`: concise public positioning language and guardrails.
 
 ## Usage
 - `docs/CLI_CONTRACT.md`: stable CLI command contract review.
@@ -41,6 +47,8 @@
 - `docs/VISUAL_ASSETS.md`: public screenshot and visual asset policy.
 - `docs/SCREENSHOT_CAPTURE_PLAN.md`: disposable demo, capture, sanitization, metadata, naming, and commit review plan.
 - `docs/DOCS_SITE_PLAN.md`: hosted documentation and GitHub Pages decision, triggers, architecture, and maintainer-only activation plan.
+- `docs/DOCS_QUALITY_TOOLCHAIN_DECISION.md`: no-dependency current decision and optional future lint/prose/link/site roles.
+- `docs/examples/external-tools/README.md`: docs-only local external-tool workflow examples and privacy boundary.
 - `docs/TROUBLESHOOTING.md`: common problems and fixes.
 - `docs/FAQ.md`: frequently asked questions.
 - `docs/SUPPORT_MATRIX.md`: supported OS, .NET, shell, and command coverage.
@@ -54,6 +62,12 @@
 - `docs/LOCALIZATION.md`: English/Turkish support.
 - `docs/DECISIONS.md`: architecture decision records.
 - `docs/LLM_INTEGRATION_ARCHITECTURE.md`: optional future LLM provider architecture.
+- `docs/INTEROPERABILITY_DESIGN.md`: no-dependency external executable/profile lifecycle and failure isolation design.
+- `docs/EXTERNAL_TOOL_CONTRACTS.md`: design-only external profile/result/namespace contract.
+- `docs/EXTERNAL_TOOLS_COMMAND_DESIGN.md`: non-shipped `ackit external-tools` discovery design.
+- `docs/WORKFLOW_COMMAND_DESIGN.md`: non-shipped guidance-only `ackit workflow` design.
+- `docs/EXTERNAL_OUTPUT_IMPORT_BOUNDARY.md`: design-only SARIF/JSON/SBOM/graph import constraints.
+- `docs/DISPOSABLE_EXTERNAL_WORKFLOW_LAB.md`: synthetic no-secret future external-tool smoke lab plan.
 - `docs/PROJECT_MAP.md`: generated project map.
 - `docs/AI_WORKFLOW.md`: generated AI workflow.
 
@@ -66,6 +80,9 @@
 - `docs/SCANNER_RULES.md`: stable `ACKIT` rule IDs and Critical suppression boundaries.
 - `docs/SECURITY_NOTES.md`: generated security notes.
 - `docs/PRIVACY.md`: local-only data handling.
+- `docs/NO_NETWORK_DEFAULT_POLICY.md`: authoritative default no-upload/no-AI-call/no-telemetry/no-external-execution policy.
+- `docs/EXTERNAL_OUTPUT_PRIVACY.md`: local storage, sanitization, and sharing rules for source-derived external outputs.
+- `docs/EXTERNAL_TOOL_PRIVACY_THREAT_MODEL.md`: external executable/output assets, threats, mitigations, and residual risks.
 
 ## OSS And Maintainers
 - `CONTRIBUTING.md`: contribution rules.
@@ -129,6 +146,10 @@
 - `docs/RELEASE_BODY_V020_ALPHA1.md`: corrected GitHub Release body draft for the published `v0.2.0-alpha.1` pre-release.
 - `docs/NEXT_TASKS.md`: unified next task roadmap.
 - `docs/PROJECT_EXECUTION_QUEUE.md`: execution queue with validation and remote-write status.
+- `docs/RELEASE_BLOCKER_BOARD.md`: consolidated open maintainer-gated P0/P1 blocker visibility.
+- `docs/MAINTAINER_DECISION_REGISTER.md`: pending/accepted maintainer decision evidence register.
+- `docs/V020_ALPHA2_PLAN.md`: planning-only next alpha scope and prerequisite boundary.
+- `docs/CHANGELOG.md`: documentation-roadmap planning log; root `CHANGELOG.md` remains release history.
 - `docs/RELEASE_CANDIDATE_0.1.0-alpha.1.md`: current RC report.
 - `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`: `0.2.0-alpha.1` publication verification and docs sync.
 - `CHANGELOG.md`: release notes.

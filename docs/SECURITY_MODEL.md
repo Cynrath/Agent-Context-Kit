@@ -1,5 +1,12 @@
 # Security Model
 
+The authoritative current default is `docs/NO_NETWORK_DEFAULT_POLICY.md`. Installation/package acquisition and explicitly selected future external/networked workflows are separate trust boundaries; they do not weaken the no-network default for normal commands.
+
+## External Executable And Output Boundary
+External tools are not part of the AgentContextKit trusted computing base. Their binaries, dependencies, caches, telemetry, network behavior, and outputs require separate evidence and explicit opt-in. See `docs/EXTERNAL_TOOL_PRIVACY_THREAT_MODEL.md`; external findings never inherit stable ACKIT rule IDs without a reviewed mapping policy.
+
+Future external artifact parsing must follow `docs/EXTERNAL_OUTPUT_IMPORT_BOUNDARY.md`: bounded inputs, repository-relative containment, no raw secret ingestion, namespaced identities, sanitized summaries, and isolated failure.
+
 ## Trust Boundary
 AgentContextKit runs locally against a repository path. The MVP does not upload repository contents, does not call AI APIs, and does not automatically redact or delete files.
 

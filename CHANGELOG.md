@@ -19,6 +19,8 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added security response, support lifecycle, upgrade compatibility, performance, and supply-chain policy documents.
 - Added read-only `ackit config-check` with sanitized human/JSON diagnostics, explicit warning/error exits, and manual obsolete-key migration guidance.
 - Added a manual-only Windows/Ubuntu/macOS release-candidate evidence workflow design with isolated predecessor/source tools, config immutability, baseline/SARIF checks, and the synthetic performance tripwire.
+- Added a normalized related-tools matrix, official-source evidence policy, privacy-first external workflow examples, no-dependency interoperability/command/import designs, external-tool threat model, and disposable lab plan.
+- Added the authoritative no-network default policy, agent context pipeline taxonomy, docs toolchain decision, release blocker board, maintainer decision register, and planning-only alpha.2 refresh.
 
 ### Changed
 - Polished README installed-tool and source command examples.

@@ -30,6 +30,8 @@ Analyze a repository, generate clean agent context files, create task-first work
 
 </div>
 
+Default commands process repository content locally: no repository upload, AI API call, telemetry, or external-tool invocation. See [No-Network Default Policy](docs/NO_NETWORK_DEFAULT_POLICY.md).
+
 ---
 
 ## Project Status
@@ -58,9 +60,14 @@ Screenshots are intentionally not committed yet until sanitized assets are avail
 
 ## Related ecosystem
 
-AgentContextKit focuses on local repo readiness, agent handoff files, scanner safety, SARIF/JSON output, and release gates. Tools such as Graphify, Repomix, Gitingest, Code2Prompt, and local scanners can complement it for project graphs, repo-to-context packing, or deeper analysis.
+AgentContextKit prepares a repository before it reaches an AI coding agent or release decision. Specialized local tools can complement that workflow, but AgentContextKit does not install or invoke external tools by default.
 
-See [Related Projects](docs/RELATED_PROJECTS.md).
+- Repo-to-context packers can create model-ready bundles after local hygiene review.
+- Graph and search tools can add optional architecture/navigation context.
+- Security scanners and SBOM tools can provide deeper, separately reviewed evidence.
+- External outputs remain local-only until a human privacy review approves sharing.
+
+See [Related Projects](docs/RELATED_PROJECTS.md), [Comparison Matrix](docs/RELATED_TOOLS_COMPARISON_MATRIX.md), [External Workflows](docs/EXTERNAL_TOOL_WORKFLOWS.md), and [Agent Context Pipeline](docs/AGENT_CONTEXT_PIPELINE.md).
 
 ---
 

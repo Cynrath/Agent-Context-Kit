@@ -1,5 +1,7 @@
 # Published Supply-Chain Status
 
+Future-release decisions derived from this published-state evidence are tracked without closure in `docs/RELEASE_BLOCKER_BOARD.md` and `docs/MAINTAINER_DECISION_REGISTER.md`.
+
 ## Audit Scope
 Read-only audit performed on 2026-06-13 for:
 

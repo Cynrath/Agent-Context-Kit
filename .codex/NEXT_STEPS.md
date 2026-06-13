@@ -29,7 +29,11 @@ PROJECT-CONTROL-0001 is active: use `docs/NEXT_TASKS.md` and `docs/PROJECT_EXECU
 25. TASK-0099 is complete locally. Read-only audit found a valid NuGet.org repository signature, no observed author signature, no package/release SBOM, no accessible GitHub package attestation, and NuGet owner profile `Cyranth` versus project persona `Cynrath`.
 26. TASK-0099 validation passes with 178/178 tests, zero scan/SARIF findings, clean dependency review, local package verification, and a 3.282-second synthetic benchmark. All remediation remains maintainer-only.
 27. TASK-0100 completed the local-only ecosystem/product intelligence reset after confirming TASK-0066 through TASK-0099 are complete locally and current remote workflows are green.
-28. The queue is split: maintainer-gated RC/security actions remain open but do not block TASK-0100 through TASK-0105 local documentation/product intelligence work.
+28. The queue is split: maintainer-gated RC/security actions remain open but do not block safe local documentation/product intelligence work.
 29. No external tool is a dependency or approved integration. The initial catalog must preserve offline/no-upload defaults and verify license/privacy boundaries before any future adapter.
 30. TASK-0100 validation passed with a zero-warning Release build, 178/178 tests, clean source scan and doctor, parsed JSON and SARIF, sample smoke, clean hygiene, readiness/security/supply-chain gates, and local package verification. The pre-commit public gate failed only on the expected dirty working tree.
-31. Continue with TASK-0101 related tools comparison matrix. Keep research official-source, dated, license-aware, and documentation-only.
+31. PROJECT-CONTROL-0101 completed TASK-0101 through TASK-0115 locally: evidence/matrix, docs-only workflows, interoperability/command/import designs, pipeline taxonomy, privacy threat model, disposable lab, docs toolchain policy, no-network policy, blocker board, and alpha.2 planning.
+32. No external dependency, installation, execution, import parser, network-default feature, release action, or remote security/repository change was added.
+33. Continue with TASK-0116 ecosystem documentation consistency and local link audit.
+34. PROJECT-CONTROL-0101 pre-commit validation passed: zero-warning build, 178/178 tests, source scan/JSON zero findings, doctor PASS, global SARIF parsed with 7 non-Critical/High results, sample smoke, clean hygiene/local links, all local gates, and local package verification. The public gate failed only on the expected dirty tree.
+35. Clean-tree post-commit public release gates passed with no blockers; only the expected post-release HEAD/manual tag-verification warning remains.

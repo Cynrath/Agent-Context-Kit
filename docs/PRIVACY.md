@@ -1,5 +1,10 @@
 # Privacy
 
+Current default network behavior is governed by `docs/NO_NETWORK_DEFAULT_POLICY.md`: normal commands do not upload repository content, call model APIs, send telemetry, or invoke external tools.
+
+## External Tool Boundary
+AgentContextKit does not install or invoke external tools by default. External prompt bundles, graphs, indexes, SARIF, JSON, SBOMs, and reports remain separate local artifacts and are governed by `docs/EXTERNAL_TOOL_PRIVACY_THREAT_MODEL.md` and `docs/EXTERNAL_OUTPUT_PRIVACY.md`.
+
 AgentContextKit MVP is local-only.
 
 ## Data Handling

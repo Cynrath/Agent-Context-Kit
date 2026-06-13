@@ -1,5 +1,7 @@
 # Hosted Validation Status
 
+The missing exact-candidate manual workflow evidence maps to blocker `RB-001` in `docs/RELEASE_BLOCKER_BOARD.md` and remains maintainer-gated.
+
 ## Current Commit
 - Branch: `master`
 - Commit: `37d52200fead0ce5c53571205d324b9b7ff6c75b`

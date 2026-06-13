@@ -1,5 +1,7 @@
 # Security And Supply-Chain Evidence Register
 
+Open decisions are consolidated in `docs/RELEASE_BLOCKER_BOARD.md` and `docs/MAINTAINER_DECISION_REGISTER.md`. Those summaries do not replace exact evidence in this file.
+
 ## Status
 Local evidence register prepared on 2026-06-12. Remote private-reporting and published package/release state were checked on 2026-06-13. Private vulnerability reporting is **VERIFIED REMOTE STATE: DISABLED**. The published package is NuGet.org repository-signed but no author signature, SBOM release artifact, or accessible GitHub package attestation was found. Maintainer decisions remain open. This document is not release approval.
 
