@@ -37,7 +37,7 @@ Package download/hash/verify, release JSON, attestation query, hygiene and docum
 Revert evidence commit if any observed fact is incorrect.
 
 ## Completion Evidence
-Pending.
+Read-only alpha.2 audit completed on 2026-06-13. Exact NuGet and release asset hashes, metadata commit, repository signature, 13-entry no-SBOM observation, HTTP 404 attestation result, owner identity difference, and hosted recovery run `27478046088` are recorded and structure-gated.
 
 ## Commit
 `docs: refresh alpha2 supply-chain evidence`

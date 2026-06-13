@@ -52,7 +52,7 @@ $task = Read-RequiredFile "docs\tasks\TASK-0095-security-supply-chain-maintainer
 $privateReportingStatus = Read-RequiredFile "docs\PRIVATE_VULNERABILITY_REPORTING_STATUS.md" "Private vulnerability reporting status"
 $privateReportingTask = Read-RequiredFile "docs\tasks\TASK-0098-private-vulnerability-reporting-status.md" "TASK-0098"
 $publishedSupplyChainStatus = Read-RequiredFile "docs\PUBLISHED_SUPPLY_CHAIN_STATUS.md" "Published supply-chain status"
-$publishedSupplyChainTask = Read-RequiredFile "docs\tasks\TASK-0099-published-supply-chain-status-audit.md" "TASK-0099"
+$publishedSupplyChainTask = Read-RequiredFile "docs\tasks\TASK-0127-alpha2-supply-chain-evidence-refresh.md" "TASK-0127"
 
 foreach ($marker in @(
     "Local evidence register prepared on 2026-06-12",
@@ -63,9 +63,9 @@ foreach ($marker in @(
     "VERIFIED PUBLISHED STATE",
     "Private vulnerability reporting | VERIFIED REMOTE STATE: DISABLED on 2026-06-13",
     "NuGet owner identity | VERIFIED REMOTE STATE: MISMATCH on 2026-06-13",
-    "NuGet package signature | VERIFIED PUBLISHED STATE: Repository signature; no author signature observed",
-    "SBOM | VERIFIED PUBLISHED STATE: Not present in package or GitHub Release assets",
-    "Build/package provenance | VERIFIED PUBLISHED STATE: No accessible GitHub attestation for package digest",
+    "NuGet package signature | VERIFIED PUBLISHED STATE: Alpha.2 repository signature; no author signature observed",
+    "SBOM | VERIFIED PUBLISHED STATE: Not present in alpha.2 package or GitHub Release assets",
+    "Build/package provenance | VERIFIED PUBLISHED STATE: No accessible GitHub attestation for alpha.2 package digest",
     "Candidate commit:",
     "Decision date:",
     "Maintainer: Cynrath",
@@ -97,9 +97,9 @@ Require-Text $privateReportingStatus "P0 blocker remains open" "Private-reportin
 Require-Text $privateReportingStatus "repos/Cynrath/agent-context-kit/private-vulnerability-reporting" "Private-reporting read-only endpoint"
 Require-Text $privateReportingTask "No GitHub setting change" "Private-reporting task remote-write boundary"
 Require-Text $publishedSupplyChainStatus "No author signature was observed" "Published author-signature boundary"
-Require-Text $publishedSupplyChainStatus "no accessible GitHub SLSA provenance attestation" "Published provenance boundary"
-Require-Text $publishedSupplyChainStatus 'Public owner profile `Cyranth`; project persona/author `Cynrath`' "Published owner-identity mismatch"
-Require-Text $publishedSupplyChainTask "No signing, certificate handling" "Published supply-chain task remote-write boundary"
+Require-Text $publishedSupplyChainStatus "no accessible GitHub artifact attestation" "Published provenance boundary"
+Require-Text $publishedSupplyChainStatus 'Repository signature owner `Cyranth`; project persona/author `Cynrath`' "Published owner-identity mismatch"
+Require-Text $publishedSupplyChainTask "Signing, republishing" "Published supply-chain task remote-write boundary"
 
 if ($RunDependencyReview) {
     Push-Location $repoRoot

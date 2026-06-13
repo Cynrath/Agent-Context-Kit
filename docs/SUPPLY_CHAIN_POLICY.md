@@ -18,7 +18,7 @@ Official public packages use NuGet package ID `AgentContextKit` and repository m
 - Review dependency licenses when adding or upgrading packages.
 - Do not add package sources or credentials to repository config.
 
-Local review on 2026-06-12 found no vulnerable direct or transitive packages. TASK-0091 resolved the prior `xunit` `2.9.3` Legacy warning by migrating the test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5`. The current repository suite passes 178/178 tests; the post-migration vulnerability and deprecation reviews are clean.
+Local review on 2026-06-13 found no vulnerable or deprecated direct/transitive packages. TASK-0091 resolved the prior `xunit` `2.9.3` Legacy warning by migrating the test project to `xunit.v3` `3.2.2` and `xunit.runner.visualstudio` `3.1.5`. The current repository suite passes 186/186 tests.
 
 ## Artifact Controls
 - Never commit `.nupkg`, `.snupkg`, SARIF, generated HTML, archives, `bin/`, `obj/`, TestResults, coverage, or publish output.
@@ -26,7 +26,7 @@ Local review on 2026-06-12 found no vulnerable direct or transitive packages. TA
 - Verify package ID, version, README, license expression, repository URLs, and tool command before publish.
 
 ## Signing, SBOM, And Provenance Decision
-The published `0.2.0-alpha.1` package is repository-signed by NuGet.org. Read-only verification found no author signature, no SBOM in the package or GitHub Release assets, and no accessible GitHub provenance attestation for the exact package digest. See `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`.
+The published `0.2.0-alpha.2` package is repository-signed by NuGet.org. Read-only verification found no author signature, no SBOM in the package or GitHub Release assets, and no accessible GitHub provenance attestation for the exact package digest. Exact NuGet/release hashes and hosted recovery evidence are in `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`.
 
 NuGet.org repository signing must not be described as author-signed. Before 1.0 RC, the maintainer must make and record explicit decisions for:
 - NuGet package signing;
@@ -37,7 +37,7 @@ NuGet.org repository signing must not be described as author-signed. Before 1.0 
 
 These decisions may require remote credentials/services and remain maintainer-only blockers. This task does not sign, publish, or upload anything.
 
-TASK-0095 consolidates the decision fields. TASK-0099 records the exact published package/release state. Private reporting activation, owner identity alignment, author signing, SBOM publication, provenance, and recovery acceptance remain maintainer actions; no unverified control is claimed.
+TASK-0095 consolidates the decision fields. TASK-0127 refreshes the exact published package/release state for alpha.2. Private reporting activation, owner identity alignment, author signing, SBOM publication, provenance, and recovery ownership remain explicit follow-up tasks; no unverified control is claimed.
 
 ## Recovery
 If a bad package is published, stop recommending the version, document impact, publish a fixed successor rather than replacing immutable package content, and update release/install guidance. NuGet unlisting/deprecation is a maintainer remote action.

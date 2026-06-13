@@ -22,6 +22,8 @@ Post-publish commit `ead65120928835419fb91bf695e845721620c394` completed the REA
 
 TASK-0126 adds a distinct read-only recovery operation to the manual release workflow. `verify-existing` uses current `origin/master` automation against an immutable historical release commit, receives only `contents: read`, performs no login/publish/tag/release mutation, and records NuGet plus GitHub Release asset SHA-256 evidence after a full installed-tool smoke. The network-free positive, negative, and idempotency fixtures are validated by `scripts/test-release-recovery.ps1`.
 
+Hosted recovery run `27478046088` completed successfully on automation commit `2f68f14dc3065dd9a810644c75c46316f8c225f0` for immutable alpha.2 release commit `f540479a92cbe66097f6796553828ee49ddd5512`. The publish jobs were skipped. The read-only job verified NuGet repository signing, exact package metadata and commit, full disposable installed-tool smoke, exact tag/release state, required package assets, and independent NuGet/release SHA-256 values.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

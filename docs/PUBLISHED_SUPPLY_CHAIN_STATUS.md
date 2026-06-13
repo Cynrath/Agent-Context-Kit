@@ -5,77 +5,82 @@ Future-release decisions derived from this published-state evidence are tracked 
 ## Audit Scope
 Read-only audit performed on 2026-06-13 for:
 
-- NuGet package `AgentContextKit` `0.2.0-alpha.1`;
-- GitHub Release `v0.2.0-alpha.1`;
-- the exact downloaded package digest;
-- package signature, archive entries, release assets, and accessible GitHub artifact attestations.
+- NuGet package `AgentContextKit` `0.2.0-alpha.2`;
+- GitHub pre-release `v0.2.0-alpha.2`;
+- exact NuGet-served and GitHub Release package digests;
+- package metadata, signature, archive entries, release assets, and accessible GitHub artifact attestations;
+- hosted recovery verification run `27478046088` using automation commit `2f68f14dc3065dd9a810644c75c46316f8c225f0` and immutable release commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 
-This is a published-state audit, not release approval and not a maintainer decision to sign, publish an SBOM, attest provenance, or change package ownership.
+This is published-state evidence. It is not approval to sign, republish, change ownership, upload an SBOM/provenance record, or modify immutable release artifacts.
 
 ## Package Identity
 | Field | Verified value |
 | --- | --- |
 | Package ID | `AgentContextKit` |
-| Version | `0.2.0-alpha.1` |
+| Version | `0.2.0-alpha.2` |
 | Listed | `true` |
-| Published | `2026-06-11T08:54:44.08Z` |
-| Package SHA-256 | `d6d0804f5dfca7c03f2b8ea173de74e3b0e9e8eb73ceec5dda9ac18cae1988ce` |
+| NuGet published | `2026-06-13T15:20:40.63Z` |
+| NuGet-served package SHA-256 | `83348398a2e52b5430456a65c3439f4a8b617760ebe1881e970141fcb5375152` |
 | Package metadata author | `Cynrath` |
 | Repository URL | `https://github.com/Cynrath/agent-context-kit` |
-| Repository commit | `d309a6fee8623297a6004838960fba842b7c4b53` |
+| Repository commit | `f540479a92cbe66097f6796553828ee49ddd5512` |
+| License | `MIT` |
 
-The public NuGet Gallery owner profile is `Cyranth`, while package metadata and the public project persona use `Cynrath`. This identity mismatch is a maintainer-only account/package ownership action and must be resolved or explicitly documented before a 1.0 release candidate.
+The NuGet repository signature reports owner `Cyranth`, while package metadata and the public project persona use `Cynrath`. This identity difference remains a maintainer decision; this audit does not modify the account or package owner list.
 
 ## Signature Result
-`dotnet nuget verify --all --verbosity detailed` completed successfully.
+`dotnet nuget verify --all --verbosity detailed` completed successfully for the NuGet-served package.
 
 - Signature type: `Repository`.
 - Repository signer: `NuGet.org Repository by Microsoft`.
 - Repository certificate SHA-256: `1F4B311D9ACC115C8DC8018B5A49E00FCE6DA8E2855F9F014CA6F34570BC482D`.
-- Repository timestamp: `2026-06-11T08:55:09Z` (displayed locally as 11:55:09 Europe/Istanbul).
-- No author signature was observed by the verifier.
+- Repository timestamp: `2026-06-13T15:21:07Z`.
+- No author signature was observed.
 
-NuGet documentation states that packages uploaded to NuGet.org are automatically repository-signed. Repository signing verifies the repository/upload surface and must not be described as AgentContextKit author signing.
+NuGet.org repository signing authenticates the repository/upload surface. It must not be described as AgentContextKit author signing.
 
-References:
-- <https://learn.microsoft.com/dotnet/core/tools/dotnet-nuget-verify>
-- <https://learn.microsoft.com/nuget/reference/signed-packages-reference>
+## GitHub Release Assets
+The pre-release targets exact commit `f540479a92cbe66097f6796553828ee49ddd5512` and was published at `2026-06-13T15:25:49Z`.
+
+| Asset | Size | SHA-256 |
+| --- | ---: | --- |
+| `AgentContextKit.0.2.0-alpha.2.nupkg` | 165235 bytes | `89291454460de7db003b38719df1d58902ae2e8fcf4b8a07814c3785f64ee264` |
+| `AgentContextKit.0.2.0-alpha.2.snupkg` | 40217 bytes | `3982128cae4c4c8b6795de1fb064fc81bb962dc06f66a5891e2340987c8c18e3` |
+
+The NuGet-served nupkg hash differs from the release nupkg hash because NuGet.org repository signing changes the served package bytes. Both hashes are independently verified and must not be treated as an unexpected mutation.
 
 ## SBOM And Provenance Result
-The package contained 13 archive entries. No entry name matched SBOM, SPDX, CycloneDX, provenance, in-toto, Sigstore, or attestation conventions.
+The NuGet package contains 13 archive entries. No entry name matches SBOM, SPDX, CycloneDX, provenance, in-toto, Sigstore, or attestation conventions. The GitHub Release assets are the nupkg and snupkg only; no SBOM asset is present.
 
-The GitHub Release is a published pre-release with no manually uploaded assets. GitHub-generated source archives are not project-uploaded SBOM or provenance artifacts.
-
-`gh attestation verify` queried the exact package SHA-256 against `Cynrath/agent-context-kit` and returned HTTP 404. Therefore, no accessible GitHub SLSA provenance attestation was found for this exact package digest during this audit. This conclusion is limited to the inspected repository, digest, and public/authenticated CLI query.
-
-GitHub verification reference:
-- GitHub Docs, "REST API endpoints for artifact attestations": <https://docs.github.com/>
+The authenticated GitHub artifact-attestation endpoint returned HTTP 404 for NuGet package digest `83348398a2e52b5430456a65c3439f4a8b617760ebe1881e970141fcb5375152`. Therefore no accessible GitHub artifact attestation was found for this exact repository and digest during the audit.
 
 ## Current Decision Boundary
-| Area | Verified published state | Maintainer action required |
+| Area | Verified published state | Follow-up |
 | --- | --- | --- |
-| NuGet owner identity | Public owner profile `Cyranth`; project persona/author `Cynrath` | Align the profile/package owner identity or record an intentional, reviewed exception |
-| Author signing | No author signature observed | Choose author signing or record dated accepted risk |
-| Repository signing | Valid NuGet.org repository signature | Preserve as repository evidence; do not relabel as author signing |
-| SBOM | Not present in package or GitHub Release assets | Publish an exact-candidate SBOM or record dated accepted risk |
-| Provenance | No accessible GitHub attestation for package digest | Attest an exact-candidate artifact or record dated accepted risk |
-| Recovery | Procedure documented but not accepted by a named owner | Record owner, threshold, communication path, and review date |
+| NuGet owner identity | Repository signature owner `Cyranth`; project persona/author `Cynrath` | TASK-0131 records alignment or a dated disposition |
+| Author signing | No author signature observed | TASK-0132 implements only with a trusted certificate; otherwise records dated deferral |
+| Repository signing | Valid NuGet.org repository signature | Preserve as repository evidence; never relabel as author signing |
+| SBOM | Not present in package or GitHub Release assets | TASK-0132 decides and, if safe, implements exact-artifact generation |
+| Provenance | No accessible GitHub attestation for exact NuGet digest | TASK-0132 decides least-privilege GitHub attestation behavior |
+| Recovery | Read-only recovery verification is green; ownership/notification disposition remains open | TASK-0130 records primary/backup ownership and recovery authority |
 
 ## Reproduction
-Use an ignored local path and remove the package after inspection:
+Use a disposable path outside tracked source and remove downloaded artifacts after inspection:
 
 ```powershell
-$package = ".ackit/audits/AgentContextKit.0.2.0-alpha.1.nupkg"
+$version = "0.2.0-alpha.2"
+$package = Join-Path $env:TEMP "AgentContextKit.$version.nupkg"
 Invoke-WebRequest `
-  -Uri "https://api.nuget.org/v3-flatcontainer/agentcontextkit/0.2.0-alpha.1/agentcontextkit.0.2.0-alpha.1.nupkg" `
+  -Uri "https://api.nuget.org/v3-flatcontainer/agentcontextkit/$version/agentcontextkit.$version.nupkg" `
   -OutFile $package
 Get-FileHash -Algorithm SHA256 $package
 dotnet nuget verify $package --all --verbosity detailed
-gh release view v0.2.0-alpha.1 --repo Cynrath/agent-context-kit --json assets,isDraft,isPrerelease,publishedAt,url
-gh attestation verify $package --repo Cynrath/agent-context-kit --format json
+gh release view v0.2.0-alpha.2 --repo Cynrath/agent-context-kit --json tagName,targetCommitish,isPrerelease,publishedAt,assets,url
+gh api repos/Cynrath/agent-context-kit/attestations/sha256:83348398a2e52b5430456a65c3439f4a8b617760ebe1881e970141fcb5375152
+Remove-Item $package -Force
 ```
 
-The attestation command is expected to remain non-zero until an attestation exists for the exact digest. Do not treat that expected absence as a CLI defect.
+The attestation query is expected to remain non-zero until an attestation exists for the exact digest.
 
 ## Remote Boundary
-TASK-0099 downloaded and inspected public artifacts only. It did not sign, publish, attest, upload, edit a release, modify NuGet ownership, unlist/deprecate a package, push, tag, or publish a package.
+TASK-0127 performs read-only package, release, signature, digest, metadata, and attestation inspection. It does not sign, publish, attest, upload, edit a release, modify NuGet ownership, unlist/deprecate a package, move a tag, or publish a package.

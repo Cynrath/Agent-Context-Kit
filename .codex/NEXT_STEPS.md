@@ -15,6 +15,6 @@ PROJECT-CONTROL-0102 completed the authorized `v0.2.0-alpha.2` release sequence.
 11. TASK-0125 global alpha.2 verification, disposable full smoke, local gates, post-publish sync, and exact-commit 8/8 are complete.
 12. Published-package and source-package smoke are both pinned to `0.2.0-alpha.2` after publication.
 13. `docs/V100_GAP_ANALYSIS.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, and `docs/MAINTAINER_RC_DECISION.md` remain the historical 1.0/RC evidence boundary.
-14. TASK-0126 local implementation is complete: split publish/read-only jobs, evidence verifier, static permission gate, and positive/negative/idempotency fixtures.
-15. Complete full local validation, commit/push TASK-0126, require 8/8, and dispatch alpha.2 `verify-existing` recovery verification.
+14. TASK-0126 is complete: commit `2f68f14` passed 8/8 and recovery run `27478046088` is green with publish jobs skipped.
+15. TASK-0127 alpha.2 published supply-chain evidence is refreshed; continue with TASK-0128 hosted RC evidence hardening.
 16. Continue TASK-0127 through TASK-0134 without per-task prompts; record permanent human/external blockers and continue independent work.

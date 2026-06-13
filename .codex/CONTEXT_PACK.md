@@ -6,7 +6,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 ## Active Control
 PROJECT-CONTROL-0103 executes TASK-0126 through TASK-0134: release recovery verification, alpha.2 supply-chain evidence, hosted RC evidence, security controls/ownership decisions, and conditional next-prerelease work. Immutable alpha.2 artifacts must never be republished or retagged.
 
-TASK-0126 local implementation splits the manual workflow into exact-master OIDC publication and a separate read-only existing-release verifier. The verifier records package/release hashes, checks immutable tag/release/package metadata, and runs the full installed-tool smoke without write permissions or login.
+TASK-0126 is hosted-verified: automation commit `2f68f14` passed 8/8 and run `27478046088` verified immutable alpha.2 package/release evidence without write permissions or login. TASK-0127 records exact alpha.2 hashes, repository signature, missing author signature/SBOM/attestation, and owner identity difference.
 
 ## Architecture
 - CLI project: `src/AgentContextKit.Cli`

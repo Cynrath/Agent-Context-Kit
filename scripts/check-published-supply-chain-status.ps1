@@ -42,29 +42,33 @@ Write-Host "AgentContextKit published supply-chain status review"
 Write-Host "Repository: $repoRoot"
 
 $status = Read-RequiredFile "docs\PUBLISHED_SUPPLY_CHAIN_STATUS.md" "Published supply-chain status"
-$task = Read-RequiredFile "docs\tasks\TASK-0099-published-supply-chain-status-audit.md" "TASK-0099"
+$task = Read-RequiredFile "docs\tasks\TASK-0127-alpha2-supply-chain-evidence-refresh.md" "TASK-0127"
 $evidence = Read-RequiredFile "docs\SECURITY_SUPPLY_CHAIN_EVIDENCE.md" "Security/supply-chain evidence register"
 $policy = Read-RequiredFile "docs\SUPPLY_CHAIN_POLICY.md" "Supply-chain policy"
 
 foreach ($marker in @(
-    'NuGet package `AgentContextKit` `0.2.0-alpha.1`',
-    "d6d0804f5dfca7c03f2b8ea173de74e3b0e9e8eb73ceec5dda9ac18cae1988ce",
+    'NuGet package `AgentContextKit` `0.2.0-alpha.2`',
+    "83348398a2e52b5430456a65c3439f4a8b617760ebe1881e970141fcb5375152",
+    "89291454460de7db003b38719df1d58902ae2e8fcf4b8a07814c3785f64ee264",
+    "3982128cae4c4c8b6795de1fb064fc81bb962dc06f66a5891e2340987c8c18e3",
+    "f540479a92cbe66097f6796553828ee49ddd5512",
+    "27478046088",
     'Signature type: `Repository`',
     "No author signature was observed",
-    'Public owner profile `Cyranth`; project persona/author `Cynrath`',
-    "no manually uploaded assets",
-    "no accessible GitHub SLSA provenance attestation",
-    "did not sign, publish, attest, upload"
+    'Repository signature owner `Cyranth`; project persona/author `Cynrath`',
+    "no SBOM asset is present",
+    "no accessible GitHub artifact attestation",
+    "does not sign, publish, attest, upload"
 )) {
     Require-Text $status $marker "Published-state marker $marker"
 }
 
-Require-Text $task "No signing, certificate handling" "Task remote-write boundary"
+Require-Text $task "Signing, republishing" "Task remote-write boundary"
 Require-Text $evidence "VERIFIED PUBLISHED STATE" "Published-state evidence vocabulary"
 Require-Text $evidence "NuGet owner identity" "NuGet owner identity evidence row"
-Require-Text $evidence "Repository signature; no author signature observed" "Package signature evidence row"
-Require-Text $evidence "Not present in package or GitHub Release assets" "SBOM published-state evidence"
-Require-Text $evidence "No accessible GitHub attestation for package digest" "Provenance published-state evidence"
+Require-Text $evidence "Alpha.2 repository signature; no author signature observed" "Package signature evidence row"
+Require-Text $evidence "Not present in alpha.2 package or GitHub Release assets" "SBOM published-state evidence"
+Require-Text $evidence "No accessible GitHub attestation for alpha.2 package digest" "Provenance published-state evidence"
 Require-Text $policy "repository-signed by NuGet.org" "Repository-signing truth boundary"
 Require-Text $policy "must not be described as author-signed" "Author-signing truth boundary"
 
