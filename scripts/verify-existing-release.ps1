@@ -17,6 +17,7 @@ Set-StrictMode -Version Latest
 function Get-StringValue {
     param([object]$Value)
     if ($null -eq $Value) { return "" }
+    if ($Value -is [System.Xml.XmlNode]) { return $Value.InnerText.Trim() }
     return ([string]$Value).Trim()
 }
 

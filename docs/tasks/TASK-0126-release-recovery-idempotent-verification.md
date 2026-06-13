@@ -37,7 +37,7 @@ Full local gates, standard 8/8, then manual `verify-existing` run with automatio
 Revert workflow/script changes; existing release remains untouched.
 
 ## Completion Evidence
-Local implementation complete: publish and verify-existing jobs are permission-isolated; static workflow checks and positive/negative/idempotency fixtures pass. Hosted 8/8 and the read-only alpha.2 verification dispatch remain the completion evidence after push.
+Local implementation complete: publish and verify-existing jobs are permission-isolated; static workflow checks and positive/negative/idempotency fixtures pass. The first hosted read-only run reached package/signature/install/full-smoke verification, then exposed a Linux PowerShell XML text-conversion difference for the nuspec license element. The cross-platform parser fix is pending repeat validation and dispatch.
 
 ## Commit
 `ci: add read-only release recovery verification`
