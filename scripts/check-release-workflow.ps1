@@ -37,6 +37,15 @@ $required = @(
     "gh release create"
 )
 
+foreach ($ubuntuCommand in @(
+    'pwsh -NoProfile -File scripts/prepare-release.ps1 -Version $version',
+    'pwsh -NoProfile -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}"'
+)) {
+    if (-not $content.Contains($ubuntuCommand)) {
+        $issues.Add("Cross-platform release command missing: $ubuntuCommand") | Out-Null
+    }
+}
+
 if (-not $content.Contains('pwsh -NoProfile -File scripts/test-local-markdown-links.ps1') -or
     -not $content.Contains('pwsh -NoProfile -File scripts/check-local-markdown-links.ps1 -FailOnIssues')) {
     $issues.Add("Markdown link gates must run in isolated pwsh child processes.") | Out-Null

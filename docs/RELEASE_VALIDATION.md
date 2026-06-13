@@ -14,6 +14,8 @@ The replacement commit `6289acb` passed all eight standard hosted jobs. Its rele
 
 Commit `4f5f06c` also passed all eight standard hosted jobs. Its release dispatch exposed the underlying path issue: the hosted `%TEMP%` root used an 8.3 short path, while the candidate path comparison could expand to a long path and incorrectly report a valid link as escaping the repository. Link containment now normalizes repository-relative path segments, rejects only real `..`, drive-letter, or UNC escapes, and covers root-relative and absolute-local cases. The dispatch stopped before pack/publish and created no package, tag, or release.
 
+Commit `ed9bf78` passed all eight standard hosted jobs and completed the release validation/package-upload job. The Ubuntu release job then stopped during remote-state inspection because two release-job script invocations used the Windows-only `powershell` executable name. Those calls now use cross-platform `pwsh`; OIDC login and NuGet publish had not started, and no package, tag, or release was created.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

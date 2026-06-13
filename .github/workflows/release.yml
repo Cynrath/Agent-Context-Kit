@@ -162,7 +162,7 @@ jobs:
           $version = "${{ inputs.version }}"
           $commit = "${{ inputs.commit_sha }}"
           $tagName = "v$version"
-          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version $version -CommitSha $commit -RequireOriginMaster -FailOnIssues
+          pwsh -NoProfile -File scripts/prepare-release.ps1 -Version $version -CommitSha $commit -RequireOriginMaster -FailOnIssues
 
           $packageUrl = "https://api.nuget.org/v3-flatcontainer/agentcontextkit/$version/agentcontextkit.$version.nupkg"
           try { Invoke-WebRequest -Uri $packageUrl -Method Head -UseBasicParsing | Out-Null; $packageExists = $true } catch { $packageExists = $false }
@@ -200,7 +200,7 @@ jobs:
 
       - name: Verify published package
         shell: pwsh
-        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}"
+        run: pwsh -NoProfile -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}"
 
       - name: Create exact tag when missing
         if: steps.state.outputs.tag_exists != 'true'
