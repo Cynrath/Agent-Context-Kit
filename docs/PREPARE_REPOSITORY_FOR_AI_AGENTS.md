@@ -1,5 +1,7 @@
 # Prepare A Repository For AI Coding Agents
 
+This tutorial follows [Agent Context Pipeline](AGENT_CONTEXT_PIPELINE.md). Complete local review before any optional external prompt packer, graph, scanner, or SBOM workflow.
+
 This workflow prepares an existing repository for safer use with Codex, Claude Code, Cursor, GitHub Copilot, or another coding agent. AgentContextKit runs locally and does not upload repository content or call a remote AI provider in the MVP.
 
 Start with [First Five Minutes With Ackit](FIRST_FIVE_MINUTES.md) if the global tool is not installed yet.

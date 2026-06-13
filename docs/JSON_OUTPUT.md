@@ -1,5 +1,8 @@
 # JSON Output
 
+## External JSON
+The current command JSON envelope does not accept external tool output. Future profile-specific import is design-only in `docs/EXTERNAL_OUTPUT_IMPORT_BOUNDARY.md`; generic JSON parsing and implicit ACKIT finding conversion are prohibited.
+
 AgentContextKit supports machine-readable JSON output for automation and CI usage.
 
 Supported commands:

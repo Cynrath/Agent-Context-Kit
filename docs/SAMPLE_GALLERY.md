@@ -1,5 +1,7 @@
 # Sample Gallery
 
+External-tool experiments may use these samples only through `docs/DISPOSABLE_EXTERNAL_WORKFLOW_LAB.md`. Copy a sample into ignored `.ackit/external/lab/`; do not write external output into the tracked sample directories.
+
 AgentContextKit sample gallery is a set of small, safe repositories under `samples/` for scanner demos, onboarding, and documentation checks.
 
 Samples are intentionally minimal. They are not production templates and should not contain generated outputs, real secrets, package artifacts, `bin/`, `obj/`, `node_modules`, archives, or local reports.

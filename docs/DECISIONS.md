@@ -1,5 +1,8 @@
 # Decisions
 
+## Optional External Tool Interoperability
+Decision: documentation and design only. Do not add external dependencies, auto-install, PATH probing, subprocess execution, generic import parsing, or network behavior. Revisit only through a dedicated implementation task after evidence, privacy threat, output-contract, and disposable-lab reviews.
+
 ## ADR-0001: Use .NET 10
 AgentContextKit targets .NET 10 because the project brief requires the latest stable .NET generation and the local environment has .NET SDK 10.0.300 installed. `net10.0` also aligns with future global-tool packaging guidance.
 

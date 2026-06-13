@@ -1,5 +1,7 @@
 # Demo Scenarios
 
+Optional external-tool demos are not part of the standard scenarios. Any future example must use the synthetic, no-secret, no-PAT, no-commit process in `docs/DISPOSABLE_EXTERNAL_WORKFLOW_LAB.md`.
+
 These scenarios show safe, local ways to try AgentContextKit. They do not push, tag, publish NuGet packages, create GitHub Releases, upload SARIF, or call remote LLM providers.
 
 ## Published Package Demo

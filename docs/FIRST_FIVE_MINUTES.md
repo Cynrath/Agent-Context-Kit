@@ -1,5 +1,7 @@
 # First Five Minutes With Ackit
 
+This tutorial covers the Inspect, Harden, Generate, Review, and Validate portions of [Agent Context Pipeline](AGENT_CONTEXT_PIPELINE.md). It does not require optional external enrichment.
+
 For Turkish human-readable output, add `--lang tr` to supported commands. CLI command/option names and JSON fields remain unchanged so the same copy-paste workflow and automation contract work in both languages.
 
 This tutorial uses the published `AgentContextKit` `0.2.0-alpha.1` global tool and a disposable synthetic repository. It does not upload repository content or call a remote AI provider.

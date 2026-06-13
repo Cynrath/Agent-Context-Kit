@@ -1,5 +1,7 @@
 # Interoperability Backlog
 
+The governing architecture is `docs/INTEROPERABILITY_DESIGN.md`. All entries remain no-dependency, no-auto-install, no-network-by-default, explicit-opt-in concepts.
+
 ## Status
 Ideas only. No command, dependency, auto-install, network call, schema commitment, or compatibility promise exists.
 

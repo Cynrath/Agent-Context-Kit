@@ -1,5 +1,7 @@
 # Documentation Site Plan
 
+The current toolchain decision is `docs/DOCS_QUALITY_TOOLCHAIN_DECISION.md`: Markdown remains canonical, no docs dependency is added, and site generators stay deferred.
+
 Status: deferred. Repository Markdown remains the canonical documentation surface.
 
 ## Current Observation

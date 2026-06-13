@@ -1,5 +1,8 @@
 # Architecture
 
+## External Interoperability Boundary
+AgentContextKit currently has no external tool runtime integration. Future interoperability must follow `docs/INTEROPERABILITY_DESIGN.md`: Core stays dependency-free from external SDKs, executable discovery/execution is explicit opt-in, outputs stay under ignored repository-relative paths, external rule/tool namespaces remain separate, and failures cannot change default scan/doctor behavior.
+
 ## Solution Layout
 ```text
 AgentContextKit.sln

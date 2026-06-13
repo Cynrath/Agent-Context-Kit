@@ -1,5 +1,7 @@
 # AI Workflow
 
+Use the eight-stage taxonomy in [Agent Context Pipeline](AGENT_CONTEXT_PIPELINE.md). This workflow covers the core Inspect/Harden/Generate/Review/Validate/Handoff stages; external enrichment is optional and release decisions remain maintainer-controlled.
+
 For repository adoption before the first agent task, use [Prepare A Repository For AI Coding Agents](PREPARE_REPOSITORY_FOR_AI_AGENTS.md).
 
 1. Read README, architecture, security, and the active task.

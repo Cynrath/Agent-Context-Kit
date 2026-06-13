@@ -1,5 +1,10 @@
 # CLI Reference
 
+## Design-Only Commands
+External tool discovery concepts are documented in `docs/EXTERNAL_TOOLS_COMMAND_DESIGN.md`. Do not attempt `ackit external-tools` or `ackit doctor --external-tools`; the current CLI does not implement them.
+
+Reviewed workflow guidance concepts are documented in `docs/WORKFLOW_COMMAND_DESIGN.md`. `ackit workflow` is not implemented.
+
 AgentContextKit CLI command name: `ackit`.
 
 During development, run commands through:

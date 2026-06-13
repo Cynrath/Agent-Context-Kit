@@ -1,5 +1,7 @@
 # Ecosystem Positioning
 
+The product boundary follows [Agent Context Pipeline](AGENT_CONTEXT_PIPELINE.md). Related tools belong only to the optional external enrichment stage and do not replace readiness, review, validation, handoff, or release decisions.
+
 AgentContextKit is not trying to replace every repo-to-context, code graph, code search, documentation, or security scanner tool.
 
 ## AgentContextKit Focus

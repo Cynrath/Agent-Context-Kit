@@ -1,5 +1,11 @@
 # External Tool Workflows
 
+These optional workflows are outside the normal-command boundary in `docs/NO_NETWORK_DEFAULT_POLICY.md`. AgentContextKit does not install or invoke them.
+
+Reviewed copy-ready examples are indexed in [External Tool Examples](examples/external-tools/README.md). They assume a manually installed tool, a disposable synthetic repository, local-only output under ignored `.ackit/external/`, and human review before sharing.
+
+A possible future guidance-only CLI is designed in `docs/WORKFLOW_COMMAND_DESIGN.md`; it is not implemented and would not run these commands.
+
 ## Boundary
 These are documentation-only, opt-in workflow sketches. AgentContextKit does not install, invoke, bundle, or support these tools. Verify each tool's current CLI and license before use.
 
@@ -93,3 +99,15 @@ Potential local checks include Markdown linting, Vale prose rules, and Lychee lo
 
 ## Non-Integration Rule
 These examples do not create `ackit workflow` commands, adapters, normalized schemas, or automatic findings. Any such behavior requires TASK-0103 or a later dedicated design and test task.
+
+## Reviewed Examples
+- [Repomix local](examples/external-tools/repomix-local.md)
+- [Gitingest local](examples/external-tools/gitingest-local.md)
+- [Code2Prompt local](examples/external-tools/code2prompt-local.md)
+- [Graphify local AST lab](examples/external-tools/graphify-local.md)
+- [Gitleaks local](examples/external-tools/gitleaks-local.md)
+- [Semgrep local rules](examples/external-tools/semgrep-local-rules.md)
+- [Trivy filesystem](examples/external-tools/trivy-filesystem.md)
+- [Secretlint local](examples/external-tools/secretlint-local.md)
+- [Syft SBOM experiment](examples/external-tools/syft-sbom-experiment.md)
+- [Docs quality local](examples/external-tools/docs-quality-local.md)

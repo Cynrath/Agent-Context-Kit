@@ -1,5 +1,10 @@
 # CLI Contract
 
+## Non-Shipped External Tools Design
+`ackit external-tools ...` and `ackit doctor --external-tools` appear only in `docs/EXTERNAL_TOOLS_COMMAND_DESIGN.md`. They are not implemented, not in published help, and not part of the current CLI compatibility contract. Default `ackit doctor` behavior remains unchanged.
+
+`ackit workflow list|show` is also a non-shipped guidance-only design in `docs/WORKFLOW_COMMAND_DESIGN.md`. It would print reviewed instructions but never execute a tool.
+
 This page records the intended stable v1.0 command contract for `ackit`. It is a local contract review aid, not public release approval.
 
 TASK-0092 conditionally freezes this command/option surface for release-candidate preparation. Any breaking change requires reopening `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`; the freeze is not publication approval.

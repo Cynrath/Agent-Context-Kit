@@ -1,5 +1,8 @@
 # SARIF Output
 
+## External SARIF
+Current `ackit sarif` emits AgentContextKit results only. External SARIF import is not implemented. The design in `docs/EXTERNAL_OUTPUT_IMPORT_BOUNDARY.md` keeps upstream tool/rule identities namespaced and does not merge them into ACKIT findings automatically.
+
 AgentContextKit published `0.2.0-alpha.1` package and current source can write scanner findings as SARIF 2.1.0 for CI review and future GitHub Code Scanning workflows.
 
 Availability note: the published NuGet package `AgentContextKit` `0.2.0-alpha.1` includes `ackit sarif`.
