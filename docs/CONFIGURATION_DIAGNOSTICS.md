@@ -14,6 +14,8 @@ Each diagnostic contains:
 
 Messages do not echo raw config values or full source lines.
 
+Quoted scalar and list values must have matching quote characters. An unmatched or mismatched quote produces sanitized `ACKITCFG006` without echoing the value.
+
 ## Codes
 | Code | Severity | Meaning |
 | --- | --- | --- |

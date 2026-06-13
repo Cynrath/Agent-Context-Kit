@@ -775,8 +775,7 @@ public static class Program
             Console.WriteLine($"{severity}:");
             foreach (var finding in group)
             {
-                var match = string.IsNullOrWhiteSpace(finding.Match) ? "" : $" ({finding.Match})";
-                Console.WriteLine($"- {finding.Path}: {finding.Message}{match}");
+                Console.WriteLine($"- {finding.Path}: {finding.Message}");
             }
 
             var omitted = findings.Count(finding => finding.Severity == severity) - group.Length;
@@ -916,7 +915,7 @@ public static class Program
             category = finding.Category.ToString(),
             path = finding.Path,
             message = finding.Message,
-            match = finding.Match
+            match = (string?)null
         };
     }
 

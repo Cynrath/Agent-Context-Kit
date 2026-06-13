@@ -20,7 +20,9 @@ AgentContextKit scanner findings use a stable rule catalog. The same catalog dri
 - Local path leakage: drive-rooted paths, Unix home paths, and file URI paths.
 - Provider-token-like values: OpenAI-like keys, GitHub-like tokens, AWS access key-like values, bearer token-like values, and generic assignment patterns for tokens, passwords, connection strings, and service credentials.
 
-Scanner messages avoid requiring raw secret values. SARIF never writes the raw `Match` field.
+Scanner messages avoid requiring raw values. Human, JSON, HTML, Web UI, baseline, and SARIF outputs do not write the internal raw `Match` value; JSON keeps the compatible `match` field as `null`.
+
+Email, phone, and IP rules evaluate all distinct candidates in a file. A safe documentation example appearing before a reportable value therefore cannot hide the later value.
 
 Case-insensitive scanner regexes use culture-invariant matching. ASCII token, email, domain, and local-path patterns therefore keep the same behavior under Turkish and other process cultures.
 

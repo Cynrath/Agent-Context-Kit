@@ -146,7 +146,7 @@ Finding shape:
 }
 ```
 
-Finding objects keep these schema v2 fields: `ruleId`, `severity`, `category`, `path`, `message`, and `match`. `match` may be `null` when exposing the raw matched value would be unsafe or unnecessary.
+Finding objects keep these schema v2 fields: `ruleId`, `severity`, `category`, `path`, `message`, and `match`. Current source emits `match: null` so raw secret, PII, brand, domain, IP, phone, and local-path values do not enter machine-readable output.
 
 Suppression shape:
 ```json

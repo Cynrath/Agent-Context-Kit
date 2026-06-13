@@ -778,7 +778,7 @@ public sealed class WebUiGenerator : IWebUiGenerator
                 var finding = findings[index];
                 var severity = finding.Severity.ToString();
                 var findingId = "RF-" + (index + 1).ToString("000", CultureInfo.InvariantCulture);
-                var match = string.IsNullOrWhiteSpace(finding.Match) ? "-" : finding.Match;
+                const string match = "-";
                 var baselineCell = classifiedFindings is null
                     ? ""
                     : "<td class=\"baseline-" + E(classifiedFindings[index].Status.ToString().ToLowerInvariant()) + "\">" + E(classifiedFindings[index].Status.ToString()) + "</td>";

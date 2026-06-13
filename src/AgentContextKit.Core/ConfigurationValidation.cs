@@ -168,7 +168,12 @@ public sealed partial class AckitConfigValidator : IAckitConfigValidator
         int line,
         List<ConfigDiagnostic> diagnostics)
     {
-        var value = Unquote(rawValue);
+        if (!TryUnquote(rawValue, out var value))
+        {
+            Add(diagnostics, ConfigDiagnosticCodes.MalformedValue, ConfigDiagnosticSeverity.Error, line, key,
+                "Configuration value has unmatched quotes.");
+            return;
+        }
         if (value.Length == 0)
         {
             Add(diagnostics, ConfigDiagnosticCodes.MalformedValue, ConfigDiagnosticSeverity.Error, line, key,
@@ -224,7 +229,14 @@ public sealed partial class AckitConfigValidator : IAckitConfigValidator
 
         foreach (var item in inner.Split(',', StringSplitOptions.None))
         {
-            ValidateListValue(key, Unquote(item), line, seenValues, diagnostics);
+            if (!TryUnquote(item, out var value))
+            {
+                Add(diagnostics, ConfigDiagnosticCodes.MalformedValue, ConfigDiagnosticSeverity.Error, line, key,
+                    "List item has unmatched quotes.");
+                continue;
+            }
+
+            ValidateListValue(key, value, line, seenValues, diagnostics);
         }
 
         return false;
@@ -251,7 +263,14 @@ public sealed partial class AckitConfigValidator : IAckitConfigValidator
             return;
         }
 
-        ValidateListValue(activeListKey, Unquote(trimmed[2..]), line, seenValues, diagnostics);
+        if (!TryUnquote(trimmed[2..], out var value))
+        {
+            Add(diagnostics, ConfigDiagnosticCodes.MalformedValue, ConfigDiagnosticSeverity.Error, line, activeListKey,
+                "List item has unmatched quotes.");
+            return;
+        }
+
+        ValidateListValue(activeListKey, value, line, seenValues, diagnostics);
     }
 
     private static void ValidateListValue(
@@ -380,9 +399,25 @@ public sealed partial class AckitConfigValidator : IAckitConfigValidator
         }
     }
 
-    private static string Unquote(string value)
+    private static bool TryUnquote(string value, out string unquoted)
     {
-        return value.Trim().Trim('"', '\'');
+        var trimmed = value.Trim();
+        if (trimmed.Length == 0)
+        {
+            unquoted = "";
+            return true;
+        }
+
+        var startsQuoted = trimmed[0] is '"' or '\'';
+        var endsQuoted = trimmed[^1] is '"' or '\'';
+        if (startsQuoted != endsQuoted || (startsQuoted && trimmed[0] != trimmed[^1]))
+        {
+            unquoted = "";
+            return false;
+        }
+
+        unquoted = startsQuoted ? trimmed[1..^1].Trim() : trimmed;
+        return true;
     }
 
     private static void Add(

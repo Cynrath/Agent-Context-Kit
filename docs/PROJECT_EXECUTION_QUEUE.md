@@ -1,5 +1,19 @@
 # Project Execution Queue
 
+## Active Authorized Alpha.2 Track
+| Order | Status | Task | Priority | Blocking status | Expected files | Validation required | Remote write required? | Done criteria |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 51 | Done locally | TASK-0116 documentation consistency/link audit | High | Complete | local Markdown gate/tests and active docs | focused test plus docs gates | Push after validation | Active wording and local links pass |
+| 52 | Done locally | TASK-0117 scanner precision audit | High | Complete | focused Core/tests/docs | positive/negative scanner tests | Push after validation | Precision improves without weaker Critical detection |
+| 53 | Done locally | TASK-0118 suppression audit polish | High | Complete | suppression code/tests/docs | sanitized audit tests | Push after validation | Audit is deterministic and raw-value-free |
+| 54 | Done locally | TASK-0119 baseline-aware CI polish | High | Complete | baseline/CLI tests/docs | baseline and exit contract tests | Push after validation | New severe findings still block |
+| 55 | Done locally | TASK-0120 config diagnostics polish | High | Complete | validator/CLI tests/docs | valid/warning/error tests | Push after validation | Stable sanitized diagnostics |
+| 56 | Done locally | TASK-0121 full validation | P0 | Complete | evidence docs | complete local gate set | No | All contracts/performance pass |
+| 57 | Done locally | TASK-0122 release automation | P0 | Complete | release workflow/scripts/docs | static/local release automation gates | Push after validation | Manual exact-SHA OIDC workflow is safe/idempotent |
+| 58 | In progress | TASK-0123 alpha.2 preparation | P0 | Blocks publication | version/release/package metadata | full package/install smoke | Yes | Exact candidate commit pushed |
+| 59 | Queued | TASK-0124 hosted publish | P0 | Requires pre-release 8/8 | hosted release evidence | release workflow plus package/tag/release verification | Yes | NuGet/tag/pre-release complete |
+| 60 | Queued | TASK-0125 post-publish verification | P0 | Final release closeout | README/workflow/status docs | installed-tool smoke and final 8/8 | Yes | Clean aligned final state |
+
 ## Completed Local Execution
 | Status | Task range | Scope | Validation | Remote state |
 | --- | --- | --- | --- | --- |
@@ -36,7 +50,7 @@
 | 48 | Done locally | TASK-0113 no-network/default-offline policy hardening | High | TASK-0107 | authoritative offline policy and aligned public docs | Terminology, scan, privacy/security/release gates | No | Default commands and outputs have an unambiguous no-upload/no-call boundary |
 | 49 | Done locally | TASK-0114 release blocker board and maintainer decision register | High | Existing RC/security evidence | blocker board/register and linked evidence docs | Cross-document and security/supply-chain gates | No | Open P0/P1 items are visible without being closed |
 | 50 | Done locally | TASK-0115 `v0.2.0-alpha.2` candidate planning refresh | Medium | TASK-0114 blocker truth | planning-only scope docs | Version/reference and full local gates | No | Scope is current, no version changes occur, and release remains maintainer-gated |
-| 51 | Queued | TASK-0116 ecosystem documentation consistency and local link audit | Low | TASK-0101 through TASK-0115 | cross-link, terminology, duplicate/stale-language audit | Local link/static docs review plus standard gates | No | New documentation is internally consistent and stale design/shipped language is absent |
+| 51 | Superseded by active track | TASK-0116 ecosystem documentation consistency and local link audit | Low | TASK-0101 through TASK-0115 | See active authorized track | See active authorized track | See active authorized track | Tracked above |
 
 ## Guardrail
 Maintainer-gated work does not block local-only product/docs progress, but no local task may claim release-ready, 1.0-ready, active security controls, signing, SBOM, provenance, or hosted RC completion without exact evidence.

@@ -106,6 +106,24 @@ public sealed class BaselinePolicyTests
     }
 
     [Fact]
+    public void ClassifierTreatsSeverityEscalationAsNew()
+    {
+        var classifier = new BaselineClassifier();
+        var reviewed = new RiskFinding(RiskSeverity.High, RiskCategory.Secret, "settings.txt", "Credential assignment detected.");
+        var escalated = reviewed with { Severity = RiskSeverity.Critical };
+        var reduced = reviewed with { Severity = RiskSeverity.Medium };
+        var manifest = classifier.CreateManifest([reviewed]);
+
+        var escalatedResult = classifier.Classify([escalated], manifest);
+        var reducedResult = classifier.Classify([reduced], manifest);
+
+        Assert.Single(escalatedResult.New);
+        Assert.Empty(escalatedResult.Existing);
+        Assert.Single(reducedResult.Existing);
+        Assert.Empty(reducedResult.New);
+    }
+
+    [Fact]
     public void EvaluationRejectsDifferentScanFindings()
     {
         var classifier = new BaselineClassifier();

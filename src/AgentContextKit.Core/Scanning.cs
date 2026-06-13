@@ -519,6 +519,7 @@ public sealed class RiskScanner : IRiskScanner
             .ThenBy(finding => finding.Path, StringComparer.OrdinalIgnoreCase)
             .ToArray(),
             suppressions
+                .Distinct()
                 .OrderBy(suppression => suppression.Path, StringComparer.OrdinalIgnoreCase)
                 .ThenBy(suppression => suppression.RuleId, StringComparer.OrdinalIgnoreCase)
                 .ThenBy(suppression => suppression.Reason)
@@ -743,11 +744,11 @@ public sealed class SecretScanner : ISecretScanner
         new(new Regex(@"BEGIN (?:RSA |DSA |EC |OPENSSH |PGP |ENCRYPTED )?PRIVATE KEY(?: BLOCK)?", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "Private key block detected."),
         new(new Regex(@"aws_secret_access_key\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Critical, RiskCategory.Secret, "AWS secret access key setting detected."),
         new(new Regex(@"\b(password|pwd|mysql password|sql password)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Password-like assignment detected."),
-        new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)\b(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
+        new(new Regex(@"(?<!var\s)(?<!const\s)(?<!string\s)(?<![A-Za-z0-9_-])(api[_ -]?key|apikey|api_key|token|bearer)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Token or API key assignment detected."),
         new(new Regex(@"\bbearer\s+[A-Za-z0-9._-]{16,}", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Bearer token-like value detected."),
         new(new Regex(@"\b(connectionstring|connection string)\b\s*[:=]|\b(data source|user id|uid)" + EqualsSign, RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.High, RiskCategory.Secret, "Connection string-like value detected."),
         new(new Regex(@"\b(smtp|recaptcha|cloudflare)\b\s*[:=]", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Medium, RiskCategory.Secret, "Service credential-like setting detected."),
-        new(new Regex(@"([A-Za-z]:\\|" + FileUriPrefix + @"|/(?:home|Users)/[^\s""'<>]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
+        new(new Regex(@"(?<![A-Za-z0-9])(?:[A-Za-z]:\\|" + FileUriPrefix + @"|/(?:home|Users)/[^\s""'<>]+)", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant), RiskSeverity.Low, RiskCategory.LocalPath, "Local filesystem path detected.")
     ];
 
     public IReadOnlyList<RiskFinding> ScanText(string relativePath, string content)
@@ -774,7 +775,7 @@ public sealed class SecretScanner : ISecretScanner
 
 public sealed class BrandPiiScanner : IBrandPiiScanner
 {
-    private static readonly Regex PhoneRegex = new(@"(?<![A-Za-z0-9-])(\+?\d[\d\s()-]{7,}\d)(?![A-Za-z0-9])", RegexOptions.Compiled);
+    private static readonly Regex PhoneRegex = new(@"(?<![A-Za-z0-9-])(\+?\d[\d \t()-]{7,}\d)(?![A-Za-z0-9])", RegexOptions.Compiled);
     private static readonly Regex EmailRegex = new(@"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
     private static readonly Regex DomainRegex = new(@"\b(?:[A-Z0-9-]+\.)+(?:com\.tr|com|net|org|io|dev|app|ai|co|tr|edu|gov|cloud|site)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled | RegexOptions.CultureInvariant);
     private static readonly Regex IpAddressRegex = new(@"\b(?:\d{1,3}\.){3}\d{1,3}\b", RegexOptions.Compiled);
@@ -842,17 +843,20 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
             }
         }
 
-        var phoneMatch = PhoneRegex.Match(content);
-        if (phoneMatch.Success && phoneMatch.Value.Count(char.IsDigit) >= 8 && !IsDateOrDateTimeLikeValue(phoneMatch.Value))
+        foreach (var phone in PhoneRegex.Matches(content).Select(match => match.Value).Distinct(StringComparer.Ordinal))
         {
-            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "Phone-like value detected.", phoneMatch.Value));
+            if (IsReportablePhoneNumber(phone))
+            {
+                findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "Phone-like value detected.", phone));
+            }
         }
 
-        var emailMatch = EmailRegex.Match(content);
-        if (emailMatch.Success)
+        var emailDomains = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (var email in EmailRegex.Matches(content).Select(match => match.Value).Distinct(StringComparer.OrdinalIgnoreCase))
         {
-            var emailDomain = GetEmailDomain(emailMatch.Value);
-            if (!IsBuiltInIgnoredDomainLikeValue(emailDomain) && !IsNonRealFixtureEmail(relativePath, emailMatch.Value, emailDomain))
+            var emailDomain = GetEmailDomain(email);
+            emailDomains.Add(emailDomain);
+            if (!IsBuiltInIgnoredDomainLikeValue(emailDomain) && !IsNonRealFixtureEmail(relativePath, email, emailDomain))
             {
                 if (IsConfiguredSafeDomain(emailDomain, config.SafeDomains))
                 {
@@ -860,14 +864,14 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
                 }
                 else
                 {
-                    findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", emailMatch.Value));
+                    findings.Add(new RiskFinding(RiskSeverity.Medium, RiskCategory.Pii, relativePath, "Email-like value detected.", email));
                 }
             }
         }
 
         foreach (var domain in DomainRegex.Matches(content).Select(match => match.Value).Distinct(StringComparer.OrdinalIgnoreCase))
         {
-            if (emailMatch.Value.Contains(domain, StringComparison.OrdinalIgnoreCase) || IsBuiltInIgnoredDomainLikeValue(domain))
+            if (emailDomains.Contains(domain) || IsBuiltInIgnoredDomainLikeValue(domain))
             {
                 continue;
             }
@@ -882,13 +886,15 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
             break;
         }
 
-        var ipAddressMatch = IpAddressRegex.Match(content);
-        if (ipAddressMatch.Success && IsReportableIpAddress(ipAddressMatch.Value))
+        foreach (var ipAddress in IpAddressRegex.Matches(content).Select(match => match.Value).Distinct(StringComparer.Ordinal))
         {
-            findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "IP address-like value detected.", ipAddressMatch.Value));
+            if (IsReportableIpAddress(ipAddress))
+            {
+                findings.Add(new RiskFinding(RiskSeverity.Low, RiskCategory.Pii, relativePath, "IP address-like value detected.", ipAddress));
+            }
         }
 
-        return new BrandPiiScanResult(findings, suppressions);
+        return new BrandPiiScanResult(findings.Distinct().ToArray(), suppressions.Distinct().ToArray());
     }
 
     private static bool IsReportableIpAddress(string value)
@@ -971,6 +977,23 @@ public sealed class BrandPiiScanner : IBrandPiiScanner
     private static bool IsDateOrDateTimeLikeValue(string value)
     {
         return Regex.IsMatch(value, @"^\d{4}-\d{2}-\d{2}(?:\s+\d{1,2})?$");
+    }
+
+    private static bool IsReportablePhoneNumber(string value)
+    {
+        var digitCount = value.Count(char.IsDigit);
+        if (digitCount is < 8 or > 15 || IsDateOrDateTimeLikeValue(value))
+        {
+            return false;
+        }
+
+        if (value.StartsWith('+'))
+        {
+            return true;
+        }
+
+        return value.Any(character => character is ' ' or '\t' or '(' or ')') ||
+               value.Count(character => character == '-') >= 2;
     }
 
     private static string GetEmailDomain(string email)

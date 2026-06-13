@@ -1,0 +1,253 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: SemVer package version without v prefix
+        required: true
+        type: string
+      commit_sha:
+        description: Exact origin/master commit to publish
+        required: true
+        type: string
+      prerelease:
+        description: Create a GitHub pre-release
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ inputs.version }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    name: validate exact package
+    runs-on: windows-2025
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.commit_sha }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Validate commit and version
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version "${{ inputs.version }}" -CommitSha "${{ inputs.commit_sha }}" -RequireOriginMaster -FailOnIssues
+
+      - name: Restore, build, and test
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          dotnet restore AgentContextKit.sln --nologo
+          dotnet build AgentContextKit.sln -c Release --no-restore --nologo
+          dotnet test AgentContextKit.sln -c Release --no-build --nologo
+
+      - name: Validate source outputs
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          dotnet run --project src/AgentContextKit.Cli -c Release --no-build -- scan --ci
+          dotnet run --project src/AgentContextKit.Cli -c Release --no-build -- doctor
+          $jsonPath = Join-Path $env:RUNNER_TEMP "ackit-scan.json"
+          dotnet run --project src/AgentContextKit.Cli -c Release --no-build -- scan --json | Set-Content -LiteralPath $jsonPath -Encoding utf8
+          Get-Content $jsonPath -Raw | ConvertFrom-Json | Out-Null
+          dotnet run --project src/AgentContextKit.Cli -c Release --no-build -- sarif --output .ackit/reports/release.sarif
+          Get-Content .ackit/reports/release.sarif -Raw | ConvertFrom-Json | Out-Null
+
+      - name: Run release gates
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-local-markdown-links.ps1
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-local-markdown-links.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-v100-documentation-release-gates.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-published-supply-chain-status.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-public-release-gates.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-release-workflow.ps1 -FailOnIssues
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-release.ps1 -Version "${{ inputs.version }}"
+
+      - name: Pack and inspect candidate
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $packageRoot = Join-Path $env:RUNNER_TEMP "ackit-release-package"
+          New-Item -ItemType Directory -Force -Path $packageRoot | Out-Null
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-package-metadata.ps1 -ExpectedVersion "${{ inputs.version }}" -FailOnIssues
+          dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release --no-build -o $packageRoot
+          $nupkg = Get-Item (Join-Path $packageRoot "AgentContextKit.${{ inputs.version }}.nupkg")
+          $snupkg = Get-Item (Join-Path $packageRoot "AgentContextKit.${{ inputs.version }}.snupkg")
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          $archive = [System.IO.Compression.ZipFile]::OpenRead($nupkg.FullName)
+          try {
+            $entries = $archive.Entries.FullName
+            foreach ($required in @("AgentContextKit.nuspec", "tools/net10.0/any/AgentContextKit.Cli.dll", "README.md")) {
+              if ($entries -notcontains $required) { throw "Package entry missing: $required" }
+            }
+          }
+          finally {
+            $archive.Dispose()
+          }
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}" -PackageSource $packageRoot
+          "PACKAGE_ROOT=$packageRoot" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Upload validated package
+        uses: actions/upload-artifact@v4
+        with:
+          name: AgentContextKit-${{ inputs.version }}
+          path: ${{ runner.temp }}/ackit-release-package/*.*nupkg
+          if-no-files-found: error
+          retention-days: 1
+
+  release:
+    name: publish and create release
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: nuget-release
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+      - name: Checkout exact commit
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.commit_sha }}
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Download validated package
+        uses: actions/download-artifact@v4
+        with:
+          name: AgentContextKit-${{ inputs.version }}
+          path: ${{ runner.temp }}/ackit-release-package
+
+      - name: Inspect remote release state
+        id: state
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $version = "${{ inputs.version }}"
+          $commit = "${{ inputs.commit_sha }}"
+          $tagName = "v$version"
+          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version $version -CommitSha $commit -RequireOriginMaster -FailOnIssues
+
+          $packageUrl = "https://api.nuget.org/v3-flatcontainer/agentcontextkit/$version/agentcontextkit.$version.nupkg"
+          try { Invoke-WebRequest -Uri $packageUrl -Method Head -UseBasicParsing | Out-Null; $packageExists = $true } catch { $packageExists = $false }
+
+          git fetch --tags origin
+          $tagCommit = git rev-list -n 1 $tagName 2>$null
+          $tagExists = $LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($tagCommit)
+          if ($tagExists -and $tagCommit.Trim() -ne $commit) { throw "Existing tag targets a different commit." }
+
+          gh release view $tagName --repo "${{ github.repository }}" *> $null
+          $releaseExists = $LASTEXITCODE -eq 0
+          "package_exists=$($packageExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "tag_exists=$($tagExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+          "release_exists=$($releaseExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Login to NuGet with trusted publishing
+        if: steps.state.outputs.package_exists != 'true'
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: Cyranth
+
+      - name: Publish NuGet package
+        if: steps.state.outputs.package_exists != 'true'
+        shell: pwsh
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $package = Get-Item (Join-Path "${{ runner.temp }}/ackit-release-package" "AgentContextKit.${{ inputs.version }}.nupkg")
+          dotnet nuget push $package.FullName --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY --skip-duplicate
+
+      - name: Verify published package
+        shell: pwsh
+        run: powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version "${{ inputs.version }}"
+
+      - name: Create exact tag when missing
+        if: steps.state.outputs.tag_exists != 'true'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $tagName = "v${{ inputs.version }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag "$tagName" "${{ inputs.commit_sha }}"
+          git push origin "$tagName"
+
+      - name: Create or complete GitHub pre-release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          $version = "${{ inputs.version }}"
+          $tagName = "v$version"
+          $packageRoot = "${{ runner.temp }}/ackit-release-package"
+          $assets = @(Get-ChildItem $packageRoot -Filter "AgentContextKit.$version.*nupkg" | ForEach-Object FullName)
+          if ("${{ steps.state.outputs.release_exists }}" -ne "true") {
+            if ([System.Convert]::ToBoolean("${{ inputs.prerelease }}")) {
+              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md" --prerelease
+            }
+            else {
+              gh release create $tagName @assets --repo "${{ github.repository }}" --verify-tag --target "${{ inputs.commit_sha }}" --title "AgentContextKit $version" --notes-file "docs/RELEASE_BODY_V020_ALPHA2.md"
+            }
+          }
+          else {
+            $existingAssets = @(gh release view $tagName --repo "${{ github.repository }}" --json assets --jq '.assets[].name')
+            foreach ($asset in $assets) {
+              if ($existingAssets -notcontains [System.IO.Path]::GetFileName($asset)) {
+                gh release upload $tagName $asset --repo "${{ github.repository }}"
+              }
+            }
+          }
+
+      - name: Verify tag and release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          git fetch --tags origin
+          $tagCommit = (git rev-list -n 1 "v${{ inputs.version }}").Trim()
+          if ($tagCommit -ne "${{ inputs.commit_sha }}") { throw "Published tag does not target the exact release commit." }
+          gh release view "v${{ inputs.version }}" --repo "${{ github.repository }}" --json tagName,isPrerelease,assets | ConvertFrom-Json | Out-Null

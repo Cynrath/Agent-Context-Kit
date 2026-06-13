@@ -1,0 +1,64 @@
+# TASK-0123 v0.2.0-alpha.2 Release Preparation
+
+## Purpose
+Prepare and push the exact alpha.2 release commit after TASK-0116–0122 pass.
+
+## Current State
+Source/package version is `0.2.0-alpha.1`; published-package smoke must remain pinned there until publication.
+
+## Scope
+Bump source/CLI/source-smoke/release verification to `0.2.0-alpha.2`; update changelog/release notes/handoff/queue; pack, inspect, and temporary-install the candidate.
+
+## Out Of Scope
+Changing published-package smoke or public README install commands before NuGet publication.
+
+## Affected Files
+Csproj, CLI version, source smoke workflow, release scripts/docs, CHANGELOG, release notes, roadmap/queue/handoff/context.
+
+## Implementation Steps
+Bump controlled references; build/test; pack to temp; inspect metadata/content; install temp tool; run command/smoke checks; commit and push.
+
+## Security/Privacy Boundary
+Candidate packages and generated reports stay temporary/ignored; no credentials are used.
+
+## Backward Compatibility
+Schemas, command names, exit codes, config/baseline formats, and rule IDs remain stable.
+
+## Database Impact
+None.
+
+## Admin Impact
+None until hosted publication.
+
+## Permission Impact
+Normal Git push only.
+
+## SEO/I18n Impact
+English/Turkish release wording remains aligned.
+
+## Audit/Security Impact
+Package metadata/content and exact release SHA are recorded.
+
+## Acceptance Criteria
+Candidate reports alpha.2, local package installs and passes smoke, published smoke stays alpha.1, clean commit is pushed.
+
+## Tests
+Full validation plus package metadata/content/install smoke.
+
+## Validation
+Run preparation and verification scripts for alpha.2.
+
+## Rollback
+Before publication, revert the release-preparation commit; never reuse alpha.2 after publication.
+
+## Completion Evidence
+Pending.
+
+## Commit
+Dedicated alpha.2 release-preparation commit.
+
+## Push
+Push normally to `master` after green local validation.
+
+## Hosted Checks
+Wait for exact release SHA 8/8 before dispatching publication.

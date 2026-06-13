@@ -37,6 +37,8 @@ Fingerprint v1 hashes this canonical metadata:
 The fingerprint never includes a finding message, raw match, secret value, repository root, username, machine name, timestamp, or absolute path.
 Severity is stored as review context but is not part of the fingerprint, so a catalog severity adjustment does not silently create a new finding identity.
 
+Classification also compares the current severity with the reviewed baseline severity. A matching fingerprint whose severity increased is classified as `new` for CI policy, while an equal or lower severity remains `existing`. This preserves fingerprint compatibility without allowing an escalation to bypass the new-finding gate.
+
 ## Path Rules
 - Convert `\` separators to `/`.
 - Normalize Unicode to Form C.

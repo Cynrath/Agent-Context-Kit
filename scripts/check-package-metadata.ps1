@@ -1,4 +1,5 @@
 param(
+    [string]$ExpectedVersion = "0.2.0-alpha.1",
     [switch]$FailOnIssues
 )
 
@@ -84,7 +85,7 @@ else {
     Require-Value -Project $project -Name "PackAsTool" -Expected "true"
     Require-Value -Project $project -Name "ToolCommandName" -Expected "ackit"
     Require-Value -Project $project -Name "PackageId" -Expected "AgentContextKit"
-    Require-Value -Project $project -Name "Version" -Expected "0.2.0-alpha.1"
+    Require-Value -Project $project -Name "Version" -Expected $ExpectedVersion
     Require-Value -Project $project -Name "Authors" -Expected "Cynrath"
     Require-Value -Project $project -Name "Company" -Expected "Cynrath"
     Require-Value -Project $project -Name "PackageReadmeFile" -Expected "README.md"

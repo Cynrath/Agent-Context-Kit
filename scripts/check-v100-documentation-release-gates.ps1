@@ -107,6 +107,11 @@ foreach ($doc in $criticalDocs) {
 }
 
 $gateScripts = @(
+    "scripts\check-local-markdown-links.ps1",
+    "scripts\test-local-markdown-links.ps1",
+    "scripts\check-release-workflow.ps1",
+    "scripts\prepare-release.ps1",
+    "scripts\verify-published-package.ps1",
     "scripts\check-cli-contract.ps1",
     "scripts\check-config-generated-conventions.ps1",
     "scripts\check-v020-readiness.ps1",
@@ -129,6 +134,22 @@ $gateScripts = @(
 
 foreach ($script in $gateScripts) {
     Require-Path -RelativePath $script -Description "Release gate script"
+}
+
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "test-local-markdown-links.ps1")
+if ($LASTEXITCODE -ne 0) {
+    Add-Issue "Local Markdown link gate tests failed."
+}
+else {
+    Add-Note "Local Markdown link gate tests passed."
+}
+
+& powershell -NoProfile -ExecutionPolicy Bypass -File (Join-Path $PSScriptRoot "check-local-markdown-links.ps1") -RepositoryRoot $repoRoot -FailOnIssues
+if ($LASTEXITCODE -ne 0) {
+    Add-Issue "Local Markdown link audit failed."
+}
+else {
+    Add-Note "Local Markdown link audit passed."
 }
 
 $documentationIndex = Get-FileText "docs\DOCUMENTATION_INDEX.md"

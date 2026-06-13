@@ -615,6 +615,53 @@ public sealed class RiskScannerTests
     }
 
     [Fact]
+    public void BrandPiiScannerFindsLaterRealEmailAfterSafeExample()
+    {
+        var scanner = new BrandPiiScanner();
+        var realLookingEmail = "security" + "@" + "private-customer" + ".dev";
+
+        var findings = scanner.ScanText(
+            "docs/contact.md",
+            "Example: sample@example.com. Review " + realLookingEmail + ".",
+            AckitConfig.Default);
+
+        Assert.Contains(findings, finding =>
+            finding.Category == RiskCategory.Pii &&
+            finding.Severity == RiskSeverity.Medium &&
+            finding.Match == realLookingEmail);
+    }
+
+    [Fact]
+    public void BrandPiiScannerFindsLaterPrivateIpAndPhoneAfterDocumentationValues()
+    {
+        var scanner = new BrandPiiScanner();
+
+        var findings = scanner.ScanText(
+            "docs/ops.md",
+            "Published 2026-06-13; build 27444536856; example host 203.0.113.10; internal host " + "10.20" + ".30.40; call " + "555" + " 123 " + "4567.",
+            AckitConfig.Default);
+
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "10.20" + ".30.40");
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "555" + " 123 " + "4567");
+        Assert.DoesNotContain(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "27444536856");
+    }
+
+    [Fact]
+    public void BrandPiiScannerDeduplicatesRepeatedSafeDomainAudit()
+    {
+        var scanner = new BrandPiiScanner();
+        var domain = "mail" + ".trusted" + ".dev";
+
+        var scan = scanner.ScanTextWithAudit(
+            "docs/contact.md",
+            "Use first@" + domain + " and second@" + domain + ".",
+            AckitConfig.Default with { SafeDomains = [domain] });
+
+        Assert.Empty(scan.Findings);
+        Assert.Single(scan.Suppressions);
+    }
+
+    [Fact]
     public void BrandPiiScannerReportsRealLookingDomainOutsideFixtures()
     {
         var scanner = new BrandPiiScanner();
@@ -656,6 +703,19 @@ public sealed class RiskScannerTests
         var findings = scanner.ScanText("headers.txt", "Authorization: Bearer " + "abcdefghijklmnopqrstuvwxyz123456");
 
         Assert.Contains(findings, finding => finding.Severity == RiskSeverity.High && finding.Category == RiskCategory.Secret);
+    }
+
+    [Fact]
+    public void SecretScannerIgnoresHyphenatedTokenMetadataButKeepsStandaloneAssignments()
+    {
+        var scanner = new SecretScanner();
+
+        var metadata = scanner.ScanText("workflow.yml", "permissions:\n  id-token: write\n  cancellation-token: none");
+        var assignment = scanner.ScanText("settings.txt", "to" + "ken: placeholder");
+
+        Assert.DoesNotContain(metadata, finding => finding.Message.Contains("Token or API key assignment", StringComparison.Ordinal));
+        Assert.DoesNotContain(metadata, finding => finding.Category == RiskCategory.LocalPath);
+        Assert.Contains(assignment, finding => finding.Severity == RiskSeverity.High && finding.Category == RiskCategory.Secret);
     }
 
     [Fact]
@@ -703,9 +763,9 @@ public sealed class RiskScannerTests
     {
         var scanner = new BrandPiiScanner();
 
-        var findings = scanner.ScanText("ops.md", "Internal host is 10.0.0.5.", AckitConfig.Default);
+        var findings = scanner.ScanText("ops.md", "Internal host is " + "10.0" + ".0.5.", AckitConfig.Default);
 
-        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "10.0.0.5");
+        Assert.Contains(findings, finding => finding.Category == RiskCategory.Pii && finding.Match == "10.0" + ".0.5");
     }
 
     [Fact]
@@ -1111,7 +1171,7 @@ public sealed class TemplateAndGenerationTests
         Assert.Contains("Recommended Action", content);
         Assert.Contains("RF-001", content);
         Assert.Contains("Review before CI or release.", content);
-        Assert.Contains("&lt;token&gt;", content);
+        Assert.DoesNotContain("&lt;token&gt;", content);
         Assert.Contains("Generated File Preview", content);
         Assert.Contains("Category", content);
         Assert.Contains("Status", content);
@@ -1609,6 +1669,22 @@ public sealed class CliJsonAndMetadataTests
     }
 
     [Fact]
+    public void ScanHumanAndJsonDoNotExposeRawSecretMatches()
+    {
+        using var repo = TempRepository.Create();
+        var fakeKey = TestData.OpenAiProjectKey();
+        repo.Write("settings.txt", "token" + "=" + fakeKey);
+
+        var human = RunCli(repo.Path, ["scan"]);
+        var jsonResult = RunCli(repo.Path, ["scan", "--json"]);
+        var json = JsonNode.Parse(jsonResult.Output);
+
+        Assert.DoesNotContain(fakeKey, human.Output, StringComparison.Ordinal);
+        Assert.DoesNotContain(fakeKey, jsonResult.Output, StringComparison.Ordinal);
+        Assert.Null(json?["findings"]?[0]?["match"]);
+    }
+
+    [Fact]
     public void ScanJsonOutputIsValid()
     {
         using var repo = TempRepository.Create();
@@ -1787,6 +1863,25 @@ public sealed class CliJsonAndMetadataTests
         Assert.Equal(2, changed.ExitCode);
         Assert.True(changedJson?["baseline"]?["new"]?.GetValue<int>() > 0);
         Assert.Equal(2, changedJson?["exitCode"]?.GetValue<int>());
+    }
+
+    [Fact]
+    public void BaselineAwareCiBlocksSeverityEscalationForExistingFingerprint()
+    {
+        using var repo = TempRepository.Create();
+        repo.Write("settings.txt", "token" + "=" + TestData.OpenAiProjectKey());
+        var reviewedHigh = new BaselineManifest(
+        [
+            new BaselineEntry("ACKIT001", "settings.txt", RiskSeverity.High, new BaselineLocation(occurrence: 1))
+        ]);
+        new BaselineStore(new PhysicalFileSystem()).Write(repo.Path, ".ackit-baseline.json", reviewedHigh, update: false);
+
+        var result = RunCli(repo.Path, ["scan", "--ci", "--baseline", ".ackit-baseline.json", "--json"]);
+        var json = JsonNode.Parse(result.Output);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.True(json?["baseline"]?["new"]?.GetValue<int>() >= 1);
+        Assert.Equal("new", json?["baseline"]?["classifiedFindings"]?[0]?["status"]?.GetValue<string>());
     }
 
     [Fact]

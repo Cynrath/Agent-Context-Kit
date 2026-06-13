@@ -260,6 +260,9 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-release-candidate-workflow.ps1`
 - `scripts/check-json-contract-assets.ps1`
 - `scripts/check-localization-parity.ps1`
+- `scripts/check-local-markdown-links.ps1`
+- `scripts/check-release-workflow.ps1`
+- `scripts/prepare-release.ps1`
 - `scripts/check-security-supply-chain-evidence.ps1`
 - `scripts/check-published-supply-chain-status.ps1`
 - `scripts/check-rc-local-readiness.ps1`
@@ -272,7 +275,9 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-v100-readiness.ps1`
 - `scripts/measure-scan-performance.ps1`
 - `scripts/test-samples.ps1`
+- `scripts/test-local-markdown-links.ps1`
 - `scripts/verify-release.ps1`
+- `scripts/verify-published-package.ps1`
 - `SECURITY.md`
 - `src/AgentContextKit.Cli/AgentContextKit.Cli.csproj`
 - `src/AgentContextKit.Cli/Program.cs`
@@ -311,6 +316,7 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - Published supply-chain status audit: `docs/tasks/TASK-0099-published-supply-chain-status-audit.md`, `docs/PUBLISHED_SUPPLY_CHAIN_STATUS.md`, and `scripts/check-published-supply-chain-status.ps1`; read-only evidence distinguishes NuGet repository signing from author signing and records missing SBOM/provenance plus the NuGet owner-profile mismatch.
 - Offline OSS ecosystem catalog and roadmap reset: `docs/tasks/TASK-0100-offline-oss-ecosystem-catalog.md`, `docs/RELATED_PROJECTS.md`, `docs/OFFLINE_OSS_ECOSYSTEM.md`, `docs/EXTERNAL_TOOL_WORKFLOWS.md`, `docs/ECOSYSTEM_POSITIONING.md`, and `docs/INTEROPERABILITY_BACKLOG.md`; no external dependency or integration is added.
 - Local ecosystem/product intelligence continuation: `docs/tasks/TASK-0101-related-tools-comparison-matrix.md` through `docs/tasks/TASK-0115-v020-alpha2-candidate-planning-refresh.md`; evidence, workflows, design-only interoperability/commands/imports, privacy threats, offline policy, blocker visibility, and planning docs are complete locally without external execution or remote writes.
+- Authorized alpha.2 execution: `docs/tasks/PROJECT-CONTROL-0102-alpha2-automated-release.md` and TASK-0116 through TASK-0125 cover local consistency/hardening, contract/performance validation, exact-commit OIDC release automation, publication, and post-publish verification.
 - Final local readiness consolidation: `docs/V100_READINESS.md`, `docs/tasks/TASK-0039-v100-final-local-readiness-consolidation.md`, and `scripts/check-v100-readiness.ps1`.
 - Public release final cleanup: `docs/SOURCE_ARCHIVE.md`, `docs/tasks/TASK-0040-public-release-final-cleanup.md`, source archive hygiene, package URL blocker documentation, and sample-aware stack detection.
 - Final public release preparation and alpha.2/v0.2 hardening: `docs/tasks/TASK-0041-repository-url-finalization.md` through `docs/tasks/TASK-0065-v020-alpha1-publish-verification.md`, `docs/CODEX_FOR_OSS_APPLICATION.md`, final repository URL metadata, pushed GitHub branch/tag status, GitHub Actions status, completed GitHub Release pages, published NuGet packages, verified global tool installs, NuGet smoke test evidence, successful cross-platform CI smoke workflow result, Codex for OSS submission status, scanner noise reduction, GitHub Actions Node 24 readiness, Turkish CLI output polish, source package version bump, source smoke workflow, alpha.2 and v0.2.0-alpha.1 publication verification, refreshed agent instructions, GitHub issue/PR templates, maintainer guide, support matrix, repository hygiene docs, issue triage docs, README badges, GitHub label guidance, repository settings checklist, privacy-first SARIF scanner output, non-active Code Scanning upload example docs, GitHub Actions usage examples, sample gallery docs, demo scenarios, sample smoke helper, scanner rule catalog hardening, config allowlist foundation, expanded scanner risk patterns, README preview guidance, Web UI screenshot policy, safe visual asset docs, and published `0.2.0-alpha.1` package verification.

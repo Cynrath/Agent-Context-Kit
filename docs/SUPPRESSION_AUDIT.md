@@ -32,6 +32,8 @@ The output includes no raw scanner match and no finding message.
 
 It does not contain `match` or `message`.
 
+Identical audit records are deduplicated. Repeated occurrences of the same configured safe domain in one path do not inflate the suppression count.
+
 ## Safety Boundary
 - Critical findings are never suppressed and never appear as Critical suppression records.
 - A source line can produce both a visible Critical finding and a suppressed lower-severity generic finding. The visible Critical finding still controls CI and redact-check behavior.

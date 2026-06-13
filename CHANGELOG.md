@@ -7,6 +7,8 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 ## [Unreleased]
 
 ### Added
+- Added a dependency-free local Markdown-link gate with positive/negative smoke coverage and release-gate integration.
+- Added manual exact-commit GitHub release automation with NuGet OIDC Trusted Publishing, scoped permissions, idempotent recovery, package inspection, and installed-tool smoke verification.
 - Added table-driven scanner regression fixtures for secret, artifact, local-path, PII/brand noise, stable rule IDs, and Critical suppression boundaries.
 - Added current-source sanitized suppression audit metadata for `safeDomains`, `ignoredPaths`, and `ignoredFindingIds` in human/JSON scan output.
 - Added safe screenshot and docs-site planning plus first-five-minutes and existing-repository adoption tutorials.
@@ -23,6 +25,10 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added the authoritative no-network default policy, agent context pipeline taxonomy, docs toolchain decision, release blocker board, maintainer decision register, and planning-only alpha.2 refresh.
 
 ### Changed
+- Scanner email, phone, and IP rules now evaluate all distinct candidates in each file; raw finding matches are omitted from human, JSON, and Web UI output while JSON keeps its compatible nullable field.
+- Baseline-aware CI now treats severity escalation as a new finding without changing baseline schema or fingerprints.
+- Config diagnostics reject unmatched quotes with sanitized `ACKITCFG006` output.
+- Suppression audit records are deduplicated before human/JSON reporting.
 - Polished README installed-tool and source command examples.
 - Froze a compatibility-preserving `v0.2.0-alpha.2` hardening scope without changing version metadata.
 - Reclassified historical v1.0 asset checks and added an explicit P0/P1/P2 1.0 readiness gap register.
@@ -38,6 +44,7 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 - Added an initial offline OSS ecosystem catalog, product positioning, external-tool workflow guidance, interoperability backlog, and split local-versus-maintainer execution queue without adding dependencies.
 
 ### Fixed
+- Prevented `id-token: write`, escaped text ending in drive-like syntax, and plain numeric hosted run IDs from producing token/path/phone false positives.
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.
 - Allowlisted Shields.io badge hosts and common `System.IO` namespace-shaped technical tokens to prevent culture-invariant self-scan noise.
 

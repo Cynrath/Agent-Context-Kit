@@ -114,6 +114,12 @@
 - `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
 - `scripts/check-json-contract-assets.ps1`: parses schema/golden assets and runs live-output contract tests.
 - `scripts/check-localization-parity.ps1`: validates English/Turkish help, human/error exits, and JSON semantic invariance.
+- `scripts/check-local-markdown-links.ps1`: validates repository-local Markdown targets without network access.
+- `scripts/test-local-markdown-links.ps1`: exercises passing, skipped-external, inline-code, and broken-link cases for the local Markdown gate.
+- `docs/RELEASE_AUTOMATION.md`: exact-commit release workflow, OIDC credential boundary, idempotency, and partial-failure recovery.
+- `scripts/check-release-workflow.ps1`: static safety gate for the manual OIDC release workflow.
+- `scripts/prepare-release.ps1`: version, commit, source-smoke, verification, and tag-target consistency check.
+- `scripts/verify-published-package.ps1`: disposable NuGet/local-package install and full installed-tool smoke verification.
 - `scripts/check-security-supply-chain-evidence.ps1`: validates pending/verified evidence structure and optionally reruns dependency reviews.
 - `docs/RC_LOCAL_READINESS.md`: consolidated local RC evidence with an explicit remote NO-GO boundary.
 - `scripts/check-rc-local-readiness.ps1`: read-only orchestration gate for final local RC evidence.

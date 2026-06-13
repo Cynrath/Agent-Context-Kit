@@ -1,6 +1,18 @@
 # Next Tasks
 
-This is the unified execution queue after the TASK-0066 through TASK-0099 local-only sequence. Maintainer-gated release/security work and local-only product intelligence are separate tracks.
+This is the unified execution queue for the explicitly authorized PROJECT-CONTROL-0102 alpha.2 release sequence.
+
+## Active Alpha.2 Execution
+1. TASK-0116 documentation consistency and local Markdown-link audit.
+2. TASK-0117 scanner precision audit and hardening.
+3. TASK-0118 suppression audit polish.
+4. TASK-0119 baseline-aware CI policy polish.
+5. TASK-0120 config diagnostics polish.
+6. TASK-0121 contract, regression, and performance validation.
+7. TASK-0122 OIDC release automation and credential boundary.
+8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push.
+9. TASK-0124 hosted validation and publication.
+10. TASK-0125 post-publish verification and final hosted validation.
 
 ## Completed Local Execution
 - TASK-0066 through TASK-0099 are completed locally.
@@ -45,10 +57,10 @@ These actions require explicit maintainer control and do not block safe local-on
 - GitHub Release: published pre-release.
 - NuGet package: `AgentContextKit` `0.2.0-alpha.1`.
 - Published global tool includes `ackit sarif`.
-- Local and remote `master` were aligned at PROJECT-CONTROL-0101 start on `1347874`.
-- Latest checked `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs succeeded for `1347874`.
+- Local and remote `master` were aligned at PROJECT-CONTROL-0102 start on `8dadd16`.
+- All eight checked `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs succeeded for `8dadd16`.
 - TASK-0100 local validation passed with 178/178 tests, clean source scan/doctor, parsed JSON/SARIF, sample smoke, hygiene checks, and all local readiness/release evidence gates. The pre-commit public release gate reported only the expected dirty working tree blocker.
 - PROJECT-CONTROL-0101 validation passed with a zero-warning Release build, 178/178 tests, source JSON with zero findings, doctor PASS, parsed global SARIF with no Critical/High findings, sample smoke, clean hygiene/local Markdown links, and all requested local gates. The pre-commit public gate reported only the expected dirty working tree blocker.
 
 ## Execution Rule
-Continue local-only queued work in order without per-task prompts. Do not perform remote writes, auto-install external tools, add dependencies, upload repository content, or claim release readiness from documentation alone.
+Continue TASK-0116 through TASK-0125 in order without per-task prompts. After successful validation, normal commit/push is automatic. Tag, GitHub pre-release, and NuGet publication are allowed only through the explicitly authorized release task and OIDC workflow. Never expose credentials or use force/history-rewrite operations.

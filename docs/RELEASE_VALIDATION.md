@@ -2,6 +2,9 @@
 
 This checklist validates local release readiness without publishing.
 
+## PROJECT-CONTROL-0102 Pre-Version Evidence
+On 2026-06-13, TASK-0116–0122 validation passed with a zero-warning Release build, 186/186 tests, clean source scan, doctor PASS, sample smoke, JSON/SARIF/locale/link contracts, local package install smoke, and all requested readiness/security/supply-chain gates. The unchanged 2,000-file/30-second performance tripwire completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln
@@ -21,6 +24,11 @@ powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidenc
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/test-local-markdown-links.ps1
+powershell -ExecutionPolicy Bypass -File scripts/check-local-markdown-links.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-release-workflow.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/prepare-release.ps1 -Version <version> -CommitSha <sha> -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/verify-published-package.ps1 -Version <published-version>
 powershell -ExecutionPolicy Bypass -File scripts/check-security-supply-chain-evidence.ps1 -RunDependencyReview -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-rc-local-readiness.ps1 -RunDependencyReview -FailOnIssues
 ```
@@ -32,6 +40,8 @@ The normative local evidence matrix and dated results are maintained in `docs/RE
 The conditional local contract freeze and maintainer GO/NO-GO conditions are maintained in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and `docs/MAINTAINER_RC_DECISION.md`.
 
 Machine-readable command JSON, baseline, and SARIF profile assets are indexed in `docs/schemas/README.md` and validated by `scripts/check-json-contract-assets.ps1`.
+
+Repository-local Markdown targets are checked without network access by `scripts/check-local-markdown-links.ps1`; its positive/negative smoke cases are in `scripts/test-local-markdown-links.ps1`. External URLs and same-document anchors are intentionally not validated by this local gate.
 
 English/Turkish human output, known argument errors, exit decisions, and JSON semantic invariance are defined in [LOCALIZATION.md](LOCALIZATION.md) and validated by `tests/AgentContextKit.Tests/LocalizationParityTests.cs` plus `scripts/check-localization-parity.ps1`.
 

@@ -18,7 +18,7 @@ AgentContextKit MVP is local-only.
 Generated files can include project structure and stack information. Review generated files before committing or sharing them.
 
 ## Risk Reports
-Risk reports may include short matching snippets. Treat reports as sensitive until reviewed.
+Human, JSON, HTML, Web UI, baseline, and SARIF outputs omit raw scanner match values. Paths, rule metadata, messages, and finding existence can still be sensitive, so treat reports as local review artifacts until approved for sharing.
 
 ## User Responsibility
 Before publishing a repository, manually review:

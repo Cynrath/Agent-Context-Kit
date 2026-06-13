@@ -4,10 +4,15 @@
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
 ## Current Task
-- PROJECT-CONTROL-0101 local-only ecosystem/product roadmap continuation is complete locally.
+- PROJECT-CONTROL-0102 is active with explicit maintainer authority for normal commit/push, exact-commit hosted validation, `v0.2.0-alpha.2` tag and GitHub pre-release creation, and NuGet Trusted Publishing after all gates pass.
 - `v0.2.0-alpha.1` is published on GitHub and NuGet; published package includes `ackit sarif`.
-- Local `master` started aligned with `origin/master` at `1347874`.
-- Read-only GitHub CLI checks reported latest `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` runs as successful for `1347874`.
+- Local `master` started aligned with `origin/master` at `8dadd16`.
+- GitHub CLI checks reported all eight `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs successful for `8dadd16`.
+- TASK-0116 through TASK-0125 task files were created before implementation.
+- Successful validation is followed by normal commit and push in this authorized control task. Release publication uses OIDC only and never exposes or persists credential values.
+- TASK-0116 through TASK-0122 are complete locally. The suite is 186/186; scan is clean; doctor passes; performance completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
+- Release automation is manual-only, exact-SHA, per-version serialized, OIDC-only, and idempotent across NuGet/tag/GitHub Release partial states. Local package and full installed-tool smoke passed with `.nupkg` and `.snupkg` output.
+- TASK-0123 version preparation is active; published-package smoke and public README install commands remain on alpha.1 until publication.
 - TASK-0066 through TASK-0073 are completed locally without remote writes.
 - TASK-0075 and TASK-0076 are completed locally; TASK-0076 is ready to commit after full validation.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.
@@ -59,7 +64,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Next local-only task is TASK-0116 ecosystem documentation consistency and local link audit.
 - PROJECT-CONTROL-0101 pre-commit validation passed with a zero-warning Release build, 178/178 tests, source scan/JSON zero findings, doctor PASS, parsed global-tool SARIF with 7 results and no Critical/High findings, sample smoke, clean identity/artifact/token/path/local-link hygiene, all readiness/security/supply-chain gates, and `scripts/verify-release.ps1`.
 - The pre-commit public release gate failed only on the intentional dirty working tree; package metadata was clean. Rerun after the final commit.
-- Do not push, tag, publish NuGet, create GitHub Releases, upload SARIF, or commit generated `.ackit/` outputs.
+- Do not force push, rewrite history, move an existing tag, overwrite a NuGet version, upload repository SARIF, or commit generated `.ackit/` outputs.
 
 ## Work Completed So Far
 - Read the pasted project brief and operating rules.

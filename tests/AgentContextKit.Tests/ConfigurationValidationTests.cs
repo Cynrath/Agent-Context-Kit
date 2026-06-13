@@ -126,6 +126,20 @@ public sealed class ConfigurationValidationTests
     }
 
     [Fact]
+    public void UnmatchedQuotesAreSanitizedErrorsWhileMatchedQuotesRemainValid()
+    {
+        const string sensitiveValue = "private-value-not-for-output";
+        var invalid = _validator.Validate($"defaultLanguage: \"tr\nsafeDomains: [\"{sensitiveValue}]\n");
+        var valid = _validator.Validate("defaultLanguage: \"tr\"\nsafeDomains: [\"docs.example.invalid\"]\n");
+        var rendered = string.Join('\n', invalid.Diagnostics.Select(diagnostic => diagnostic.Message));
+
+        Assert.Equal(2, invalid.Diagnostics.Count(diagnostic => diagnostic.Code == ConfigDiagnosticCodes.MalformedValue));
+        Assert.True(invalid.HasErrors);
+        Assert.DoesNotContain(sensitiveValue, rendered, StringComparison.Ordinal);
+        Assert.Empty(valid.Diagnostics);
+    }
+
+    [Fact]
     public void ValidationDoesNotChangeCurrentReaderFallbackBehavior()
     {
         using var repo = TempRepository.Create();

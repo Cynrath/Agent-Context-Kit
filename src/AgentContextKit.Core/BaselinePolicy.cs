@@ -236,15 +236,13 @@ public sealed class BaselineClassifier : IBaselineClassifier
     public BaselineEvaluation Classify(IReadOnlyList<RiskFinding> findings, BaselineManifest manifest)
     {
         ArgumentNullException.ThrowIfNull(manifest);
-        var fingerprints = manifest.Entries
-            .Select(entry => entry.Fingerprint)
-            .ToHashSet(StringComparer.Ordinal);
-        return new BaselineEvaluation(manifest.Entries.Count, CreateEvaluations(findings, fingerprints));
+        var baselineEntries = manifest.Entries.ToDictionary(entry => entry.Fingerprint, StringComparer.Ordinal);
+        return new BaselineEvaluation(manifest.Entries.Count, CreateEvaluations(findings, baselineEntries));
     }
 
     private static IReadOnlyList<BaselineFindingEvaluation> CreateEvaluations(
         IReadOnlyList<RiskFinding> findings,
-        IReadOnlySet<string>? baselineFingerprints)
+        IReadOnlyDictionary<string, BaselineEntry>? baselineEntries)
     {
         ArgumentNullException.ThrowIfNull(findings);
         var indexed = findings.Select((finding, index) => new IndexedFinding(finding, index)).ToArray();
@@ -270,7 +268,8 @@ public sealed class BaselineClassifier : IBaselineClassifier
                 RiskRuleCatalog.GetRuleId(item.Finding),
                 item.Finding.Path,
                 new BaselineLocation(occurrence: occurrence));
-            var status = baselineFingerprints?.Contains(fingerprint) == true
+            var status = baselineEntries?.TryGetValue(fingerprint, out var baselineEntry) == true &&
+                         item.Finding.Severity <= baselineEntry.Severity
                 ? BaselineFindingStatus.Existing
                 : BaselineFindingStatus.New;
             return new BaselineFindingEvaluation(item.Finding, fingerprint, status, occurrence);
