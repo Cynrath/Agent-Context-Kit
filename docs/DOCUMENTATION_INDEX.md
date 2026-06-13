@@ -112,6 +112,8 @@
 - `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`: conditional local CLI/config/JSON/baseline/SARIF/upgrade contract freeze.
 - `docs/MAINTAINER_RC_DECISION.md`: release-candidate GO/NO-GO inputs, conditions, and remote-write boundary.
 - `docs/RC_HOSTED_EVIDENCE.md`: manual three-OS predecessor/config/baseline/performance workflow procedure.
+- `scripts/check-release-candidate-inputs.ps1`: exact commit and candidate/predecessor version boundary for hosted RC evidence.
+- `scripts/test-release-candidate-inputs.ps1`: positive and negative RC workflow input tests.
 - `scripts/check-json-contract-assets.ps1`: parses schema/golden assets and runs live-output contract tests.
 - `scripts/check-localization-parity.ps1`: validates English/Turkish help, human/error exits, and JSON semantic invariance.
 - `scripts/check-local-markdown-links.ps1`: validates repository-local Markdown targets without network access.

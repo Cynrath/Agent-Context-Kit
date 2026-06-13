@@ -23,11 +23,20 @@ else {
     $content = Get-Content -Raw $workflowPath
     $required = @(
         "workflow_dispatch:",
+        "commit_sha:",
+        "candidate_version:",
+        "predecessor_version:",
+        "concurrency:",
         "contents: read",
         "windows-2025",
         "ubuntu-latest",
         "macos-latest",
-        "PREDECESSOR_VERSION: 0.2.0-alpha.1",
+        'PREDECESSOR_VERSION: ${{ inputs.predecessor_version }}',
+        'CANDIDATE_VERSION: ${{ inputs.candidate_version }}',
+        'ref: ${{ inputs.commit_sha }}',
+        "fetch-depth: 0",
+        "check-release-candidate-inputs.ps1",
+        "-RequireOriginMaster",
         "CANDIDATE_PACKAGE_VERSION",
         "config-check --json",
         "baseline --output .ackit-baseline.json",
@@ -53,12 +62,32 @@ else {
         "upload-artifact",
         "upload-sarif",
         "security-events:\s*write",
-        "secrets\."
+        "secrets\.",
+        "contents:\s*write",
+        "id-token:\s*write",
+        "packages:\s*write",
+        "git push",
+        "gh release",
+        "dotnet nuget push"
     )
 
     foreach ($pattern in $forbiddenPatterns) {
         if ($content -match $pattern) {
             Add-Issue "Forbidden workflow pattern found: $pattern"
+        }
+    }
+
+    $inputTest = Join-Path $PSScriptRoot "test-release-candidate-inputs.ps1"
+    if (-not (Test-Path $inputTest)) {
+        Add-Issue "Release-candidate input tests are missing."
+    }
+    else {
+        & powershell -NoProfile -ExecutionPolicy Bypass -File $inputTest
+        if ($LASTEXITCODE -eq 0) {
+            Add-Note "Release-candidate input positive/negative tests passed."
+        }
+        else {
+            Add-Issue "Release-candidate input positive/negative tests failed."
         }
     }
 }

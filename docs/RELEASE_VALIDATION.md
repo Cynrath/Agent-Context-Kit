@@ -41,6 +41,8 @@ dotnet run --project src/AgentContextKit.Cli -- doctor
 powershell -ExecutionPolicy Bypass -File scripts/measure-scan-performance.ps1 -FileCount 2000 -MaxSeconds 30 -FailOnThreshold
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-evidence.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-workflow.ps1 -FailOnIssues
+powershell -ExecutionPolicy Bypass -File scripts/check-release-candidate-inputs.ps1 -CommitSha <exact-head-sha> -CandidateVersion <source-version> -PredecessorVersion <published-predecessor> -RequireOriginMaster
+powershell -ExecutionPolicy Bypass -File scripts/test-release-candidate-inputs.ps1
 powershell -ExecutionPolicy Bypass -File scripts/check-json-contract-assets.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/check-localization-parity.ps1 -FailOnIssues
 powershell -ExecutionPolicy Bypass -File scripts/test-local-markdown-links.ps1

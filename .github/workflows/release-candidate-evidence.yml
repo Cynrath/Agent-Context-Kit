@@ -2,17 +2,40 @@ name: release-candidate-evidence
 
 on:
   workflow_dispatch:
+    inputs:
+      commit_sha:
+        description: Exact current origin/master commit to validate
+        required: true
+        type: string
+      candidate_version:
+        description: Source package version expected at the exact commit
+        required: true
+        default: 0.2.0-alpha.2
+        type: string
+      predecessor_version:
+        description: Published predecessor package used for upgrade evidence
+        required: true
+        default: 0.2.0-alpha.1
+        type: string
 
 permissions:
   contents: read
 
 env:
-  PREDECESSOR_VERSION: 0.2.0-alpha.1
+  PREDECESSOR_VERSION: ${{ inputs.predecessor_version }}
+  CANDIDATE_VERSION: ${{ inputs.candidate_version }}
+
+concurrency:
+  group: rc-evidence-${{ inputs.commit_sha }}-${{ inputs.candidate_version }}
+  cancel-in-progress: false
 
 jobs:
   evidence:
     name: evidence (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
@@ -22,13 +45,27 @@ jobs:
           - macos-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout exact commit
         uses: actions/checkout@v6
+        with:
+          ref: ${{ inputs.commit_sha }}
+          fetch-depth: 0
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 10.0.x
+
+      - name: Validate exact commit and versions
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $PSNativeCommandUseErrorActionPreference = $true
+          pwsh -NoProfile -File scripts/check-release-candidate-inputs.ps1 `
+            -CommitSha "${{ inputs.commit_sha }}" `
+            -CandidateVersion "${{ inputs.candidate_version }}" `
+            -PredecessorVersion "${{ inputs.predecessor_version }}" `
+            -RequireOriginMaster
 
       - name: Restore, build, and test
         shell: pwsh
@@ -55,6 +92,9 @@ jobs:
           $sourceVersion = (Select-Xml -Xml $project -XPath "/Project/PropertyGroup/Version" | Select-Object -First 1).Node.InnerText
           if ([string]::IsNullOrWhiteSpace($sourceVersion)) {
             throw "Source package version could not be read."
+          }
+          if ($sourceVersion -ne $env:CANDIDATE_VERSION) {
+            throw "Source package version does not match candidate_version."
           }
 
           $candidatePackageVersion = "${sourceVersion}.ci.$($env:GITHUB_RUN_ID)"
@@ -139,7 +179,9 @@ jobs:
           @"
           ## Release-candidate evidence
           - OS: ${{ matrix.os }}
+          - Exact commit: ${{ inputs.commit_sha }}
           - Predecessor package: AgentContextKit $env:PREDECESSOR_VERSION
+          - Candidate source version: $env:CANDIDATE_VERSION
           - Source candidate package: $env:CANDIDATE_PACKAGE_VERSION
           - Artifact upload: disabled
           - SARIF upload: disabled

@@ -110,6 +110,8 @@ $gateScripts = @(
     "scripts\check-local-markdown-links.ps1",
     "scripts\test-local-markdown-links.ps1",
     "scripts\check-release-workflow.ps1",
+    "scripts\check-release-candidate-inputs.ps1",
+    "scripts\test-release-candidate-inputs.ps1",
     "scripts\test-release-recovery.ps1",
     "scripts\verify-existing-release.ps1",
     "scripts\prepare-release.ps1",

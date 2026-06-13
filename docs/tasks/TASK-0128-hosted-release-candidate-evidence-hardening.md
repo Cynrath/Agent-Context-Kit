@@ -37,7 +37,7 @@ Full local gates and hosted run inspection.
 Revert workflow hardening; retain previous evidence as historical.
 
 ## Completion Evidence
-Pending.
+Local hardening implemented: exact SHA/candidate/predecessor inputs, current origin/master validation, per-commit/version concurrency, read-only permissions, no-upload boundaries, and positive/negative input tests. Push, standard 8/8, and dedicated three-OS dispatch remain.
 
 ## Commit
 `ci: harden hosted release candidate evidence`

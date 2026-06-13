@@ -258,6 +258,8 @@ Sample projects remain under `samples/`, but their ASP.NET Core, Minimal API, No
 - `scripts/check-public-release-gates.ps1`
 - `scripts/check-release-candidate-evidence.ps1`
 - `scripts/check-release-candidate-workflow.ps1`
+- `scripts/check-release-candidate-inputs.ps1`
+- `scripts/test-release-candidate-inputs.ps1`
 - `scripts/check-json-contract-assets.ps1`
 - `scripts/check-localization-parity.ps1`
 - `scripts/check-local-markdown-links.ps1`
