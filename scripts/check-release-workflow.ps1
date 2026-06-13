@@ -37,6 +37,11 @@ $required = @(
     "gh release create"
 )
 
+if (-not $content.Contains('pwsh -NoProfile -File scripts/test-local-markdown-links.ps1') -or
+    -not $content.Contains('pwsh -NoProfile -File scripts/check-local-markdown-links.ps1 -FailOnIssues')) {
+    $issues.Add("Markdown link gates must run in isolated pwsh child processes.") | Out-Null
+}
+
 $prepareRelease = Get-Content -Raw (Join-Path $repoRoot "scripts\prepare-release.ps1")
 if (-not $prepareRelease.Contains('git tag --list $tagName')) {
     $issues.Add("Release preparation must treat an absent target tag as an idempotent state.") | Out-Null

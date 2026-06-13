@@ -10,6 +10,8 @@ On 2026-06-13, TASK-0123 prepared source/package/CLI metadata and source-package
 
 The first manual release-workflow dispatch for commit `63ef69c` stopped before pack/publish because the Markdown link test exposed one remaining direct `System.IO.Path.GetRelativePath` call under Windows PowerShell 5.1. No NuGet package, tag, or GitHub Release was created. The helper was replaced with the existing URI-based compatibility path and a repository-escape regression case was added before creating a new exact release commit.
 
+The replacement commit `6289acb` passed all eight standard hosted jobs. Its release dispatch also stopped before pack/publish because the nested legacy PowerShell child returned a nonzero fixture result only on the hosted image. The release workflow now runs both Markdown link gates in isolated `pwsh` child processes, while the fixture runner reuses its current host and preserves child output for diagnosis. No NuGet package, tag, or GitHub Release was created by either failed dispatch.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

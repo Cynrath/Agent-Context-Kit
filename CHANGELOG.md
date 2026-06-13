@@ -50,6 +50,7 @@ No changes have been recorded after the alpha.2 release candidate.
 ### Fixed
 - Prevented `id-token: write`, escaped text ending in drive-like syntax, and plain numeric hosted run IDs from producing token/path/phone false positives.
 - Made the local Markdown link gate compatible with Windows PowerShell 5.1, including repository-escape diagnostics.
+- Run Markdown link release gates in isolated hosted `pwsh` child processes and preserve child output on fixture failures.
 - Made case-insensitive scanner regexes culture-invariant so ASCII token, email, domain, and local-path detection stays consistent under Turkish and other process cultures.
 - Allowlisted Shields.io badge hosts and common `System.IO` namespace-shaped technical tokens to prevent culture-invariant self-scan noise.
 

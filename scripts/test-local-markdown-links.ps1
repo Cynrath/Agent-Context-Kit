@@ -5,6 +5,7 @@ Set-StrictMode -Version Latest
 
 $checker = Join-Path $PSScriptRoot "check-local-markdown-links.ps1"
 $tempRoot = Join-Path $env:TEMP ("ackit-markdown-link-tests-" + [guid]::NewGuid().ToString("N"))
+$hostExecutable = (Get-Process -Id $PID).Path
 
 function Invoke-Case {
     param(
@@ -21,9 +22,11 @@ function Invoke-Case {
         Set-Content -LiteralPath $path -Value $entry.Value -Encoding utf8
     }
 
-    & powershell -NoProfile -ExecutionPolicy Bypass -File $checker -RepositoryRoot $caseRoot -FailOnIssues *> $null
-    if ($LASTEXITCODE -ne $ExpectedExitCode) {
-        throw "Markdown link test '$Name' expected exit code $ExpectedExitCode but received $LASTEXITCODE."
+    $output = @(& $hostExecutable -NoProfile -ExecutionPolicy Bypass -File $checker -RepositoryRoot $caseRoot -FailOnIssues 2>&1)
+    $actualExitCode = $LASTEXITCODE
+    if ($actualExitCode -ne $ExpectedExitCode) {
+        $output | Out-Host
+        throw "Markdown link test '$Name' expected exit code $ExpectedExitCode but received $actualExitCode."
     }
 }
 

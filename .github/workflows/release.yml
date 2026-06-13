@@ -78,8 +78,8 @@ jobs:
           $ErrorActionPreference = "Stop"
           $PSNativeCommandUseErrorActionPreference = $true
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-samples.ps1 -NoBuild
-          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/test-local-markdown-links.ps1
-          powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-local-markdown-links.ps1 -FailOnIssues
+          pwsh -NoProfile -File scripts/test-local-markdown-links.ps1
+          pwsh -NoProfile -File scripts/check-local-markdown-links.ps1 -FailOnIssues
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-config-generated-conventions.ps1 -FailOnIssues
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-v020-readiness.ps1 -FailOnIssues
           powershell -NoProfile -ExecutionPolicy Bypass -File scripts/check-v100-readiness.ps1 -FailOnIssues
