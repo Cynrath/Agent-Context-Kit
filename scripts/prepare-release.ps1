@@ -96,9 +96,13 @@ try {
     }
 
     $tagName = "v$Version"
-    $tagCommit = git rev-list -n 1 $tagName 2>$null
-    if ($LASTEXITCODE -eq 0 -and $tagCommit) {
-        if ($tagCommit.Trim() -ne $resolvedCommit) {
+    $existingTag = @(git tag --list $tagName)
+    if ($existingTag -contains $tagName) {
+        $tagCommit = git rev-list -n 1 $tagName
+        if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($tagCommit)) {
+            Add-Issue "Existing tag $tagName could not be resolved."
+        }
+        elseif ($tagCommit.Trim() -ne $resolvedCommit) {
             Add-Issue "Existing tag $tagName targets a different commit."
         }
         else {

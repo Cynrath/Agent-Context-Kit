@@ -10,7 +10,7 @@
 | 55 | Done locally | TASK-0120 config diagnostics polish | High | Complete | validator/CLI tests/docs | valid/warning/error tests | Push after validation | Stable sanitized diagnostics |
 | 56 | Done locally | TASK-0121 full validation | P0 | Complete | evidence docs | complete local gate set | No | All contracts/performance pass |
 | 57 | Done locally | TASK-0122 release automation | P0 | Complete | release workflow/scripts/docs | static/local release automation gates | Push after validation | Manual exact-SHA OIDC workflow is safe/idempotent |
-| 58 | In progress | TASK-0123 alpha.2 preparation | P0 | Blocks publication | version/release/package metadata | full package/install smoke | Yes | Exact candidate commit pushed |
+| 58 | Ready to commit | TASK-0123 alpha.2 preparation | P0 | Blocks publication | version/release/package metadata | full package/install smoke | Yes | Exact candidate commit pushed |
 | 59 | Queued | TASK-0124 hosted publish | P0 | Requires pre-release 8/8 | hosted release evidence | release workflow plus package/tag/release verification | Yes | NuGet/tag/pre-release complete |
 | 60 | Queued | TASK-0125 post-publish verification | P0 | Final release closeout | README/workflow/status docs | installed-tool smoke and final 8/8 | Yes | Clean aligned final state |
 

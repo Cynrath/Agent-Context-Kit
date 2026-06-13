@@ -12,6 +12,7 @@ Prefer minimal, tested, secure changes that follow the project docs and task fil
 
 ## Release Status
 - Current release: `v0.2.0-alpha.1` published on GitHub and NuGet as a pre-release.
+- Current source candidate: `v0.2.0-alpha.2` under exact-commit release validation.
 - Previous release: `v0.1.0-alpha.2` published and verified; pushed, released, and published.
 - Main stack: `.NET`, `.NET CLI / .NET Tool`, and `GitHub Actions`.
 

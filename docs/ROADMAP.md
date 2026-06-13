@@ -171,7 +171,10 @@
 - TASK-0114 completed the maintainer-gated P0/P1 blocker board and decision register without closing blockers.
 - TASK-0115 completed `v0.2.0-alpha.2` planning without version, tag, package, or release changes.
 - PROJECT-CONTROL-0102 authorizes sequential TASK-0116 through TASK-0125 implementation, validated normal pushes, exact-commit hosted checks, OIDC NuGet publication, GitHub pre-release creation, and post-publish verification.
-- TASK-0116 will audit cross-links, terminology, duplicate content, and stale design-versus-shipped language.
+- TASK-0116 through TASK-0122 completed local link validation, scanner/config/baseline/suppression hardening, full regression/performance validation, and manual exact-SHA OIDC release automation.
+- TASK-0123 is preparing source/package/CLI metadata and source-package smoke for `0.2.0-alpha.2`; published-package smoke and README install commands remain on alpha.1 until publication.
+- TASK-0124 will require exact-commit 8/8 hosted checks before OIDC NuGet publication, exact tag creation, and GitHub pre-release creation.
+- TASK-0125 will perform global installed-tool smoke, published-package version sync, final docs sync, and post-publish 8/8 hosted validation.
 - TASK-0115 planning scope: scanner precision, suppression audit, baseline-aware CI, config diagnostics, and ecosystem/offline documentation. It excludes dependency expansion, default network behavior, and external tool execution.
 - Maintainer-gated RC/security decisions do not block this local-only research, but the research does not close release blockers or imply 1.0 readiness.
 

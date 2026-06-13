@@ -45,11 +45,12 @@
 
 ## Release Status
 - Current release: `v0.2.0-alpha.1` published on GitHub and NuGet as a pre-release.
+- Current source candidate: `v0.2.0-alpha.2` under exact-commit release validation.
 - Previous release: `v0.1.0-alpha.2` published and verified; pushed, released, and published.
 - NuGet global tool install verification: completed.
 - GitHub Release page: completed.
 - Published-package smoke workflow installs `AgentContextKit` `0.2.0-alpha.1`.
-- Source-package smoke workflow installs the local `AgentContextKit` `0.2.0-alpha.1` package.
+- Source-package smoke workflow installs the local `AgentContextKit` `0.2.0-alpha.2` package.
 
 ## Risk Summary
 - No risk findings in the latest local scan.

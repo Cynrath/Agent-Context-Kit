@@ -8,7 +8,7 @@ Current package metadata is defined in `src/AgentContextKit.Cli/AgentContextKit.
 Important fields:
 - `PackageId`: `AgentContextKit`
 - `ToolCommandName`: `ackit`
-- `Version`: `0.2.0-alpha.1`
+- `Version`: `0.2.0-alpha.2` release candidate
 - `Authors`: `Cynrath`
 - `PackageLicenseExpression`: `MIT`
 - `PackageReadmeFile`: `README.md`
@@ -42,7 +42,7 @@ dotnet pack src/AgentContextKit.Cli/AgentContextKit.Cli.csproj -c Release -o $pk
 ```powershell
 $tools = Join-Path $env:TEMP "ackit-tools"
 New-Item -ItemType Directory -Force -Path $tools | Out-Null
-dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.1 --ignore-failed-sources
+dotnet tool install AgentContextKit --tool-path $tools --add-source $pkg --version 0.2.0-alpha.2 --ignore-failed-sources
 & (Join-Path $tools "ackit.exe") --help
 & (Join-Path $tools "ackit.exe") sarif --output .ackit/reports/local-package.sarif
 ```
@@ -58,16 +58,14 @@ ackit scan --ci
 ```
 
 ## Current Published Package
-Current source is published as the `0.2.0-alpha.1` package. The `v0.2.0-alpha.1` tag, GitHub pre-release, NuGet publish, and global tool install verification are complete.
+The current published package remains `0.2.0-alpha.1`. Current source/package metadata is prepared as the `0.2.0-alpha.2` release candidate; public install commands remain on alpha.1 until publication is verified.
 
-## Manual NuGet Publish
-NuGet publish is not automated by this project. Version `0.2.0-alpha.1` has been published and install-verified. Future versions must be published only from the reviewed release commit, only after all gates pass, and only with an approved API key stored outside the repository.
+## OIDC NuGet Publish
+Version `0.2.0-alpha.1` has been published and install-verified. Future versions are published only from the reviewed exact commit after all gates pass, using the manual `.github/workflows/release.yml` workflow and the preconfigured `nuget-release` environment.
 
-Future package push commands should use the next approved version, for example:
+The workflow uses NuGet Trusted Publishing through `NuGet/login@v1`. API keys, repository secrets for package credentials, local environment credentials, and credential-bearing `NuGet.Config` files are prohibited.
 
-```powershell
-dotnet nuget push (Join-Path $pkg "AgentContextKit.<next-version>.nupkg") --source https://api.nuget.org/v3/index.json --api-key $env:NUGET_API_KEY
-```
+See [RELEASE_AUTOMATION.md](RELEASE_AUTOMATION.md) for the dispatch, exact-SHA, idempotency, and recovery contract.
 
 ## Release Blockers
 - For future releases, do not publish until `scripts/check-package-metadata.ps1 -FailOnIssues` exits `0`.

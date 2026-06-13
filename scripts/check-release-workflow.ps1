@@ -28,12 +28,19 @@ $required = @(
     "NuGet/login@v1",
     "user: Cyranth",
     "steps.login.outputs.NUGET_API_KEY",
+    'git tag --list $tagName',
+    "gh release list",
     "scripts/prepare-release.ps1",
     "scripts/verify-published-package.ps1",
     "scripts/check-local-markdown-links.ps1",
     "scripts/verify-release.ps1",
     "gh release create"
 )
+
+$prepareRelease = Get-Content -Raw (Join-Path $repoRoot "scripts\prepare-release.ps1")
+if (-not $prepareRelease.Contains('git tag --list $tagName')) {
+    $issues.Add("Release preparation must treat an absent target tag as an idempotent state.") | Out-Null
+}
 
 foreach ($marker in $required) {
     if (-not $content.Contains($marker)) {

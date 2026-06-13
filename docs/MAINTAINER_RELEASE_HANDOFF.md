@@ -1,10 +1,10 @@
 # Maintainer Release Handoff
 
-Current future-candidate planning is in `docs/V020_ALPHA2_PLAN.md`. It is planning-only and does not replace the blocker board, select a version, or authorize release writes.
+Current alpha.2 scope is in `docs/V020_ALPHA2_SCOPE.md`. PROJECT-CONTROL-0102 explicitly authorizes validated normal pushes and the exact-SHA OIDC release workflow for `v0.2.0-alpha.2`.
 
 This handoff records the completed `v0.2.0-alpha.1` GitHub and NuGet pre-release state.
 
-Codex must not push commits, create GitHub releases, publish NuGet packages, or handle API keys unless the maintainer explicitly asks for each public action.
+This release sequence must not use API keys. Publication is allowed only through the manual OIDC workflow after the exact release commit passes all eight standard hosted jobs.
 
 ## Future Release-Candidate Decision
 TASK-0092 prepares a conditional local contract freeze in `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md` and the authoritative GO/NO-GO checklist in `docs/MAINTAINER_RC_DECISION.md`. The current decision is NO-GO for RC publication until hosted evidence, remaining P0 gaps, private vulnerability reporting, schema assets, and supply-chain decisions are complete.
@@ -92,7 +92,7 @@ The workflow:
 - Uses `actions/checkout@v6` and `actions/setup-dotnet@v5`.
 - Runs restore, Release build, and Release tests.
 - Packs the current source into a temporary package directory.
-- Installs `AgentContextKit` version `0.2.0-alpha.1` from the temporary package source into a temporary tool path.
+- Installs `AgentContextKit` version `0.2.0-alpha.2` from the temporary package source into a temporary tool path for the current candidate.
 - Runs `ackit version`, `ackit --help`, clean DemoApp smoke commands, fake-secret `redact-check` expected failure, fake secret cleanup, and final `ackit scan --ci`.
 
 Latest read-only GitHub CLI evidence:
@@ -107,13 +107,13 @@ Maintainer-only next release actions:
 - Optionally polish the existing `v0.2.0-alpha.1` GitHub Release body using `docs/RELEASE_BODY_V020_ALPHA1.md`.
 - Confirm hosted `ci`, published-package smoke, and source-package smoke are green after the next push.
 - Create any future tags and GitHub Releases only after reviewed release commits.
-- Publish future NuGet packages only from reviewed release commits.
+- Publish future NuGet packages only from reviewed exact release commits through OIDC Trusted Publishing.
 - Decide whether CodeQL or GitHub Code Scanning/SARIF upload should be enabled.
 
-## Planned v0.2.0-alpha.2 Handoff
+## v0.2.0-alpha.2 Release-Candidate Handoff
 `docs/V020_ALPHA2_SCOPE.md` freezes alpha.2 as a small hardening package: culture-invariant scanner matching, expanded scanner fixtures, and sanitized human/JSON suppression audit output. CLI commands, exit codes, JSON schema `2`, config schema `1`, and visible-findings-only SARIF stay compatible.
 
-This task does not bump versions. A separate release-preparation task must update csproj/CLI/source-smoke versions, run local package install smoke, and obtain hosted source-smoke validation. Published-package smoke must remain on `0.2.0-alpha.1` until NuGet `0.2.0-alpha.2` exists.
+TASK-0123 updates csproj/CLI/source-smoke versions to `0.2.0-alpha.2`, runs local package install smoke, pushes the exact candidate, and obtains hosted validation. Published-package smoke remains on `0.2.0-alpha.1` until NuGet `0.2.0-alpha.2` exists.
 
 ## GitHub Contributor Workflow
 The repository now includes GitHub issue templates, a pull request template, `docs/MAINTAINER_GUIDE.md`, `docs/SUPPORT_MATRIX.md`, `docs/CONTRIBUTOR_ONBOARDING.md`, `docs/GITHUB_REPO_HYGIENE.md`, and `docs/ISSUE_TRIAGE.md`.
@@ -178,6 +178,6 @@ Form-ready sections are included for:
 - Run release gates.
 - Push release commits and tag only after review.
 - Create GitHub Release.
-- Publish NuGet with a secure API key outside the repository.
+- Publish NuGet through the authorized exact-SHA OIDC workflow.
 - Verify install from NuGet.
 - After NuGet publication, update published-package smoke and public install docs to the new version.

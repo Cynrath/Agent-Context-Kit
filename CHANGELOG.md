@@ -6,6 +6,10 @@ This project follows Semantic Versioning where practical before `1.0.0`.
 
 ## [Unreleased]
 
+No changes have been recorded after the alpha.2 release candidate.
+
+## [0.2.0-alpha.2] - Unreleased
+
 ### Added
 - Added a dependency-free local Markdown-link gate with positive/negative smoke coverage and release-gate integration.
 - Added manual exact-commit GitHub release automation with NuGet OIDC Trusted Publishing, scoped permissions, idempotent recovery, package inspection, and installed-tool smoke verification.

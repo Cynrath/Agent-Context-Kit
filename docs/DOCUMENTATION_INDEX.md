@@ -150,6 +150,7 @@
 - `docs/RELEASE_BLOCKERS.md`: public-release blocker/follow-up state and guard script.
 - `docs/RELEASE_CHECKLIST.md`: release checklist.
 - `docs/RELEASE_BODY_V020_ALPHA1.md`: corrected GitHub Release body draft for the published `v0.2.0-alpha.1` pre-release.
+- `docs/RELEASE_BODY_V020_ALPHA2.md`: validated GitHub pre-release body for the `v0.2.0-alpha.2` exact-commit OIDC release workflow.
 - `docs/NEXT_TASKS.md`: unified next task roadmap.
 - `docs/PROJECT_EXECUTION_QUEUE.md`: execution queue with validation and remote-write status.
 - `docs/RELEASE_BLOCKER_BOARD.md`: consolidated open maintainer-gated P0/P1 blocker visibility.

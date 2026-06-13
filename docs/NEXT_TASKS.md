@@ -10,7 +10,7 @@ This is the unified execution queue for the explicitly authorized PROJECT-CONTRO
 5. TASK-0120 config diagnostics polish.
 6. TASK-0121 contract, regression, and performance validation.
 7. TASK-0122 OIDC release automation and credential boundary.
-8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push.
+8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push (in progress).
 9. TASK-0124 hosted validation and publication.
 10. TASK-0125 post-publish verification and final hosted validation.
 

@@ -4,7 +4,7 @@
 Prepare and push the exact alpha.2 release commit after TASK-0116–0122 pass.
 
 ## Current State
-Source/package version is `0.2.0-alpha.1`; published-package smoke must remain pinned there until publication.
+Source/package/CLI metadata and source-package smoke are being moved to `0.2.0-alpha.2`; published-package smoke must remain pinned to `0.2.0-alpha.1` until publication.
 
 ## Scope
 Bump source/CLI/source-smoke/release verification to `0.2.0-alpha.2`; update changelog/release notes/handoff/queue; pack, inspect, and temporary-install the candidate.
@@ -52,7 +52,7 @@ Run preparation and verification scripts for alpha.2.
 Before publication, revert the release-preparation commit; never reuse alpha.2 after publication.
 
 ## Completion Evidence
-Pending.
+Release build passed with zero warnings and zero errors; 186/186 tests passed. Source scan was clean, doctor passed, JSON/SARIF parsed, samples and all contract/readiness/security/documentation gates passed, and the unchanged 2,000-file/30-second tripwire completed in 3.704 seconds through the RC gate and 3.685 seconds standalone. Candidate `.nupkg` and `.snupkg` entries were inspected. A temporary install reported `AgentContextKit 0.2.0-alpha.2` and completed init, scan, generate, task, report, Web UI, SARIF, prompt-pack, context-export, fake-secret exit `2`, cleanup, and final clean scan. Exact commit/push and hosted evidence follow after this task commit.
 
 ## Commit
 Dedicated alpha.2 release-preparation commit.

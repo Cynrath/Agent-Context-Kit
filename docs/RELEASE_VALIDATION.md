@@ -5,6 +5,9 @@ This checklist validates local release readiness without publishing.
 ## PROJECT-CONTROL-0102 Pre-Version Evidence
 On 2026-06-13, TASK-0116–0122 validation passed with a zero-warning Release build, 186/186 tests, clean source scan, doctor PASS, sample smoke, JSON/SARIF/locale/link contracts, local package install smoke, and all requested readiness/security/supply-chain gates. The unchanged 2,000-file/30-second performance tripwire completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
 
+## v0.2.0-alpha.2 Candidate Evidence
+On 2026-06-13, TASK-0123 prepared source/package/CLI metadata and source-package smoke as `0.2.0-alpha.2` while leaving published-package smoke and public README install commands on `0.2.0-alpha.1`. Release build completed with zero warnings and zero errors; 186/186 tests passed; source scan was clean; doctor passed; JSON and SARIF parsed; sample, contract, localization, documentation, readiness, security, supply-chain, and release gates passed. Candidate `.nupkg` and `.snupkg` archives were inspected and removed after a full temporary installed-tool smoke. The 2,000-file performance tripwire completed in 3.704 seconds through the RC evidence gate and 3.685 seconds standalone, below the unchanged 30-second threshold.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

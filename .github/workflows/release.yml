@@ -168,12 +168,14 @@ jobs:
           try { Invoke-WebRequest -Uri $packageUrl -Method Head -UseBasicParsing | Out-Null; $packageExists = $true } catch { $packageExists = $false }
 
           git fetch --tags origin
-          $tagCommit = git rev-list -n 1 $tagName 2>$null
-          $tagExists = $LASTEXITCODE -eq 0 -and -not [string]::IsNullOrWhiteSpace($tagCommit)
-          if ($tagExists -and $tagCommit.Trim() -ne $commit) { throw "Existing tag targets a different commit." }
+          $tagExists = @(git tag --list $tagName) -contains $tagName
+          if ($tagExists) {
+            $tagCommit = (git rev-list -n 1 $tagName).Trim()
+            if ($tagCommit -ne $commit) { throw "Existing tag targets a different commit." }
+          }
 
-          gh release view $tagName --repo "${{ github.repository }}" *> $null
-          $releaseExists = $LASTEXITCODE -eq 0
+          $releaseTags = @(gh release list --repo "${{ github.repository }}" --limit 100 --json tagName --jq '.[].tagName')
+          $releaseExists = $releaseTags -contains $tagName
           "package_exists=$($packageExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           "tag_exists=$($tagExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append
           "release_exists=$($releaseExists.ToString().ToLowerInvariant())" | Out-File -FilePath $env:GITHUB_OUTPUT -Encoding utf8 -Append

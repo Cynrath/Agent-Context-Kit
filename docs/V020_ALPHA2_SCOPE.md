@@ -1,6 +1,6 @@
 # v0.2.0-alpha.2 Scope
 
-Status: scope frozen locally; version bump and release preparation have not started.
+Status: release candidate prepared locally; hosted exact-commit validation and publication remain pending.
 
 ## Release Intent
 `v0.2.0-alpha.2` should be a small compatibility-preserving hardening release after the published `v0.2.0-alpha.1` package. It should package the completed scanner precision and suppression-audit work without adding a new command or changing established schemas.
@@ -8,12 +8,13 @@ Status: scope frozen locally; version bump and release preparation have not star
 Current state remains:
 
 - Published release: `v0.2.0-alpha.1`.
-- Source/package/CLI version: `0.2.0-alpha.1`.
+- Source/package/CLI version: `0.2.0-alpha.2`.
 - Published-package smoke pin: `0.2.0-alpha.1`.
+- Source-package smoke pin: `0.2.0-alpha.2`.
 - JSON schema version: `2`.
 - Config schema version: `1`.
 
-This planning task does not change any of those values.
+The alpha.2 release-preparation task changes only candidate metadata and source-package validation. Public install commands and published-package smoke remain on alpha.1 until NuGet publication is verified.
 
 ## Package-Affecting Scope
 
@@ -76,27 +77,27 @@ Consumers should tolerate additive JSON properties. Any breaking schema or comma
 - `v0.3` product direction or `1.0` readiness decisions.
 
 ## Release Preparation Gate
-A separate release-preparation task must:
+TASK-0123 must:
 
 1. Change csproj and CLI runtime version to `0.2.0-alpha.2`.
 2. Update source-package smoke to install the local `0.2.0-alpha.2` package.
 3. Keep published-package smoke on `0.2.0-alpha.1` until NuGet alpha.2 publication succeeds.
-4. Move the Unreleased changelog entries into a dated `0.2.0-alpha.2` section.
+4. Move the Unreleased changelog entries into an `0.2.0-alpha.2` release-candidate section and date it after publication.
 5. Run restore, Release build, 127+ tests, scan, doctor, JSON/SARIF parse, sample smoke, hygiene, and release gates.
 6. Pack and install the candidate from a temporary local package source on a temporary tool path.
 7. Verify `ackit version`, help, scan, suppression audit behavior, SARIF, and fake-secret Critical exit behavior.
-8. Obtain successful hosted `ci` and cross-platform source-package smoke after maintainer push.
+8. Obtain successful hosted `ci`, published-package smoke, and cross-platform source-package smoke for the exact pushed commit.
 
-## Maintainer-Only Publication Gate
+## Authorized OIDC Publication Gate
 After local preparation and hosted validation:
 
-1. Approve and create the release tag.
-2. Create the GitHub pre-release.
-3. Publish the NuGet package with a maintainer-controlled key outside the repository.
+1. Dispatch the exact-SHA manual release workflow.
+2. Publish the NuGet package through GitHub OIDC Trusted Publishing only.
+3. Create the exact-commit tag and GitHub pre-release only after NuGet availability is verified.
 4. Verify global install and smoke commands from NuGet.
 5. Update published-package smoke, README install commands, release docs, and agent instructions to alpha.2.
 
-None of these remote writes are performed in TASK-0081.
+PROJECT-CONTROL-0102 explicitly authorizes these remote writes after all required gates pass. API keys and persistent package credentials are prohibited.
 
 ## Rollback
 Before publication, revert the dedicated version/release-preparation commit and keep `0.2.0-alpha.1` as the published baseline. After publication, do not overwrite an immutable NuGet version; prepare a follow-up version if a package defect is found.

@@ -53,12 +53,14 @@
 - Published install commands are pinned to `0.2.0-alpha.1`.
 - `v0.2.0-alpha.1` tag push, GitHub pre-release, NuGet publish, global install verification, and `ackit sarif` help verification are complete.
 
-## Planned v0.2.0-alpha.2 Scope Gate
+## v0.2.0-alpha.2 Release-Candidate Gate
 - Scope is defined in `docs/V020_ALPHA2_SCOPE.md`.
 - Release is limited to scanner precision, fixture hardening, sanitized suppression audit, contract validation, and repository documentation polish.
 - CLI commands, exit codes, JSON schema `2`, config schema `1`, SARIF visible-findings-only behavior, package ID, and tool command remain compatible.
-- Source/package/CLI version is not changed until a dedicated release-preparation task.
+- Source/package/CLI version and source-package smoke are `0.2.0-alpha.2` under TASK-0123.
 - Published-package smoke stays pinned to `0.2.0-alpha.1` until alpha.2 is available on NuGet.
+- Public README install commands stay pinned to `0.2.0-alpha.1` until alpha.2 is available on NuGet.
+- Publication requires exact-commit 8/8 hosted checks and the manual OIDC release workflow.
 - Code Scanning, Pages, screenshot assets, remote LLM integration, and breaking schema changes are out of scope.
 
 ## Remaining Manual Actions
