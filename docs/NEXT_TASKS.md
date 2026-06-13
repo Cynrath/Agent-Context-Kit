@@ -1,6 +1,17 @@
 # Next Tasks
 
-This is the unified execution queue for the explicitly authorized PROJECT-CONTROL-0102 alpha.2 release sequence.
+This is the unified execution queue. PROJECT-CONTROL-0102 is complete; PROJECT-CONTROL-0103 now governs release recovery, security/supply-chain evidence, and conditional next-prerelease work.
+
+## Active PROJECT-CONTROL-0103
+1. TASK-0126 release recovery and idempotent verification.
+2. TASK-0127 alpha.2 supply-chain evidence refresh.
+3. TASK-0128 hosted release-candidate evidence hardening.
+4. TASK-0129 private vulnerability reporting verification.
+5. TASK-0130 security notification and recovery ownership.
+6. TASK-0131 NuGet owner identity disposition.
+7. TASK-0132 signing, SBOM, and provenance implementation/decision.
+8. TASK-0133 next prerelease scope and version selection.
+9. TASK-0134 conditional next prerelease preparation, publication, and verification.
 
 ## Active Alpha.2 Execution
 1. TASK-0116 documentation consistency and local Markdown-link audit.
@@ -64,7 +75,7 @@ These actions require explicit maintainer control and do not block safe local-on
 - Post-publish commit `ead65120928835419fb91bf695e845721620c394` passed all eight standard hosted jobs: 2 CI, 3 published-package smoke, and 3 source-package smoke.
 
 ## Next Task
-- TASK-0126 refresh the published alpha.2 supply-chain evidence and select the next package scope without changing remote security settings by default.
+- TASK-0126 add and host-verify the read-only `verify-existing` release recovery operation.
 
 ## Execution Rule
 Continue TASK-0116 through TASK-0125 in order without per-task prompts. After successful validation, normal commit/push is automatic. Tag, GitHub pre-release, and NuGet publication are allowed only through the explicitly authorized release task and OIDC workflow. Never expose credentials or use force/history-rewrite operations.

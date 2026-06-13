@@ -1,5 +1,18 @@
 # Project Execution Queue
 
+## Active PROJECT-CONTROL-0103 Track
+| Order | Status | Task | Priority | Blocking status | Expected files | Validation required | Remote write required? | Done criteria |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 61 | In progress | TASK-0126 release recovery verification | P0 | Blocks reliable recovery evidence | release workflow/scripts/tests/docs | local gates, 8/8, verify-existing run | Dispatch only; verifier read-only | Green idempotent alpha.2 verification |
+| 62 | Queued | TASK-0127 alpha.2 supply-chain evidence | P1 | None for current release | evidence/status/gates | exact artifact audit | Read-only queries | Alpha.2 evidence is reproducible |
+| 63 | Queued | TASK-0128 hosted RC evidence hardening | P0 future release | Blocks future candidate | RC workflow/gates/evidence | exact hosted matrix | Dispatch only | Reviewed hosted evidence |
+| 64 | Queued | TASK-0129 private vulnerability reporting | P0 future release | External setting/permission | security status/evidence | enabled boolean re-read | Yes if permitted | Enabled or precise blocker |
+| 65 | Queued | TASK-0130 notification/recovery ownership | P0/P1 | Human backup may block | security/recovery/decision docs | evidence structure | No unless notification settings change | Truthful ownership/procedure |
+| 66 | Queued | TASK-0131 NuGet identity disposition | P1 | Human account action may block | NuGet/evidence/decision docs | public identity review | Possible, not automatic | Alignment or dated exception |
+| 67 | Queued | TASK-0132 signing/SBOM/provenance | P1 | Certificate/permissions | workflow/scripts/evidence | SBOM/privacy/digest/attestation gates | Possible isolated workflow | Implement/defer decisions recorded |
+| 68 | Queued | TASK-0133 next prerelease selection | P0 | Depends on decisions/evidence | scope/roadmap/changelog docs | contract/version gates | No | Smallest valid version selected/deferred |
+| 69 | Conditional | TASK-0134 next prerelease release | P0 | Requires exact GO packet | release/package/status files | full local/hosted/release gates | Yes if GO | Published and verified or evidence-backed NO-GO |
+
 ## Active Authorized Alpha.2 Track
 | Order | Status | Task | Priority | Blocking status | Expected files | Validation required | Remote write required? | Done criteria |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |

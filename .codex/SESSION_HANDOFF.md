@@ -4,6 +4,8 @@
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
 ## Current Task
+- PROJECT-CONTROL-0103 is active for TASK-0126 through TASK-0134. Normal commits/pushes and authorized GitHub security/release workflow actions are allowed; force/history/tag movement/version reuse/API-key publication remain prohibited.
+- TASK-0126 must create a read-only `verify-existing` release operation with no login, OIDC, contents write, publish, tag, or release mutation.
 - PROJECT-CONTROL-0102 completed the authorized alpha.2 implementation, publication, post-publish synchronization, and hosted validation sequence.
 - `v0.2.0-alpha.2` is published on GitHub and NuGet; exact tag `v0.2.0-alpha.2` points to package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 - Local `master` started aligned with `origin/master` at `8dadd16`.

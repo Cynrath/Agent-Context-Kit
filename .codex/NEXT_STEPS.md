@@ -1,6 +1,6 @@
 # Next Steps
 
-PROJECT-CONTROL-0102 completed the authorized `v0.2.0-alpha.2` release sequence.
+PROJECT-CONTROL-0102 completed the authorized `v0.2.0-alpha.2` release sequence. PROJECT-CONTROL-0103 is active for TASK-0126 through TASK-0134.
 
 1. Current published release: `v0.2.0-alpha.2` at exact package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 2. Starting Git state: clean aligned `master`/`origin/master` at `8dadd16`.
@@ -16,3 +16,5 @@ PROJECT-CONTROL-0102 completed the authorized `v0.2.0-alpha.2` release sequence.
 12. Published-package and source-package smoke are both pinned to `0.2.0-alpha.2` after publication.
 13. `docs/V100_GAP_ANALYSIS.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, and `docs/MAINTAINER_RC_DECISION.md` remain the historical 1.0/RC evidence boundary.
 14. Next recommended task: TASK-0126 alpha.2 supply-chain evidence refresh and next-package scope selection.
+15. Execute TASK-0126 first: split publish and read-only verify-existing release jobs, push after full validation, require 8/8, and dispatch alpha.2 recovery verification.
+16. Continue TASK-0127 through TASK-0134 without per-task prompts; record permanent human/external blockers and continue independent work.
