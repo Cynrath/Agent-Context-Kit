@@ -12,7 +12,7 @@ This is the unified execution queue for the explicitly authorized PROJECT-CONTRO
 7. TASK-0122 OIDC release automation and credential boundary.
 8. TASK-0123 `v0.2.0-alpha.2` release preparation and exact-commit push - completed.
 9. TASK-0124 hosted validation and publication - completed.
-10. TASK-0125 post-publish verification and final hosted validation - in progress.
+10. TASK-0125 post-publish verification and final hosted validation - completed.
 
 ## Completed Local Execution
 - TASK-0066 through TASK-0099 are completed locally.
@@ -61,6 +61,10 @@ These actions require explicit maintainer control and do not block safe local-on
 - All eight checked `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs succeeded for `8dadd16`.
 - TASK-0100 local validation passed with 178/178 tests, clean source scan/doctor, parsed JSON/SARIF, sample smoke, hygiene checks, and all local readiness/release evidence gates. The pre-commit public release gate reported only the expected dirty working tree blocker.
 - PROJECT-CONTROL-0101 validation passed with a zero-warning Release build, 178/178 tests, source JSON with zero findings, doctor PASS, parsed global SARIF with no Critical/High findings, sample smoke, clean hygiene/local Markdown links, and all requested local gates. The pre-commit public gate reported only the expected dirty working tree blocker.
+- Post-publish commit `ead65120928835419fb91bf695e845721620c394` passed all eight standard hosted jobs: 2 CI, 3 published-package smoke, and 3 source-package smoke.
+
+## Next Task
+- TASK-0126 refresh the published alpha.2 supply-chain evidence and select the next package scope without changing remote security settings by default.
 
 ## Execution Rule
 Continue TASK-0116 through TASK-0125 in order without per-task prompts. After successful validation, normal commit/push is automatic. Tag, GitHub pre-release, and NuGet publication are allowed only through the explicitly authorized release task and OIDC workflow. Never expose credentials or use force/history-rewrite operations.

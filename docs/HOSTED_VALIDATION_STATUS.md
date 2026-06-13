@@ -1,21 +1,21 @@
 # Hosted Validation Status
 
-The missing exact-candidate manual workflow evidence maps to blocker `RB-001` in `docs/RELEASE_BLOCKER_BOARD.md` and remains maintainer-gated.
+The alpha.2 post-publish commit passed the standard hosted matrix. The separate manual 1.0 RC evidence workflow maps to blocker `RB-001` in `docs/RELEASE_BLOCKER_BOARD.md` and remains maintainer-gated.
 
 ## Current Commit
 - Branch: `master`
-- Commit: `37d52200fead0ce5c53571205d324b9b7ff6c75b`
+- Commit: `ead65120928835419fb91bf695e845721620c394`
 - Local/remote state observed on 2026-06-13: `master` equals `origin/master`.
-- Commit title: `docs: consolidate final RC local readiness`
+- Commit title: `chore: complete v0.2.0-alpha.2 post-publish sync`
 
 ## Successful Standard Workflows
-The following public GitHub Actions runs started on 2026-06-12 at 21:38:03 UTC and completed successfully for the exact commit above.
+The following public GitHub Actions runs completed successfully on 2026-06-13 for the exact commit above.
 
 | Workflow | Run | Hosted Scope | Result |
 | --- | --- | --- | --- |
-| `ci` | [27444536856](https://github.com/Cynrath/agent-context-kit/actions/runs/27444536856) | Restore, build, test, and self-scan on `windows-2025` and `ubuntu-latest` | SUCCESS |
-| `cross-platform-smoke` | [27444536899](https://github.com/Cynrath/agent-context-kit/actions/runs/27444536899) | Published `AgentContextKit` `0.2.0-alpha.1` smoke on Windows, Ubuntu, and macOS | SUCCESS |
-| `cross-platform-source-smoke` | [27444536894](https://github.com/Cynrath/agent-context-kit/actions/runs/27444536894) | Source restore/build/test, local package install, and smoke on Windows, Ubuntu, and macOS | SUCCESS |
+| `ci` | [27471224858](https://github.com/Cynrath/agent-context-kit/actions/runs/27471224858) | Restore, build, test, and self-scan on `windows-2025` and `ubuntu-latest` | SUCCESS |
+| `cross-platform-smoke` | [27471224861](https://github.com/Cynrath/agent-context-kit/actions/runs/27471224861) | Published `AgentContextKit` `0.2.0-alpha.2` smoke on Windows, Ubuntu, and macOS | SUCCESS |
+| `cross-platform-source-smoke` | [27471224867](https://github.com/Cynrath/agent-context-kit/actions/runs/27471224867) | Source restore/build/test, local alpha.2 package install, and smoke on Windows, Ubuntu, and macOS | SUCCESS |
 
 ## Evidence Value
 These runs verify that:

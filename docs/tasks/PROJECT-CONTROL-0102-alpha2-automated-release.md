@@ -4,7 +4,7 @@
 Deliver `v0.2.0-alpha.2` from TASK-0116 through TASK-0125, including validated code/docs changes, normal pushes, exact-commit hosted checks, OIDC NuGet publication, GitHub pre-release creation, and post-publish verification.
 
 ## Current State
-NuGet `0.2.0-alpha.2`, exact tag `v0.2.0-alpha.2`, and the GitHub pre-release are published from package commit `f540479a92cbe66097f6796553828ee49ddd5512`. TASK-0125 post-publish synchronization and final hosted validation remain.
+Completed. NuGet `0.2.0-alpha.2`, exact tag `v0.2.0-alpha.2`, and the GitHub pre-release are published from package commit `f540479a92cbe66097f6796553828ee49ddd5512`; TASK-0125 post-publish synchronization and hosted validation are complete.
 
 ## Scope
 Coordinate TASK-0116 through TASK-0125 in order and preserve evidence for every local and hosted gate.
@@ -52,7 +52,7 @@ Validate local artifacts, hosted Actions, NuGet availability, GitHub Release, ex
 Before publication, revert normal commits. After publication, never overwrite the immutable version; fix forward with a new version.
 
 ## Completion Evidence
-TASK-0116 through TASK-0124 are complete. Exact package commit `f540479a92cbe66097f6796553828ee49ddd5512` passed the eight standard hosted jobs. Release run `27470659578` validated and packed the exact commit and published NuGet `0.2.0-alpha.2` through OIDC Trusted Publishing. Its post-publish verifier exposed an Ubuntu temporary-directory assumption after the immutable publish; recovery did not republish. Exact tag `v0.2.0-alpha.2` and the GitHub pre-release were completed at the package commit with validated `.nupkg` and `.snupkg` assets. Global installation and full published-package smoke pass locally. TASK-0125 final post-publish commit/push and exact-HEAD 8/8 remain before control closure.
+TASK-0116 through TASK-0125 are complete. Exact package commit `f540479a92cbe66097f6796553828ee49ddd5512` passed the eight standard hosted jobs. Release run `27470659578` validated and packed the exact commit and published NuGet `0.2.0-alpha.2` through OIDC Trusted Publishing. Its post-publish verifier exposed an Ubuntu temporary-directory assumption after the immutable publish; recovery did not republish. Exact tag `v0.2.0-alpha.2` and the GitHub pre-release were completed at the package commit with validated `.nupkg` and `.snupkg` assets. Global installation and full published-package smoke passed locally. Post-publish commit `ead65120928835419fb91bf695e845721620c394` passed all eight standard hosted jobs.
 
 ## Commit
 Use small logical commits; final release and post-publish commits must identify their exact SHA.

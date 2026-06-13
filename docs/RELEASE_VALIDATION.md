@@ -18,6 +18,8 @@ Commit `ed9bf78` passed all eight standard hosted jobs and completed the release
 
 Commit `f540479` passed all eight standard hosted jobs. The release workflow validated and packed the exact commit, authenticated through NuGet OIDC Trusted Publishing, and successfully published `AgentContextKit` `0.2.0-alpha.2`. Published-package verification then stopped before tag/release creation because `$env:TEMP` was unset on Ubuntu. Recovery detected the existing immutable package without republishing, pushed exact tag `v0.2.0-alpha.2` at `f540479a92cbe66097f6796553828ee49ddd5512`, and created the GitHub pre-release with the validated package assets. The verifier now falls back across `TEMP`, `TMPDIR`, `RUNNER_TEMP`, and `Path.GetTempPath()`.
 
+Post-publish commit `ead65120928835419fb91bf695e845721620c394` completed the README/workflow/release-document sync and passed all eight standard hosted jobs in runs `27471224858`, `27471224861`, and `27471224867`.
+
 ## Required Commands
 ```powershell
 dotnet restore AgentContextKit.sln

@@ -4,7 +4,7 @@
 AgentContextKit is an offline-first, security-first, docs-first, task-first .NET CLI for developers who use AI coding agents. It analyzes repositories, detects stacks and hygiene gaps, generates safe context/workflow files for multiple agents, and reports secret/PII/brand leakage risks before public release or AI context export.
 
 ## Current Task
-- PROJECT-CONTROL-0102 is in post-publish verification with explicit maintainer authority for the final normal commit/push and hosted validation.
+- PROJECT-CONTROL-0102 completed the authorized alpha.2 implementation, publication, post-publish synchronization, and hosted validation sequence.
 - `v0.2.0-alpha.2` is published on GitHub and NuGet; exact tag `v0.2.0-alpha.2` points to package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 - Local `master` started aligned with `origin/master` at `8dadd16`.
 - GitHub CLI checks reported all eight `ci`, `cross-platform-smoke`, and `cross-platform-source-smoke` jobs successful for `8dadd16`.
@@ -12,7 +12,7 @@ AgentContextKit is an offline-first, security-first, docs-first, task-first .NET
 - Successful validation is followed by normal commit and push in this authorized control task. Release publication uses OIDC only and never exposes or persists credential values.
 - TASK-0116 through TASK-0122 are complete locally. The suite is 186/186; scan is clean; doctor passes; performance completed in 3.961 seconds standalone and 2.785 seconds through the RC gate.
 - Release automation is manual-only, exact-SHA, per-version serialized, OIDC-only, and idempotent across NuGet/tag/GitHub Release partial states. Local package and full installed-tool smoke passed with `.nupkg` and `.snupkg` output.
-- TASK-0124 workflow run `27470659578` published NuGet `0.2.0-alpha.2` successfully through OIDC, then stopped before tag/release because Linux had no `$env:TEMP`. Recovery did not republish: exact tag `v0.2.0-alpha.2` and the GitHub pre-release were completed at `f540479a92cbe66097f6796553828ee49ddd5512` with validated package assets. TASK-0125 now owns global install smoke, active docs/workflow sync, final commit/push, and post-publish 8/8.
+- TASK-0124 workflow run `27470659578` published NuGet `0.2.0-alpha.2` successfully through OIDC, then stopped before tag/release because Linux had no `$env:TEMP`. Recovery did not republish: exact tag `v0.2.0-alpha.2` and the GitHub pre-release were completed at `f540479a92cbe66097f6796553828ee49ddd5512` with validated package assets. TASK-0125 global install/full smoke passed, and post-publish commit `ead65120928835419fb91bf695e845721620c394` passed all eight standard hosted jobs.
 - TASK-0066 through TASK-0073 are completed locally without remote writes.
 - TASK-0075 and TASK-0076 are completed locally; TASK-0076 is ready to commit after full validation.
 - PROJECT-CONTROL-0001 pre-commit validation passed; public release gate dirty-tree failure is expected before commit and must be rerun after commit.

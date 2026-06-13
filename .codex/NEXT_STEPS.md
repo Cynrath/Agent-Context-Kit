@@ -1,6 +1,6 @@
 # Next Steps
 
-PROJECT-CONTROL-0102 is active and explicitly authorizes the `v0.2.0-alpha.2` release sequence.
+PROJECT-CONTROL-0102 completed the authorized `v0.2.0-alpha.2` release sequence.
 
 1. Current published release: `v0.2.0-alpha.2` at exact package commit `f540479a92cbe66097f6796553828ee49ddd5512`.
 2. Starting Git state: clean aligned `master`/`origin/master` at `8dadd16`.
@@ -12,6 +12,7 @@ PROJECT-CONTROL-0102 is active and explicitly authorizes the `v0.2.0-alpha.2` re
 8. Never force push, rewrite history, move an existing tag, overwrite an immutable NuGet version, or delete user changes.
 9. Keep generated `.ackit/`, SARIF/HTML, package, archive, `bin/`, `obj/`, `TestResults`, and coverage outputs untracked.
 10. TASK-0116 through TASK-0122 are complete locally with 186/186 tests and green contract/performance/package gates.
-11. Complete TASK-0125: verify global alpha.2, run the disposable full smoke, finish local gates, commit/push the portable-temp and post-publish sync, then require final HEAD 8/8.
+11. TASK-0125 global alpha.2 verification, disposable full smoke, local gates, post-publish sync, and exact-commit 8/8 are complete.
 12. Published-package and source-package smoke are both pinned to `0.2.0-alpha.2` after publication.
-13. `docs/V100_GAP_ANALYSIS.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, and `docs/MAINTAINER_RC_DECISION.md` remain the historical 1.0/RC evidence boundary; PROJECT-CONTROL-0102 authorizes only the alpha.2 release described here.
+13. `docs/V100_GAP_ANALYSIS.md`, `docs/RELEASE_CANDIDATE_CONTRACT_FREEZE.md`, and `docs/MAINTAINER_RC_DECISION.md` remain the historical 1.0/RC evidence boundary.
+14. Next recommended task: TASK-0126 alpha.2 supply-chain evidence refresh and next-package scope selection.

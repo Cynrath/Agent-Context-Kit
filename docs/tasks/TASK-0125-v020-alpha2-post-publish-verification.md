@@ -4,7 +4,7 @@
 Verify the published alpha.2 tool, sync public install/status references, and prove the final post-publish commit across all platforms.
 
 ## Current State
-NuGet `0.2.0-alpha.2`, exact tag `v0.2.0-alpha.2`, and the GitHub pre-release exist. Post-publish repository synchronization and final hosted validation are in progress.
+Completed. NuGet `0.2.0-alpha.2`, exact tag `v0.2.0-alpha.2`, the GitHub pre-release, global install smoke, repository synchronization, and post-publish hosted validation are complete.
 
 ## Scope
 Pin published smoke and README installs to alpha.2; update status docs/tasks/context; reinstall global tool; run disposable full CLI smoke; commit/push; wait for final 8/8.
@@ -52,7 +52,7 @@ Verify clean Git state, HEAD/origin equality, exact tag SHA, GitHub pre-release,
 Revert post-publish docs/workflow commit if incorrect; published package/tag remain immutable and fixes use a new version.
 
 ## Completion Evidence
-NuGet registration and flat-container availability were confirmed for `0.2.0-alpha.2`. The global `0.2.0-alpha.1` tool was uninstalled, NuGet HTTP cache was cleared after the initial propagation miss, and global `0.2.0-alpha.2` installed successfully. `ackit version` returned `AgentContextKit 0.2.0-alpha.2`; help includes `config-check`, `baseline`, and `sarif`. The published-package verifier completed init, clean scan, generation, task creation, report, Web UI, SARIF parse, prompt pack, context export, synthetic-secret exit `2`, cleanup, and final clean scan. Local release validation passed with a zero-warning/zero-error Release build, 186/186 tests, clean scan, doctor PASS, parsed JSON/SARIF, sample/contract/localization/readiness/security gates, and the unchanged 2,000-file performance tripwire. Published-package workflow and active release documentation are synchronized to alpha.2. Final completion requires the post-publish commit push and exact-HEAD 8/8 hosted checks.
+NuGet registration and flat-container availability were confirmed for `0.2.0-alpha.2`. The global `0.2.0-alpha.1` tool was uninstalled, NuGet HTTP cache was cleared after the initial propagation miss, and global `0.2.0-alpha.2` installed successfully. `ackit version` returned `AgentContextKit 0.2.0-alpha.2`; help includes `config-check`, `baseline`, and `sarif`. The published-package verifier completed init, clean scan, generation, task creation, report, Web UI, SARIF parse, prompt pack, context export, synthetic-secret exit `2`, cleanup, and final clean scan. Local release validation passed with a zero-warning/zero-error Release build, 186/186 tests, clean scan, doctor PASS, parsed JSON/SARIF, sample/contract/localization/readiness/security gates, and the unchanged 2,000-file performance tripwire. Published-package workflow and active release documentation are synchronized to alpha.2. Post-publish commit `ead65120928835419fb91bf695e845721620c394` passed runs `27471224858`, `27471224861`, and `27471224867`, covering all eight required jobs.
 
 ## Commit
 Dedicated post-publish verification/docs sync commit.

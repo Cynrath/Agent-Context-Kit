@@ -81,8 +81,8 @@ The workflow installs .NET 10, installs `AgentContextKit` version `0.2.0-alpha.2
 This workflow remains the published-package smoke baseline for the current release. It does not create tags, publish NuGet packages, or mutate release metadata.
 
 Latest read-only GitHub CLI evidence:
-- Workflow run `27015579020`, commit `8dac9237c27ba912d056344155f1c9f901557bf5`, branch `master`, conclusion `success`.
-- Jobs `smoke (windows-2025)`, `smoke (ubuntu-latest)`, and `smoke (macos-latest)` completed successfully.
+- Workflow run `27471224861`, commit `ead65120928835419fb91bf695e845721620c394`, branch `master`, conclusion `success`.
+- Jobs `smoke (windows-2025)`, `smoke (ubuntu-latest)`, and `smoke (macos-latest)` completed successfully with the published alpha.2 package.
 
 ## Cross-Platform Source Smoke Test
 `.github/workflows/cross-platform-source-smoke.yml` is used for current-branch source package validation before future publication.
@@ -96,7 +96,7 @@ The workflow:
 - Runs `ackit version`, `ackit --help`, clean DemoApp smoke commands, fake-secret `redact-check` expected failure, fake secret cleanup, and final `ackit scan --ci`.
 
 Latest read-only GitHub CLI evidence:
-- TASK-0064 pre-change observation: latest `cross-platform-source-smoke` run for commit `6d38f11` completed with conclusion `success`.
+- Workflow run `27471224867`, commit `ead65120928835419fb91bf695e845721620c394`, branch `master`, conclusion `success`.
 - Jobs `source smoke (windows-2025)`, `source smoke (ubuntu-latest)`, and `source smoke (macos-latest)` completed successfully.
 
 ## v0.2.0-alpha.2 Published Handoff

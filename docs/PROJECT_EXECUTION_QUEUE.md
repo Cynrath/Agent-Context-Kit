@@ -12,7 +12,7 @@
 | 57 | Done locally | TASK-0122 release automation | P0 | Complete | release workflow/scripts/docs | static/local release automation gates | Push after validation | Manual exact-SHA OIDC workflow is safe/idempotent |
 | 58 | Completed | TASK-0123 alpha.2 preparation | P0 | Complete | version/release/package metadata | full package/install smoke | Yes, completed | Exact candidate commit pushed |
 | 59 | Completed | TASK-0124 hosted publish | P0 | Complete | hosted release evidence | release workflow plus package/tag/release verification | Yes, completed | NuGet/tag/pre-release complete |
-| 60 | In progress | TASK-0125 post-publish verification | P0 | Final release closeout | README/workflow/status docs | installed-tool smoke and final 8/8 | Yes | Clean aligned final state |
+| 60 | Completed | TASK-0125 post-publish verification | P0 | Complete | README/workflow/status docs | installed-tool smoke and final 8/8 | Yes, completed | Clean aligned final state |
 
 ## Completed Local Execution
 | Status | Task range | Scope | Validation | Remote state |

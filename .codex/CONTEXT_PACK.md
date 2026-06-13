@@ -39,7 +39,7 @@ AgentContextKit (`ackit`) is an offline-first .NET 10 CLI for AI-assisted reposi
 - Repository description and topics are set.
 - GitHub Release page for `v0.2.0-alpha.2` is completed as a pre-release with validated package assets.
 - NuGet package `AgentContextKit` version `0.2.0-alpha.2` is published through GitHub OIDC Trusted Publishing.
-- NuGet global tool install verification for `0.2.0-alpha.2` is part of TASK-0125 final verification.
+- NuGet global tool install and full disposable smoke verification are completed for `0.2.0-alpha.2`.
 - NuGet global tool smoke test is completed, including `ackit --help` and Web UI generation.
 - Cross-platform CI smoke workflow succeeded on commit `868dff3` for Windows, Ubuntu, and macOS.
 - Codex for OSS form submission is completed per maintainer-provided status.
